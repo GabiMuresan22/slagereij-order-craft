@@ -42,7 +42,7 @@ const Footer = () => {
 
           {/* About */}
           <div>
-            <h3 className="text-xl font-serif font-semibold mb-4">Slagereij John</h3>
+            <h3 className="text-xl font-serif font-semibold mb-4">Slagerij John</h3>
             <p className="text-sm leading-relaxed">
               Uw vertrouwde slager voor vers vlees en huisgemaakte specialiteiten sinds 1985. 
               Kwaliteit en service staan bij ons centraal.
@@ -51,7 +51,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-accent-foreground/20 mt-8 pt-8 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} Slagereij John. Alle rechten voorbehouden.</p>
+          <p>&copy; {new Date().getFullYear()} Slagerij John. Alle rechten voorbehouden.</p>
         </div>
       </div>
     </footer>
