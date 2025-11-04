@@ -75,8 +75,12 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-lg mb-2">Openingsuren</h3>
                     <div className="text-muted-foreground space-y-1">
-                      <p>Maandag - Vrijdag: 8:00 - 18:00</p>
-                      <p>Zaterdag: 8:00 - 17:00</p>
+                      <p>Maandag: 08:00 - 18:00</p>
+                      <p>Dinsdag: 08:00 - 18:00</p>
+                      <p>Woensdag: 08:00 - 13:00</p>
+                      <p>Donderdag: 08:00 - 18:00</p>
+                      <p>Vrijdag: 08:00 - 18:00</p>
+                      <p>Zaterdag: 08:00 - 18:00</p>
                       <p>Zondag: Gesloten</p>
                     </div>
                   </div>
