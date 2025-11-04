@@ -1,0 +1,128 @@
+import { Card, CardContent } from "@/components/ui/card";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
+
+const Contact = () => {
+  return (
+    <div className="min-h-screen py-12">
+      <div className="container mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 text-primary">
+            Contact
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Kom langs in onze winkel of neem contact met ons op
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
+          {/* Contact Information */}
+          <div className="space-y-6">
+            <Card className="border-border">
+              <CardContent className="p-6">
+                <div className="flex items-start space-x-4">
+                  <MapPin className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-2">Adres</h3>
+                    <p className="text-muted-foreground">
+                      Hoofdstraat 123<br />
+                      3000 Leuven<br />
+                      België
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-border">
+              <CardContent className="p-6">
+                <div className="flex items-start space-x-4">
+                  <Phone className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-2">Telefoon</h3>
+                    <a 
+                      href="tel:+32123456789" 
+                      className="text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      +32 12 34 56 789
+                    </a>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-border">
+              <CardContent className="p-6">
+                <div className="flex items-start space-x-4">
+                  <Mail className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-2">Email</h3>
+                    <a 
+                      href="mailto:info@slagereijjohn.be" 
+                      className="text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      info@slagereijjohn.be
+                    </a>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-border">
+              <CardContent className="p-6">
+                <div className="flex items-start space-x-4">
+                  <Clock className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-2">Openingsuren</h3>
+                    <div className="text-muted-foreground space-y-1">
+                      <p>Maandag - Vrijdag: 8:00 - 18:00</p>
+                      <p>Zaterdag: 8:00 - 17:00</p>
+                      <p>Zondag: Gesloten</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Map */}
+          <Card className="border-border overflow-hidden h-[600px]">
+            <CardContent className="p-0 h-full">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2519.3098982891766!2d4.699349!3d50.879844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c1610e39a8566d%3A0x40099ab2f4d5f50!2sLeuven%2C%20Belgium!5e0!3m2!1sen!2s!4v1234567890"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Slagereij John Location"
+              />
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Additional Info */}
+        <Card className="bg-primary text-primary-foreground max-w-4xl mx-auto">
+          <CardContent className="p-8 md:p-12 text-center">
+            <h2 className="text-3xl font-serif font-semibold mb-4">
+              Vragen of Speciale Wensen?
+            </h2>
+            <p className="text-lg opacity-90 mb-6">
+              Bel ons gerust of kom langs in de winkel. We helpen u graag verder met 
+              advies, speciale bestellingen of vragen over bereiding.
+            </p>
+            <a href="tel:+32123456789">
+              <span className="inline-flex items-center text-xl font-semibold hover:underline">
+                <Phone className="w-5 h-5 mr-2" />
+                +32 12 34 56 789
+              </span>
+            </a>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+export default Contact;
