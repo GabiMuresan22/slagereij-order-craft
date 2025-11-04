@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ShoppingBag, Clock, Award } from "lucide-react";
 import heroImage from "@/assets/hero-butcher.jpg";
+import Testimonials from "@/components/Testimonials";
 
 const Home = () => {
   return (
@@ -108,6 +109,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Testimonials Section */}
+      <Testimonials />
 
       {/* CTA Section */}
       <section className="py-20 bg-primary text-primary-foreground">
