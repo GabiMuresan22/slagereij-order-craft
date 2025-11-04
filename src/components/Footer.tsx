@@ -32,8 +32,12 @@ const Footer = () => {
               <div className="flex items-start space-x-3">
                 <Clock className="w-5 h-5 mt-0.5 flex-shrink-0" />
                 <div>
-                  <p>Ma - Vr: 8:00 - 18:00</p>
-                  <p>Za: 8:00 - 17:00</p>
+                  <p>Ma: 08:00 - 18:00</p>
+                  <p>Di: 08:00 - 18:00</p>
+                  <p>Wo: 08:00 - 13:00</p>
+                  <p>Do: 08:00 - 18:00</p>
+                  <p>Vr: 08:00 - 18:00</p>
+                  <p>Za: 08:00 - 18:00</p>
                   <p>Zo: Gesloten</p>
                 </div>
               </div>
