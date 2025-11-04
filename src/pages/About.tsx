@@ -11,7 +11,7 @@ const About = () => {
             Over Slagereij John
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Al meer dan 35 jaar uw vertrouwde adres voor vers vlees en huisgemaakte specialiteiten
+            De nieuwste culinaire aanwinst in Zwevezele
           </p>
         </div>
 
@@ -24,20 +24,14 @@ const About = () => {
               </h2>
               <div className="space-y-4 text-lg leading-relaxed text-foreground/90">
                 <p>
-                  In 1985 opende John zijn eerste slagerij in het hart van Leuven. 
-                  Met een passie voor kwaliteit en een diep respect voor het ambacht, 
-                  bouwde hij een reputatie op die generaties overstijgt.
+                  Welkom bij Slagerij John, de nieuwste culinaire aanwinst in Zwevezele! In de Bruggestraat 146A, 
+                  waar vroeger bakkerij Choc-O-Fee en bakkerij Geert gevestigd waren, hebben Ion (John) Nistor (36) 
+                  en zijn echtgenote Georgiana (31) hun droom waargemaakt met de opening van hun eigen slagerij.
                 </p>
-                <p>
-                  Vandaag de dag blijven we trouw aan onze roots: traditionele bereidingen, 
-                  persoonlijke service en een onwrikbare toewijding aan kwaliteit. We werken 
-                  samen met lokale boeren die dezelfde waarden delen en zorgen ervoor dat 
-                  elk stuk vlees aan onze hoge standaarden voldoet.
-                </p>
-                <p>
-                  Of u nu op zoek bent naar een perfect stuk biefstuk voor een bijzondere 
-                  gelegenheid of onze beroemde huisgemaakte worst voor een gezellig BBQ, 
-                  bij Slagereij John vindt u altijd wat u zoekt.
+                <p className="italic border-l-4 border-primary pl-4 text-foreground/80">
+                  "Eigenlijk heet ik Ion, maar iedereen noemt me John," legt de slager uit. "Ion is de Roemeense 
+                  versie van die naam en toen we destijds naar België kwamen werd ik in de omgang heel snel John 
+                  genoemd. Die naam is blijven plakken. Zelfs mijn vrouw noemt me zo!"
                 </p>
               </div>
             </CardContent>
@@ -90,9 +84,9 @@ const About = () => {
                 Ons Team
               </h2>
               <p className="text-lg text-center text-foreground/90 leading-relaxed">
-                Ons ervaren team van slagers staat klaar om u te helpen met advies, 
-                speciale wensen of simpelweg een praatje. We kennen ons vak door en door 
-                en delen graag onze kennis over de beste bereidingswijzen en recepten. 
+                Ion (John) en Georgiana staan klaar om u te helpen met advies, speciale wensen 
+                of simpelweg een praatje. Met hun passie voor kwaliteitsvlees en persoonlijke 
+                service delen ze graag hun kennis over de beste bereidingswijzen en recepten. 
                 Kom gerust langs en maak kennis!
               </p>
             </CardContent>
