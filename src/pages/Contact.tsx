@@ -100,7 +100,7 @@ const Contact = () => {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Slagereij John Location"
+                title="Slagerij John Location"
               />
             </CardContent>
           </Card>

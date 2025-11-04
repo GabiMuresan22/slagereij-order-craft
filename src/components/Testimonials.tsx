@@ -68,7 +68,7 @@ export default function Testimonials() {
 
         <div className="text-center mt-8">
           <a
-            href="https://www.google.com/maps/place/Slagereij+John"
+            href="https://www.google.com/maps/place/Slagerij+John"
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:text-primary/80 font-semibold inline-flex items-center gap-2"
