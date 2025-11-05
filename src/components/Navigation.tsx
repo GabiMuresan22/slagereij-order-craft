@@ -1,19 +1,26 @@
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Languages } from "lucide-react";
 import { useState } from "react";
 import logo from "@/assets/logo.png";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/about", label: "Over Ons" },
-    { path: "/products", label: "Producten" },
-    { path: "/order", label: "Bestel Online" },
-    { path: "/contact", label: "Contact" },
+    { path: "/", label: t('nav.home') },
+    { path: "/about", label: t('nav.about') },
+    { path: "/products", label: t('nav.products') },
+    { path: "/order", label: t('nav.order') },
+    { path: "/contact", label: t('nav.contact') },
   ];
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'nl' ? 'ro' : 'nl');
+  };
 
   return (
     <nav className="bg-card border-b border-border sticky top-0 z-50 shadow-sm">
@@ -43,15 +50,35 @@ const Navigation = () => {
                 {item.label}
               </Link>
             ))}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={toggleLanguage}
+              className="flex items-center gap-2"
+            >
+              <Languages className="h-4 w-4" />
+              {language === 'nl' ? 'RO' : 'NL'}
+            </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-foreground"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
+          {/* Mobile Menu Button & Language Toggle */}
+          <div className="md:hidden flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={toggleLanguage}
+              className="flex items-center gap-1"
+            >
+              <Languages className="h-4 w-4" />
+              {language === 'nl' ? 'RO' : 'NL'}
+            </Button>
+            <button
+              className="text-foreground"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
