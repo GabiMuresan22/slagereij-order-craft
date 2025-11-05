@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 import beefImage from "@/assets/beef-products.jpg";
 import porkImage from "@/assets/pork-products.jpg";
 import poultryImage from "@/assets/poultry-products.jpg";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Products = () => {
+  const { t } = useLanguage();
+
   const categories = [
     {
       title: "Rundvlees",
@@ -54,10 +57,10 @@ const Products = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 text-primary">
-            Ons Assortiment
+            {t('products.title')}
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Ontdek ons breed assortiment aan verse vleesproducten en huisgemaakte specialiteiten
+            {t('products.subtitle')}
           </p>
         </div>
 
@@ -95,11 +98,11 @@ const Products = () => {
         <Card className="bg-muted/30 border-border mb-12">
           <CardContent className="p-8 md:p-12">
             <h2 className="text-3xl font-serif font-semibold mb-6 text-center text-foreground">
-              Onze Specialiteiten
+              {t('products.specialties.title')}
             </h2>
             <div className="grid md:grid-cols-2 gap-6 text-lg">
               <div>
-                <h3 className="font-semibold mb-3 text-xl text-primary">Huisgemaakte Producten</h3>
+                <h3 className="font-semibold mb-3 text-xl text-primary">{t('products.specialties.homemade')}</h3>
                 <ul className="space-y-2 text-foreground/90">
                   <li>• Gehaktballen (speciaal recept)</li>
                   <li>• Verse worst (verschillende smaken)</li>
@@ -108,7 +111,7 @@ const Products = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold mb-3 text-xl text-primary">BBQ & Grill</h3>
+                <h3 className="font-semibold mb-3 text-xl text-primary">{t('products.specialties.bbq')}</h3>
                 <ul className="space-y-2 text-foreground/90">
                   <li>• BBQ pakketten</li>
                   <li>• Gemarineerde spiesjes</li>
@@ -123,14 +126,14 @@ const Products = () => {
         {/* CTA */}
         <div className="text-center">
           <h2 className="text-3xl font-serif font-bold mb-4 text-foreground">
-            Klaar om te Bestellen?
+            {t('products.cta.title')}
           </h2>
           <p className="text-lg text-muted-foreground mb-6">
-            Plaats uw bestelling online en haal op wanneer het u uitkomt
+            {t('products.cta.subtitle')}
           </p>
           <Link to="/order">
             <Button size="lg" className="text-lg px-8 py-6">
-              Bestel Nu Online
+              {t('products.cta.button')}
             </Button>
           </Link>
         </div>
