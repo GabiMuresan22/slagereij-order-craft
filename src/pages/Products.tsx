@@ -11,42 +11,42 @@ const Products = () => {
 
   const categories = [
     {
-      title: "Rundvlees",
+      titleKey: "products.beef.title",
       image: beefImage,
-      description: "Premium biefstukken, gehakt, stoofvlees en meer",
-      items: [
-        "Biefstuk (diverse soorten)",
-        "Rosbief",
-        "Gehakt (rund)",
-        "Stoofvlees",
-        "Riblappen",
-        "Ossenhaas"
+      descriptionKey: "products.beef.description",
+      itemKeys: [
+        "products.beef.item1",
+        "products.beef.item2",
+        "products.beef.item3",
+        "products.beef.item4",
+        "products.beef.item5",
+        "products.beef.item6"
       ]
     },
     {
-      title: "Varkensvlees",
+      titleKey: "products.pork.title",
       image: porkImage,
-      description: "Verse varkensproducten en huisgemaakte specialiteiten",
-      items: [
-        "Varkenshaas",
-        "Koteletten",
-        "Gehakt (varken)",
-        "Speklappen",
-        "Braadworst",
-        "Huisgemaakte worst"
+      descriptionKey: "products.pork.description",
+      itemKeys: [
+        "products.pork.item1",
+        "products.pork.item2",
+        "products.pork.item3",
+        "products.pork.item4",
+        "products.pork.item5",
+        "products.pork.item6"
       ]
     },
     {
-      title: "Gevogelte",
+      titleKey: "products.poultry.title",
       image: poultryImage,
-      description: "Verse kip, kalkoen en gevogelte specialiteiten",
-      items: [
-        "Hele kip",
-        "Kipfilet",
-        "Kippendijen",
-        "Kalkoenfilet",
-        "Kipgehakt",
-        "Gevulde kip"
+      descriptionKey: "products.poultry.description",
+      itemKeys: [
+        "products.poultry.item1",
+        "products.poultry.item2",
+        "products.poultry.item3",
+        "products.poultry.item4",
+        "products.poultry.item5",
+        "products.poultry.item6"
       ]
     }
   ];
@@ -75,16 +75,16 @@ const Products = () => {
                 />
                 <CardContent className="p-8 flex flex-col justify-center">
                   <h2 className="text-3xl font-serif font-bold mb-4 text-primary">
-                    {category.title}
+                    {t(category.titleKey)}
                   </h2>
                   <p className="text-lg text-muted-foreground mb-6">
-                    {category.description}
+                    {t(category.descriptionKey)}
                   </p>
                   <ul className="space-y-2 mb-6">
-                    {category.items.map((item, itemIndex) => (
+                    {category.itemKeys.map((itemKey, itemIndex) => (
                       <li key={itemIndex} className="flex items-center text-foreground">
                         <span className="w-2 h-2 bg-primary rounded-full mr-3" />
-                        {item}
+                        {t(itemKey)}
                       </li>
                     ))}
                   </ul>
@@ -104,19 +104,19 @@ const Products = () => {
               <div>
                 <h3 className="font-semibold mb-3 text-xl text-primary">{t('products.specialties.homemade')}</h3>
                 <ul className="space-y-2 text-foreground/90">
-                  <li>• Gehaktballen (speciaal recept)</li>
-                  <li>• Verse worst (verschillende smaken)</li>
-                  <li>• Kruidenboter</li>
-                  <li>• Marinades</li>
+                  <li>• {t('products.specialties.homemade.item1')}</li>
+                  <li>• {t('products.specialties.homemade.item2')}</li>
+                  <li>• {t('products.specialties.homemade.item3')}</li>
+                  <li>• {t('products.specialties.homemade.item4')}</li>
                 </ul>
               </div>
               <div>
                 <h3 className="font-semibold mb-3 text-xl text-primary">{t('products.specialties.bbq')}</h3>
                 <ul className="space-y-2 text-foreground/90">
-                  <li>• BBQ pakketten</li>
-                  <li>• Gemarineerde spiesjes</li>
-                  <li>• Hamburgers (huisgemaakt)</li>
-                  <li>• Spare ribs</li>
+                  <li>• {t('products.specialties.bbq.item1')}</li>
+                  <li>• {t('products.specialties.bbq.item2')}</li>
+                  <li>• {t('products.specialties.bbq.item3')}</li>
+                  <li>• {t('products.specialties.bbq.item4')}</li>
                 </ul>
               </div>
             </div>
