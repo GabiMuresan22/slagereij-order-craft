@@ -143,7 +143,7 @@ const translations = {
     'footer.hours.sat': 'Za: 08:00 - 18:00',
     'footer.hours.sun': 'Zo: Gesloten',
     'footer.about.title': 'Slagerij John',
-    'footer.about.desc': 'Uw vertrouwde slager voor vers vlees en huisgemaakte specialiteiten sinds 1985. Kwaliteit en service staan bij ons centraal.',
+    'footer.about.desc': 'Uw vertrouwde slager voor vers vlees en huisgemaakte specialiteiten. Kwaliteit en service staan bij ons centraal.',
     'footer.rights': 'Alle rechten voorbehouden.',
   },
   ro: {
@@ -278,7 +278,7 @@ const translations = {
     'footer.hours.sat': 'Sâ: 08:00 - 18:00',
     'footer.hours.sun': 'Du: Închis',
     'footer.about.title': 'Măcelăria John',
-    'footer.about.desc': 'Măcelarul tău de încredere pentru carne proaspătă și specialități casnice din 1985. Calitatea și serviciul sunt prioritatea noastră.',
+    'footer.about.desc': 'Măcelarul tău de încredere pentru carne proaspătă și specialități casnice. Calitatea și serviciul sunt prioritatea noastră.',
     'footer.rights': 'Toate drepturile rezervate.',
   },
 };
