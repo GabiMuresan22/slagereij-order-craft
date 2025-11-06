@@ -22,6 +22,7 @@ const Home = () => {
         
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-serif font-bold text-primary-foreground mb-6">
+            Kwaliteitsvlees
             {t('home.hero.title')}
           </h1>
           <p className="text-xl md:text-2xl text-primary-foreground/90 mb-8 font-light">
