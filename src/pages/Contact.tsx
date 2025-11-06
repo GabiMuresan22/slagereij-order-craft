@@ -1,17 +1,20 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Contact = () => {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen py-12">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 text-primary">
-            Contact
+            {t('contact.title')}
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Kom langs in onze winkel of neem contact met ons op
+            {t('contact.subtitle')}
           </p>
         </div>
 
@@ -23,11 +26,11 @@ const Contact = () => {
                 <div className="flex items-start space-x-4">
                   <MapPin className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-lg mb-2">Adres</h3>
+                    <h3 className="font-semibold text-lg mb-2">{t('contact.address.title')}</h3>
                     <p className="text-muted-foreground">
-                      Bruggestraat 146/a<br />
-                      8750 Wingene<br />
-                      België
+                      {t('contact.address.street')}<br />
+                      {t('contact.address.city')}<br />
+                      {t('contact.address.country')}
                     </p>
                   </div>
                 </div>
@@ -39,7 +42,7 @@ const Contact = () => {
                 <div className="flex items-start space-x-4">
                   <Phone className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-lg mb-2">Telefoon</h3>
+                    <h3 className="font-semibold text-lg mb-2">{t('contact.phone.title')}</h3>
                     <a 
                       href="tel:+32123456789" 
                       className="text-muted-foreground hover:text-primary transition-colors"
@@ -56,7 +59,7 @@ const Contact = () => {
                 <div className="flex items-start space-x-4">
                   <Mail className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-lg mb-2">Email</h3>
+                    <h3 className="font-semibold text-lg mb-2">{t('contact.email.title')}</h3>
                     <a 
                       href="mailto:info@slagereijjohn.be" 
                       className="text-muted-foreground hover:text-primary transition-colors"
@@ -73,15 +76,15 @@ const Contact = () => {
                 <div className="flex items-start space-x-4">
                   <Clock className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-lg mb-2">Openingsuren</h3>
+                    <h3 className="font-semibold text-lg mb-2">{t('contact.hours.title')}</h3>
                     <div className="text-muted-foreground space-y-1">
-                      <p>Maandag: 08:00 - 18:00</p>
-                      <p>Dinsdag: 08:00 - 18:00</p>
-                      <p>Woensdag: 08:00 - 13:00</p>
-                      <p>Donderdag: 08:00 - 18:00</p>
-                      <p>Vrijdag: 08:00 - 18:00</p>
-                      <p>Zaterdag: 08:00 - 18:00</p>
-                      <p>Zondag: Gesloten</p>
+                      <p>{t('contact.hours.mon')}</p>
+                      <p>{t('contact.hours.tue')}</p>
+                      <p>{t('contact.hours.wed')}</p>
+                      <p>{t('contact.hours.thu')}</p>
+                      <p>{t('contact.hours.fri')}</p>
+                      <p>{t('contact.hours.sat')}</p>
+                      <p>{t('contact.hours.sun')}</p>
                     </div>
                   </div>
                 </div>
@@ -110,11 +113,10 @@ const Contact = () => {
         <Card className="bg-primary text-primary-foreground max-w-4xl mx-auto">
           <CardContent className="p-8 md:p-12 text-center">
             <h2 className="text-3xl font-serif font-semibold mb-4">
-              Vragen of Speciale Wensen?
+              {t('contact.cta.title')}
             </h2>
             <p className="text-lg opacity-90 mb-6">
-              Bel ons gerust of kom langs in de winkel. We helpen u graag verder met 
-              advies, speciale bestellingen of vragen over bereiding.
+              {t('contact.cta.desc')}
             </p>
             <a href="tel:+32123456789">
               <span className="inline-flex items-center text-xl font-semibold hover:underline">

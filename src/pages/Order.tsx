@@ -10,6 +10,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { CalendarIcon, ShoppingCart } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface OrderItem {
   product: string;
@@ -19,6 +20,7 @@ interface OrderItem {
 
 const Order = () => {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [step, setStep] = useState(1);
   const [orderItems, setOrderItems] = useState<OrderItem[]>([
     { product: "", quantity: "", unit: "kg" }
@@ -120,10 +122,10 @@ const Order = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 text-primary">
-            Online Bestellen
+            {t('order.title')}
           </h1>
           <p className="text-xl text-muted-foreground">
-            Bestel gemakkelijk online en haal uw bestelling af in de winkel
+            {t('order.subtitle')}
           </p>
         </div>
 
