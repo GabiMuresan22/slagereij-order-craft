@@ -74,8 +74,8 @@ const Order = () => {
       const hasValidItems = orderItems.some(item => item.product && item.quantity);
       if (!hasValidItems) {
         toast({
-          title: "Fout",
-          description: "Voeg minimaal één product toe aan uw bestelling",
+          title: t('order.error.title'),
+          description: t('order.error.addProduct'),
           variant: "destructive"
         });
         return;
@@ -84,8 +84,8 @@ const Order = () => {
     } else if (step === 2) {
       if (!pickupDate || !pickupTime) {
         toast({
-          title: "Fout",
-          description: "Selecteer een afhaaldatum en tijd",
+          title: t('order.error.title'),
+          description: t('order.error.pickupDateTime'),
           variant: "destructive"
         });
         return;
@@ -94,8 +94,8 @@ const Order = () => {
     } else {
       if (!customerInfo.name || !customerInfo.phone || !customerInfo.email) {
         toast({
-          title: "Fout",
-          description: "Vul alle verplichte velden in",
+          title: t('order.error.title'),
+          description: t('order.error.requiredFields'),
           variant: "destructive"
         });
         return;
@@ -103,8 +103,8 @@ const Order = () => {
       
       // Here you would normally send the order to a backend
       toast({
-        title: "Bestelling Ontvangen!",
-        description: "We nemen zo snel mogelijk contact met u op ter bevestiging.",
+        title: t('order.success.title'),
+        description: t('order.success.description'),
       });
       
       // Reset form
@@ -154,27 +154,27 @@ const Order = () => {
               <CardHeader>
                 <CardTitle className="text-2xl font-serif flex items-center">
                   <ShoppingCart className="w-6 h-6 mr-2 text-primary" />
-                  Selecteer Producten
+                  {t('order.step1.title')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 {orderItems.map((item, index) => (
                   <div key={index} className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 border border-border rounded-lg">
                     <div className="md:col-span-2">
-                      <Label>Product</Label>
+                      <Label>{t('order.product.label')}</Label>
                       <select
                         className="w-full mt-1 p-2 border border-input rounded-md bg-background"
                         value={item.product}
                         onChange={(e) => updateOrderItem(index, "product", e.target.value)}
                       >
-                        <option value="">Selecteer een product</option>
+                        <option value="">{t('order.product.placeholder')}</option>
                         {productOptions.map((product) => (
                           <option key={product} value={product}>{product}</option>
                         ))}
                       </select>
                     </div>
                     <div>
-                      <Label>Aantal</Label>
+                      <Label>{t('order.quantity.label')}</Label>
                       <Input
                         type="number"
                         step="0.1"
@@ -190,8 +190,8 @@ const Order = () => {
                         value={item.unit}
                         onChange={(e) => updateOrderItem(index, "unit", e.target.value)}
                       >
-                        <option value="kg">kg</option>
-                        <option value="stuks">stuks</option>
+                        <option value="kg">{t('order.unit.kg')}</option>
+                        <option value="stuks">{t('order.unit.pieces')}</option>
                       </select>
                       {orderItems.length > 1 && (
                         <Button
@@ -208,10 +208,10 @@ const Order = () => {
                   </div>
                 ))}
                 <Button type="button" variant="outline" onClick={addOrderItem} className="w-full">
-                  + Voeg Product Toe
+                  {t('order.addProduct')}
                 </Button>
                 <Button type="submit" className="w-full" size="lg">
-                  Volgende Stap
+                  {t('order.nextStep')}
                 </Button>
               </CardContent>
             </Card>
@@ -223,12 +223,12 @@ const Order = () => {
               <CardHeader>
                 <CardTitle className="text-2xl font-serif flex items-center">
                   <CalendarIcon className="w-6 h-6 mr-2 text-primary" />
-                  Kies Afhaaltijd
+                  {t('order.step2.title')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div>
-                  <Label>Afhaaldatum</Label>
+                  <Label>{t('order.pickupDate.label')}</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
@@ -236,7 +236,7 @@ const Order = () => {
                         className="w-full justify-start text-left font-normal mt-1"
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {pickupDate ? format(pickupDate, "PPP", { locale: nl }) : "Selecteer datum"}
+                        {pickupDate ? format(pickupDate, "PPP", { locale: nl }) : t('order.pickupDate.placeholder')}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0">
@@ -254,13 +254,13 @@ const Order = () => {
                 </div>
 
                 <div>
-                  <Label>Afhaaltijd</Label>
+                  <Label>{t('order.pickupTime.label')}</Label>
                   <select
                     className="w-full mt-1 p-2 border border-input rounded-md bg-background"
                     value={pickupTime}
                     onChange={(e) => setPickupTime(e.target.value)}
                   >
-                    <option value="">Selecteer tijd</option>
+                    <option value="">{t('order.pickupTime.placeholder')}</option>
                     <option value="09:00">09:00</option>
                     <option value="10:00">10:00</option>
                     <option value="11:00">11:00</option>
@@ -274,10 +274,10 @@ const Order = () => {
 
                 <div className="flex gap-4">
                   <Button type="button" variant="outline" onClick={() => setStep(1)} className="flex-1">
-                    Terug
+                    {t('order.back')}
                   </Button>
                   <Button type="submit" className="flex-1">
-                    Volgende Stap
+                    {t('order.nextStep')}
                   </Button>
                 </div>
               </CardContent>
@@ -288,11 +288,11 @@ const Order = () => {
           {step === 3 && (
             <Card className="border-border">
               <CardHeader>
-                <CardTitle className="text-2xl font-serif">Contactgegevens</CardTitle>
+                <CardTitle className="text-2xl font-serif">{t('order.step3.title')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div>
-                  <Label>Naam *</Label>
+                  <Label>{t('order.name.label')}</Label>
                   <Input
                     value={customerInfo.name}
                     onChange={(e) => setCustomerInfo({...customerInfo, name: e.target.value})}
@@ -302,7 +302,7 @@ const Order = () => {
                 </div>
 
                 <div>
-                  <Label>Telefoonnummer *</Label>
+                  <Label>{t('order.phone.label')}</Label>
                   <Input
                     type="tel"
                     value={customerInfo.phone}
@@ -313,7 +313,7 @@ const Order = () => {
                 </div>
 
                 <div>
-                  <Label>Email *</Label>
+                  <Label>{t('order.email.label')}</Label>
                   <Input
                     type="email"
                     value={customerInfo.email}
@@ -324,22 +324,22 @@ const Order = () => {
                 </div>
 
                 <div>
-                  <Label>Opmerkingen (optioneel)</Label>
+                  <Label>{t('order.notes.label')}</Label>
                   <Textarea
                     value={customerInfo.notes}
                     onChange={(e) => setCustomerInfo({...customerInfo, notes: e.target.value})}
                     className="mt-1"
                     rows={4}
-                    placeholder="Speciale wensen of opmerkingen..."
+                    placeholder={t('order.notes.placeholder')}
                   />
                 </div>
 
                 <div className="flex gap-4">
                   <Button type="button" variant="outline" onClick={() => setStep(2)} className="flex-1">
-                    Terug
+                    {t('order.back')}
                   </Button>
                   <Button type="submit" className="flex-1">
-                    Bestelling Plaatsen
+                    {t('order.placeOrder')}
                   </Button>
                 </div>
               </CardContent>

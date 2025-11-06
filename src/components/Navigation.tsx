@@ -19,7 +19,13 @@ const Navigation = () => {
   ];
 
   const toggleLanguage = () => {
-    setLanguage(language === 'nl' ? 'ro' : 'nl');
+    if (language === 'nl') {
+      setLanguage('en');
+    } else if (language === 'en') {
+      setLanguage('ro');
+    } else {
+      setLanguage('nl');
+    }
   };
 
   return (
@@ -57,7 +63,7 @@ const Navigation = () => {
               className="flex items-center gap-2"
             >
               <Languages className="h-4 w-4" />
-              {language === 'nl' ? 'RO' : 'NL'}
+              {language.toUpperCase()}
             </Button>
           </div>
 
@@ -70,7 +76,7 @@ const Navigation = () => {
               className="flex items-center gap-1"
             >
               <Languages className="h-4 w-4" />
-              {language === 'nl' ? 'RO' : 'NL'}
+              {language.toUpperCase()}
             </Button>
             <button
               className="text-foreground"
