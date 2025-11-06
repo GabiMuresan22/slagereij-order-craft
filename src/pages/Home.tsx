@@ -21,11 +21,11 @@ const Home = () => {
         </div>
         
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-serif font-bold text-primary-foreground mb-6">
+          <h1 className="text-4xl md:text-7xl font-serif font-bold text-primary-foreground mb-6 text-center">
             Kwaliteitsvlees
             {t('home.hero.title')}
           </h1>
-          <p className="text-xl md:text-2xl text-primary-foreground/90 mb-8 font-light">
+          <p className="text-lg md:text-2xl text-primary-foreground/90 mb-8 font-light text-center">
             {t('home.hero.subtitle')}
           </p>
           <Link to="/order">
