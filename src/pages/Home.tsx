@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[500px] md:h-[600px] flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImage})` }}
@@ -20,16 +20,15 @@ const Home = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-accent/70" />
         </div>
         
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-serif font-bold text-primary-foreground mb-6">
-            Kwaliteitsvlees
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold text-primary-foreground mb-4 md:mb-6">
             {t('home.hero.title')}
           </h1>
-          <p className="text-xl md:text-2xl text-primary-foreground/90 mb-8 font-light">
+          <p className="text-lg sm:text-xl md:text-2xl text-primary-foreground/90 mb-6 md:mb-8 font-light">
             {t('home.hero.subtitle')}
           </p>
           <Link to="/order">
-            <Button size="lg" variant="secondary" className="text-lg px-8 py-6 font-semibold">
+            <Button size="lg" variant="secondary" className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 font-semibold">
               {t('home.hero.cta')}
             </Button>
           </Link>
