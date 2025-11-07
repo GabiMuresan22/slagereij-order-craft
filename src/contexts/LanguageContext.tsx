@@ -20,7 +20,7 @@ const translations = {
     'nav.contact': 'Contact',
     
     // Home Page
-    'home.hero.title': 'Kwaliteitsvlees Sinds 1985',
+    'home.hero.title': 'Kwaliteitsvlees',
     'home.hero.subtitle': 'Traditioneel ambacht met moderne service',
     'home.hero.cta': 'Bestel Nu Online',
     'home.features.online.title': 'Online Bestellen',
@@ -155,7 +155,7 @@ const translations = {
     'nav.contact': 'Contact',
     
     // Home Page
-    'home.hero.title': 'Carne de Calitate Din 1985',
+    'home.hero.title': 'Carne de Calitate',
     'home.hero.subtitle': 'Meșteșug tradițional cu servicii moderne',
     'home.hero.cta': 'Comandă Acum Online',
     'home.features.online.title': 'Comandă Online',
