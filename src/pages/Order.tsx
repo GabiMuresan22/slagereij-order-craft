@@ -105,6 +105,33 @@ const Order = () => {
     }
   };
 
+  const sendWhatsAppConfirmation = (data: OrderFormValues) => {
+    // Shop's WhatsApp number (format: country code + number without + or spaces)
+    const shopWhatsAppNumber = "32475411154"; // Belgium number
+    
+    // Build order details message
+    const orderDetails = data.orderItems
+      .map((item, index) => `${index + 1}. ${item.product} - ${item.quantity} ${item.unit}`)
+      .join('\n');
+    
+    const message = `🥩 *Nieuwe Bestelling - Slagerij John*\n\n` +
+      `*Klantgegevens:*\n` +
+      `Naam: ${data.customerName}\n` +
+      `Telefoon: ${data.customerPhone}\n` +
+      `Email: ${data.customerEmail}\n\n` +
+      `*Bestelde producten:*\n${orderDetails}\n\n` +
+      `*Afhaalgegevens:*\n` +
+      `Datum: ${format(data.pickupDate, "dd-MM-yyyy")}\n` +
+      `Tijd: ${data.pickupTime}\n` +
+      (data.notes ? `\n*Opmerkingen:*\n${data.notes}` : '');
+    
+    // Create WhatsApp link with encoded message
+    const whatsappUrl = `https://wa.me/${shopWhatsAppNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp in new window
+    window.open(whatsappUrl, '_blank');
+  };
+
   const handleSubmit = async (data: OrderFormValues) => {
     setIsSubmitting(true);
     
@@ -122,14 +149,17 @@ const Order = () => {
 
       if (error) throw error;
 
+      // Send WhatsApp confirmation
+      sendWhatsAppConfirmation(data);
+
       toast({
         title: t('order.success.title'),
-        description: t('order.success.description'),
+        description: "Uw bestelling is geplaatst! WhatsApp wordt geopend om uw bestelling te bevestigen.",
       });
 
       setTimeout(() => {
         navigate("/");
-      }, 2000);
+      }, 3000);
     } catch (error) {
       console.error("Error submitting order:", error);
       toast({
