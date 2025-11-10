@@ -1,4 +1,4 @@
-import { MapPin, Phone, Clock } from "lucide-react";
+import { MapPin, Phone, Clock, Facebook, Instagram, MapPinned } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
@@ -47,12 +47,46 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* About */}
+          {/* About & Social Media */}
           <div>
             <h3 className="text-xl font-serif font-semibold mb-4">{t('footer.about.title')}</h3>
-            <p className="text-sm leading-relaxed">
+            <p className="text-sm leading-relaxed mb-6">
               {t('footer.about.desc')}
             </p>
+            
+            {/* Social Media Links */}
+            <div className="space-y-3">
+              <h4 className="font-semibold text-sm mb-3">Follow Us</h4>
+              <div className="flex items-center space-x-4">
+                <a 
+                  href="https://www.facebook.com/profile.php?id=61560710702910" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="w-6 h-6" />
+                </a>
+                <a 
+                  href="https://www.instagram.com/slagerijjohn" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-6 h-6" />
+                </a>
+                <a 
+                  href="https://www.google.com/maps/place/Bruggestraat+146a,+8750+Wingene" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors"
+                  aria-label="Google Maps"
+                >
+                  <MapPinned className="w-6 h-6" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
