@@ -66,6 +66,7 @@ const translations = {
     'about.team.names': 'Georgiana Nistor & Ion (John) Nistor',
     'about.team.role': 'Eigenaars',
     'about.team.desc': 'Ion (John) en Georgiana staan klaar om u te helpen met advies, speciale wensen of simpelweg een praatje. Met hun passie voor kwaliteitsvlees en persoonlijke service delen ze graag hun kennis over de beste bereidingswijzen en recepten. Kom gerust langs en maak kennis!',
+    'about.gallery.title': 'Onze Slagerij',
     
     // Products Page
     'products.title': 'Ons Assortiment',
@@ -241,6 +242,7 @@ const translations = {
     'about.team.names': 'Georgiana Nistor & Ion (John) Nistor',
     'about.team.role': 'Proprietari',
     'about.team.desc': 'Ion (John) și Georgiana sunt gata să vă ajute cu sfaturi, cerințe speciale sau pur și simplu o discuție. Cu pasiunea lor pentru carne de calitate și servicii personalizate, împart cu plăcere cunoștințele despre cele mai bune metode de preparare și rețete. Vino să ne cunoști!',
+    'about.gallery.title': 'Măcelăria Noastră',
     
     // Products Page
     'products.title': 'Sortimentul Nostru',

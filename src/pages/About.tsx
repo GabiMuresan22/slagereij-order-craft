@@ -3,6 +3,16 @@ import { Award, Globe, Heart } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema } from "@/lib/structuredData";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import shopInterior from "@/assets/shop-interior.jpg";
+import meatDisplay from "@/assets/meat-display.jpg";
+import teamWorking from "@/assets/team-working.jpg";
 
 const About = () => {
   const { t } = useLanguage();
@@ -130,6 +140,46 @@ const About = () => {
               </ul>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Gallery Section */}
+        <div className="max-w-5xl mx-auto mb-16">
+          <h2 className="text-4xl font-bold mb-8 text-primary text-center">
+            {t('about.gallery.title')}
+          </h2>
+          <Carousel className="w-full" opts={{ loop: true }}>
+            <CarouselContent>
+              <CarouselItem>
+                <Card className="border-border overflow-hidden">
+                  <img 
+                    src={shopInterior} 
+                    alt="Slagerij John shop interior" 
+                    className="w-full h-[400px] md:h-[500px] object-cover"
+                  />
+                </Card>
+              </CarouselItem>
+              <CarouselItem>
+                <Card className="border-border overflow-hidden">
+                  <img 
+                    src={meatDisplay} 
+                    alt="Fresh meat display" 
+                    className="w-full h-[400px] md:h-[500px] object-cover"
+                  />
+                </Card>
+              </CarouselItem>
+              <CarouselItem>
+                <Card className="border-border overflow-hidden">
+                  <img 
+                    src={teamWorking} 
+                    alt="Team working at Slagerij John" 
+                    className="w-full h-[400px] md:h-[500px] object-cover"
+                  />
+                </Card>
+              </CarouselItem>
+            </CarouselContent>
+            <CarouselPrevious className="left-4" />
+            <CarouselNext className="right-4" />
+          </Carousel>
         </div>
 
         {/* Team Section */}
