@@ -26,14 +26,12 @@ const Home = () => {
       />
       {/* Hero Section */}
       <section className="relative h-[500px] md:h-[600px] flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroImage})` }}
-          role="img"
-          aria-label="Slagerij John Hero Image"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-accent/70" />
-        </div>
+        <img
+          src={heroImage}
+          alt="Slagerij John Storefront"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-accent/70" />
         
         <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold text-primary-foreground mb-4 md:mb-6">
