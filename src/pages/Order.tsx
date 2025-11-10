@@ -11,6 +11,8 @@ import { CalendarIcon, ShoppingCart } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { useLanguage } from "@/contexts/LanguageContext";
+import SEO from "@/components/SEO";
+import { getBreadcrumbSchema } from "@/lib/structuredData";
 
 interface OrderItem {
   product: string;
@@ -116,8 +118,19 @@ const Order = () => {
     }
   };
 
+  const breadcrumbData = getBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Bestel Online', url: '/order' }
+  ]);
+
   return (
     <div className="min-h-screen py-12">
+      <SEO 
+        title="Bestel Online"
+        description="Bestel gemakkelijk online bij Slagerij John. Kies uw producten, selecteer een afhaaltijd en haal uw bestelling af in onze winkel in Zwevezele."
+        keywords="online bestellen, vlees bestellen, afhalen, bestelformulier, Zwevezele"
+        structuredData={breadcrumbData}
+      />
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Header */}
         <div className="text-center mb-12">

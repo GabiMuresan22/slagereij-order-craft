@@ -5,17 +5,32 @@ import { ShoppingBag, Clock, Award } from "lucide-react";
 import heroImage from "@/assets/hero-butcher.jpg";
 import Testimonials from "@/components/Testimonials";
 import { useLanguage } from "@/contexts/LanguageContext";
+import SEO from "@/components/SEO";
+import { getLocalBusinessSchema, getReviewsSchema } from "@/lib/structuredData";
 
 const Home = () => {
   const { t } = useLanguage();
 
+  const structuredData = [
+    getLocalBusinessSchema(),
+    getReviewsSchema()
+  ];
+
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Premium Kwaliteitsvlees"
+        description="Slagerij John in Zwevezele biedt premium kwaliteitsvlees, huisgemaakte specialiteiten en online bestellen. Belgische en Roemeense vleeswaren van topkwaliteit."
+        keywords="slagerij, kwaliteitsvlees, Zwevezele, online bestellen, huisgemaakte worst, BBQ vlees, verse vleeswaren"
+        structuredData={structuredData}
+      />
       {/* Hero Section */}
       <section className="relative h-[500px] md:h-[600px] flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImage})` }}
+          role="img"
+          aria-label="Slagerij John Hero Image"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-accent/70" />
         </div>

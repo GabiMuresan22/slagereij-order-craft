@@ -1,12 +1,25 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Award, Globe, Heart } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import SEO from "@/components/SEO";
+import { getBreadcrumbSchema } from "@/lib/structuredData";
 
 const About = () => {
   const { t } = useLanguage();
 
+  const breadcrumbData = getBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Over Ons', url: '/about' }
+  ]);
+
   return (
     <div className="min-h-screen py-12">
+      <SEO 
+        title="Over Ons"
+        description="Ontdek het verhaal achter Slagerij John. Een unieke mix van Belgische en Roemeense specialiteiten, gedreven door passie voor kwaliteitsvlees en persoonlijke service in Zwevezele."
+        keywords="over ons, slagerij geschiedenis, Belgisch-Roemeens, kwaliteit vlees, ambachtelijk"
+        structuredData={breadcrumbData}
+      />
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">

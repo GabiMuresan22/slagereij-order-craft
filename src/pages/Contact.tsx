@@ -1,12 +1,25 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import SEO from "@/components/SEO";
+import { getBreadcrumbSchema, getLocalBusinessSchema } from "@/lib/structuredData";
 
 const Contact = () => {
   const { t } = useLanguage();
 
+  const breadcrumbData = getBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Contact', url: '/contact' }
+  ]);
+
   return (
     <div className="min-h-screen py-12">
+      <SEO 
+        title="Contact"
+        description="Neem contact op met Slagerij John in Zwevezele. Bezoek ons in de Bruggestraat 146/a of bel +32 12 34 56 789. Openingstijden en routebeschrijving."
+        keywords="contact, openingstijden, adres, telefoon, route, Zwevezele, Bruggestraat"
+        structuredData={[breadcrumbData, getLocalBusinessSchema()]}
+      />
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">

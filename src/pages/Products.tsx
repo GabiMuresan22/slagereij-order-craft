@@ -5,9 +5,16 @@ import beefImage from "@/assets/beef-products.jpg";
 import porkImage from "@/assets/pork-products.jpg";
 import poultryImage from "@/assets/poultry-products.jpg";
 import { useLanguage } from "@/contexts/LanguageContext";
+import SEO from "@/components/SEO";
+import { getBreadcrumbSchema } from "@/lib/structuredData";
 
 const Products = () => {
   const { t } = useLanguage();
+
+  const breadcrumbData = getBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Producten', url: '/products' }
+  ]);
 
   const categories = [
     {
@@ -53,6 +60,12 @@ const Products = () => {
 
   return (
     <div className="min-h-screen py-12">
+      <SEO 
+        title="Ons Assortiment"
+        description="Ontdek ons uitgebreide assortiment: premium rundvlees, verse varkensvlees, gevogelte en huisgemaakte specialiteiten. Kwaliteitsvlees voor elke gelegenheid."
+        keywords="rundvlees, varkensvlees, gevogelte, huisgemaakte worst, BBQ vlees, biefstuk, gehakt"
+        structuredData={breadcrumbData}
+      />
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
@@ -70,9 +83,11 @@ const Products = () => {
             <Card key={index} className="overflow-hidden border-border hover:shadow-xl transition-shadow">
               <div className="grid md:grid-cols-2 gap-0">
                 <div 
-                  className="h-64 md:h-auto bg-cover bg-center"
-                  style={{ backgroundImage: `url(${category.image})` }}
-                />
+          className="h-64 md:h-auto bg-cover bg-center"
+          style={{ backgroundImage: `url(${category.image})` }}
+          role="img"
+          aria-label={t(category.titleKey)}
+        />
                 <CardContent className="p-8 flex flex-col justify-center">
                   <h2 className="text-3xl font-serif font-bold mb-4 text-primary">
                     {t(category.titleKey)}
