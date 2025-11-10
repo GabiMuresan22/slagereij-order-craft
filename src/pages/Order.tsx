@@ -196,6 +196,43 @@ const Order = () => {
           </p>
         </div>
 
+        {/* Delivery Information */}
+        <Card className="mb-8 border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5">
+          <CardHeader>
+            <CardTitle className="text-2xl font-serif text-primary">
+              {t('order.delivery.title')}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-foreground font-medium">
+              {t('order.delivery.intro')}
+            </p>
+            
+            <div className="space-y-3">
+              <div className="border-l-4 border-primary pl-4">
+                <p className="font-semibold text-lg">{t('order.delivery.minimum')}</p>
+                <p className="text-muted-foreground">{t('order.delivery.tier1.free')}</p>
+                <p className="text-muted-foreground">{t('order.delivery.tier1.paid')}</p>
+              </div>
+              
+              <div className="border-l-4 border-accent pl-4">
+                <p className="font-semibold text-lg">{t('order.delivery.minimum100')}</p>
+                <p className="text-muted-foreground">{t('order.delivery.tier2.free')}</p>
+                <p className="text-muted-foreground">{t('order.delivery.tier2.paid')}</p>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-border space-y-2">
+              <p className="font-medium">{t('order.delivery.schedule')}</p>
+              <p className="font-medium">
+                {t('order.delivery.phone')} <a href="tel:+32466186457" className="text-primary hover:underline">+32 466 18 64 57</a>
+              </p>
+              <p className="text-sm text-muted-foreground">{t('order.delivery.address')}</p>
+              <p className="text-sm italic text-primary font-medium">{t('order.delivery.tagline')}</p>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Progress Steps */}
         <div className="flex justify-between mb-8">
           {[1, 2, 3].map((s) => (
