@@ -45,6 +45,7 @@ const translations = {
     // About Page
     'about.title': 'Over Slagerij John',
     'about.subtitle': 'De nieuwste culinaire aanwinst in Zwevezele',
+    'about.tagline': 'Ontdek de échte smaak van vers vlees! In onze slagerij vind je alleen vers vlees, ambachtelijke bereidingen en specialiteiten die met zorg en passie worden gemaakt. We doen alles met liefde, zodat jij elke dag kunt genieten van een authentieke smaak.',
     'about.story.title': 'Ons Verhaal',
     'about.story.p1': 'Welkom bij Slagerij John, de nieuwste culinaire aanwinst in Zwevezele! In de Bruggestraat 146A, waar vroeger bakkerij Choc-O-Fee en bakkerij Geert gevestigd waren, hebben Ion (John) Nistor (36) en zijn echtgenote Georgiana (31) hun droom waargemaakt met de opening van hun eigen slagerij.',
     'about.story.p2': '"Eigenlijk heet ik Ion, maar iedereen noemt me John," legt de slager uit. "Ion is de Roemeense versie van die naam en toen we destijds naar België kwamen werd ik in de omgang heel snel John genoemd. Die naam is blijven plakken. Zelfs mijn vrouw noemt me zo!"',
@@ -219,6 +220,7 @@ const translations = {
     // About Page
     'about.title': 'Despre Măcelăria John',
     'about.subtitle': 'Cea mai nouă achiziție culinară din Zwevezele',
+    'about.tagline': 'Descoperă adevăratul gust al cărnii proaspete! În măcelăria noastră, vei găsi doar carne proaspătă, preparate de casa și specialități făcute cu grijă și pasiune. Facem totul cu dragoste, astfel încât să te poți bucura de o aromă autentică în fiecare zi.',
     'about.story.title': 'Povestea Noastră',
     'about.story.p1': 'Bun venit la Măcelăria John, cea mai nouă achiziție culinară din Zwevezele! Pe Bruggestraat 146A, unde odinioară erau brutăriile Choc-O-Fee și Geert, Ion (John) Nistor (36) și soția sa Georgiana (31) și-au îndeplinit visul deschizând propria măcelărie.',
     'about.story.p2': '"De fapt mă numesc Ion, dar toată lumea mă cheamă John," explică măcelarul. "Ion este versiunea românească a numelui și când am venit în Belgia am început să fiu numit John. Numele a rămas. Chiar și soția mea mă cheamă așa!"',

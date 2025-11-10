@@ -31,6 +31,17 @@ const About = () => {
           </p>
         </div>
 
+        {/* Tagline Section */}
+        <div className="max-w-4xl mx-auto mb-16">
+          <Card className="border-primary/20 bg-gradient-to-br from-primary/10 to-accent/10">
+            <CardContent className="p-8 md:p-12 text-center">
+              <p className="text-xl md:text-2xl font-medium leading-relaxed text-foreground">
+                {t('about.tagline')}
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Story Section */}
         <div className="max-w-4xl mx-auto mb-16">
           <Card className="border-border">
