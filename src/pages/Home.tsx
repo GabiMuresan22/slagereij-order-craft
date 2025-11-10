@@ -29,7 +29,7 @@ const Home = () => {
         <img
           src={heroImage}
           alt="Slagerij John Storefront"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-contain"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-accent/70" />
         
