@@ -16,7 +16,7 @@ const Contact = () => {
     <div className="min-h-screen py-12">
       <SEO 
         title="Contact"
-        description="Neem contact op met Slagerij John in Zwevezele. Bezoek ons in de Bruggestraat 146/a of bel +32 12 34 56 789. Openingstijden en routebeschrijving."
+        description="Neem contact op met Slagerij John in Zwevezele. Bezoek ons in de Bruggestraat 146A of bel +32 12 34 56 789. Openingstijden en routebeschrijving."
         keywords="contact, openingstijden, adres, telefoon, route, Zwevezele, Bruggestraat"
         structuredData={[breadcrumbData, getLocalBusinessSchema()]}
       />
@@ -109,7 +109,7 @@ const Contact = () => {
           <Card className="border-border overflow-hidden h-[600px]">
             <CardContent className="p-0 h-full relative">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2507.8!2d3.277!3d51.059!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c34b4c0b5e5e5f%3A0x5e5e5e5e5e5e5e5e!2sBruggestraat%20146a%2C%208750%20Wingene!5e0!3m2!1snl!2sbe!4v1234567890"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2507.8!2d3.277!3d51.059!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c34b4c0b5e5e5f%3A0x5e5e5e5e5e5e5e5e!2sBruggestraat%20146A%2C%208750%20Zwevezele!5e0!3m2!1snl!2sbe!4v1234567890"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -119,7 +119,7 @@ const Contact = () => {
                 title="Slagerij John Location"
               />
               <a 
-                href="https://www.google.com/maps/place/Bruggestraat+146a,+8750+Wingene"
+                href="https://www.google.com/maps/place/Bruggestraat+146A,+8750+Zwevezele"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="absolute bottom-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg shadow-lg hover:bg-primary/90 transition-colors flex items-center space-x-2"

@@ -10,8 +10,8 @@ export const getLocalBusinessSchema = () => ({
   "email": "info@slagerijjohn.be",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Bruggestraat 146/a",
-    "addressLocality": "Wingene",
+    "streetAddress": "Bruggestraat 146A",
+    "addressLocality": "Zwevezele",
     "postalCode": "8750",
     "addressCountry": "BE"
   },

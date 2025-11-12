@@ -77,7 +77,7 @@ const Footer = () => {
                   <Instagram className="w-6 h-6" />
                 </a>
                 <a 
-                  href="https://www.google.com/maps/place/Bruggestraat+146a,+8750+Wingene" 
+                  href="https://www.google.com/maps/place/Bruggestraat+146A,+8750+Zwevezele"
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="hover:text-primary transition-colors"
