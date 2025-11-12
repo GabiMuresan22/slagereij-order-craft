@@ -23,21 +23,21 @@ export const getLocalBusinessSchema = () => ({
   "openingHoursSpecification": [
     {
       "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday"],
+      "dayOfWeek": "Monday",
+      "opens": "13:00",
+      "closes": "18:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Tuesday", "Thursday", "Friday", "Saturday"],
       "opens": "08:00",
       "closes": "18:00"
     },
     {
       "@type": "OpeningHoursSpecification",
-      "dayOfWeek": "Wednesday",
+      "dayOfWeek": ["Wednesday", "Sunday"],
       "opens": "08:00",
       "closes": "13:00"
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Thursday", "Friday", "Saturday"],
-      "opens": "08:00",
-      "closes": "18:00"
     }
   ],
   "priceRange": "$$",
