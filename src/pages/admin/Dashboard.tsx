@@ -74,7 +74,7 @@ export default function AdminDashboard() {
       }
 
       try {
-        const { data, error } = await supabase
+        const { data, error } = await (supabase as any)
           .rpc('has_role', { _user_id: user.id, _role: 'admin' });
 
         if (error || !data) {
@@ -168,16 +168,40 @@ export default function AdminDashboard() {
   }, [isAdmin]);
 
   const updateOrderStatus = async (orderId: string, newStatus: string) => {
-    const { error } = await supabase
-      .from('orders')
-      .update({ status: newStatus })
-      .eq('id', orderId);
+    try {
+      const order = orders.find(o => o.id === orderId);
+      if (!order) throw new Error('Order not found');
 
-    if (error) {
-      toast.error('Failed to update order status');
-      console.error('Error updating order:', error);
-    } else {
+      const { error } = await supabase
+        .from('orders')
+        .update({ status: newStatus })
+        .eq('id', orderId);
+
+      if (error) throw error;
+
+      // Send email notification
+      try {
+        await supabase.functions.invoke('send-order-status-email', {
+          body: {
+            customerName: order.customer_name,
+            customerEmail: order.customer_email,
+            orderId: order.id,
+            status: newStatus,
+            orderItems: order.order_items,
+            pickupDate: new Date(order.pickup_date).toLocaleDateString(),
+            pickupTime: order.pickup_time,
+          },
+        });
+        console.log('Status update email sent');
+      } catch (emailError) {
+        console.error('Failed to send email:', emailError);
+        // Don't fail the status update if email fails
+      }
+
       toast.success('Order status updated successfully');
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to update order status');
+      console.error('Error updating order:', error);
     }
   };
 
