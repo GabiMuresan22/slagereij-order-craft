@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ShoppingBag, Clock, Award } from "lucide-react";
-import heroImage from "@/assets/storefront-night.jpg";
+import heroImage from "@/assets/hero-charcuterie.jpg";
 import Testimonials from "@/components/Testimonials";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
@@ -25,19 +25,28 @@ const Home = () => {
         structuredData={structuredData}
       />
       {/* Hero Section */}
-      <section className="relative h-[500px] md:h-[600px] flex items-center justify-center overflow-hidden">
-        <img
-          src={heroImage}
-          alt="Slagerij John Storefront"
-          className="absolute inset-0 w-full h-full object-contain"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-accent/70" />
+      <section 
+        className="relative h-[500px] md:h-[600px] flex items-start justify-center overflow-hidden"
+        style={{
+          backgroundImage: `url(${heroImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        {/* Gradient overlay - dark to transparent from top to bottom */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/65 to-transparent" />
         
-        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold text-primary-foreground mb-4 md:mb-6">
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto mt-8 md:mt-16">
+          <h1 
+            className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold text-white mb-4 md:mb-6"
+            style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.5)' }}
+          >
             {t('home.hero.title')}
           </h1>
-          <p className="text-lg sm:text-xl md:text-2xl text-primary-foreground/90 mb-6 md:mb-8 font-light">
+          <p 
+            className="text-lg sm:text-xl md:text-2xl text-white mb-6 md:mb-8 font-light"
+            style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.5)' }}
+          >
             {t('home.hero.subtitle')}
           </p>
           <Link to="/order">
