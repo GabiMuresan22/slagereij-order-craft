@@ -16,7 +16,7 @@ const Contact = () => {
     <div className="min-h-screen py-12">
       <SEO 
         title="Contact"
-        description="Neem contact op met Slagerij John in Zwevezele. Bezoek ons in de Bruggestraat 146A of bel +32 12 34 56 789. Openingstijden en routebeschrijving."
+        description="Neem contact op met Slagerij John in Zwevezele. Bezoek ons in de Bruggestraat 146A of bel +32 466 18 64 57. Openingstijden en routebeschrijving."
         keywords="contact, openingstijden, adres, telefoon, route, Zwevezele, Bruggestraat"
         structuredData={[breadcrumbData, getLocalBusinessSchema()]}
       />
@@ -57,10 +57,10 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-lg mb-2">{t('contact.phone.title')}</h3>
                     <a 
-                      href="tel:+32123456789" 
+                      href="tel:+32466186457" 
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      +32 12 34 56 789
+                      +32 466 18 64 57
                     </a>
                   </div>
                 </div>
@@ -140,10 +140,10 @@ const Contact = () => {
             <p className="text-lg opacity-90 mb-6">
               {t('contact.cta.desc')}
             </p>
-            <a href="tel:+32123456789">
+            <a href="tel:+32466186457">
               <span className="inline-flex items-center text-xl font-semibold hover:underline">
                 <Phone className="w-5 h-5 mr-2" />
-                +32 12 34 56 789
+                +32 466 18 64 57
               </span>
             </a>
           </CardContent>

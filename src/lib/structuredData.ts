@@ -6,7 +6,7 @@ export const getLocalBusinessSchema = () => ({
   "name": "Slagerij John",
   "image": "https://slagerijjohn.be/og-image.jpg",
   "url": "https://slagerijjohn.be",
-  "telephone": "+32123456789",
+  "telephone": "+32466186457",
   "email": "info@slagerijjohn.be",
   "address": {
     "@type": "PostalAddress",

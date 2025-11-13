@@ -21,8 +21,8 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 flex-shrink-0" />
-                <a href="tel:+32123456789" className="text-sm hover:underline">
-                  +32 12 34 56 789
+                <a href="tel:+32466186457" className="text-sm hover:underline">
+                  +32 466 18 64 57
                 </a>
               </div>
             </div>
