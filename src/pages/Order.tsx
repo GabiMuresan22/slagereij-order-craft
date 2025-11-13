@@ -107,7 +107,7 @@ const Order = () => {
 
   const sendWhatsAppConfirmation = (data: OrderFormValues) => {
     // Shop's WhatsApp number (format: country code + number without + or spaces)
-    const shopWhatsAppNumber = "32475411154"; // Belgium number
+    const shopWhatsAppNumber = "32466186457"; // Belgium number
     
     // Build order details message
     const orderDetails = data.orderItems
