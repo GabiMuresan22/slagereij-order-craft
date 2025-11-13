@@ -1,14 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Languages } from "lucide-react";
+import { Menu, X, User, LogOut } from "lucide-react";
 import { useState } from "react";
 import logo from "@/assets/logo.png";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
+  const { user, signOut, loading } = useAuth();
 
   const navItems = [
     { path: "/", label: t('nav.home') },
@@ -63,6 +65,35 @@ const Navigation = () => {
               <span className="text-lg">{language === 'nl' ? '🇳🇱' : '🇷🇴'}</span>
               {language.toUpperCase()}
             </Button>
+            
+            {/* Auth Button */}
+            {!loading && (
+              <>
+                {user ? (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => signOut()}
+                    className="flex items-center gap-2"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    <span>{t('auth.logout')}</span>
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    asChild
+                    className="flex items-center gap-2"
+                  >
+                    <Link to="/auth">
+                      <User className="h-4 w-4" />
+                      <span>{t('auth.login')}</span>
+                    </Link>
+                  </Button>
+                )}
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button & Language Toggle */}
@@ -76,6 +107,20 @@ const Navigation = () => {
               <span className="text-base">{language === 'nl' ? '🇳🇱' : '🇷🇴'}</span>
               {language.toUpperCase()}
             </Button>
+            
+            {/* Mobile Auth Button */}
+            {!loading && !user && (
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild
+              >
+                <Link to="/auth">
+                  <User className="h-4 w-4" />
+                </Link>
+              </Button>
+            )}
+            
             <button
               className="text-foreground"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -102,6 +147,19 @@ const Navigation = () => {
                 {item.label}
               </Link>
             ))}
+            
+            {/* Mobile Auth Link */}
+            {!loading && user && (
+              <button
+                onClick={() => {
+                  signOut();
+                  setMobileMenuOpen(false);
+                }}
+                className="block w-full text-left py-3 text-base font-medium text-foreground hover:text-primary"
+              >
+                {t('auth.logout')}
+              </button>
+            )}
           </div>
         )}
       </div>
