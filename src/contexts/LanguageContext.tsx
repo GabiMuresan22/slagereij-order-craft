@@ -186,6 +186,20 @@ const translations = {
     'footer.about.title': 'Slagerij John',
     'footer.about.desc': 'Uw vertrouwde slager voor vers vlees en huisgemaakte specialiteiten. Kwaliteit en service staan bij ons centraal.',
     'footer.rights': 'Alle rechten voorbehouden.',
+    
+    // Auth
+    'auth.title': 'Inloggen',
+    'auth.description': 'Log in op uw account of maak een nieuw account aan',
+    'auth.welcome': 'Welkom',
+    'auth.subtitle': 'Log in of maak een account aan',
+    'auth.login': 'Inloggen',
+    'auth.signup': 'Registreren',
+    'auth.email': 'E-mail',
+    'auth.password': 'Wachtwoord',
+    'auth.confirmPassword': 'Bevestig wachtwoord',
+    'auth.name': 'Naam',
+    'auth.loading': 'Laden...',
+    'auth.logout': 'Uitloggen',
   },
   ro: {
     // Navigation
@@ -362,6 +376,20 @@ const translations = {
     'footer.about.title': 'Măcelăria John',
     'footer.about.desc': 'Măcelarul tău de încredere pentru carne proaspătă și specialități casnice. Calitatea și serviciul sunt prioritatea noastră.',
     'footer.rights': 'Toate drepturile rezervate.',
+    
+    // Auth
+    'auth.title': 'Autentificare',
+    'auth.description': 'Conectați-vă la contul dvs. sau creați un cont nou',
+    'auth.welcome': 'Bun venit',
+    'auth.subtitle': 'Conectați-vă sau creați un cont',
+    'auth.login': 'Conectare',
+    'auth.signup': 'Înregistrare',
+    'auth.email': 'Email',
+    'auth.password': 'Parolă',
+    'auth.confirmPassword': 'Confirmă parola',
+    'auth.name': 'Nume',
+    'auth.loading': 'Se încarcă...',
+    'auth.logout': 'Deconectare',
   },
 };
 
