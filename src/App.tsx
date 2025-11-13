@@ -14,7 +14,7 @@ import Products from "./pages/Products";
 import Order from "./pages/Order";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
-import Admin from "./pages/Admin";
+import AdminDashboard from "./pages/admin/Dashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,7 +38,7 @@ const App = () => (
                     <Route path="/order" element={<Order />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/auth" element={<Auth />} />
-                    <Route path="/admin" element={<Admin />} />
+                    <Route path="/admin" element={<AdminDashboard />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </main>
