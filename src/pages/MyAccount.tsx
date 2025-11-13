@@ -12,7 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { User, Package, Settings } from "lucide-react";
 import { toast } from "sonner";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 
 interface Profile {
@@ -236,7 +236,7 @@ const MyAccount = () => {
                         You haven't placed any orders yet
                       </p>
                       <Button asChild>
-                        <a href="/order">Place Your First Order</a>
+                        <Link to="/order">Place Your First Order</Link>
                       </Button>
                     </div>
                   ) : (
