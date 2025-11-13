@@ -1,9 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, User, LogOut } from "lucide-react";
-import { useState } from "react";
+import { Menu, X, User, LogOut, Shield } from "lucide-react";
+import { useState, useEffect } from "react";
 import logo from "@/assets/logo.png";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
@@ -11,6 +12,27 @@ const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
   const { user, signOut, loading } = useAuth();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // Check if user is admin
+  useEffect(() => {
+    const checkAdmin = async () => {
+      if (!user) {
+        setIsAdmin(false);
+        return;
+      }
+
+      try {
+        const { data } = await supabase
+          .rpc('has_role', { _user_id: user.id, _role: 'admin' });
+        setIsAdmin(!!data);
+      } catch (err) {
+        setIsAdmin(false);
+      }
+    };
+
+    checkAdmin();
+  }, [user]);
 
   const navItems = [
     { path: "/", label: t('nav.home') },
@@ -70,15 +92,30 @@ const Navigation = () => {
             {!loading && (
               <>
                 {user ? (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => signOut()}
-                    className="flex items-center gap-2"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    <span>{t('auth.logout')}</span>
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    {isAdmin && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        asChild
+                        className="flex items-center gap-2"
+                      >
+                        <Link to="/admin">
+                          <Shield className="h-4 w-4" />
+                          <span>Admin</span>
+                        </Link>
+                      </Button>
+                    )}
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => signOut()}
+                      className="flex items-center gap-2"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      <span>{t('auth.logout')}</span>
+                    </Button>
+                  </div>
                 ) : (
                   <Button
                     variant="outline"
@@ -150,15 +187,27 @@ const Navigation = () => {
             
             {/* Mobile Auth Link */}
             {!loading && user && (
-              <button
-                onClick={() => {
-                  signOut();
-                  setMobileMenuOpen(false);
-                }}
-                className="block w-full text-left py-3 text-base font-medium text-foreground hover:text-primary"
-              >
-                {t('auth.logout')}
-              </button>
+              <>
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    className="block py-3 text-base font-medium text-foreground hover:text-primary flex items-center gap-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Shield className="h-4 w-4" />
+                    Admin
+                  </Link>
+                )}
+                <button
+                  onClick={() => {
+                    signOut();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="block w-full text-left py-3 text-base font-medium text-foreground hover:text-primary"
+                >
+                  {t('auth.logout')}
+                </button>
+              </>
             )}
           </div>
         )}

@@ -20,19 +20,21 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
+interface OrderItem {
+  product: string;
+  quantity: string;
+  unit: string;
+}
+
 interface Order {
   id: string;
   customer_name: string;
   customer_email: string;
   customer_phone: string;
-  order_items: Array<{
-    product: string;
-    quantity: string;
-    unit: string;
-  }>;
+  order_items: OrderItem[];
   pickup_date: string;
   pickup_time: string;
-  notes?: string;
+  notes?: string | null;
   status: string;
   created_at: string;
 }
@@ -71,20 +73,22 @@ export default function AdminDashboard() {
         return;
       }
 
-      const { data, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', user.id)
-        .eq('role', 'admin')
-        .maybeSingle();
+      try {
+        const { data, error } = await supabase
+          .rpc('has_role', { _user_id: user.id, _role: 'admin' });
 
-      if (error || !data) {
+        if (error || !data) {
+          toast.error('Access denied. Admin privileges required.');
+          navigate('/');
+          return;
+        }
+
+        setIsAdmin(true);
+      } catch (err) {
+        console.error('Error checking admin status:', err);
         toast.error('Access denied. Admin privileges required.');
         navigate('/');
-        return;
       }
-
-      setIsAdmin(true);
     };
 
     if (!authLoading) {
@@ -107,7 +111,12 @@ export default function AdminDashboard() {
         toast.error('Failed to load orders');
         console.error('Error fetching orders:', error);
       } else {
-        setOrders(data || []);
+        // Cast order_items from Json to our OrderItem[] type
+        const typedOrders = (data || []).map(order => ({
+          ...order,
+          order_items: order.order_items as unknown as OrderItem[]
+        }));
+        setOrders(typedOrders);
       }
       setLoading(false);
     };
@@ -130,16 +139,24 @@ export default function AdminDashboard() {
         },
         (payload) => {
           if (payload.eventType === 'INSERT') {
-            setOrders((prev) => [payload.new as Order, ...prev]);
+            const newOrder = {
+              ...(payload.new as any),
+              order_items: (payload.new as any).order_items as OrderItem[]
+            };
+            setOrders((prev) => [newOrder, ...prev]);
             toast.success('New order received!');
           } else if (payload.eventType === 'UPDATE') {
+            const updatedOrder = {
+              ...(payload.new as any),
+              order_items: (payload.new as any).order_items as OrderItem[]
+            };
             setOrders((prev) =>
               prev.map((order) =>
-                order.id === payload.new.id ? (payload.new as Order) : order
+                order.id === updatedOrder.id ? updatedOrder : order
               )
             );
           } else if (payload.eventType === 'DELETE') {
-            setOrders((prev) => prev.filter((order) => order.id !== payload.old.id));
+            setOrders((prev) => prev.filter((order) => order.id !== (payload.old as any).id));
           }
         }
       )
