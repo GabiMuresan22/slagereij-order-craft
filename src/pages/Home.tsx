@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ShoppingBag, Clock, Award } from "lucide-react";
+import { ShoppingBag, Clock, Award, Download } from "lucide-react";
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import heroImage from "@/assets/hero-charcuterie.jpg";
 import christmasMenu1 from "@/assets/christmas-menu-1.jpg";
 import christmasMenu2 from "@/assets/christmas-menu-2.jpg";
@@ -12,6 +15,48 @@ import { getLocalBusinessSchema, getReviewsSchema } from "@/lib/structuredData";
 
 const Home = () => {
   const { t } = useLanguage();
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownloadPDF = async () => {
+    try {
+      setIsDownloading(true);
+      toast.info('PDF wordt gegenereerd...');
+
+      // Get the full URLs of the images
+      const baseUrl = window.location.origin;
+      const image1Url = `${baseUrl}${christmasMenu1}`;
+      const image2Url = `${baseUrl}${christmasMenu2}`;
+
+      // Call the edge function
+      const { data, error } = await supabase.functions.invoke('generate-christmas-menu-pdf', {
+        body: { image1Url, image2Url },
+      });
+
+      if (error) throw error;
+
+      // Create blob from response
+      const blob = new Blob([data], { type: 'application/pdf' });
+      
+      // Create download link
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Menu-Kerst-Nieuwjaar-Slagerij-John.pdf';
+      document.body.appendChild(a);
+      a.click();
+      
+      // Cleanup
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      
+      toast.success('PDF gedownload!');
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
+      toast.error('Fout bij downloaden van PDF');
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   const structuredData = [
     getLocalBusinessSchema(),
@@ -95,11 +140,23 @@ const Home = () => {
             <p className="text-muted-foreground mb-4">
               Voor meer info verwelkomen we uw graag in onze winkel!
             </p>
-            <Link to="/order">
-              <Button size="lg" className="text-lg px-8 py-6">
-                {t('home.hero.cta')}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                size="lg" 
+                variant="outline"
+                onClick={handleDownloadPDF}
+                disabled={isDownloading}
+                className="text-lg px-8 py-6"
+              >
+                <Download className="mr-2 h-5 w-5" />
+                {isDownloading ? 'Downloaden...' : 'Download PDF Menu'}
               </Button>
-            </Link>
+              <Link to="/order">
+                <Button size="lg" className="text-lg px-8 py-6 w-full sm:w-auto">
+                  {t('home.hero.cta')}
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
