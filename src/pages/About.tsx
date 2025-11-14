@@ -151,7 +151,7 @@ const About = () => {
           <h2 className="text-4xl font-bold mb-8 text-primary text-center">
             {t('about.gallery.title')}
           </h2>
-          <Carousel className="w-full" opts={{ loop: true }}>
+          <Carousel className="w-full [&_img]:object-cover" opts={{ loop: true }}>
             <CarouselContent>
               <CarouselItem>
                 <Card className="border-border overflow-hidden">
