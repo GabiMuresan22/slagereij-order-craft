@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ShoppingBag, Clock, Award } from "lucide-react";
 import heroImage from "@/assets/hero-charcuterie.jpg";
+import christmasMenu1 from "@/assets/christmas-menu-1.jpg";
+import christmasMenu2 from "@/assets/christmas-menu-2.jpg";
 import Testimonials from "@/components/Testimonials";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
@@ -54,6 +56,51 @@ const Home = () => {
               {t('home.hero.cta')}
             </Button>
           </Link>
+        </div>
+      </section>
+
+      {/* Christmas Menu Section */}
+      <section className="py-16 bg-gradient-to-b from-primary/5 to-background">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-center mb-4 text-foreground">
+            Menu Kerst Nieuwjaar
+          </h2>
+          <p className="text-center text-muted-foreground mb-12 text-lg">
+            November - December - Januari
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <Card className="overflow-hidden hover:shadow-2xl transition-shadow border-primary/20">
+              <CardContent className="p-0">
+                <img 
+                  src={christmasMenu1} 
+                  alt="Menu Kerst Nieuwjaar - Tapas en Desserts"
+                  className="w-full h-auto"
+                />
+              </CardContent>
+            </Card>
+
+            <Card className="overflow-hidden hover:shadow-2xl transition-shadow border-primary/20">
+              <CardContent className="p-0">
+                <img 
+                  src={christmasMenu2} 
+                  alt="Menu Kerst Nieuwjaar - Hapjes en Hoofdgerechten"
+                  className="w-full h-auto"
+                />
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center mt-8">
+            <p className="text-muted-foreground mb-4">
+              Voor meer info verwelkomen we uw graag in onze winkel!
+            </p>
+            <Link to="/order">
+              <Button size="lg" className="text-lg px-8 py-6">
+                {t('home.hero.cta')}
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
