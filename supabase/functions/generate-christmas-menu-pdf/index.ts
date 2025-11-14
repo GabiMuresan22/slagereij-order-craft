@@ -18,27 +18,28 @@ serve(async (req) => {
     // Create a new PDF document
     const pdfDoc = await PDFDocument.create();
 
-    // Get the image URLs from the request body
-    const { image1Url, image2Url } = await req.json();
+    // Get the base64 images from the request body
+    const { image1Base64, image2Base64 } = await req.json();
 
-    if (!image1Url || !image2Url) {
-      throw new Error('Image URLs are required');
+    if (!image1Base64 || !image2Base64) {
+      throw new Error('Image data is required');
     }
 
-    console.log('Fetching images...');
+    console.log('Processing base64 images...');
 
-    // Fetch both images
-    const [image1Response, image2Response] = await Promise.all([
-      fetch(image1Url),
-      fetch(image2Url)
-    ]);
+    // Convert base64 to bytes (remove data:image/jpeg;base64, prefix)
+    const base64ToBytes = (base64: string): Uint8Array => {
+      const base64Data = base64.split(',')[1];
+      const binaryString = atob(base64Data);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      return bytes;
+    };
 
-    if (!image1Response.ok || !image2Response.ok) {
-      throw new Error('Failed to fetch images');
-    }
-
-    const image1Bytes = await image1Response.arrayBuffer();
-    const image2Bytes = await image2Response.arrayBuffer();
+    const image1Bytes = base64ToBytes(image1Base64);
+    const image2Bytes = base64ToBytes(image2Base64);
 
     console.log('Embedding images in PDF...');
 
