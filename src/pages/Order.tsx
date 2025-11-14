@@ -25,21 +25,26 @@ interface OrderItem {
   unit: string;
 }
 
-const orderItemSchema = z.object({
-  product: z.string().min(1, "Selecteer een product"),
-  quantity: z.string().min(1, "Vul een hoeveelheid in"),
-  unit: z.string().min(1, "Selecteer een eenheid"),
-});
+// Create schemas dynamically with translations
+const createOrderSchemas = (t: (key: string) => string) => {
+  const orderItemSchema = z.object({
+    product: z.string().min(1, t('order.validation.selectProduct')),
+    quantity: z.string().min(1, t('order.validation.enterQuantity')),
+    unit: z.string().min(1, t('order.validation.selectUnit')),
+  });
 
-const orderFormSchema = z.object({
-  orderItems: z.array(orderItemSchema).min(1, "Voeg minimaal één product toe"),
-  pickupDate: z.date({ required_error: "Selecteer een afhaaldatum" }),
-  pickupTime: z.string().min(1, "Selecteer een afhaaltijd"),
-  customerName: z.string().min(2, "Naam moet minimaal 2 karakters zijn"),
-  customerPhone: z.string().min(10, "Telefoonnummer moet minimaal 10 cijfers zijn"),
-  customerEmail: z.string().email("Ongeldig e-mailadres"),
-  notes: z.string().optional(),
-});
+  const orderFormSchema = z.object({
+    orderItems: z.array(orderItemSchema).min(1, t('order.validation.addProduct')),
+    pickupDate: z.date({ required_error: t('order.validation.selectDate') }),
+    pickupTime: z.string().min(1, t('order.validation.selectTime')),
+    customerName: z.string().min(2, t('order.validation.nameMin')),
+    customerPhone: z.string().min(10, t('order.validation.phoneMin')),
+    customerEmail: z.string().email(t('order.validation.emailInvalid')),
+    notes: z.string().optional(),
+  });
+
+  return { orderItemSchema, orderFormSchema };
+};
 
 type OrderFormValues = z.infer<typeof orderFormSchema>;
 
@@ -50,21 +55,24 @@ const Order = () => {
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Get translated schemas
+  const { orderFormSchema } = createOrderSchemas(t);
+
   const productOptions = [
-    "Biefstuk",
-    "Rosbief", 
-    "Gehakt (rund)",
-    "Stoofvlees",
-    "Varkenshaas",
-    "Koteletten",
-    "Gehakt (varken)",
-    "Braadworst",
-    "Hele kip",
-    "Kipfilet",
-    "Kippendijen",
-    "Huisgemaakte worst",
-    "Gehaktballen",
-    "BBQ pakket"
+    { key: 'steak', label: t('order.products.steak') },
+    { key: 'roast', label: t('order.products.roast') },
+    { key: 'beefMince', label: t('order.products.beefMince') },
+    { key: 'stew', label: t('order.products.stew') },
+    { key: 'porkTenderloin', label: t('order.products.porkTenderloin') },
+    { key: 'chops', label: t('order.products.chops') },
+    { key: 'porkMince', label: t('order.products.porkMince') },
+    { key: 'sausage', label: t('order.products.sausage') },
+    { key: 'wholeChicken', label: t('order.products.wholeChicken') },
+    { key: 'chickenBreast', label: t('order.products.chickenBreast') },
+    { key: 'chickenThighs', label: t('order.products.chickenThighs') },
+    { key: 'homemadeSausage', label: t('order.products.homemadeSausage') },
+    { key: 'meatballs', label: t('order.products.meatballs') },
+    { key: 'bbqPackage', label: t('order.products.bbqPackage') },
   ];
 
   const form = useForm<OrderFormValues>({
@@ -279,7 +287,7 @@ const Order = () => {
                                 >
                                   <option value="">{t('order.product.placeholder')}</option>
                                   {productOptions.map((product) => (
-                                    <option key={product} value={product}>{product}</option>
+                                    <option key={product.key} value={product.label}>{product.label}</option>
                                   ))}
                                 </select>
                               </FormControl>

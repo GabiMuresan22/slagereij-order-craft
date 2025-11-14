@@ -125,7 +125,7 @@ const MyAccount = () => {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-20 text-center">
-        <p>Loading...</p>
+        <p>{t('account.loading')}</p>
       </div>
     );
   }
@@ -137,41 +137,41 @@ const MyAccount = () => {
   return (
     <>
       <SEO 
-        title="My Account - Slager John"
-        description="Manage your account and view order history"
+        title={t('account.title') + " - Slager John"}
+        description={t('account.profile.description')}
       />
       
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold mb-8">My Account</h1>
+          <h1 className="text-4xl font-bold mb-8">{t('account.title')}</h1>
 
           <Tabs defaultValue="profile" className="space-y-6">
             <TabsList className="grid w-full grid-cols-2 lg:grid-cols-3">
               <TabsTrigger value="profile" className="flex items-center gap-2">
                 <User className="h-4 w-4" />
-                <span className="hidden sm:inline">Profile</span>
+                <span className="hidden sm:inline">{t('account.tabs.profile')}</span>
               </TabsTrigger>
               <TabsTrigger value="orders" className="flex items-center gap-2">
                 <Package className="h-4 w-4" />
-                <span className="hidden sm:inline">Orders</span>
+                <span className="hidden sm:inline">{t('account.tabs.orders')}</span>
               </TabsTrigger>
               <TabsTrigger value="settings" className="flex items-center gap-2">
                 <Settings className="h-4 w-4" />
-                <span className="hidden sm:inline">Settings</span>
+                <span className="hidden sm:inline">{t('account.tabs.settings')}</span>
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="profile">
               <Card>
                 <CardHeader>
-                  <CardTitle>Profile Information</CardTitle>
+                  <CardTitle>{t('account.profile.title')}</CardTitle>
                   <CardDescription>
-                    View and update your account details
+                    {t('account.profile.description')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email">{t('account.profile.email')}</Label>
                     <Input 
                       id="email" 
                       type="email" 
@@ -180,23 +180,23 @@ const MyAccount = () => {
                       className="bg-muted"
                     />
                     <p className="text-sm text-muted-foreground">
-                      Email address cannot be changed
+                      {t('account.profile.emailNote')}
                     </p>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="fullName">Full Name</Label>
+                    <Label htmlFor="fullName">{t('account.profile.fullName')}</Label>
                     <Input 
                       id="fullName" 
                       type="text" 
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      placeholder="Enter your full name"
+                      placeholder={t('account.profile.fullNamePlaceholder')}
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label>Member Since</Label>
+                    <Label>{t('account.profile.memberSince')}</Label>
                     <Input 
                       type="text" 
                       value={profile ? new Date(profile.created_at).toLocaleDateString() : ""} 
@@ -211,7 +211,7 @@ const MyAccount = () => {
                     onClick={updateProfile} 
                     disabled={isUpdating}
                   >
-                    {isUpdating ? "Updating..." : "Update Profile"}
+                    {isUpdating ? t('account.profile.updating') : t('account.profile.update')}
                   </Button>
                 </CardContent>
               </Card>
@@ -220,23 +220,23 @@ const MyAccount = () => {
             <TabsContent value="orders">
               <Card>
                 <CardHeader>
-                  <CardTitle>Order History</CardTitle>
+                  <CardTitle>{t('account.orders.title')}</CardTitle>
                   <CardDescription>
-                    View all your past and current orders
+                    {t('account.orders.description')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {loadingOrders ? (
-                    <p className="text-center py-8">Loading orders...</p>
+                    <p className="text-center py-8">{t('account.orders.loading')}</p>
                   ) : orders.length === 0 ? (
                     <div className="text-center py-12">
                       <Package className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
-                      <p className="text-lg font-medium mb-2">No orders yet</p>
+                      <p className="text-lg font-medium mb-2">{t('account.orders.noOrders')}</p>
                       <p className="text-muted-foreground mb-4">
-                        You haven't placed any orders yet
+                        {t('account.orders.noOrdersText')}
                       </p>
                       <Button asChild>
-                        <Link to="/order">Place Your First Order</Link>
+                        <Link to="/order">{t('account.orders.placeFirst')}</Link>
                       </Button>
                     </div>
                   ) : (
@@ -244,11 +244,11 @@ const MyAccount = () => {
                       <Table>
                         <TableHeader>
                           <TableRow>
-                            <TableHead>Order Date</TableHead>
-                            <TableHead>Pickup Date</TableHead>
-                            <TableHead>Pickup Time</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead className="text-right">Items</TableHead>
+                            <TableHead>{t('account.orders.orderDate')}</TableHead>
+                            <TableHead>{t('account.orders.pickupDate')}</TableHead>
+                            <TableHead>{t('account.orders.pickupTime')}</TableHead>
+                            <TableHead>{t('account.orders.status')}</TableHead>
+                            <TableHead className="text-right">{t('account.orders.items')}</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -280,26 +280,26 @@ const MyAccount = () => {
             <TabsContent value="settings">
               <Card>
                 <CardHeader>
-                  <CardTitle>Account Settings</CardTitle>
+                  <CardTitle>{t('account.settings.title')}</CardTitle>
                   <CardDescription>
-                    Manage your account preferences
+                    {t('account.settings.description')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="space-y-4">
                     <div>
-                      <h3 className="text-lg font-medium mb-2">Account Security</h3>
+                      <h3 className="text-lg font-medium mb-2">{t('account.settings.security')}</h3>
                       <p className="text-sm text-muted-foreground mb-4">
-                        To change your password or update security settings, please contact support.
+                        {t('account.settings.securityText')}
                       </p>
                     </div>
 
                     <Separator />
 
                     <div>
-                      <h3 className="text-lg font-medium mb-2">Notifications</h3>
+                      <h3 className="text-lg font-medium mb-2">{t('account.settings.notifications')}</h3>
                       <p className="text-sm text-muted-foreground mb-4">
-                        You will receive email notifications about your order status updates.
+                        {t('account.settings.notificationsText')}
                       </p>
                     </div>
 
@@ -307,10 +307,10 @@ const MyAccount = () => {
 
                     <div>
                       <h3 className="text-lg font-medium mb-2 text-destructive">
-                        Danger Zone
+                        {t('account.settings.danger')}
                       </h3>
                       <p className="text-sm text-muted-foreground mb-4">
-                        To delete your account, please contact us at{" "}
+                        {t('account.settings.dangerText')}{" "}
                         <a href="mailto:info@slagerij-john.nl" className="underline">
                           info@slagerij-john.nl
                         </a>

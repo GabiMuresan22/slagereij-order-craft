@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const reviews = [
   {
@@ -29,12 +30,14 @@ const reviews = [
 ];
 
 export default function Testimonials() {
+  const { t } = useLanguage();
+  
   return (
     <section className="py-16 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="font-serif text-4xl font-bold text-foreground mb-4">
-            Wat Onze Klanten Zeggen
+            {t('testimonials.title')}
           </h2>
           <div className="flex items-center justify-center gap-2 mb-2">
             <div className="flex">
@@ -44,7 +47,7 @@ export default function Testimonials() {
             </div>
             <span className="text-3xl font-bold text-foreground">4.9</span>
           </div>
-          <p className="text-muted-foreground">Gebaseerd op 11 Google recensies</p>
+          <p className="text-muted-foreground">{t('testimonials.basedOn')}</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -73,7 +76,7 @@ export default function Testimonials() {
             rel="noopener noreferrer"
             className="text-primary hover:text-primary/80 font-semibold inline-flex items-center gap-2"
           >
-            Bekijk alle recensies op Google Maps
+            {t('testimonials.viewAll')}
           </a>
         </div>
       </div>
