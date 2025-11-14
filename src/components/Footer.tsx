@@ -1,4 +1,4 @@
-import { MapPin, Phone, Clock, Facebook, Instagram, MapPinned } from "lucide-react";
+import { MapPin, Phone, Clock, Facebook, Clapperboard, MapPinned } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
@@ -68,13 +68,13 @@ const Footer = () => {
                   <Facebook className="w-6 h-6" />
                 </a>
                 <a 
-                  href="https://www.instagram.com/slagerijjohn" 
+                  href="https://www.tiktok.com/@traiteur.john" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="hover:text-primary transition-colors"
-                  aria-label="Instagram"
+                  aria-label="TikTok"
                 >
-                  <Instagram className="w-6 h-6" />
+                  <Clapperboard className="w-6 h-6" />
                 </a>
                 <a 
                   href="https://www.google.com/maps/place/Bruggestraat+146A,+8750+Zwevezele"
