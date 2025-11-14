@@ -22,14 +22,26 @@ const Home = () => {
       setIsDownloading(true);
       toast.info('PDF wordt gegenereerd...');
 
-      // Get the full URLs of the images
-      const baseUrl = window.location.origin;
-      const image1Url = `${baseUrl}${christmasMenu1}`;
-      const image2Url = `${baseUrl}${christmasMenu2}`;
+      // Convert images to base64
+      const imageToBase64 = async (url: string): Promise<string> => {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      };
 
-      // Call the edge function
+      const [image1Base64, image2Base64] = await Promise.all([
+        imageToBase64(christmasMenu1),
+        imageToBase64(christmasMenu2)
+      ]);
+
+      // Call the edge function with base64 data
       const { data, error } = await supabase.functions.invoke('generate-christmas-menu-pdf', {
-        body: { image1Url, image2Url },
+        body: { image1Base64, image2Base64 },
       });
 
       if (error) throw error;
