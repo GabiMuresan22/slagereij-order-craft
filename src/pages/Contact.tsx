@@ -16,7 +16,7 @@ const Contact = () => {
     <div className="min-h-screen py-12">
       <SEO 
         title="Contact"
-        description="Neem contact op met Slagerij John in Zwevezele. Bezoek ons in de Bruggestraat 146A of bel +32 466 18 64 57. Openingstijden en routebeschrijving."
+        description="Neem contact op met Slagerij John in Zwevezele. Bezoek ons in de Bruggestraat 146A, Zwevezele 8750, België of bel +32 466 18 64 57. Openingstijden en routebeschrijving."
         keywords="contact, openingstijden, adres, telefoon, route, Zwevezele, Bruggestraat"
         structuredData={[breadcrumbData, getLocalBusinessSchema()]}
       />
