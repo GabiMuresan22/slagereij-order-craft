@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import { trackLanguageChange } from '@/components/Analytics';
 
 type Language = 'nl' | 'ro';
 
@@ -544,12 +545,17 @@ const translations = {
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('nl');
 
+  const handleSetLanguage = (lang: Language) => {
+    setLanguage(lang);
+    trackLanguageChange(lang);
+  };
+
   const t = (key: string): string => {
     return translations[language][key] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );

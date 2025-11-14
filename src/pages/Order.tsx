@@ -15,6 +15,7 @@ import { CalendarIcon, ShoppingCart, Loader2 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { trackOrderSubmit } from "@/components/Analytics";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema } from "@/lib/structuredData";
 import { supabase } from "@/integrations/supabase/client";
@@ -156,6 +157,12 @@ const Order = () => {
       });
 
       if (error) throw error;
+
+      // Track order submission
+      trackOrderSubmit({
+        items: data.orderItems.length,
+        pickupDate: format(data.pickupDate, "yyyy-MM-dd"),
+      });
 
       // Send WhatsApp confirmation
       sendWhatsAppConfirmation(data);

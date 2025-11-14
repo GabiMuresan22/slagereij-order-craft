@@ -5,6 +5,7 @@ import { ShoppingBag, Clock, Award, Download } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { trackMenuDownload } from "@/components/Analytics";
 import heroImage from "@/assets/hero-charcuterie.jpg";
 import christmasMenu1 from "@/assets/christmas-menu-1.jpg";
 import christmasMenu2 from "@/assets/christmas-menu-2.jpg";
@@ -60,6 +61,9 @@ const Home = () => {
       // Cleanup
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
+
+      // Track download event
+      trackMenuDownload();
 
       toast.success("PDF gedownload!");
     } catch (error) {
