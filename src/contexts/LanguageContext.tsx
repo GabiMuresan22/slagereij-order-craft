@@ -150,7 +150,7 @@ const translations = {
     'order.delivery.tier2.paid': 'Buiten 20 km — €1 per km',
     'order.delivery.schedule': 'Levering van maandag tot en met zaterdag vanaf 19:00 uur',
     'order.delivery.phone': 'Bestel nu via:',
-    'order.delivery.address': 'Bruggestraat 146A, Zwevezele 8750',
+    'order.delivery.address': 'Bruggestraat 146A, Zwevezele 8750, België',
     'order.delivery.tagline': 'Verse producten, met liefde bij jou thuis geleverd!',
     
     // Contact Page
@@ -340,7 +340,7 @@ const translations = {
     'order.delivery.tier2.paid': 'După 20 km — 1 € / km',
     'order.delivery.schedule': 'Livrăm începând cu ora 19:00, de luni pana sambata',
     'order.delivery.phone': 'Sună acum pentru comenzi:',
-    'order.delivery.address': 'Bruggestraat 146A, Zwevezele 8750',
+    'order.delivery.address': 'Bruggestraat 146A, Zwevezele 8750, Belgia',
     'order.delivery.tagline': 'Produse proaspete, livrate cu drag — direct la tine acasă!',
     
     // Contact Page
