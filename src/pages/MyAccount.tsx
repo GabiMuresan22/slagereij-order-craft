@@ -57,7 +57,7 @@ const MyAccount = () => {
       .from('profiles')
       .select('*')
       .eq('id', user.id)
-      .single();
+      .single() as any;
 
     if (error) {
       console.error('Error fetching profile:', error);
@@ -65,7 +65,7 @@ const MyAccount = () => {
     }
 
     setProfile(data);
-    setFullName(data.full_name || "");
+    setFullName(data?.full_name || "");
   };
 
   const fetchOrders = async () => {
@@ -93,8 +93,8 @@ const MyAccount = () => {
     setIsUpdating(true);
     const { error } = await supabase
       .from('profiles')
-      .update({ full_name: fullName })
-      .eq('id', user.id);
+      .update({ full_name: fullName } as any)
+      .eq('id', user.id) as any;
 
     if (error) {
       toast.error('Failed to update profile');
