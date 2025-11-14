@@ -10,9 +10,13 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import shopInterior from "@/assets/shop-interior.jpg";
-import meatDisplay from "@/assets/meat-display.jpg";
-import teamWorking from "@/assets/team-working.jpg";
+import gallery1 from "@/assets/gallery-1.webp";
+import gallery2 from "@/assets/gallery-2.webp";
+import gallery3 from "@/assets/gallery-3.webp";
+import gallery4 from "@/assets/gallery-4.webp";
+import gallery5 from "@/assets/gallery-5.webp";
+import gallery6 from "@/assets/gallery-6.webp";
+import gallery7 from "@/assets/gallery-7.webp";
 
 const About = () => {
   const { t } = useLanguage();
@@ -152,8 +156,8 @@ const About = () => {
               <CarouselItem>
                 <Card className="border-border overflow-hidden">
                   <img 
-                    src={shopInterior} 
-                    alt="Slagerij John shop interior" 
+                    src={gallery1} 
+                    alt="Marinated meat selection with rosemary" 
                     className="w-full h-[400px] md:h-[500px] object-cover"
                   />
                 </Card>
@@ -161,8 +165,8 @@ const About = () => {
               <CarouselItem>
                 <Card className="border-border overflow-hidden">
                   <img 
-                    src={meatDisplay} 
-                    alt="Fresh meat display" 
+                    src={gallery2} 
+                    alt="Gourmet meat platter with shrimp" 
                     className="w-full h-[400px] md:h-[500px] object-cover"
                   />
                 </Card>
@@ -170,8 +174,44 @@ const About = () => {
               <CarouselItem>
                 <Card className="border-border overflow-hidden">
                   <img 
-                    src={teamWorking} 
-                    alt="Team working at Slagerij John" 
+                    src={gallery3} 
+                    alt="Premium beef steak with rosemary" 
+                    className="w-full h-[400px] md:h-[500px] object-cover"
+                  />
+                </Card>
+              </CarouselItem>
+              <CarouselItem>
+                <Card className="border-border overflow-hidden">
+                  <img 
+                    src={gallery4} 
+                    alt="Homemade sausage selection" 
+                    className="w-full h-[400px] md:h-[500px] object-cover"
+                  />
+                </Card>
+              </CarouselItem>
+              <CarouselItem>
+                <Card className="border-border overflow-hidden">
+                  <img 
+                    src={gallery5} 
+                    alt="Fresh Ardennes pork cutlets" 
+                    className="w-full h-[400px] md:h-[500px] object-cover"
+                  />
+                </Card>
+              </CarouselItem>
+              <CarouselItem>
+                <Card className="border-border overflow-hidden">
+                  <img 
+                    src={gallery6} 
+                    alt="Assorted gourmet meat platter" 
+                    className="w-full h-[400px] md:h-[500px] object-cover"
+                  />
+                </Card>
+              </CarouselItem>
+              <CarouselItem>
+                <Card className="border-border overflow-hidden">
+                  <img 
+                    src={gallery7} 
+                    alt="Charcuterie board with cheese and ham" 
                     className="w-full h-[400px] md:h-[500px] object-cover"
                   />
                 </Card>
