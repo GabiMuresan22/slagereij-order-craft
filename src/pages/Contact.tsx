@@ -69,10 +69,10 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-lg mb-2">{t("contact.email.title")}</h3>
                     <a
-                      href="mailto:contact@slagereij-john.be"
+                      href="mailto:contact@slagerij-john.be"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      contact@slagereij-john.be
+                      contact@slagerij-john.be
                     </a>
                   </div>
                 </div>
