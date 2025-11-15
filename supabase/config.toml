@@ -1,0 +1,7 @@
+project_id = "xqmfdoayucknepabazpp"
+
+[functions.send-order-status-email]
+verify_jwt = true
+
+[functions.generate-christmas-menu-pdf]
+verify_jwt = false
