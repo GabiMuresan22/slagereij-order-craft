@@ -32,6 +32,7 @@ interface Order {
   status: string;
   created_at: string;
   notes: string | null;
+  user_id: string | null;
 }
 
 const MyAccount = () => {
@@ -72,10 +73,12 @@ const MyAccount = () => {
     if (!user) return;
 
     setLoadingOrders(true);
+    // Query by user_id instead of email for better security and performance
+    // The RLS policy will ensure users can only see their own orders
     const { data, error } = await supabase
       .from('orders')
       .select('*')
-      .eq('customer_email', user.email)
+      .eq('user_id', user.id)
       .order('created_at', { ascending: false });
 
     if (error) {

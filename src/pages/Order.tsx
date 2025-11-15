@@ -15,6 +15,7 @@ import { CalendarIcon, ShoppingCart, Loader2 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { trackOrderSubmit } from "@/components/Analytics";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema } from "@/lib/structuredData";
@@ -51,6 +52,7 @@ const Order = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { t } = useLanguage();
+  const { user } = useAuth();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -158,6 +160,7 @@ const Order = () => {
         pickup_time: data.pickupTime,
         notes: data.notes || null,
         status: "pending",
+        user_id: user?.id || null, // Set user_id if user is authenticated
       });
 
       if (error) throw error;
