@@ -133,10 +133,10 @@ const MyAccount = () => {
 
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold mb-8">{t("account.title")}</h1>
+          <h1 className="text-4xl font-bold mb-6 md:mb-8">{t("account.title")}</h1>
 
-          <Tabs defaultValue="profile" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-3 gap-2">
+          <Tabs defaultValue="profile" className="space-y-6 md:space-y-8">
+            <TabsList className="grid w-full grid-cols-3 gap-2 mb-6">
               <TabsTrigger value="profile" className="flex items-center gap-2">
                 <User className="h-4 w-4" />
                 <span className="hidden sm:inline">{t("account.tabs.profile")}</span>
@@ -157,15 +157,15 @@ const MyAccount = () => {
                   <CardTitle>{t("account.profile.title")}</CardTitle>
                   <CardDescription>{t("account.profile.description")}</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="email">{t("account.profile.email")}</Label>
+                <CardContent className="space-y-4 md:space-y-6 p-6 md:p-8">
+                  <div className="space-y-1">
+                    <Label htmlFor="email" className="mb-1">{t("account.profile.email")}</Label>
                     <Input id="email" type="email" value={user.email || ""} disabled className="bg-muted" />
-                    <p className="text-sm text-muted-foreground">{t("account.profile.emailNote")}</p>
+                    <p className="text-sm text-muted-foreground mt-1">{t("account.profile.emailNote")}</p>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="fullName">{t("account.profile.fullName")}</Label>
+                  <div className="space-y-1">
+                    <Label htmlFor="fullName" className="mb-1">{t("account.profile.fullName")}</Label>
                     <Input
                       id="fullName"
                       type="text"
@@ -175,7 +175,7 @@ const MyAccount = () => {
                     />
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-1">
                     <Label>{t("account.profile.memberSince")}</Label>
                     <Input
                       type="text"
@@ -185,9 +185,9 @@ const MyAccount = () => {
                     />
                   </div>
 
-                  <Separator />
+                  <Separator className="my-6 md:my-8" />
 
-                  <Button onClick={updateProfile} disabled={isUpdating}>
+                  <Button onClick={updateProfile} disabled={isUpdating} className="mt-6 md:mt-8">
                     {isUpdating ? t("account.profile.updating") : t("account.profile.update")}
                   </Button>
                 </CardContent>
