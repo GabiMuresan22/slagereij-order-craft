@@ -137,8 +137,12 @@ const Order = () => {
     // Create WhatsApp link with encoded message
     const whatsappUrl = `https://wa.me/${shopWhatsAppNumber}?text=${encodeURIComponent(message)}`;
     
-    // Open WhatsApp in new window
-    window.open(whatsappUrl, '_blank');
+    // Open WhatsApp in new tab (use location.href for better compatibility)
+    const newWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    if (!newWindow) {
+      // Fallback if popup blocked
+      window.location.href = whatsappUrl;
+    }
   };
 
   const handleSubmit = async (data: OrderFormValues) => {
