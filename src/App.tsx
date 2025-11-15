@@ -9,6 +9,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { Analytics } from "./components/Analytics";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Products from "./pages/Products";
@@ -26,6 +27,7 @@ const App = () => (
     <HelmetProvider>
       <TooltipProvider>
         <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <ScrollToTop />
           <LanguageProvider>
             <AuthProvider>
               <Analytics />
