@@ -29,20 +29,37 @@ interface OrderItem {
 
 // Create schemas dynamically with translations
 const createOrderSchemas = (t: (key: string) => string) => {
+  // Phone number validation regex (supports international formats)
+  const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/;
+  
   const orderItemSchema = z.object({
     product: z.string().min(1, t('order.validation.selectProduct')),
-    quantity: z.string().min(1, t('order.validation.enterQuantity')),
+    quantity: z.string()
+      .min(1, t('order.validation.enterQuantity'))
+      .refine((val) => {
+        const num = parseFloat(val);
+        return !isNaN(num) && num > 0 && num <= 1000; // Max 1000 kg/units
+      }, { message: t('order.validation.quantityInvalid') || 'Quantity must be between 0.1 and 1000' }),
     unit: z.string().min(1, t('order.validation.selectUnit')),
   });
 
   const orderFormSchema = z.object({
-    orderItems: z.array(orderItemSchema).min(1, t('order.validation.addProduct')),
+    orderItems: z.array(orderItemSchema).min(1, t('order.validation.addProduct')).max(50), // Max 50 items
     pickupDate: z.date({ required_error: t('order.validation.selectDate') }),
     pickupTime: z.string().min(1, t('order.validation.selectTime')),
-    customerName: z.string().min(2, t('order.validation.nameMin')),
-    customerPhone: z.string().min(10, t('order.validation.phoneMin')),
-    customerEmail: z.string().email(t('order.validation.emailInvalid')),
-    notes: z.string().optional(),
+    customerName: z.string()
+      .min(2, t('order.validation.nameMin'))
+      .max(100, t('order.validation.nameMax') || 'Name must be less than 100 characters'),
+    customerPhone: z.string()
+      .min(10, t('order.validation.phoneMin'))
+      .max(20, t('order.validation.phoneMax') || 'Phone number must be less than 20 characters')
+      .regex(phoneRegex, t('order.validation.phoneFormat') || 'Invalid phone number format'),
+    customerEmail: z.string()
+      .email(t('order.validation.emailInvalid'))
+      .max(255, t('order.validation.emailMax') || 'Email must be less than 255 characters'),
+    notes: z.string()
+      .max(1000, t('order.validation.notesMax') || 'Notes must be less than 1000 characters')
+      .optional(),
   });
 
   return { orderItemSchema, orderFormSchema };

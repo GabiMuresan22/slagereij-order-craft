@@ -20,6 +20,34 @@ interface OrderStatusEmailRequest {
   pickupTime: string;
 }
 
+// Validation functions
+const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email) && email.length <= 255;
+};
+
+const validateOrderData = (data: any): data is OrderStatusEmailRequest => {
+  if (!data || typeof data !== 'object') return false;
+  
+  // Validate required fields
+  if (!data.customerName || typeof data.customerName !== 'string' || data.customerName.length > 100) return false;
+  if (!data.customerEmail || !isValidEmail(data.customerEmail)) return false;
+  if (!data.orderId || typeof data.orderId !== 'string' || data.orderId.length > 100) return false;
+  if (!data.status || typeof data.status !== 'string' || !['confirmed', 'ready', 'completed'].includes(data.status)) return false;
+  if (!data.pickupDate || typeof data.pickupDate !== 'string') return false;
+  if (!data.pickupTime || typeof data.pickupTime !== 'string' || data.pickupTime.length > 50) return false;
+  
+  // Validate orderItems array
+  if (!Array.isArray(data.orderItems) || data.orderItems.length === 0 || data.orderItems.length > 50) return false;
+  for (const item of data.orderItems) {
+    if (!item.product || typeof item.product !== 'string' || item.product.length > 200) return false;
+    if (typeof item.quantity !== 'number' || item.quantity <= 0 || item.quantity > 1000) return false;
+    if (!item.weight || typeof item.weight !== 'string' || item.weight.length > 50) return false;
+  }
+  
+  return true;
+};
+
 const getEmailContent = (data: OrderStatusEmailRequest) => {
   const { customerName, orderId, status, orderItems, pickupDate, pickupTime } = data;
   
@@ -167,7 +195,17 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    const requestData: OrderStatusEmailRequest = await req.json();
+    const requestData = await req.json();
+    
+    // Validate input data
+    if (!validateOrderData(requestData)) {
+      console.error("Invalid order data received:", requestData);
+      return new Response(
+        JSON.stringify({ error: "Invalid request data. Please check all fields are valid." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     console.log("Sending order status email:", requestData);
 
     const { customerEmail } = requestData;
