@@ -314,8 +314,8 @@ const MyAccount = () => {
                       </h3>
                       <p className="text-sm text-muted-foreground mb-4">
                         {t('account.settings.dangerText')}{" "}
-                        <a href="mailto:info@slagerij-john.nl" className="underline">
-                          info@slagerij-john.nl
+                        <a href="mailto:contact@slagerij-jhon.be" className="underline">
+                          contact@slagerij-jhon.be
                         </a>
                       </p>
                     </div>
