@@ -72,7 +72,7 @@ const Contact = () => {
                       href="mailto:info@slagereijjohn.be"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      contact@slagereijjohn.be
+                      contact@slagereij-john.be
                     </a>
                   </div>
                 </div>
