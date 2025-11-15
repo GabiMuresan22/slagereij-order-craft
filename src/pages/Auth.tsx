@@ -39,14 +39,46 @@ export default function Auth() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
-  // Check for password recovery token
+  // Check for password recovery token in URL hash and handle recovery flow
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event) => {
+    // Check if URL contains recovery token in hash
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const type = hashParams.get('type');
+    
+    if (type === 'recovery') {
+      // Exchange the recovery token for a session
+      supabase.auth.getSession().then(({ data: { session }, error }) => {
+        if (error) {
+          console.error('Error getting session:', error);
+          toast.error('Invalid or expired reset link. Please request a new one.');
+          return;
+        }
+        
+        if (session) {
+          setIsPasswordRecovery(true);
+          // Clean up the URL hash
+          window.history.replaceState(null, '', '/auth');
+        }
+      });
+    }
+
+    // Also listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY') {
         setIsPasswordRecovery(true);
       }
+      // If user signs out during recovery, reset the state
+      if (event === 'SIGNED_OUT' && isPasswordRecovery) {
+        setIsPasswordRecovery(false);
+        setNewPassword('');
+        setConfirmNewPassword('');
+      }
     });
-  }, []);
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [isPasswordRecovery]);
 
   // Redirect if already logged in (but not during password recovery)
   if (user && !isPasswordRecovery) {
@@ -135,6 +167,13 @@ export default function Auth() {
         return;
       }
 
+      // Verify we have a valid session before updating password
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError || !session) {
+        throw new Error('Invalid or expired reset link. Please request a new password reset.');
+      }
+
       const { error } = await supabase.auth.updateUser({
         password: newPassword,
       });
@@ -143,10 +182,20 @@ export default function Auth() {
 
       toast.success('Password updated successfully!');
       setIsPasswordRecovery(false);
+      setNewPassword('');
+      setConfirmNewPassword('');
       navigate('/');
     } catch (error: any) {
+      console.error('Error updating password:', error);
       toast.error(error.message || 'Failed to update password');
-      setErrors({ general: error.message });
+      setErrors({ general: error.message || 'Failed to update password' });
+      
+      // If session is invalid, reset the recovery state
+      if (error.message?.includes('Invalid or expired')) {
+        setIsPasswordRecovery(false);
+        setNewPassword('');
+        setConfirmNewPassword('');
+      }
     } finally {
       setLoading(false);
     }
