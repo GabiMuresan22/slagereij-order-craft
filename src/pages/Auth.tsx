@@ -26,10 +26,12 @@ const signupSchema = loginSchema.extend({
 
 export default function Auth() {
   const { t } = useLanguage();
-  const { signIn, signUp, user } = useAuth();
+  const { signIn, signUp, resetPassword, user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [resetEmailSent, setResetEmailSent] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Redirect if already logged in
@@ -101,6 +103,27 @@ export default function Auth() {
     }
   };
 
+  const handleForgotPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setErrors({});
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('reset-email') as string;
+
+    try {
+      z.string().email().parse(email);
+      await resetPassword(email);
+      setResetEmailSent(true);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        setErrors({ email: 'Invalid email address' });
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -126,7 +149,61 @@ export default function Auth() {
               </TabsList>
 
               <TabsContent value="login">
-                <form onSubmit={handleLogin} className="space-y-4">
+                {showForgotPassword ? (
+                  <div className="space-y-4">
+                    {resetEmailSent ? (
+                      <div className="text-center space-y-4">
+                        <p className="text-sm text-muted-foreground">
+                          {t('auth.resetEmailSent')}
+                        </p>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="w-full"
+                          onClick={() => {
+                            setShowForgotPassword(false);
+                            setResetEmailSent(false);
+                          }}
+                        >
+                          {t('auth.backToLogin')}
+                        </Button>
+                      </div>
+                    ) : (
+                      <form onSubmit={handleForgotPassword} className="space-y-4">
+                        <div className="space-y-2">
+                          <p className="text-sm text-muted-foreground">
+                            {t('auth.resetPasswordDesc')}
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="reset-email">{t('auth.email')}</Label>
+                          <Input
+                            id="reset-email"
+                            name="reset-email"
+                            type="email"
+                            required
+                            disabled={loading}
+                          />
+                          {errors.email && (
+                            <p className="text-sm text-destructive">{errors.email}</p>
+                          )}
+                        </div>
+                        <Button type="submit" className="w-full" disabled={loading}>
+                          {loading ? t('auth.loading') : t('auth.sendResetLink')}
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          className="w-full"
+                          onClick={() => setShowForgotPassword(false)}
+                        >
+                          {t('auth.backToLogin')}
+                        </Button>
+                      </form>
+                    )}
+                  </div>
+                ) : (
+                  <form onSubmit={handleLogin} className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="login-email">{t('auth.email')}</Label>
                     <Input
@@ -171,7 +248,15 @@ export default function Auth() {
                   <Button type="submit" className="w-full" disabled={loading}>
                     {loading ? t('auth.loading') : t('auth.login')}
                   </Button>
+                  <button
+                    type="button"
+                    onClick={() => setShowForgotPassword(true)}
+                    className="text-sm text-primary hover:underline w-full text-center"
+                  >
+                    {t('auth.forgotPassword')}
+                  </button>
                 </form>
+                )}
               </TabsContent>
 
               <TabsContent value="signup">

@@ -201,6 +201,12 @@ const translations = {
     'auth.name': 'Naam',
     'auth.loading': 'Laden...',
     'auth.logout': 'Uitloggen',
+    'auth.forgotPassword': 'Wachtwoord vergeten?',
+    'auth.resetPassword': 'Reset Wachtwoord',
+    'auth.resetPasswordDesc': 'Voer je email in om een wachtwoord reset link te ontvangen',
+    'auth.sendResetLink': 'Verstuur Reset Link',
+    'auth.backToLogin': 'Terug naar inloggen',
+    'auth.resetEmailSent': 'Reset email verstuurd! Controleer je inbox.',
     
     // My Account Page
     'account.title': 'Mijn Account',
@@ -465,6 +471,12 @@ const translations = {
     'auth.name': 'Nume',
     'auth.loading': 'Se încarcă...',
     'auth.logout': 'Deconectare',
+    'auth.forgotPassword': 'Ai uitat parola?',
+    'auth.resetPassword': 'Resetează Parola',
+    'auth.resetPasswordDesc': 'Introdu email-ul tău pentru a primi un link de resetare a parolei',
+    'auth.sendResetLink': 'Trimite Link de Resetare',
+    'auth.backToLogin': 'Înapoi la autentificare',
+    'auth.resetEmailSent': 'Email de resetare trimis! Verifică-ți inbox-ul.',
     
     // My Account Page
     'account.title': 'Contul Meu',
