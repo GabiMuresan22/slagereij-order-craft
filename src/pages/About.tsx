@@ -17,6 +17,7 @@ import gallery4 from "@/assets/gallery-4.webp";
 import gallery5 from "@/assets/gallery-5.webp";
 import gallery6 from "@/assets/gallery-6.webp";
 import gallery7 from "@/assets/gallery-7.webp";
+import storefront from "@/assets/storefront.webp";
 
 const About = () => {
   const { t } = useLanguage();
@@ -43,6 +44,17 @@ const About = () => {
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             {t('about.subtitle')}
           </p>
+        </div>
+
+        {/* Storefront Image */}
+        <div className="max-w-5xl mx-auto mb-16">
+          <Card className="border-border overflow-hidden">
+            <img 
+              src={storefront} 
+              alt="Slagerij John storefront with festive opening decorations" 
+              className="w-full h-auto object-cover"
+            />
+          </Card>
         </div>
 
         {/* Tagline Section */}
