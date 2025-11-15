@@ -47,8 +47,6 @@ const createOrderSchemas = (t: (key: string) => string) => {
   return { orderItemSchema, orderFormSchema };
 };
 
-type OrderFormValues = z.infer<typeof orderFormSchema>;
-
 const Order = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -58,6 +56,8 @@ const Order = () => {
 
   // Get translated schemas
   const { orderFormSchema } = createOrderSchemas(t);
+  
+  type OrderFormValues = z.infer<typeof orderFormSchema>;
 
   const productOptions = [
     { key: 'steak', label: t('order.products.steak') },
