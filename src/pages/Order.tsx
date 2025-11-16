@@ -177,7 +177,6 @@ const Order = () => {
         pickup_time: data.pickupTime,
         notes: data.notes || null,
         status: "pending",
-        user_id: user?.id || null, // Set user_id if user is authenticated
       });
 
       if (error) throw error;
@@ -419,7 +418,7 @@ const Order = () => {
                               mode="single"
                               selected={field.value}
                               onSelect={field.onChange}
-                              disabled={(date) => date < new Date() || date.getDay() === 0}
+                              disabled={(date) => date < new Date()}
                               initialFocus
                             />
                           </PopoverContent>
@@ -432,28 +431,46 @@ const Order = () => {
                   <FormField
                     control={form.control}
                     name="pickupTime"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t('order.pickupTime.label')}</FormLabel>
-                        <FormControl>
-                          <select
-                            className="w-full p-2 border border-input rounded-md bg-background"
-                            {...field}
-                          >
-                            <option value="">{t('order.pickupTime.placeholder')}</option>
-                            <option value="09:00">09:00</option>
-                            <option value="10:00">10:00</option>
-                            <option value="11:00">11:00</option>
-                            <option value="12:00">12:00</option>
-                            <option value="14:00">14:00</option>
-                            <option value="15:00">15:00</option>
-                            <option value="16:00">16:00</option>
-                            <option value="17:00">17:00</option>
-                          </select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    render={({ field }) => {
+                      const selectedDate = form.watch("pickupDate");
+                      const isSunday = selectedDate && selectedDate.getDay() === 0;
+                      
+                      return (
+                        <FormItem>
+                          <FormLabel>{t('order.pickupTime.label')}</FormLabel>
+                          <FormControl>
+                            <select
+                              className="w-full p-2 border border-input rounded-md bg-background"
+                              {...field}
+                            >
+                              <option value="">{t('order.pickupTime.placeholder')}</option>
+                              {isSunday ? (
+                                <>
+                                  <option value="08:00">08:00</option>
+                                  <option value="09:00">09:00</option>
+                                  <option value="10:00">10:00</option>
+                                  <option value="11:00">11:00</option>
+                                  <option value="12:00">12:00</option>
+                                  <option value="13:00">13:00</option>
+                                </>
+                              ) : (
+                                <>
+                                  <option value="09:00">09:00</option>
+                                  <option value="10:00">10:00</option>
+                                  <option value="11:00">11:00</option>
+                                  <option value="12:00">12:00</option>
+                                  <option value="14:00">14:00</option>
+                                  <option value="15:00">15:00</option>
+                                  <option value="16:00">16:00</option>
+                                  <option value="17:00">17:00</option>
+                                </>
+                              )}
+                            </select>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      );
+                    }}
                   />
 
                   <div className="flex gap-4">
