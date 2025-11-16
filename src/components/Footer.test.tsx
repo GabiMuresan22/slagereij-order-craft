@@ -49,6 +49,9 @@ describe("Footer", () => {
     expect(facebookLink).toBeInTheDocument();
     expect(tiktokLink).toBeInTheDocument();
     expect(mapsLink).toBeInTheDocument();
+    
+    // Verify the social media heading text
+    expect(screen.getByText(/footer.social/i)).toBeInTheDocument();
   });
 
   it("renders copyright with current year", () => {
