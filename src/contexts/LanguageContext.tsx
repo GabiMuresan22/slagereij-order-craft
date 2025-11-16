@@ -17,6 +17,7 @@ const translations = {
     'nav.home': 'Home',
     'nav.about': 'Over Ons',
     'nav.products': 'Producten',
+    'nav.catering': 'Traiteur',
     'nav.order': 'Bestel Online',
     'nav.contact': 'Contact',
     
@@ -68,6 +69,15 @@ const translations = {
     'about.team.role': 'Eigenaars',
     'about.team.desc': 'Ion (John) en Georgiana staan klaar om u te helpen met advies, speciale wensen of simpelweg een praatje. Met hun passie voor kwaliteitsvlees en persoonlijke service delen ze graag hun kennis over de beste bereidingswijzen en recepten. Kom gerust langs en maak kennis!',
     'about.gallery.title': 'Onze Slagerij',
+    
+    // Catering Page
+    'catering.title': 'Traiteur',
+    'catering.subtitle': 'Wij verzorgen uw feestmaaltijden van A tot Z!',
+    'catering.p1': 'Ons ervaren traiteursteam verzorgt uw maaltijden tot in de kleinste details, zowel voor het huiselijk vriendenfeestje als het massale wijkfeest.',
+    'catering.p2': 'De voorbereiding alsook de opruiming worden door onze diensten verzorgd.',
+    'catering.p3': 'mobiele barbecue-units, bestek, bedieningspersoneel, ...',
+    'catering.p4': 'Ook afhalen is mogelijk.',
+    'catering.gallery.title': 'Onze Traiteurservice',
     
     // Products Page
     'products.title': 'Ons Assortiment',
@@ -288,6 +298,7 @@ const translations = {
     'nav.home': 'Acasă',
     'nav.about': 'Despre Noi',
     'nav.products': 'Produse',
+    'nav.catering': 'Catering',
     'nav.order': 'Comandă Online',
     'nav.contact': 'Contact',
     
@@ -339,6 +350,15 @@ const translations = {
     'about.team.role': 'Proprietari',
     'about.team.desc': 'Ion (John) și Georgiana sunt gata să vă ajute cu sfaturi, cerințe speciale sau pur și simplu o discuție. Cu pasiunea lor pentru carne de calitate și servicii personalizate, împart cu plăcere cunoștințele despre cele mai bune metode de preparare și rețete. Vino să ne cunoști!',
     'about.gallery.title': 'Măcelăria Noastră',
+    
+    // Catering Page
+    'catering.title': 'Catering',
+    'catering.subtitle': 'Ne ocupăm de mesele dvs. festive de la A la Z!',
+    'catering.p1': 'Echipa noastră experimentată de catering se ocupă de mesele dvs. până în cele mai mici detalii, atât pentru petrecerea casnică cu prietenii, cât și pentru sărbătoarea masivă a cartierului.',
+    'catering.p2': 'Atât pregătirea, cât și curățarea sunt asigurate de serviciile noastre.',
+    'catering.p3': 'unități mobile de grătar, tacâmuri, personal de servire, ...',
+    'catering.p4': 'De asemenea, ridicarea este posibilă.',
+    'catering.gallery.title': 'Serviciul Nostru de Catering',
     
     // Products Page
     'products.title': 'Sortimentul Nostru',
