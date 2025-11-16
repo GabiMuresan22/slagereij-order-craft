@@ -187,12 +187,9 @@ const Order = () => {
         pickupDate: format(data.pickupDate, "yyyy-MM-dd"),
       });
 
-      // Send WhatsApp confirmation
-      sendWhatsAppConfirmation(data);
-
       toast({
         title: t('order.success.title'),
-        description: "Uw bestelling is geplaatst! WhatsApp wordt geopend om uw bestelling te bevestigen.",
+        description: "Uw bestelling is succesvol geplaatst! We nemen spoedig contact met u op.",
       });
 
       setTimeout(() => {
