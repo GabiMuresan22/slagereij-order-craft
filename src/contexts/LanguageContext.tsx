@@ -186,6 +186,7 @@ const translations = {
     'footer.hours.sun': 'Zo: 08:00 - 13:00',
     'footer.about.title': 'Slagerij John',
     'footer.about.desc': 'Uw vertrouwde slager voor vers vlees en huisgemaakte specialiteiten. Kwaliteit en service staan bij ons centraal.',
+    'footer.social': 'Follow US on our social media.',
     'footer.rights': 'Alle rechten voorbehouden.',
     
     // Auth
@@ -456,6 +457,7 @@ const translations = {
     'footer.hours.sun': 'Du: 08:00 - 13:00',
     'footer.about.title': 'Măcelăria John',
     'footer.about.desc': 'Măcelarul tău de încredere pentru carne proaspătă și specialități casnice. Calitatea și serviciul sunt prioritatea noastră.',
+    'footer.social': 'Follow US on our social media.',
     'footer.rights': 'Toate drepturile rezervate.',
     
     // Auth

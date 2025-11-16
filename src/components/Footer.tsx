@@ -56,7 +56,7 @@ const Footer = () => {
             
             {/* Social Media Links */}
             <div className="space-y-3">
-              <h4 className="font-semibold text-sm mb-3">Follow Us</h4>
+              <h4 className="font-semibold text-sm mb-3">{t('footer.social')}</h4>
               <div className="flex items-center space-x-4">
                 <a 
                   href="https://www.facebook.com/profile.php?id=61560710702910" 
