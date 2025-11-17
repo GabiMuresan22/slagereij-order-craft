@@ -60,7 +60,7 @@ const Navigation = () => {
             <img 
               src={logo} 
               alt="Slager John Logo" 
-              className="h-14 md:h-16 w-auto"
+              className="h-12 md:h-14 w-auto rounded-lg"
             />
           </Link>
 

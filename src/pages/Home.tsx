@@ -92,29 +92,30 @@ const Home = () => {
         style={{
           backgroundImage: `url(${heroImage})`,
           backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundPosition: "center top",
         }}
       >
-        {/* Gradient overlay - dark to transparent from top to bottom */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/65 to-transparent" />
+        {/* Enhanced gradient overlay - darker at top for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/40 to-transparent" />
 
         <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto mt-8 md:mt-16">
           <h1
             className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold text-white mb-4 md:mb-6"
-            style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.5)" }}
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
           >
             {t("home.hero.title")}
           </h1>
           <p
-            className="text-lg sm:text-xl md:text-2xl text-primary mb-6 md:mb-8 font-light"
-            style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.5)" }}
+            className="text-lg sm:text-xl md:text-2xl text-white mb-8 md:mb-10 font-light leading-relaxed"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)", whiteSpace: "pre-line" }}
           >
             {t("home.hero.subtitle")}
           </p>
           <Link to="/order">
             <Button
               size="lg"
-              className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 font-semibold bg-primary text-primary-foreground hover:bg-primary/90"
+              className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 font-semibold hover:opacity-90 transition-opacity"
+              style={{ backgroundColor: "#C5A059", color: "#1a1a1a" }}
             >
               {t("home.hero.cta")}
             </Button>
