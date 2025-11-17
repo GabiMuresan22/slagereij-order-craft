@@ -106,7 +106,7 @@ const Home = () => {
             {t("home.hero.title")}
           </h1>
           <p
-            className="text-lg sm:text-xl md:text-2xl text-white mb-6 md:mb-8 font-light"
+            className="text-lg sm:text-xl md:text-2xl text-primary mb-6 md:mb-8 font-light"
             style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.5)" }}
           >
             {t("home.hero.subtitle")}
@@ -114,8 +114,7 @@ const Home = () => {
           <Link to="/order">
             <Button
               size="lg"
-              variant="secondary"
-              className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 font-semibold"
+              className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 font-semibold bg-primary text-primary-foreground hover:bg-primary/90"
             >
               {t("home.hero.cta")}
             </Button>
@@ -163,7 +162,7 @@ const Home = () => {
                 {isDownloading ? t('home.christmas.downloading') : t('home.christmas.download')}
               </Button>
               <Link to="/order">
-                <Button size="lg" className="text-lg px-8 py-6 w-full sm:w-auto">
+                <Button size="lg" className="text-lg px-8 py-6 w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90">
                   {t("home.hero.cta")}
                 </Button>
               </Link>
@@ -216,10 +215,10 @@ const Home = () => {
                 <h3 className="text-2xl font-serif font-semibold mb-3 text-primary">
                   {t("home.specials.steak.title")}
                 </h3>
-                <p className="text-3xl font-bold text-accent mb-2">{t("home.specials.steak.price")}</p>
+                <p className="text-3xl font-bold text-primary mb-2">{t("home.specials.steak.price")}</p>
                 <p className="text-muted-foreground mb-4">{t("home.specials.steak.desc")}</p>
                 <Link to="/order">
-                  <Button className="w-full">{t("home.specials.order")}</Button>
+                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">{t("home.specials.order")}</Button>
                 </Link>
               </CardContent>
             </Card>
@@ -229,10 +228,10 @@ const Home = () => {
                 <h3 className="text-2xl font-serif font-semibold mb-3 text-primary">
                   {t("home.specials.sausage.title")}
                 </h3>
-                <p className="text-3xl font-bold text-accent mb-2">{t("home.specials.sausage.price")}</p>
+                <p className="text-3xl font-bold text-primary mb-2">{t("home.specials.sausage.price")}</p>
                 <p className="text-muted-foreground mb-4">{t("home.specials.sausage.desc")}</p>
                 <Link to="/order">
-                  <Button className="w-full">{t("home.specials.order")}</Button>
+                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">{t("home.specials.order")}</Button>
                 </Link>
               </CardContent>
             </Card>
