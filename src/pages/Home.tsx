@@ -83,7 +83,9 @@ const Home = () => {
         description="Slagerij John in Zwevezele biedt premium kwaliteitsvlees, huisgemaakte specialiteiten en online bestellen. Belgische en Roemeense vleeswaren van topkwaliteit."
         keywords="slagerij, kwaliteitsvlees, Zwevezele, online bestellen, huisgemaakte worst, BBQ vlees, verse vleeswaren"
         structuredData={structuredData}
-      />
+      >
+        <link rel="preload" as="image" href={heroImage} />
+      </SEO>
       {/* Hero Section */}
       <section
         className="relative h-[500px] md:h-[600px] flex items-start justify-center overflow-hidden"

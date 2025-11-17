@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
+import { ReactNode } from 'react';
 
 interface SEOProps {
   title: string;
@@ -8,6 +9,7 @@ interface SEOProps {
   image?: string;
   type?: string;
   structuredData?: object;
+  children?: ReactNode;
 }
 
 const SEO = ({ 
@@ -16,7 +18,8 @@ const SEO = ({
   keywords, 
   image = '/og-image.jpg',
   type = 'website',
-  structuredData 
+  structuredData,
+  children
 }: SEOProps) => {
   const location = useLocation();
   const baseUrl = 'https://slagerijjohn.be';
@@ -51,6 +54,9 @@ const SEO = ({
           {JSON.stringify(structuredData)}
         </script>
       )}
+      
+      {/* Additional custom head elements */}
+      {children}
     </Helmet>
   );
 };
