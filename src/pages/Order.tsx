@@ -177,6 +177,7 @@ const Order = () => {
         pickup_time: data.pickupTime,
         notes: data.notes || null,
         status: "pending",
+        user_id: user?.id || null,
       });
 
       if (error) throw error;
