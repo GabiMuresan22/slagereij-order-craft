@@ -5,7 +5,7 @@ const Footer = () => {
   const { t } = useLanguage();
 
   return (
-    <footer className="bg-accent text-accent-foreground mt-20">
+    <footer className="bg-background text-foreground mt-20">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Contact Info */}
@@ -13,15 +13,15 @@ const Footer = () => {
             <h3 className="text-xl font-serif font-semibold mb-4">{t('footer.contact')}</h3>
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 mt-1 flex-shrink-0" />
-                <p className="text-sm">
+                <MapPin className="w-5 h-5 mt-1 flex-shrink-0 text-primary" />
+                <p className="text-sm text-muted-foreground">
                   {t('contact.address.street')}<br />
                   {t('contact.address.city')}, {t('contact.address.country')}
                 </p>
               </div>
               <div className="flex items-center space-x-3">
-                <Phone className="w-5 h-5 flex-shrink-0" />
-                <a href="tel:+32466186457" className="text-sm hover:underline">
+                <Phone className="w-5 h-5 flex-shrink-0 text-primary" />
+                <a href="tel:+32466186457" className="text-sm text-muted-foreground hover:underline">
                   +32 466 18 64 57
                 </a>
               </div>
@@ -31,9 +31,9 @@ const Footer = () => {
           {/* Opening Hours */}
           <div>
             <h3 className="text-xl font-serif font-semibold mb-4">{t('footer.hours')}</h3>
-            <div className="space-y-2 text-sm">
+            <div className="space-y-2 text-sm text-muted-foreground">
               <div className="flex items-start space-x-3">
-                <Clock className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                <Clock className="w-5 h-5 mt-0.5 flex-shrink-0 text-primary" />
                 <div>
                   <p>{t('footer.hours.mon')}</p>
                   <p>{t('footer.hours.tue')}</p>
@@ -50,7 +50,7 @@ const Footer = () => {
           {/* About & Social Media */}
           <div>
             <h3 className="text-xl font-serif font-semibold mb-4">{t('footer.about.title')}</h3>
-            <p className="text-sm leading-relaxed mb-6">
+            <p className="text-sm leading-relaxed mb-6 text-muted-foreground">
               {t('footer.about.desc')}
             </p>
             
@@ -65,7 +65,7 @@ const Footer = () => {
                   className="hover:text-primary transition-colors"
                   aria-label="Facebook"
                 >
-                  <Facebook className="w-6 h-6" />
+                  <Facebook className="w-6 h-6 text-primary" />
                 </a>
                 <a 
                   href="https://www.tiktok.com/@traiteur.john" 
@@ -74,7 +74,7 @@ const Footer = () => {
                   className="hover:text-primary transition-colors"
                   aria-label="TikTok"
                 >
-                  <Clapperboard className="w-6 h-6" />
+                  <Clapperboard className="w-6 h-6 text-primary" />
                 </a>
                 <a 
                   href="https://www.google.com/maps/place/Bruggestraat+146A,+8750+Zwevezele"
@@ -83,14 +83,14 @@ const Footer = () => {
                   className="hover:text-primary transition-colors"
                   aria-label="Google Maps"
                 >
-                  <MapPinned className="w-6 h-6" />
+                  <MapPinned className="w-6 h-6 text-primary" />
                 </a>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-accent-foreground/20 mt-8 pt-8 text-center text-sm">
+        <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} {t('footer.about.title')}. {t('footer.rights')}</p>
         </div>
       </div>

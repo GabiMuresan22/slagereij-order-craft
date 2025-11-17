@@ -52,7 +52,7 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="bg-card border-b border-border sticky top-0 z-50 shadow-sm">
+    <nav className="bg-background border-b border-border sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
@@ -66,19 +66,37 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`text-base font-medium transition-colors hover:text-primary ${
-                  location.pathname === item.path
-                    ? "text-primary font-semibold"
-                    : "text-foreground"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              // Make "Order Online" a primary button
+              if (item.path === "/order") {
+                return (
+                  <Button
+                    key={item.path}
+                    asChild
+                    size="sm"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90"
+                  >
+                    <Link to={item.path}>
+                      {item.label}
+                    </Link>
+                  </Button>
+                );
+              }
+              
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`text-base font-medium transition-colors hover:text-primary ${
+                    location.pathname === item.path
+                      ? "text-primary font-semibold"
+                      : "text-foreground"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
             <Button
               variant="outline"
               size="sm"
@@ -182,20 +200,38 @@ const Navigation = () => {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <div className="md:hidden pb-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`block py-3 text-base font-medium transition-colors hover:text-primary ${
-                  location.pathname === item.path
-                    ? "text-primary font-semibold"
-                    : "text-foreground"
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              // Make "Order Online" a primary button in mobile too
+              if (item.path === "/order") {
+                return (
+                  <Button
+                    key={item.path}
+                    asChild
+                    className="w-full mb-2 bg-primary text-primary-foreground hover:bg-primary/90"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Link to={item.path}>
+                      {item.label}
+                    </Link>
+                  </Button>
+                );
+              }
+              
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`block py-3 text-base font-medium transition-colors hover:text-primary ${
+                    location.pathname === item.path
+                      ? "text-primary font-semibold"
+                      : "text-foreground"
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
             
             {/* Mobile Auth Link */}
             {!loading && user && (
