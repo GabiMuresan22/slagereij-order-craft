@@ -23,7 +23,7 @@ const translations = {
     
     // Home Page
     'home.hero.title': 'Kwaliteitsvlees',
-    'home.hero.subtitle': 'Traditioneel ambacht met moderne service',
+    'home.hero.subtitle': 'Traditioneel ambacht\nmet moderne service',
     'home.hero.cta': 'Bestel Nu Online',
     'home.features.online.title': 'Online Bestellen',
     'home.features.online.desc': 'Bestel gemakkelijk online en haal op wanneer het u uitkomt',
@@ -304,7 +304,7 @@ const translations = {
     
     // Home Page
     'home.hero.title': 'Carne de Calitate',
-    'home.hero.subtitle': 'Meșteșug tradițional cu servicii moderne',
+    'home.hero.subtitle': 'Meșteșug tradițional\ncu servicii moderne',
     'home.hero.cta': 'Comandă Acum Online',
     'home.features.online.title': 'Comandă Online',
     'home.features.online.desc': 'Comandă ușor online și ridică când îți convine',
