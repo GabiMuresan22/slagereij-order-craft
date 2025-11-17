@@ -68,11 +68,10 @@ const MyAccount = () => {
     if (!user) return;
 
     setLoadingOrders(true);
-    // Query by email for now - TODO: Add user_id column for better security
     const { data, error } = await supabase
       .from("orders")
       .select("*")
-      .eq("customer_email", user.email)
+      .eq("user_id", user.id)
       .order("created_at", { ascending: false });
 
     if (error) {
