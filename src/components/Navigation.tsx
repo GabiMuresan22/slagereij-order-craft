@@ -13,6 +13,17 @@ const Navigation = () => {
   const { language, setLanguage, t } = useLanguage();
   const { user, signOut, loading } = useAuth();
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Handle scroll for sticky navigation background
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Check if user is admin
   useEffect(() => {
@@ -51,8 +62,14 @@ const Navigation = () => {
     }
   };
 
+  const isHomePage = location.pathname === "/";
+
   return (
-    <nav className="bg-card border-b border-border sticky top-0 z-50 shadow-sm">
+    <nav className={`border-b sticky top-0 z-50 transition-all duration-300 ${
+      isHomePage && !isScrolled 
+        ? 'bg-transparent border-transparent' 
+        : 'bg-card/95 backdrop-blur-sm border-border shadow-sm'
+    }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
@@ -60,7 +77,7 @@ const Navigation = () => {
             <img 
               src={logo} 
               alt="Slager John Logo" 
-              className="h-14 md:h-16 w-auto"
+              className="h-16 md:h-20 w-auto drop-shadow-lg"
             />
           </Link>
 
@@ -70,11 +87,22 @@ const Navigation = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`text-base font-medium transition-colors hover:text-primary ${
+                className={`text-base font-medium transition-colors ${
+                  isHomePage && !isScrolled
+                    ? 'text-white hover:text-white/80 drop-shadow-lg'
+                    : 'text-foreground hover:text-primary'
+                } ${
                   location.pathname === item.path
-                    ? "text-primary font-semibold"
-                    : "text-foreground"
+                    ? isHomePage && !isScrolled 
+                      ? "font-bold text-white" 
+                      : "text-primary font-semibold"
+                    : ""
                 }`}
+                style={
+                  isHomePage && !isScrolled
+                    ? { textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }
+                    : {}
+                }
               >
                 {item.label}
               </Link>
@@ -83,7 +111,11 @@ const Navigation = () => {
               variant="outline"
               size="sm"
               onClick={toggleLanguage}
-              className="flex items-center gap-2"
+              className={`flex items-center gap-2 ${
+                isHomePage && !isScrolled
+                  ? 'bg-white/20 backdrop-blur-sm text-white border-white/40 hover:bg-white/30'
+                  : ''
+              }`}
             >
               <span className="text-lg">{language === 'nl' ? '🇳🇱' : '🇷🇴'}</span>
               {language.toUpperCase()}
@@ -98,7 +130,11 @@ const Navigation = () => {
                       variant="outline"
                       size="sm"
                       asChild
-                      className="flex items-center gap-2"
+                      className={`flex items-center gap-2 ${
+                        isHomePage && !isScrolled
+                          ? 'bg-white/20 backdrop-blur-sm text-white border-white/40 hover:bg-white/30'
+                          : ''
+                      }`}
                     >
                       <Link to="/my-account">
                         <UserCircle className="h-4 w-4" />
@@ -110,7 +146,11 @@ const Navigation = () => {
                         variant="outline"
                         size="sm"
                         asChild
-                        className="flex items-center gap-2"
+                        className={`flex items-center gap-2 ${
+                          isHomePage && !isScrolled
+                            ? 'bg-white/20 backdrop-blur-sm text-white border-white/40 hover:bg-white/30'
+                            : ''
+                        }`}
                       >
                         <Link to="/admin">
                           <Shield className="h-4 w-4" />
@@ -122,7 +162,11 @@ const Navigation = () => {
                       variant="ghost"
                       size="sm"
                       onClick={() => signOut()}
-                      className="flex items-center gap-2"
+                      className={`flex items-center gap-2 ${
+                        isHomePage && !isScrolled
+                          ? 'text-white hover:bg-white/20'
+                          : ''
+                      }`}
                     >
                       <LogOut className="h-4 w-4" />
                       <span>{t('auth.logout')}</span>
@@ -133,7 +177,11 @@ const Navigation = () => {
                     variant="outline"
                     size="sm"
                     asChild
-                    className="flex items-center gap-2"
+                    className={`flex items-center gap-2 ${
+                      isHomePage && !isScrolled
+                        ? 'bg-white/20 backdrop-blur-sm text-white border-white/40 hover:bg-white/30'
+                        : ''
+                    }`}
                   >
                     <Link to="/auth">
                       <User className="h-4 w-4" />

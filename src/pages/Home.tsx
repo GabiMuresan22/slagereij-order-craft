@@ -88,34 +88,43 @@ const Home = () => {
       </SEO>
       {/* Hero Section */}
       <section
-        className="relative h-[500px] md:h-[600px] flex items-start justify-center overflow-hidden"
+        className="relative h-[600px] md:h-[700px] flex items-center justify-center overflow-hidden -mt-20"
         style={{
           backgroundImage: `url(${heroImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        {/* Gradient overlay - dark to transparent from top to bottom */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/65 to-transparent" />
+        {/* Dark overlay for better text contrast - 45% opacity */}
+        <div className="absolute inset-0 bg-black/45" />
 
-        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto mt-8 md:mt-16">
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
           <h1
-            className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold text-white mb-4 md:mb-6"
-            style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.5)" }}
+            className="text-5xl sm:text-6xl md:text-8xl font-serif font-extrabold text-white mb-6 md:mb-8 tracking-tight"
+            style={{ textShadow: "2px 4px 8px rgba(0,0,0,0.8)" }}
           >
-            {t("home.hero.title")}
+            {t("home.hero.title").toUpperCase()}
           </h1>
           <p
-            className="text-lg sm:text-xl md:text-2xl text-white mb-6 md:mb-8 font-light"
-            style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.5)" }}
+            className="text-xl sm:text-2xl md:text-3xl text-white mb-8 md:mb-12 font-sans uppercase tracking-wider font-light"
+            style={{ textShadow: "2px 2px 6px rgba(0,0,0,0.8)", letterSpacing: "0.15em" }}
           >
             {t("home.hero.subtitle")}
           </p>
           <Link to="/order">
             <Button
               size="lg"
-              variant="secondary"
-              className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 font-semibold"
+              className="text-base sm:text-lg px-8 sm:px-10 py-6 sm:py-7 font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              style={{ 
+                backgroundColor: "#8a1c1c",
+                color: "white",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#6d1616";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "#8a1c1c";
+              }}
             >
               {t("home.hero.cta")}
             </Button>
