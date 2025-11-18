@@ -88,17 +88,17 @@ const Home = () => {
       </SEO>
       {/* Hero Section */}
       <section
-        className="relative h-[500px] md:h-[600px] flex items-start justify-center overflow-hidden"
+        className="relative h-[550px] md:h-[650px] flex items-start justify-center overflow-hidden"
         style={{
           backgroundImage: `url(${heroImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center top",
         }}
       >
-        {/* Enhanced gradient overlay - darker at top for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/40 to-transparent" />
+        {/* Enhanced gradient overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/45 to-transparent" />
 
-        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto mt-8 md:mt-16">
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto mt-16 md:mt-24">
           <h1
             className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold text-white mb-4 md:mb-6"
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
@@ -114,8 +114,7 @@ const Home = () => {
           <Link to="/order">
             <Button
               size="lg"
-              className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 font-semibold hover:opacity-90 transition-opacity"
-              style={{ backgroundColor: "#C5A059", color: "#1a1a1a" }}
+              className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-all"
             >
               {t("home.hero.cta")}
             </Button>
@@ -126,10 +125,10 @@ const Home = () => {
       {/* Christmas Menu Section */}
       <section className="py-16 bg-gradient-to-b from-primary/5 to-background">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-center mb-4 text-foreground">
+          <h2 className="text-3xl md:text-4xl font-serif font-bold text-center mb-3 text-foreground">
             {t('home.christmas.title')}
           </h2>
-          <p className="text-center text-muted-foreground mb-12 text-lg">{t('home.christmas.period')}</p>
+          <p className="text-center text-muted-foreground mb-12 text-base md:text-lg">{t('home.christmas.period')}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             <Card className="overflow-hidden hover:shadow-2xl transition-shadow border-primary/20">
