@@ -18,6 +18,7 @@ import gallery5 from "@/assets/gallery-5.webp";
 import gallery6 from "@/assets/gallery-6.webp";
 import gallery7 from "@/assets/gallery-7.webp";
 import storefront from "@/assets/storefront.webp";
+import teamPortrait from "@/assets/team-portrait.jpg";
 
 const About = () => {
   const { t } = useLanguage();
@@ -239,6 +240,18 @@ const About = () => {
           <h2 className="text-4xl font-bold mb-8 text-primary">
             {t('about.team.title')}
           </h2>
+          
+          {/* Team Portrait */}
+          <div className="mb-8">
+            <Card className="border-border overflow-hidden">
+              <img 
+                src={teamPortrait} 
+                alt="John and his team in the butcher shop" 
+                className="w-full h-auto object-cover"
+              />
+            </Card>
+          </div>
+
           <Card className="bg-muted/30 border-border">
             <CardContent className="p-8 md:p-12 text-center">
               <h3 className="text-2xl font-bold mb-2 text-foreground">
