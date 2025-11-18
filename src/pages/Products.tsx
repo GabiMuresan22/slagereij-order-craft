@@ -6,6 +6,8 @@ import tomatoImage from "@/assets/tomahawk-steaks.webp";
 import porkMariImage from "@/assets/pork-marinated.webp";
 import poultryImage from "@/assets/roasted-chicken.webp";
 import specialtyImage from "@/assets/specialty-platter.webp";
+import productBuffetSpread from "@/assets/product-buffet-spread.jpg";
+import productWrappedSandwiches from "@/assets/product-wrapped-sandwiches.jpg";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema } from "@/lib/structuredData";
@@ -201,6 +203,29 @@ const Products = () => {
               </CardContent>
             </div>
           </Card>
+        </section>
+
+        {/* Product Gallery */}
+        <section className="mb-20">
+          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-8 text-center text-primary">
+            Onze Producten in Beeld
+          </h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="relative overflow-hidden rounded-lg group hover:shadow-2xl transition-all duration-300">
+              <img
+                src={productBuffetSpread}
+                alt="Uitgebreide buffet spread met verse salades, donuts en specialiteiten"
+                className="w-full h-[400px] object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="relative overflow-hidden rounded-lg group hover:shadow-2xl transition-all duration-300">
+              <img
+                src={productWrappedSandwiches}
+                alt="Kleurrijke wraps en broodjes platter"
+                className="w-full h-[400px] object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          </div>
         </section>
 
         {/* Final CTA */}
