@@ -102,7 +102,7 @@ const About = () => {
 
             <Card className="border-border hover:shadow-lg transition-shadow bg-muted/30">
               <CardContent className="p-8">
-                <Globe className="w-12 h-12 mb-4 text-accent mx-auto" />
+                <Globe className="w-12 h-12 mb-4 text-primary mx-auto" />
                 <h3 className="text-2xl font-bold mb-3">{t('about.values.culture.title')}</h3>
                 <p className="text-foreground/80">
                   {t('about.values.culture.desc')}
