@@ -1,8 +1,25 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema, getLocalBusinessSchema } from "@/lib/structuredData";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { toast } from "sonner";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+
+const contactFormSchema = z.object({
+  name: z.string().trim().min(2, { message: "Name must be at least 2 characters" }).max(100),
+  email: z.string().trim().email({ message: "Invalid email address" }).max(255),
+  phone: z.string().trim().min(10, { message: "Phone number must be at least 10 characters" }).max(20),
+  message: z.string().trim().min(10, { message: "Message must be at least 10 characters" }).max(1000),
+});
+
+type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 const Contact = () => {
   const { t } = useLanguage();
@@ -11,6 +28,22 @@ const Contact = () => {
     { name: "Home", url: "/" },
     { name: "Contact", url: "/contact" },
   ]);
+
+  const form = useForm<ContactFormValues>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    },
+  });
+
+  const onSubmit = (data: ContactFormValues) => {
+    console.log("Contact form submitted:", data);
+    toast.success("Bericht verzonden! We nemen zo snel mogelijk contact met u op.");
+    form.reset();
+  };
 
   return (
     <div className="min-h-screen py-12">
@@ -28,10 +61,10 @@ const Contact = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
-          {/* Contact Information */}
+          {/* Contact Information - Merged Card */}
           <div className="space-y-6">
             <Card className="border-border">
-              <CardContent className="p-6">
+              <CardContent className="p-8 space-y-6">
                 <div className="flex items-start space-x-4">
                   <MapPin className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
@@ -45,46 +78,42 @@ const Contact = () => {
                     </p>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
 
-            <Card className="border-border">
-              <CardContent className="p-6">
-                <div className="flex items-start space-x-4">
-                  <Phone className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">{t("contact.phone.title")}</h3>
-                    <a href="tel:+32466186457" className="text-muted-foreground hover:text-primary transition-colors">
-                      +32 466 18 64 57
-                    </a>
+                <div className="border-t border-border pt-6">
+                  <div className="flex items-start space-x-4">
+                    <Phone className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                    <div>
+                      <h3 className="font-semibold text-lg mb-2">{t("contact.phone.title")}</h3>
+                      <a href="tel:+32466186457" className="text-muted-foreground hover:text-primary transition-colors text-lg">
+                        +32 466 18 64 57
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-border pt-6">
+                  <div className="flex items-start space-x-4">
+                    <Mail className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                    <div>
+                      <h3 className="font-semibold text-lg mb-2">{t("contact.email.title")}</h3>
+                      <a
+                        href="mailto:contact@slagerij-john.be"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
+                        contact@slagerij-john.be
+                      </a>
+                    </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             <Card className="border-border">
-              <CardContent className="p-6">
-                <div className="flex items-start space-x-4">
-                  <Mail className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">{t("contact.email.title")}</h3>
-                    <a
-                      href="mailto:contact@slagerij-john.be"
-                      className="text-muted-foreground hover:text-primary transition-colors"
-                    >
-                      contact@slagerij-john.be
-                    </a>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-border">
-              <CardContent className="p-6">
+              <CardContent className="p-8">
                 <div className="flex items-start space-x-4">
                   <Clock className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-lg mb-2">{t("contact.hours.title")}</h3>
+                    <h3 className="font-semibold text-lg mb-4">{t("contact.hours.title")}</h3>
                     <div className="text-muted-foreground space-y-1">
                       <p>{t("contact.hours.mon")}</p>
                       <p>{t("contact.hours.tue")}</p>
@@ -100,31 +129,106 @@ const Contact = () => {
             </Card>
           </div>
 
-          {/* Map */}
-          <Card className="border-border overflow-hidden h-[600px]">
-            <CardContent className="p-0 h-full relative">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2507.8!2d3.277!3d51.059!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c34b4c0b5e5e5f%3A0x5e5e5e5e5e5e5e5e!2sBruggestraat%20146A%2C%208750%20Zwevezele!5e0!3m2!1snl!2sbe!4v1234567890"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Slagerij John Location"
-              />
-              <a
-                href="https://www.google.com/maps/place/Bruggestraat+146A,+8750+Zwevezele"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute bottom-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg shadow-lg hover:bg-primary/90 transition-colors flex items-center space-x-2"
-              >
-                <MapPin className="w-4 h-4" />
-                <span className="font-semibold">Open in Google Maps</span>
-              </a>
+          {/* Contact Form */}
+          <Card className="border-border">
+            <CardContent className="p-8">
+              <h3 className="text-2xl font-semibold mb-6">Stuur ons een bericht</h3>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Naam</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Uw naam" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="uw.email@voorbeeld.be" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Telefoon</FormLabel>
+                        <FormControl>
+                          <Input type="tel" placeholder="+32 466 18 64 57" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Bericht</FormLabel>
+                        <FormControl>
+                          <Textarea 
+                            placeholder="Hoe kunnen we u helpen?" 
+                            className="min-h-[120px]"
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <Button type="submit" className="w-full" size="lg">
+                    <Send className="w-4 h-4 mr-2" />
+                    Verzenden
+                  </Button>
+                </form>
+              </Form>
             </CardContent>
           </Card>
         </div>
+
+        {/* Full-width Map with Dark Mode */}
+        <Card className="border-border overflow-hidden max-w-6xl mx-auto mb-12">
+          <CardContent className="p-0 h-[500px] relative">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2507.8!2d3.277!3d51.059!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c34b4c0b5e5e5f%3A0x5e5e5e5e5e5e5e5e!2sBruggestraat%20146A%2C%208750%20Zwevezele!5e0!3m2!1snl!2sbe!4v1234567890&style=feature:all%7Celement:geometry%7Ccolor:0x242f3e&style=feature:all%7Celement:labels.text.stroke%7Ccolor:0x242f3e&style=feature:all%7Celement:labels.text.fill%7Ccolor:0x746855&style=feature:water%7Celement:geometry%7Ccolor:0x17263c&style=feature:road%7Celement:geometry%7Ccolor:0x38414e&style=feature:road%7Celement:geometry.stroke%7Ccolor:0x212a37"
+              width="100%"
+              height="100%"
+              style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg)' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Slagerij John Location"
+            />
+            <a
+              href="https://www.google.com/maps/place/Bruggestraat+146A,+8750+Zwevezele"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute bottom-4 right-4 bg-primary text-primary-foreground px-6 py-3 rounded-lg shadow-lg hover:bg-primary/90 transition-colors flex items-center space-x-2"
+            >
+              <MapPin className="w-5 h-5" />
+              <span className="font-semibold">Open in Google Maps</span>
+            </a>
+          </CardContent>
+        </Card>
 
         {/* Additional Info */}
         <Card className="bg-primary text-primary-foreground max-w-4xl mx-auto">
