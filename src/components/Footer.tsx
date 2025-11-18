@@ -2,9 +2,11 @@ import { MapPin, Phone, Clock, Facebook, Clapperboard, MapPinned } from "lucide-
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
+import { useBusinessHours } from "@/hooks/useBusinessHours";
 
 const Footer = () => {
   const { t } = useLanguage();
+  const { isOpen } = useBusinessHours();
 
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
   const today = new Date().getDay();
@@ -61,10 +63,21 @@ const Footer = () => {
 
           {/* Opening Hours */}
           <div>
-            <h3 className="text-xl font-serif font-semibold mb-4 flex items-center gap-2">
-              <Clock className="w-5 h-5 text-primary" />
-              {t('footer.hours')}
-            </h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-serif font-semibold flex items-center gap-2">
+                <Clock className="w-5 h-5 text-primary" />
+                {t('footer.hours')}
+              </h3>
+              <span 
+                className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                  isOpen 
+                    ? 'bg-green-500/20 text-green-600 dark:text-green-400' 
+                    : 'bg-red-500/20 text-red-600 dark:text-red-400'
+                }`}
+              >
+                {isOpen ? t('footer.status.open') : t('footer.status.closed')}
+              </span>
+            </div>
             <div className="space-y-1.5 text-sm">
               {days.map((day, index) => (
                 <div 

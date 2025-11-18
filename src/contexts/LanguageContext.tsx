@@ -208,6 +208,8 @@ const translations = {
     'footer.rights': 'Alle rechten voorbehouden.',
     'footer.privacy': 'Privacybeleid',
     'footer.terms': 'Algemene Voorwaarden',
+    'footer.status.open': 'Nu Open',
+    'footer.status.closed': 'Gesloten',
     
     // Auth
     'auth.title': 'Authenticatie',
@@ -499,6 +501,8 @@ const translations = {
     'footer.rights': 'Toate drepturile rezervate.',
     'footer.privacy': 'Politica de Confidențialitate',
     'footer.terms': 'Termeni și Condiții',
+    'footer.status.open': 'Deschis Acum',
+    'footer.status.closed': 'Închis',
     
     // Auth
     'auth.title': 'Autentificare',
