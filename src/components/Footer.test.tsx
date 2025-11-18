@@ -40,6 +40,11 @@ describe("Footer", () => {
     expect(phoneLink).toHaveAttribute("href", "tel:+32466186457");
   });
 
+  it("renders quick links navigation", () => {
+    render(<Footer />);
+    expect(screen.getByText(/footer.quickLinks/i)).toBeInTheDocument();
+  });
+
   it("renders social media links", () => {
     render(<Footer />);
     const facebookLink = screen.getByLabelText(/Facebook/i);
@@ -52,6 +57,12 @@ describe("Footer", () => {
     
     // Verify the social media heading text
     expect(screen.getByText(/footer.social/i)).toBeInTheDocument();
+  });
+
+  it("renders legal links", () => {
+    render(<Footer />);
+    expect(screen.getByText(/footer.privacy/i)).toBeInTheDocument();
+    expect(screen.getByText(/footer.terms/i)).toBeInTheDocument();
   });
 
   it("renders copyright with current year", () => {
