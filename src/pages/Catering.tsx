@@ -1,14 +1,16 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema } from "@/lib/structuredData";
-import gallery1 from "@/assets/gallery-1.webp";
-import gallery2 from "@/assets/gallery-2.webp";
-import gallery3 from "@/assets/gallery-3.webp";
-import gallery4 from "@/assets/gallery-4.webp";
-import gallery5 from "@/assets/gallery-5.webp";
-import gallery6 from "@/assets/gallery-6.webp";
-import gallery7 from "@/assets/gallery-7.webp";
-import teamWorking from "@/assets/team-working.jpg";
+import cateringChef from "@/assets/catering-chef-grilling.jpg";
+import cateringSalads from "@/assets/catering-salads.jpg";
+import cateringSausages from "@/assets/catering-sausages.jpg";
+import cateringPorkChops from "@/assets/catering-pork-chops.jpg";
+import cateringRibs from "@/assets/catering-ribs.jpg";
+import cateringCharcuterie from "@/assets/catering-charcuterie.jpg";
+import cateringPartySpread from "@/assets/catering-party-spread.jpg";
+import cateringBeefSteak from "@/assets/catering-beef-steak.jpg";
+import cateringGrainBowls from "@/assets/catering-grain-bowls.jpg";
+import cateringTacos from "@/assets/catering-tacos.jpg";
 
 export default function Catering() {
   const { t } = useLanguage();
@@ -19,14 +21,16 @@ export default function Catering() {
   ]);
 
   const galleryImages = [
-    { src: teamWorking, alt: "Catering team at work" },
-    { src: gallery1, alt: "Catering event setup" },
-    { src: gallery2, alt: "Food display" },
-    { src: gallery3, alt: "Catering service" },
-    { src: gallery4, alt: "Event catering" },
-    { src: gallery5, alt: "BBQ catering" },
-    { src: gallery6, alt: "Food preparation" },
-    { src: gallery7, alt: "Catering products" },
+    { src: cateringChef, alt: "Professional chef grilling at outdoor catering event" },
+    { src: cateringCharcuterie, alt: "Artisanal charcuterie platter with premium meats and accompaniments" },
+    { src: cateringRibs, alt: "Perfectly grilled spare ribs with smoky glaze" },
+    { src: cateringPorkChops, alt: "Juicy grilled pork chops on professional BBQ" },
+    { src: cateringSausages, alt: "Fresh homemade sausages grilling to perfection" },
+    { src: cateringSalads, alt: "Fresh colorful salad bowls with vegetables" },
+    { src: cateringPartySpread, alt: "Complete party catering spread with tacos and sides" },
+    { src: cateringTacos, alt: "Artfully arranged taco platter with fresh toppings" },
+    { src: cateringGrainBowls, alt: "Gourmet grain bowls with salmon and vegetables" },
+    { src: cateringBeefSteak, alt: "Premium beef steak with rosemary and peppercorns" },
   ];
 
   return (
