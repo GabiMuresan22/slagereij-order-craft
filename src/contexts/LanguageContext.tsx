@@ -72,11 +72,11 @@ const translations = {
     
     // Catering Page
     'catering.title': 'Traiteur',
-    'catering.subtitle': 'Wij verzorgen uw feestmaaltijden van A tot Z!',
-    'catering.p1': 'Ons ervaren traiteursteam verzorgt uw maaltijden tot in de kleinste details, zowel voor het huiselijk vriendenfeestje als het massale wijkfeest.',
-    'catering.p2': 'De voorbereiding alsook de opruiming worden door onze diensten verzorgd.',
-    'catering.p3': 'mobiele barbecue-units, bestek, bedieningspersoneel, ...',
-    'catering.p4': 'Ook afhalen is mogelijk.',
+    'catering.subtitle': 'Zorgeloos genieten van elke gelegenheid',
+    'catering.p1': 'Of u nu een intiem vriendenfeest organiseert of een groot wijkfeest: ons ervaren traiteursteam verzorgt uw maaltijden tot in de puntjes. Wij nemen de volledige organisatie uit handen, zodat u tijd heeft voor uw gasten.',
+    'catering.p2': 'Onze totaalservice omvat:\n\nCulinaire verwennerij: Van voorbereiding tot bediening met onze professionele mobiele barbecue-units.',
+    'catering.p3': 'Volledige ontzorging: Wij regelen het bestek, het bedieningspersoneel én de opruiming achteraf.',
+    'catering.p4': 'Flexibiliteit: Kiest u voor full-service op locatie of haalt u de gerechten liever af? Alles is bespreekbaar.',
     'catering.gallery.title': 'Onze Traiteurservice',
     
     // Products Page
@@ -353,11 +353,11 @@ const translations = {
     
     // Catering Page
     'catering.title': 'Catering',
-    'catering.subtitle': 'Ne ocupăm de mesele dvs. festive de la A la Z!',
-    'catering.p1': 'Echipa noastră experimentată de catering se ocupă de mesele dvs. până în cele mai mici detalii, atât pentru petrecerea casnică cu prietenii, cât și pentru sărbătoarea masivă a cartierului.',
-    'catering.p2': 'Atât pregătirea, cât și curățarea sunt asigurate de serviciile noastre.',
-    'catering.p3': 'unități mobile de grătar, tacâmuri, personal de servire, ...',
-    'catering.p4': 'De asemenea, ridicarea este posibilă.',
+    'catering.subtitle': 'Bucurați-vă fără griji de fiecare ocazie',
+    'catering.p1': 'Fie că organizați o petrecere intimă cu prietenii sau o mare sărbătoare de cartier: echipa noastră experimentată de catering se ocupă de mesele dumneavoastră până în cele mai mici detalii. Ne asumăm întreaga organizare, astfel încât să aveți timp pentru invitații dumneavoastră.',
+    'catering.p2': 'Serviciul nostru complet include:\n\nRăsfăț culinar: De la pregătire până la servire cu unitățile noastre mobile profesionale de grătar.',
+    'catering.p3': 'Servicii complete: Asigurăm tacâmurile, personalul de servire și curățarea după eveniment.',
+    'catering.p4': 'Flexibilitate: Preferați serviciul complet la locație sau ridicați mâncarea? Totul este negociabil.',
     'catering.gallery.title': 'Serviciul Nostru de Catering',
     
     // Products Page
