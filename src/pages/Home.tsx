@@ -96,25 +96,25 @@ const Home = () => {
         }}
       >
         {/* Enhanced gradient overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/45 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-transparent" />
 
-        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto mt-16 md:mt-24">
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto mt-20 md:mt-28">
           <h1
-            className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold text-white mb-4 md:mb-6"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
+            className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold text-white mb-6 md:mb-8"
+            style={{ textShadow: "2px 2px 8px rgba(0,0,0,0.9)" }}
           >
             {t("home.hero.title")}
           </h1>
           <p
-            className="text-lg sm:text-xl md:text-2xl text-white mb-8 md:mb-10 font-light leading-relaxed"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)", whiteSpace: "pre-line" }}
+            className="text-lg sm:text-xl md:text-2xl text-white mb-10 md:mb-12 font-medium leading-relaxed"
+            style={{ textShadow: "2px 2px 6px rgba(0,0,0,0.9)", whiteSpace: "pre-line" }}
           >
             {t("home.hero.subtitle")}
           </p>
           <Link to="/order">
             <Button
               size="lg"
-              className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-all"
+              className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-all min-h-[48px] shadow-lg border-2 border-primary-foreground/20"
             >
               {t("home.hero.cta")}
             </Button>

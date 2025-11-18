@@ -13,6 +13,9 @@ export default {
       },
     },
     extend: {
+      screens: {
+        'lg': '950px',
+      },
       fontFamily: {
         'serif': ['Playfair Display', 'serif'],
         'sans': ['Roboto', 'sans-serif'],
