@@ -101,3 +101,20 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* Logo blending styles for dark backgrounds */
+@layer components {
+  /* In light mode, keep the original logo appearance */
+  .logo-blend {
+    filter: none;
+    mix-blend-mode: normal;
+  }
+
+  /* In dark mode, apply blending effects */
+  .dark .logo-blend {
+    /* Invert colors: black logo becomes white, white background becomes black */
+    filter: invert(1) sepia(1) saturate(3) hue-rotate(5deg);
+    /* Use screen blend mode to make the black background transparent */
+    mix-blend-mode: screen;
+  }
+}

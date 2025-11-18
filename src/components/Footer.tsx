@@ -94,7 +94,7 @@ const Footer = () => {
           {/* About & Social Media */}
           <div>
             <div className="mb-4">
-              <img src={logo} alt={t('footer.about.title')} className="h-12 w-auto mb-3" />
+              <img src={logo} alt={t('footer.about.title')} className="h-12 w-auto mb-3 logo-blend" />
             </div>
             <p className="text-sm leading-relaxed mb-6 text-muted-foreground italic">
               {t('footer.about.desc')}
