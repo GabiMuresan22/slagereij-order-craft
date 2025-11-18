@@ -117,9 +117,11 @@ const Products = () => {
                         </li>
                       ))}
                     </ul>
-                    <Button className="w-full md:w-auto">
-                      {t(category.ctaKey)}
-                    </Button>
+                    <Link to="/order">
+                      <Button className="w-full md:w-auto">
+                        {t(category.ctaKey)}
+                      </Button>
+                    </Link>
                   </CardContent>
                 </div>
               </Card>
@@ -194,9 +196,11 @@ const Products = () => {
                     </ul>
                   </div>
 
-                  <Button className="w-full md:w-auto">
-                    {t('products.specialties.cta')}
-                  </Button>
+                  <Link to="/order">
+                    <Button className="w-full md:w-auto">
+                      {t('products.specialties.cta')}
+                    </Button>
+                  </Link>
                 </div>
               </CardContent>
             </div>
