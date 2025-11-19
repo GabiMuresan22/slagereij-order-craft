@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { CalendarIcon, ShoppingCart, Loader2 } from "lucide-react";
+import { CalendarIcon, ShoppingCart, Loader2, CheckCircle2, MessageCircle } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -209,12 +209,11 @@ const Order = () => {
 
       toast({
         title: t('order.success.title'),
-        description: "Uw bestelling is succesvol geplaatst! U ontvangt een bevestigingsmail.",
+        description: "Uw bestelling is succesvol geplaatst!",
       });
 
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
+      // Move to success step instead of navigating away
+      setStep(4);
     } catch (error) {
       console.error("Error submitting order:", error);
       toast({
@@ -589,6 +588,51 @@ const Order = () => {
             )}
           </form>
         </Form>
+
+        {/* Step 4: Order Confirmation & WhatsApp */}
+        {step === 4 && (
+          <Card className="border-border bg-green-50/50 dark:bg-green-900/10">
+            <CardHeader>
+              <CardTitle className="text-2xl font-serif text-center text-green-600">
+                {t('order.success.title')}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6 text-center">
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                  <CheckCircle2 className="w-8 h-8 text-green-600" />
+                </div>
+              </div>
+              
+              <p className="text-lg">
+                Bedankt voor uw bestelling, {form.getValues().customerName}!
+              </p>
+              <p className="text-muted-foreground">
+                We hebben u een bevestigingsmail gestuurd. 
+                Wilt u ons ook direct op de hoogte brengen via WhatsApp?
+              </p>
+
+              <div className="flex flex-col gap-3 max-w-sm mx-auto mt-6">
+                <Button 
+                  onClick={() => sendWhatsAppConfirmation(form.getValues())}
+                  className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-bold"
+                  size="lg"
+                >
+                  <MessageCircle className="mr-2 h-5 w-5" />
+                  Verstuur via WhatsApp
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  onClick={() => navigate("/")}
+                  className="w-full"
+                >
+                  Terug naar Home
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );
