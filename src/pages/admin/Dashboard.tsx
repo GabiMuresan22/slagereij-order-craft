@@ -775,8 +775,19 @@ export default function AdminDashboard() {
                   </Select>
                 </div>
 
-                {/* Print Button */}
-                <div className="pt-4 border-t">
+                {/* Action Buttons */}
+                <div className="pt-4 border-t space-y-2">
+                  <Button
+                    onClick={() => {
+                      openWhatsAppDialog(selectedOrder);
+                      setSelectedOrder(null);
+                    }}
+                    className="w-full bg-green-600 hover:bg-green-700"
+                  >
+                    <MessageCircle className="h-4 w-4 mr-2" />
+                    Send WhatsApp Update
+                  </Button>
+                  
                   <Button
                     onClick={() => printOrder(selectedOrder)}
                     variant="outline"
