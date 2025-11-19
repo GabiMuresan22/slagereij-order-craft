@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Flame, ChefHat, ArrowRight } from "lucide-react";
 import displayCaseImage from "@/assets/display-case.webp";
 import tomatoImage from "@/assets/tomahawk-steaks.webp";
 import porkMariImage from "@/assets/pork-marinated.webp";
@@ -131,74 +132,84 @@ const Products = () => {
 
         {/* Specialties Section */}
         <section className="mb-20">
-          <Card className="overflow-hidden border-border">
+          <Card className="overflow-hidden border-border hover:shadow-2xl transition-all duration-300">
             <div className="grid md:grid-cols-2 gap-0">
               <div 
-                className="h-80 md:h-auto bg-cover bg-center"
-                style={{ backgroundImage: `url(${specialtyImage})` }}
+                className="h-80 md:h-[600px] bg-cover bg-center order-first"
+                style={{ backgroundImage: `url(${specialtyImage})`, aspectRatio: '16/9' }}
                 role="img"
                 aria-label={t('products.specialties.title')}
               />
-              <CardContent className="p-8 md:p-12">
+              <CardContent className="p-10 md:px-16 md:py-12 flex flex-col justify-center order-last">
+                {/* Split heading with eyebrow text */}
+                <p className="text-sm md:text-base uppercase tracking-wider text-primary/80 mb-2 font-semibold">
+                  Onze Specialiteiten
+                </p>
                 <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-primary">
-                  {t('products.specialties.title')}
+                  Smaakmakers van Slager John
                 </h2>
-                <p className="text-lg text-muted-foreground mb-8">
+                <p className="text-lg text-[#E0E0E0] mb-8 leading-relaxed">
                   {t('products.specialties.subtitle')}
                 </p>
                 
                 <div className="space-y-8">
                   <div>
-                    <h3 className="font-bold text-xl mb-4 text-primary">
+                    <h3 className="font-bold text-xl mb-5 text-primary flex items-center gap-2">
+                      <ChefHat className="w-5 h-5" />
                       {t('products.specialties.homemade.title')}
                     </h3>
-                    <ul className="space-y-3">
-                      <li className="flex items-start text-foreground">
-                        <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-2 flex-shrink-0" />
+                    <ul className="space-y-4">
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: '1.6' }}>
+                        <ChefHat className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
                         <span>{t('products.specialties.homemade.item1')}</span>
                       </li>
-                      <li className="flex items-start text-foreground">
-                        <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-2 flex-shrink-0" />
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: '1.6' }}>
+                        <ChefHat className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
                         <span>{t('products.specialties.homemade.item2')}</span>
                       </li>
-                      <li className="flex items-start text-foreground">
-                        <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-2 flex-shrink-0" />
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: '1.6' }}>
+                        <ChefHat className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
                         <span>{t('products.specialties.homemade.item3')}</span>
                       </li>
-                      <li className="flex items-start text-foreground">
-                        <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-2 flex-shrink-0" />
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: '1.6' }}>
+                        <ChefHat className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
                         <span>{t('products.specialties.homemade.item4')}</span>
                       </li>
                     </ul>
                   </div>
 
                   <div>
-                    <h3 className="font-bold text-xl mb-4 text-primary">
+                    <h3 className="font-bold text-xl mb-5 text-primary flex items-center gap-2">
+                      <Flame className="w-5 h-5" />
                       {t('products.specialties.bbq.title')}
                     </h3>
-                    <ul className="space-y-3">
-                      <li className="flex items-start text-foreground">
-                        <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-2 flex-shrink-0" />
+                    <ul className="space-y-4">
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: '1.6' }}>
+                        <Flame className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
                         <span>{t('products.specialties.bbq.item1')}</span>
                       </li>
-                      <li className="flex items-start text-foreground">
-                        <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-2 flex-shrink-0" />
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: '1.6' }}>
+                        <Flame className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
                         <span>{t('products.specialties.bbq.item2')}</span>
                       </li>
-                      <li className="flex items-start text-foreground">
-                        <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-2 flex-shrink-0" />
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: '1.6' }}>
+                        <Flame className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
                         <span>{t('products.specialties.bbq.item3')}</span>
                       </li>
-                      <li className="flex items-start text-foreground">
-                        <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-2 flex-shrink-0" />
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: '1.6' }}>
+                        <Flame className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
                         <span>{t('products.specialties.bbq.item4')}</span>
                       </li>
                     </ul>
                   </div>
 
-                  <Link to="/order">
-                    <Button className="w-full md:w-auto">
+                  <Link to="/order" className="inline-block">
+                    <Button 
+                      size="lg"
+                      className="w-full md:w-auto px-8 py-6 text-lg font-semibold hover:shadow-lg transition-all duration-300 group"
+                    >
                       {t('products.specialties.cta')}
+                      <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
                 </div>
