@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, PackageCheck, Clock, CheckCircle2, XCircle, Phone, Mail, Calendar, StickyNote, MessageCircle, Settings } from 'lucide-react';
+import { Loader2, PackageCheck, Clock, CheckCircle2, XCircle, Phone, Mail, Calendar, StickyNote, MessageCircle, Settings, Printer } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import {
@@ -300,6 +300,171 @@ export default function AdminDashboard() {
       toast.error(error.message || 'Failed to update template');
       console.error('Error updating template:', error);
     }
+  };
+
+  const printOrder = (order: Order) => {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      toast.error('Please allow popups to print orders');
+      return;
+    }
+
+    const printContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Order #${order.id.slice(0, 8)}</title>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              max-width: 800px;
+              margin: 40px auto;
+              padding: 20px;
+              color: #000;
+            }
+            h1 {
+              text-align: center;
+              color: #8B4513;
+              margin-bottom: 30px;
+            }
+            .section {
+              margin-bottom: 30px;
+              padding: 15px;
+              border: 1px solid #ddd;
+              border-radius: 8px;
+            }
+            .section h2 {
+              margin-top: 0;
+              color: #8B4513;
+              font-size: 18px;
+              border-bottom: 2px solid #8B4513;
+              padding-bottom: 10px;
+            }
+            .info-row {
+              display: flex;
+              margin-bottom: 10px;
+            }
+            .info-label {
+              font-weight: bold;
+              width: 150px;
+            }
+            .items-table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-top: 10px;
+            }
+            .items-table th,
+            .items-table td {
+              padding: 10px;
+              text-align: left;
+              border-bottom: 1px solid #ddd;
+            }
+            .items-table th {
+              background-color: #f5f5f5;
+              font-weight: bold;
+            }
+            .status-badge {
+              display: inline-block;
+              padding: 5px 15px;
+              border-radius: 20px;
+              font-weight: bold;
+              text-transform: uppercase;
+            }
+            .status-pending { background-color: #fef3c7; color: #92400e; }
+            .status-confirmed { background-color: #dbeafe; color: #1e40af; }
+            .status-ready { background-color: #d1fae5; color: #065f46; }
+            .status-completed { background-color: #e5e7eb; color: #374151; }
+            .status-cancelled { background-color: #fee2e2; color: #991b1b; }
+            @media print {
+              body { margin: 0; padding: 20px; }
+            }
+          </style>
+        </head>
+        <body>
+          <h1>Slagerij John - Order Details</h1>
+          
+          <div class="section">
+            <h2>Order Information</h2>
+            <div class="info-row">
+              <span class="info-label">Order ID:</span>
+              <span>#${order.id.slice(0, 8)}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Order Date:</span>
+              <span>${format(new Date(order.created_at), 'dd/MM/yyyy HH:mm')}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Status:</span>
+              <span class="status-badge status-${order.status}">${order.status}</span>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Customer Information</h2>
+            <div class="info-row">
+              <span class="info-label">Name:</span>
+              <span>${order.customer_name}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Phone:</span>
+              <span>${order.customer_phone}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Email:</span>
+              <span>${order.customer_email}</span>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Order Items</h2>
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${order.order_items.map(item => `
+                  <tr>
+                    <td>${item.product}</td>
+                    <td>${item.quantity} ${item.unit}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="section">
+            <h2>Pickup Details</h2>
+            <div class="info-row">
+              <span class="info-label">Pickup Date:</span>
+              <span>${format(new Date(order.pickup_date), 'EEEE, dd MMMM yyyy')}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Pickup Time:</span>
+              <span>${order.pickup_time}</span>
+            </div>
+          </div>
+
+          ${order.notes ? `
+            <div class="section">
+              <h2>Notes</h2>
+              <p>${order.notes}</p>
+            </div>
+          ` : ''}
+
+          <script>
+            window.onload = function() {
+              window.print();
+            };
+          </script>
+        </body>
+      </html>
+    `;
+
+    printWindow.document.write(printContent);
+    printWindow.document.close();
   };
 
   const filteredOrders = statusFilter === 'all' 
@@ -608,6 +773,18 @@ export default function AdminDashboard() {
                       <SelectItem value="cancelled">Cancelled</SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+
+                {/* Print Button */}
+                <div className="pt-4 border-t">
+                  <Button
+                    onClick={() => printOrder(selectedOrder)}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    <Printer className="h-4 w-4 mr-2" />
+                    Print Order
+                  </Button>
                 </div>
               </div>
             )}
