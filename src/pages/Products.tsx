@@ -140,7 +140,7 @@ const Products = () => {
                 role="img"
                 aria-label={t('products.specialties.title')}
               />
-              <CardContent className="p-10 md:px-16 md:py-12 flex flex-col justify-center order-last">
+              <CardContent className="p-6 md:px-16 md:py-12 flex flex-col justify-center order-last">
                 {/* Split heading with eyebrow text */}
                 <p className="text-sm md:text-base uppercase tracking-wider text-primary/80 mb-2 font-semibold">
                   Onze Specialiteiten
@@ -148,7 +148,7 @@ const Products = () => {
                 <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-primary">
                   Smaakmakers van Slager John
                 </h2>
-                <p className="text-lg text-[#E0E0E0] mb-8 leading-relaxed">
+                <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
                   {t('products.specialties.subtitle')}
                 </p>
                 
