@@ -11,6 +11,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { supabase } from "@/integrations/supabase/client";
+import { useState } from "react";
 
 const contactFormSchema = z.object({
   name: z.string().trim().min(2, { message: "Name must be at least 2 characters" }).max(100),
@@ -23,6 +25,7 @@ type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 const Contact = () => {
   const { t } = useLanguage();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const breadcrumbData = getBreadcrumbSchema([
     { name: "Home", url: "/" },
@@ -39,10 +42,23 @@ const Contact = () => {
     },
   });
 
-  const onSubmit = (data: ContactFormValues) => {
-    console.log("Contact form submitted:", data);
-    toast.success("Bericht verzonden! We nemen zo snel mogelijk contact met u op.");
-    form.reset();
+  const onSubmit = async (data: ContactFormValues) => {
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase.functions.invoke('send-contact-email', {
+        body: data,
+      });
+
+      if (error) throw error;
+
+      toast.success("Bericht verzonden! We nemen zo snel mogelijk contact met u op.");
+      form.reset();
+    } catch (error: any) {
+      console.error("Error sending contact form:", error);
+      toast.error("Er is een fout opgetreden. Probeer het later opnieuw of bel ons direct.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -195,9 +211,9 @@ const Contact = () => {
                     )}
                   />
 
-                  <Button type="submit" className="w-full" size="lg">
+                  <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
                     <Send className="w-4 h-4 mr-2" />
-                    Verzenden
+                    {isSubmitting ? "Verzenden..." : "Verzenden"}
                   </Button>
                 </form>
               </Form>
