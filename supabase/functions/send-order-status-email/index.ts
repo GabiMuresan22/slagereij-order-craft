@@ -1,8 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "https://esm.sh/resend@3.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -220,16 +219,31 @@ const handler = async (req: Request): Promise<Response> => {
     const { customerEmail } = requestData;
     const emailContent = getEmailContent(requestData);
 
-    const emailResponse = await resend.emails.send({
-      from: "Slagerij John <onboarding@resend.dev>",
-      to: [customerEmail],
-      subject: emailContent.subject,
-      html: emailContent.html,
+    // Use direct fetch to Resend API instead of SDK
+    const emailResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "Slagerij John <onboarding@resend.dev>",
+        to: [customerEmail],
+        subject: emailContent.subject,
+        html: emailContent.html,
+      }),
     });
 
-    console.log("Email sent successfully:", emailResponse);
+    if (!emailResponse.ok) {
+      const errorText = await emailResponse.text();
+      console.error("Resend API error:", errorText);
+      throw new Error(`Failed to send email: ${errorText}`);
+    }
 
-    return new Response(JSON.stringify(emailResponse), {
+    const emailData = await emailResponse.json();
+    console.log("Email sent successfully:", emailData);
+
+    return new Response(JSON.stringify(emailData), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
