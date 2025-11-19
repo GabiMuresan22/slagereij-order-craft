@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, PackageCheck, Clock, CheckCircle2, XCircle, Phone, Mail, Calendar, StickyNote } from 'lucide-react';
+import { Loader2, PackageCheck, Clock, CheckCircle2, XCircle, Phone, Mail, Calendar, StickyNote, MessageCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import {
@@ -205,6 +205,30 @@ export default function AdminDashboard() {
     }
   };
 
+  // Send WhatsApp status update
+  const sendWhatsAppStatus = (order: Order) => {
+    // Strip non-numeric characters for the link
+    const cleanPhone = order.customer_phone.replace(/[^0-9]/g, '');
+    
+    let message = '';
+    switch (order.status) {
+      case 'ready':
+        message = `Hallo ${order.customer_name}, uw bestelling bij Slagerij John is klaar om afgehaald te worden! 🥩 U bent welkom op ${format(new Date(order.pickup_date), 'dd/MM/yyyy')} om ${order.pickup_time}.`;
+        break;
+      case 'confirmed':
+        message = `Hallo ${order.customer_name}, we hebben uw bestelling bij Slagerij John goed ontvangen en zijn ermee aan de slag! ✅`;
+        break;
+      case 'cancelled':
+        message = `Hallo ${order.customer_name}, er is een update over uw bestelling bij Slagerij John. Gelieve ons even te contacteren.`;
+        break;
+      default:
+        message = `Hallo ${order.customer_name}, een update over uw bestelling bij Slagerij John.`;
+    }
+
+    // Open WhatsApp Web
+    window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
   const filteredOrders = statusFilter === 'all' 
     ? orders 
     : orders.filter(order => order.status === statusFilter);
@@ -363,7 +387,7 @@ export default function AdminDashboard() {
                             {format(new Date(order.created_at), 'dd/MM/yyyy HH:mm')}
                           </TableCell>
                           <TableCell>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 items-center">
                               <Button
                                 variant="outline"
                                 size="sm"
@@ -371,6 +395,18 @@ export default function AdminDashboard() {
                               >
                                 View
                               </Button>
+                              
+                              {/* WhatsApp Button */}
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="text-green-600 hover:text-green-700 hover:bg-green-50"
+                                title="Stuur WhatsApp update"
+                                onClick={() => sendWhatsAppStatus(order)}
+                              >
+                                <MessageCircle className="h-4 w-4" />
+                              </Button>
+
                               <Select
                                 value={order.status}
                                 onValueChange={(value) => updateOrderStatus(order.id, value)}
