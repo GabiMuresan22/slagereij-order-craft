@@ -231,8 +231,20 @@ export default function AdminDashboard() {
 
   // Send WhatsApp status update
   const sendWhatsAppStatus = (order: Order) => {
-    // Strip non-numeric characters for the link
-    const cleanPhone = order.customer_phone.replace(/[^0-9]/g, '');
+    // Strip non-numeric characters
+    let cleanPhone = order.customer_phone.replace(/[^0-9]/g, '');
+    
+    // Handle Belgian phone number formatting
+    if (cleanPhone.startsWith('00')) {
+      // Remove international dialing prefix (00)
+      cleanPhone = cleanPhone.substring(2);
+    } else if (cleanPhone.startsWith('0')) {
+      // Remove leading 0 and add Belgium country code
+      cleanPhone = '32' + cleanPhone.substring(1);
+    } else if (!cleanPhone.startsWith('32')) {
+      // If no country code, assume Belgium
+      cleanPhone = '32' + cleanPhone;
+    }
     
     // Get template or use fallback
     const template = templates[order.status] || templates['default'] || 'Hallo {customer_name}, een update over uw bestelling bij Slagerij John.';
