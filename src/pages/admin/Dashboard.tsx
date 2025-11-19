@@ -4,12 +4,15 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Helmet } from 'react-helmet-async';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, PackageCheck, Clock, CheckCircle2, XCircle, Phone, Mail, Calendar, StickyNote, MessageCircle } from 'lucide-react';
+import { Loader2, PackageCheck, Clock, CheckCircle2, XCircle, Phone, Mail, Calendar, StickyNote, MessageCircle, Settings } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import {
@@ -64,6 +67,7 @@ export default function AdminDashboard() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [templates, setTemplates] = useState<Record<string, string>>({});
 
   // Check if user is admin
   useEffect(() => {
@@ -96,6 +100,25 @@ export default function AdminDashboard() {
     }
   }, [user, authLoading, navigate]);
 
+  // Fetch templates
+  const fetchTemplates = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('whatsapp_templates')
+        .select('*');
+
+      if (error) throw error;
+
+      const templatesMap: Record<string, string> = {};
+      data?.forEach((template: any) => {
+        templatesMap[template.status] = template.message_template;
+      });
+      setTemplates(templatesMap);
+    } catch (error: any) {
+      console.error('Error fetching templates:', error);
+    }
+  };
+
   // Fetch orders
   useEffect(() => {
     const fetchOrders = async () => {
@@ -122,6 +145,7 @@ export default function AdminDashboard() {
     };
 
     fetchOrders();
+    fetchTemplates();
   }, [isAdmin]);
 
   // Set up real-time updates
@@ -210,23 +234,34 @@ export default function AdminDashboard() {
     // Strip non-numeric characters for the link
     const cleanPhone = order.customer_phone.replace(/[^0-9]/g, '');
     
-    let message = '';
-    switch (order.status) {
-      case 'ready':
-        message = `Hallo ${order.customer_name}, uw bestelling bij Slagerij John is klaar om afgehaald te worden! 🥩 U bent welkom op ${format(new Date(order.pickup_date), 'dd/MM/yyyy')} om ${order.pickup_time}.`;
-        break;
-      case 'confirmed':
-        message = `Hallo ${order.customer_name}, we hebben uw bestelling bij Slagerij John goed ontvangen en zijn ermee aan de slag! ✅`;
-        break;
-      case 'cancelled':
-        message = `Hallo ${order.customer_name}, er is een update over uw bestelling bij Slagerij John. Gelieve ons even te contacteren.`;
-        break;
-      default:
-        message = `Hallo ${order.customer_name}, een update over uw bestelling bij Slagerij John.`;
-    }
+    // Get template or use fallback
+    const template = templates[order.status] || templates['default'] || 'Hallo {customer_name}, een update over uw bestelling bij Slagerij John.';
+    
+    // Replace placeholders
+    const message = template
+      .replace(/{customer_name}/g, order.customer_name)
+      .replace(/{pickup_date}/g, format(new Date(order.pickup_date), 'dd/MM/yyyy'))
+      .replace(/{pickup_time}/g, order.pickup_time);
 
     // Open WhatsApp Web
     window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
+  const updateTemplate = async (status: string, messageTemplate: string) => {
+    try {
+      const { error } = await supabase
+        .from('whatsapp_templates')
+        .update({ message_template: messageTemplate })
+        .eq('status', status);
+
+      if (error) throw error;
+
+      toast.success('Template updated successfully');
+      setTemplates(prev => ({ ...prev, [status]: messageTemplate }));
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to update template');
+      console.error('Error updating template:', error);
+    }
   };
 
   const filteredOrders = statusFilter === 'all' 
@@ -261,6 +296,16 @@ export default function AdminDashboard() {
           <p className="text-muted-foreground">Manage orders and customer requests</p>
         </div>
 
+        <Tabs defaultValue="orders" className="space-y-6">
+          <TabsList>
+            <TabsTrigger value="orders">Orders</TabsTrigger>
+            <TabsTrigger value="settings">
+              <Settings className="h-4 w-4 mr-2" />
+              Settings
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="orders" className="space-y-6">
         {/* Stats Cards */}
         <div className="grid gap-4 md:grid-cols-5 mb-8">
           <Card>
@@ -530,6 +575,39 @@ export default function AdminDashboard() {
             )}
           </DialogContent>
         </Dialog>
+          </TabsContent>
+
+          <TabsContent value="settings" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>WhatsApp Message Templates</CardTitle>
+                <CardDescription>
+                  Customize the WhatsApp messages sent to customers for different order statuses.
+                  Use placeholders: {'{customer_name}'}, {'{pickup_date}'}, {'{pickup_time}'}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {['ready', 'confirmed', 'cancelled', 'default'].map((status) => (
+                  <div key={status} className="space-y-2">
+                    <Label className="text-base capitalize">{status} Status</Label>
+                    <Textarea
+                      value={templates[status] || ''}
+                      onChange={(e) => setTemplates(prev => ({ ...prev, [status]: e.target.value }))}
+                      rows={3}
+                      className="font-mono text-sm"
+                    />
+                    <Button
+                      size="sm"
+                      onClick={() => updateTemplate(status, templates[status])}
+                    >
+                      Save Template
+                    </Button>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </>
   );
