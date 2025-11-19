@@ -135,12 +135,12 @@ const Products = () => {
           <Card className="overflow-hidden border-border hover:shadow-2xl transition-all duration-300">
             <div className="grid md:grid-cols-2 gap-0">
               <div 
-                className="h-80 md:h-[600px] bg-cover bg-center order-first"
-                style={{ backgroundImage: `url(${specialtyImage})`, aspectRatio: '16/9' }}
+                className="h-80 md:h-auto md:min-h-[600px] bg-cover bg-center"
+                style={{ backgroundImage: `url(${specialtyImage})` }}
                 role="img"
                 aria-label={t('products.specialties.title')}
               />
-              <CardContent className="p-6 md:px-16 md:py-12 flex flex-col justify-center order-last">
+              <CardContent className="p-6 md:px-16 md:py-12 flex flex-col justify-center">
                 {/* Split heading with eyebrow text */}
                 <p className="text-sm md:text-base uppercase tracking-wider text-primary/80 mb-2 font-semibold">
                   Onze Specialiteiten
