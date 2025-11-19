@@ -78,7 +78,7 @@ const Footer = () => {
                 {isOpen ? t('footer.status.open') : t('footer.status.closed')}
               </span>
             </div>
-            <div className="space-y-1.5 text-sm">
+            <div className="space-y-2.5 text-sm">
               {days.map((day, index) => (
                 <div 
                   key={day} 

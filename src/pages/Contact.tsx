@@ -128,16 +128,37 @@ const Contact = () => {
               <CardContent className="p-8">
                 <div className="flex items-start space-x-4">
                   <Clock className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                  <div>
+                  <div className="w-full">
                     <h3 className="font-semibold text-lg mb-4">{t("contact.hours.title")}</h3>
-                    <div className="text-muted-foreground space-y-1">
-                      <p>{t("contact.hours.mon")}</p>
-                      <p>{t("contact.hours.tue")}</p>
-                      <p>{t("contact.hours.wed")}</p>
-                      <p>{t("contact.hours.thu")}</p>
-                      <p>{t("contact.hours.fri")}</p>
-                      <p>{t("contact.hours.sat")}</p>
-                      <p>{t("contact.hours.sun")}</p>
+                    <div className="text-muted-foreground space-y-2.5">
+                      <div className="flex justify-between">
+                        <span>{t("footer.hours.day.mon")}</span>
+                        <span>{t("footer.hours.time.mon")}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>{t("footer.hours.day.tue")}</span>
+                        <span>{t("footer.hours.time.tue")}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>{t("footer.hours.day.wed")}</span>
+                        <span>{t("footer.hours.time.wed")}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>{t("footer.hours.day.thu")}</span>
+                        <span>{t("footer.hours.time.thu")}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>{t("footer.hours.day.fri")}</span>
+                        <span>{t("footer.hours.time.fri")}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>{t("footer.hours.day.sat")}</span>
+                        <span>{t("footer.hours.time.sat")}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>{t("footer.hours.day.sun")}</span>
+                        <span>{t("footer.hours.time.sun")}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
