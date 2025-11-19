@@ -153,15 +153,11 @@ const Order = () => {
       `Tijd: ${data.pickupTime}\n` +
       (data.notes ? `\n*Opmerkingen:*\n${data.notes}` : '');
     
-    // Create WhatsApp link with encoded message
-    const whatsappUrl = `https://wa.me/${shopWhatsAppNumber}?text=${encodeURIComponent(message)}`;
+    // Use web.whatsapp.com to avoid api.whatsapp.com being blocked
+    const whatsappUrl = `https://web.whatsapp.com/send?phone=${shopWhatsAppNumber}&text=${encodeURIComponent(message)}`;
     
-    // Open WhatsApp in new tab (use location.href for better compatibility)
-    const newWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-    if (!newWindow) {
-      // Fallback if popup blocked
-      window.location.href = whatsappUrl;
-    }
+    // Open WhatsApp in new tab
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 
   const handleSubmit = async (data: OrderFormValues) => {
