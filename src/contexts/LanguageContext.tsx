@@ -214,6 +214,7 @@ const translations = {
     'footer.rights': 'Alle rechten voorbehouden.',
     'footer.privacy': 'Privacybeleid',
     'footer.terms': 'Algemene Voorwaarden',
+    'footer.credit': 'Website gemaakt door Gabi Muresan',
     'footer.status.open': 'Nu Open',
     'footer.status.closed': 'Gesloten',
     
@@ -568,6 +569,7 @@ const translations = {
     'footer.rights': 'Toate drepturile rezervate.',
     'footer.privacy': 'Politica de Confidențialitate',
     'footer.terms': 'Termeni și Condiții',
+    'footer.credit': 'Website creat de Gabi Muresan',
     'footer.status.open': 'Deschis Acum',
     'footer.status.closed': 'Închis',
     

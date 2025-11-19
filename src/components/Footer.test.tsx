@@ -70,5 +70,14 @@ describe("Footer", () => {
     const currentYear = new Date().getFullYear();
     expect(screen.getByText(new RegExp(currentYear.toString()))).toBeInTheDocument();
   });
+
+  it("renders website credit link", () => {
+    render(<Footer />);
+    const creditLink = screen.getByText(/footer.credit/i);
+    expect(creditLink).toBeInTheDocument();
+    expect(creditLink).toHaveAttribute("href", "https://gabimuresan.com/");
+    expect(creditLink).toHaveAttribute("target", "_blank");
+    expect(creditLink).toHaveAttribute("rel", "noopener noreferrer");
+  });
 });
 
