@@ -22,6 +22,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface OrderItem {
   product: string;
@@ -68,6 +78,11 @@ export default function AdminDashboard() {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [templates, setTemplates] = useState<Record<string, string>>({});
+  const [whatsappDialog, setWhatsappDialog] = useState<{ open: boolean; order: Order | null; message: string }>({
+    open: false,
+    order: null,
+    message: ''
+  });
 
   // Check if user is admin
   useEffect(() => {
@@ -229,23 +244,8 @@ export default function AdminDashboard() {
     }
   };
 
-  // Send WhatsApp status update
-  const sendWhatsAppStatus = (order: Order) => {
-    // Strip non-numeric characters
-    let cleanPhone = order.customer_phone.replace(/[^0-9]/g, '');
-    
-    // Handle Belgian phone number formatting
-    if (cleanPhone.startsWith('00')) {
-      // Remove international dialing prefix (00)
-      cleanPhone = cleanPhone.substring(2);
-    } else if (cleanPhone.startsWith('0')) {
-      // Remove leading 0 and add Belgium country code
-      cleanPhone = '32' + cleanPhone.substring(1);
-    } else if (!cleanPhone.startsWith('32')) {
-      // If no country code, assume Belgium
-      cleanPhone = '32' + cleanPhone;
-    }
-    
+  // Open WhatsApp dialog with pre-filled message
+  const openWhatsAppDialog = (order: Order) => {
     // Get template or use fallback
     const template = templates[order.status] || templates['default'] || 'Hallo {customer_name}, een update over uw bestelling bij Slagerij John.';
     
@@ -254,9 +254,35 @@ export default function AdminDashboard() {
       .replace(/{customer_name}/g, order.customer_name)
       .replace(/{pickup_date}/g, format(new Date(order.pickup_date), 'dd/MM/yyyy'))
       .replace(/{pickup_time}/g, order.pickup_time);
+    
+    setWhatsappDialog({
+      open: true,
+      order,
+      message
+    });
+  };
 
-    // Open WhatsApp Web
-    window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, '_blank');
+  // Send WhatsApp message with custom text
+  const sendWhatsAppMessage = () => {
+    if (!whatsappDialog.order) return;
+    
+    // Strip non-numeric characters
+    let cleanPhone = whatsappDialog.order.customer_phone.replace(/[^0-9]/g, '');
+    
+    // Handle Belgian phone number formatting
+    if (cleanPhone.startsWith('00')) {
+      cleanPhone = cleanPhone.substring(2);
+    } else if (cleanPhone.startsWith('0')) {
+      cleanPhone = '32' + cleanPhone.substring(1);
+    } else if (!cleanPhone.startsWith('32')) {
+      cleanPhone = '32' + cleanPhone;
+    }
+    
+    const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(whatsappDialog.message)}`;
+    window.open(url, '_blank');
+    
+    // Close dialog
+    setWhatsappDialog({ open: false, order: null, message: '' });
   };
 
   const updateTemplate = async (status: string, messageTemplate: string) => {
@@ -459,7 +485,7 @@ export default function AdminDashboard() {
                                 size="icon"
                                 className="text-green-600 hover:text-green-700 hover:bg-green-50"
                                 title="Stuur WhatsApp update"
-                                onClick={() => sendWhatsAppStatus(order)}
+                                onClick={() => openWhatsAppDialog(order)}
                               >
                                 <MessageCircle className="h-4 w-4" />
                               </Button>
@@ -621,6 +647,31 @@ export default function AdminDashboard() {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* WhatsApp Message Customization Dialog */}
+      <AlertDialog open={whatsappDialog.open} onOpenChange={(open) => setWhatsappDialog({ ...whatsappDialog, open })}>
+        <AlertDialogContent className="max-w-lg">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Send WhatsApp Message</AlertDialogTitle>
+            <AlertDialogDescription>
+              Customize your message to {whatsappDialog.order?.customer_name}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <Textarea
+            value={whatsappDialog.message}
+            onChange={(e) => setWhatsappDialog({ ...whatsappDialog, message: e.target.value })}
+            rows={6}
+            className="my-4"
+          />
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={sendWhatsAppMessage} className="bg-green-600 hover:bg-green-700">
+              <MessageCircle className="h-4 w-4 mr-2" />
+              Send WhatsApp
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }
