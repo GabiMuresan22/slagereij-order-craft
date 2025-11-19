@@ -15,7 +15,7 @@ interface OrderStatusEmailRequest {
   customerEmail: string;
   orderId: string;
   status: string;
-  orderItems: Array<{ product: string; quantity: number; weight: string }>;
+  orderItems: Array<{ product: string; quantity: number | string; weight?: string; unit?: string }>;
   pickupDate: string;
   pickupTime: string;
 }
@@ -33,7 +33,7 @@ const validateOrderData = (data: any): data is OrderStatusEmailRequest => {
   if (!data.customerName || typeof data.customerName !== 'string' || data.customerName.length > 100) return false;
   if (!data.customerEmail || !isValidEmail(data.customerEmail)) return false;
   if (!data.orderId || typeof data.orderId !== 'string' || data.orderId.length > 100) return false;
-  if (!data.status || typeof data.status !== 'string' || !['confirmed', 'ready', 'completed'].includes(data.status)) return false;
+  if (!data.status || typeof data.status !== 'string' || !['pending', 'confirmed', 'ready', 'completed'].includes(data.status)) return false;
   if (!data.pickupDate || typeof data.pickupDate !== 'string') return false;
   if (!data.pickupTime || typeof data.pickupTime !== 'string' || data.pickupTime.length > 50) return false;
   
@@ -41,8 +41,8 @@ const validateOrderData = (data: any): data is OrderStatusEmailRequest => {
   if (!Array.isArray(data.orderItems) || data.orderItems.length === 0 || data.orderItems.length > 50) return false;
   for (const item of data.orderItems) {
     if (!item.product || typeof item.product !== 'string' || item.product.length > 200) return false;
-    if (typeof item.quantity !== 'number' || item.quantity <= 0 || item.quantity > 1000) return false;
-    if (!item.weight || typeof item.weight !== 'string' || item.weight.length > 50) return false;
+    if (typeof item.quantity !== 'number' && typeof item.quantity !== 'string') return false;
+    // Weight/unit is optional for flexibility
   }
   
   return true;
@@ -52,10 +52,15 @@ const getEmailContent = (data: OrderStatusEmailRequest) => {
   const { customerName, orderId, status, orderItems, pickupDate, pickupTime } = data;
   
   const itemsList = orderItems
-    .map(item => `<li>${item.quantity}x ${item.product} (${item.weight})</li>`)
+    .map(item => `<li>${item.quantity} ${item.weight || item.unit || ''} ${item.product}</li>`)
     .join("");
 
   const statusMessages = {
+    pending: {
+      subject: "Bestelling Ontvangen - Slagerij John",
+      title: "Bedankt voor uw bestelling!",
+      message: "We hebben uw bestelling goed ontvangen. We gaan er zo snel mogelijk mee aan de slag.",
+    },
     confirmed: {
       subject: "Order Confirmed - We're preparing your order!",
       title: "Your Order Has Been Confirmed",
@@ -157,7 +162,6 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    // Verify admin role
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) {
       console.error("Missing authorization header");
@@ -167,35 +171,40 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
-      { global: { headers: { Authorization: authHeader } } }
-    );
-
-    // Get the authenticated user
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
-    if (userError || !user) {
-      console.error("Error getting user:", userError);
-      return new Response(
-        JSON.stringify({ error: "Unauthorized" }),
-        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
-    // Check if user has admin role
-    const { data: hasAdminRole, error: roleError } = await supabase
-      .rpc("has_role", { _user_id: user.id, _role: "admin" });
-
-    if (roleError || !hasAdminRole) {
-      console.error("User is not an admin:", roleError);
-      return new Response(
-        JSON.stringify({ error: "Forbidden: Admin access required" }),
-        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
+    // Read the body first to check status
     const requestData = await req.json();
+
+    // Only perform strict Admin Role check if status is NOT pending
+    // This allows customers to trigger the "Order Received" email themselves
+    if (requestData.status !== 'pending') {
+      const supabase = createClient(
+        Deno.env.get("SUPABASE_URL") ?? "",
+        Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+        { global: { headers: { Authorization: authHeader } } }
+      );
+
+      // Get the authenticated user
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError || !user) {
+        console.error("Error getting user:", userError);
+        return new Response(
+          JSON.stringify({ error: "Unauthorized" }),
+          { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      // Check if user has admin role
+      const { data: hasAdminRole, error: roleError } = await supabase
+        .rpc("has_role", { _user_id: user.id, _role: "admin" });
+
+      if (roleError || !hasAdminRole) {
+        console.error("User is not an admin:", roleError);
+        return new Response(
+          JSON.stringify({ error: "Forbidden: Admin access required" }),
+          { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+    }
     
     // Validate input data
     if (!validateOrderData(requestData)) {
@@ -212,7 +221,7 @@ const handler = async (req: Request): Promise<Response> => {
     const emailContent = getEmailContent(requestData);
 
     const emailResponse = await resend.emails.send({
-      from: "Butcher Shop <onboarding@resend.dev>",
+      from: "Slagerij John <onboarding@resend.dev>",
       to: [customerEmail],
       subject: emailContent.subject,
       html: emailContent.html,
