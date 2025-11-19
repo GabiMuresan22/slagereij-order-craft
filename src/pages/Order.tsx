@@ -168,7 +168,8 @@ const Order = () => {
     setIsSubmitting(true);
     
     try {
-      const { error } = await supabase.from("orders").insert({
+      // Insert order and get the created order data
+      const { data: orderData, error } = await supabase.from("orders").insert({
         customer_name: data.customerName,
         customer_phone: data.customerPhone,
         customer_email: data.customerEmail,
@@ -178,9 +179,27 @@ const Order = () => {
         notes: data.notes || null,
         status: "pending",
         user_id: user?.id || null,
-      });
+      }).select().single();
 
       if (error) throw error;
+
+      // Send confirmation email via Edge Function
+      try {
+        await supabase.functions.invoke('send-order-status-email', {
+          body: {
+            customerName: data.customerName,
+            customerEmail: data.customerEmail,
+            orderId: orderData.id,
+            status: "pending",
+            orderItems: data.orderItems,
+            pickupDate: format(data.pickupDate, "dd-MM-yyyy"),
+            pickupTime: data.pickupTime,
+          }
+        });
+      } catch (emailError) {
+        console.error("Error sending confirmation email:", emailError);
+        // Don't throw - order was still placed successfully
+      }
 
       // Track order submission
       trackOrderSubmit({
@@ -190,7 +209,7 @@ const Order = () => {
 
       toast({
         title: t('order.success.title'),
-        description: "Uw bestelling is succesvol geplaatst! We nemen spoedig contact met u op.",
+        description: "Uw bestelling is succesvol geplaatst! U ontvangt een bevestigingsmail.",
       });
 
       setTimeout(() => {
