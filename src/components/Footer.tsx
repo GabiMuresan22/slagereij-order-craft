@@ -138,7 +138,17 @@ const Footer = () => {
 
         <div className="border-t border-border mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-            <p>&copy; {new Date().getFullYear()} {t('footer.about.title')}. {t('footer.rights')}</p>
+            <div className="flex flex-col items-center md:items-start gap-2">
+              <p>&copy; {new Date().getFullYear()} {t('footer.about.title')}. {t('footer.rights')}</p>
+              <a 
+                href="https://gabimuresan.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors"
+              >
+                {t('footer.credit')}
+              </a>
+            </div>
             <div className="flex gap-4">
               <Link to="/privacy" className="hover:text-primary transition-colors">
                 {t('footer.privacy')}
