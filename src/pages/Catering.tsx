@@ -98,7 +98,7 @@ export default function Catering() {
               {galleryImages.map((image, index) => (
                 <div 
                   key={index} 
-                  className="relative overflow-hidden rounded-lg aspect-square group hover:shadow-xl transition-shadow duration-300"
+                  className="relative overflow-hidden rounded-lg aspect-[3/4] group hover:shadow-xl transition-shadow duration-300"
                 >
                   <img
                     src={image.src}
