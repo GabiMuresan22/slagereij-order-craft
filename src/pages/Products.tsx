@@ -108,10 +108,7 @@ const Products = () => {
                   <div className="relative h-80 md:h-full md:min-h-[500px]">
                     <div
                       className="absolute inset-0 bg-cover bg-center"
-                      style={{ 
-                        backgroundImage: `url(${category.image})`,
-                        objectFit: 'cover'
-                      }}
+                      style={{ backgroundImage: `url(${category.image})` }}
                       role="img"
                       aria-label={t(category.titleKey)}
                     />
@@ -163,10 +160,7 @@ const Products = () => {
               <div className="relative h-80 md:h-full md:min-h-[500px]">
                 <div
                   className="absolute inset-0 bg-cover bg-center"
-                  style={{ 
-                    backgroundImage: `url(${specialtyImage})`,
-                    objectFit: 'cover'
-                  }}
+                  style={{ backgroundImage: `url(${specialtyImage})` }}
                   role="img"
                   aria-label={t("products.specialties.title")}
                 />
