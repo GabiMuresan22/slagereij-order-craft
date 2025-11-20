@@ -104,28 +104,47 @@ const Products = () => {
           {categories.map((category, index) => (
             <section key={index}>
               <Card className="overflow-hidden border-0 hover:shadow-2xl transition-all duration-300 max-w-6xl mx-auto">
-                <div className="grid md:grid-cols-2 gap-0">
-                  <div
-                    className="h-80 md:h-[500px] bg-cover bg-center"
-                    style={{ backgroundImage: `url(${category.image})` }}
-                    role="img"
-                    aria-label={t(category.titleKey)}
-                  />
+                <div className="grid md:grid-cols-2 gap-0 md:items-center">
+                  <div className="relative h-80 md:h-full md:min-h-[500px]">
+                    <div
+                      className="absolute inset-0 bg-cover bg-center"
+                      style={{ backgroundImage: `url(${category.image})` }}
+                      role="img"
+                      aria-label={t(category.titleKey)}
+                    />
+                    {/* Quality badge */}
+                    <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-md font-semibold text-sm shadow-lg">
+                      Vers van het mes
+                    </div>
+                  </div>
                   <CardContent className="p-8 md:p-12 flex flex-col justify-center">
                     <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-primary">
                       {t(category.titleKey)}
                     </h2>
-                    <p className="text-lg text-muted-foreground mb-8">{t(category.subtitleKey)}</p>
+                    <p className="text-lg text-muted-foreground mb-8 leading-relaxed">{t(category.subtitleKey)}</p>
                     <ul className="space-y-3 mb-8">
-                      {category.itemKeys.map((itemKey, itemIndex) => (
-                        <li key={itemIndex} className="flex items-start text-foreground">
-                          <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-2 flex-shrink-0" />
-                          <span>{t(itemKey)}</span>
-                        </li>
-                      ))}
+                      {category.itemKeys.map((itemKey, itemIndex) => {
+                        const itemText = t(itemKey);
+                        const colonIndex = itemText.indexOf(':');
+                        const itemName = colonIndex > 0 ? itemText.substring(0, colonIndex) : itemText;
+                        const itemDesc = colonIndex > 0 ? itemText.substring(colonIndex + 1) : '';
+                        
+                        return (
+                          <li key={itemIndex} className="flex items-start text-foreground leading-relaxed">
+                            <span className="text-primary mr-3 mt-0.5 flex-shrink-0 font-bold">✓</span>
+                            <span>
+                              <strong className="font-semibold">{itemName}</strong>
+                              {itemDesc && <span>{':' + itemDesc}</span>}
+                            </span>
+                          </li>
+                        );
+                      })}
                     </ul>
                     <Link to="/order">
-                      <Button className="w-full md:w-auto">{t(category.ctaKey)}</Button>
+                      <Button variant="outline" className="w-full md:w-auto border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 group">
+                        {t(category.ctaKey)}
+                        <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
                     </Link>
                   </CardContent>
                 </div>
@@ -137,13 +156,19 @@ const Products = () => {
         {/* Specialties Section */}
         <section className="mb-20">
           <Card className="overflow-hidden border-0 hover:shadow-2xl transition-all duration-300 max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-0">
-              <div
-                className="h-80 md:h-[500px] bg-cover bg-center"
-                style={{ backgroundImage: `url(${specialtyImage})` }}
-                role="img"
-                aria-label={t("products.specialties.title")}
-              />
+            <div className="grid md:grid-cols-2 gap-0 md:items-center">
+              <div className="relative h-80 md:h-full md:min-h-[500px]">
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${specialtyImage})` }}
+                  role="img"
+                  aria-label={t("products.specialties.title")}
+                />
+                {/* Quality badge */}
+                <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-md font-semibold text-sm shadow-lg">
+                  100% Lokaal
+                </div>
+              </div>
               <CardContent className="p-6 md:px-16 md:py-12 flex flex-col justify-center">
                 {/* Split heading with eyebrow text */}
                 <p className="text-sm md:text-base uppercase tracking-wider text-primary/80 mb-2 font-semibold">
