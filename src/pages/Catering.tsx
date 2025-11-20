@@ -2,6 +2,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema } from "@/lib/structuredData";
 import cateringChef from "@/assets/catering-chef-grilling.jpg";
+import cateringChefServing from "@/assets/catering-chef-serving.jpg";
 import cateringSalads from "@/assets/catering-salads.jpg";
 import cateringSausages from "@/assets/catering-sausages.jpg";
 import cateringPorkChops from "@/assets/catering-pork-chops.jpg";
@@ -24,6 +25,7 @@ export default function Catering() {
 
   const galleryImages = [
     { src: cateringChef, alt: "Professional chef grilling at outdoor catering event" },
+    { src: cateringChefServing, alt: "Chef presenting gourmet catering dishes on serving tray" },
     { src: cateringCharcuterie, alt: "Artisanal charcuterie platter with premium meats and accompaniments" },
     { src: cateringRibs, alt: "Perfectly grilled spare ribs with smoky glaze" },
     { src: cateringPorkChops, alt: "Juicy grilled pork chops on professional BBQ" },
