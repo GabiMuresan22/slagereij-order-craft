@@ -6,6 +6,7 @@ import displayCaseImage from "@/assets/display-case.webp";
 import tomatoImage from "@/assets/tomahawk-steaks.webp";
 import porkImage from "@/assets/pork-products.jpg";
 import poultryImage from "@/assets/poultry-products.jpg";
+import bbqGrillImage from "@/assets/bbq-grill-meats.jpg";
 import specialtyImage from "@/assets/specialty-platter.webp";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
@@ -61,6 +62,20 @@ const Products = () => {
         "products.poultry.item6"
       ],
       ctaKey: "products.poultry.cta"
+    },
+    {
+      titleKey: "products.bbq.title",
+      subtitleKey: "products.bbq.subtitle",
+      image: bbqGrillImage,
+      itemKeys: [
+        "products.bbq.item1",
+        "products.bbq.item2",
+        "products.bbq.item3",
+        "products.bbq.item4",
+        "products.bbq.item5",
+        "products.bbq.item6"
+      ],
+      ctaKey: "products.bbq.cta"
     }
   ];
 
