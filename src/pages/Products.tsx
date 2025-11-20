@@ -94,11 +94,11 @@ const Products = () => {
         {/* Product Categories */}
         <div className="space-y-20 mb-20">
           {categories.map((category, index) => (
-            <section key={index} className={index % 2 === 0 ? "" : "bg-muted/20 -mx-4 px-4 py-12 md:py-16"}>
-              <Card className="overflow-hidden border-border hover:shadow-2xl transition-all duration-300 max-w-6xl mx-auto">
-                <div className={`grid md:grid-cols-2 gap-0 ${index % 2 === 1 ? 'md:grid-flow-dense' : ''}`}>
+            <section key={index}>
+              <Card className="overflow-hidden border-0 hover:shadow-2xl transition-all duration-300 max-w-6xl mx-auto">
+                <div className="grid md:grid-cols-2 gap-0">
                   <div 
-                    className={`h-80 md:h-auto bg-cover bg-center ${index % 2 === 1 ? 'md:col-start-2' : ''}`}
+                    className="h-80 md:h-[500px] bg-cover bg-center"
                     style={{ backgroundImage: `url(${category.image})` }}
                     role="img"
                     aria-label={t(category.titleKey)}
@@ -132,10 +132,10 @@ const Products = () => {
 
         {/* Specialties Section */}
         <section className="mb-20">
-          <Card className="overflow-hidden border-border hover:shadow-2xl transition-all duration-300">
+          <Card className="overflow-hidden border-0 hover:shadow-2xl transition-all duration-300 max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-0">
               <div 
-                className="h-80 md:h-auto md:min-h-[600px] bg-cover bg-center"
+                className="h-80 md:h-[500px] bg-cover bg-center"
                 style={{ backgroundImage: `url(${specialtyImage})` }}
                 role="img"
                 aria-label={t('products.specialties.title')}
