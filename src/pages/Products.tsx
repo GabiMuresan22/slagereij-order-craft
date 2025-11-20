@@ -5,7 +5,7 @@ import { Flame, ChefHat, ArrowRight } from "lucide-react";
 import displayCaseImage from "@/assets/display-case.webp";
 import tomatoImage from "@/assets/tomahawk-steaks.webp";
 import porkImage from "@/assets/pork-products.jpg";
-import poultryImage from "@/assets/roasted-chicken.webp";
+import poultryImage from "@/assets/poultry-products.jpg";
 import specialtyImage from "@/assets/specialty-platter.webp";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
