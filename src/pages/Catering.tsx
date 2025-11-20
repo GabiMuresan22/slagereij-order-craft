@@ -14,6 +14,9 @@ import cateringGrainBowls from "@/assets/catering-grain-bowls.jpg";
 import cateringTacos from "@/assets/catering-tacos.jpg";
 import cateringBuffetSpread from "@/assets/catering-buffet-spread.jpg";
 import cateringPastaBowls from "@/assets/catering-pasta-bowls.jpg";
+import cateringPartyPlatter from "@/assets/catering-party-platter.jpg";
+import cateringCheesePlatter from "@/assets/catering-cheese-platter.jpg";
+import cateringTomatoSalad from "@/assets/catering-tomato-salad.jpg";
 
 export default function Catering() {
   const { t } = useLanguage();
@@ -37,6 +40,9 @@ export default function Catering() {
     { src: cateringBeefSteak, alt: "Premium beef steak with rosemary and peppercorns" },
     { src: cateringBuffetSpread, alt: "Colorful buffet spread with salads, donuts and side dishes" },
     { src: cateringPastaBowls, alt: "Gourmet pasta bowls with fresh vegetables in ceramic dishes" },
+    { src: cateringPartyPlatter, alt: "Premium party platter with cold cuts, cheese, olives and garnishes" },
+    { src: cateringCheesePlatter, alt: "Artisanal cheese platter with grapes, walnuts and dried fruits" },
+    { src: cateringTomatoSalad, alt: "Fresh tomato salad with red onions and parsley garnish" },
   ];
 
   return (
