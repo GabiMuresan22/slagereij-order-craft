@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Flame, ChefHat, ArrowRight } from "lucide-react";
 import displayCaseImage from "@/assets/display-case.webp";
 import tomatoImage from "@/assets/tomahawk-steaks.webp";
-import porkMariImage from "@/assets/pork-marinated.webp";
+import porkImage from "@/assets/pork-products.jpg";
 import poultryImage from "@/assets/roasted-chicken.webp";
 import specialtyImage from "@/assets/specialty-platter.webp";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -37,7 +37,7 @@ const Products = () => {
     {
       titleKey: "products.pork.title",
       subtitleKey: "products.pork.subtitle",
-      image: porkMariImage,
+      image: porkImage,
       itemKeys: [
         "products.pork.item1",
         "products.pork.item2",
