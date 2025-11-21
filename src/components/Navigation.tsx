@@ -36,6 +36,7 @@ const Navigation = () => {
 
   const navItems = [
     { path: "/", label: t('nav.home') },
+    { path: "/packages", label: "Colli's" },
     { path: "/about", label: t('nav.about') },
     { path: "/products", label: t('nav.products') },
     { path: "/catering", label: t('nav.catering') },
