@@ -42,6 +42,18 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Validate API key is present
+    if (!RESEND_API_KEY) {
+      console.error("Missing RESEND_API_KEY environment variable");
+      return new Response(
+        JSON.stringify({ error: "Server configuration error" }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
     const requestData = await req.json();
     
     console.log("Received contact form submission");
