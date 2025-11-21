@@ -22,7 +22,7 @@ const translations = {
     'nav.contact': 'Contact',
     
     // Home Page
-    'home.hero.title': 'Kwaliteitsvlees',
+    'home.hero.title': 'Uw Kwaliteitsslager in Zwevezele',
     'home.hero.subtitle': 'Traditioneel ambacht\nmet moderne service',
     'home.hero.cta': 'Bestel Nu Online',
     'home.features.online.title': 'Online Bestellen',
@@ -405,7 +405,7 @@ const translations = {
     'nav.contact': 'Contact',
     
     // Home Page
-    'home.hero.title': 'Carne de Calitate',
+    'home.hero.title': 'Măcelarul Dvs. de Calitate în Zwevezele',
     'home.hero.subtitle': 'Meșteșug tradițional\ncu servicii moderne',
     'home.hero.cta': 'Comandă Acum Online',
     'home.features.online.title': 'Comandă Online',

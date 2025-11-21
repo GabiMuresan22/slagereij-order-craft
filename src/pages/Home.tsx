@@ -79,8 +79,8 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       <SEO
-        title="Slagerij John Premium Kwaliteitsvlees"
-        description="Slagerij John in Zwevezele biedt premium kwaliteitsvlees, huisgemaakte specialiteiten en online bestellen. Belgische en Roemeense vleeswaren van topkwaliteit."
+        title="Ambachtelijke Slagerij & Traiteur in Zwevezele"
+        description="Welkom bij Slagerij John in Zwevezele. Ontdek ons assortiment vers vlees, huisbereide charcuterie en BBQ-pakketten. Bestel eenvoudig online of bezoek onze winkel."
         keywords="slagerij, kwaliteitsvlees, Zwevezele, online bestellen, huisgemaakte worst, BBQ vlees, verse vleeswaren"
         structuredData={structuredData}
       >
