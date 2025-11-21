@@ -1,7 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "https://esm.sh/resend@3.0.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -22,14 +21,16 @@ const isValidEmail = (email: string): boolean => {
   return emailRegex.test(email) && email.length <= 255;
 };
 
-const validateContactData = (data: any): data is ContactEmailRequest => {
+const validateContactData = (data: unknown): data is ContactEmailRequest => {
   if (!data || typeof data !== 'object') return false;
   
+  const record = data as Record<string, unknown>;
+  
   // Validate required fields
-  if (!data.name || typeof data.name !== 'string' || data.name.length < 2 || data.name.length > 100) return false;
-  if (!data.email || !isValidEmail(data.email)) return false;
-  if (!data.phone || typeof data.phone !== 'string' || data.phone.length < 10 || data.phone.length > 20) return false;
-  if (!data.message || typeof data.message !== 'string' || data.message.length < 10 || data.message.length > 1000) return false;
+  if (!record.name || typeof record.name !== 'string' || record.name.length < 2 || record.name.length > 100) return false;
+  if (!record.email || typeof record.email !== 'string' || !isValidEmail(record.email)) return false;
+  if (!record.phone || typeof record.phone !== 'string' || record.phone.length < 10 || record.phone.length > 20) return false;
+  if (!record.message || typeof record.message !== 'string' || record.message.length < 10 || record.message.length > 1000) return false;
   
   return true;
 };
@@ -59,13 +60,19 @@ const handler = async (req: Request): Promise<Response> => {
 
     const { name, email, phone, message } = requestData;
 
-    // Send email to business
-    const emailResponse = await resend.emails.send({
-      from: "Slagerij John Website <onboarding@resend.dev>",
-      to: ["contact@slagerij-john.be"],
-      reply_to: email,
-      subject: `Nieuw contactbericht van ${name}`,
-      html: `
+    // Send email to business using direct fetch to Resend API
+    const emailResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "Slagerij John <gabimuresan2289@gmail.com>",
+        to: ["contact@slagerij-john.be"],
+        reply_to: email,
+        subject: `Nieuw contactbericht van ${name}`,
+        html: `
         <!DOCTYPE html>
         <html>
           <head>
@@ -135,9 +142,17 @@ const handler = async (req: Request): Promise<Response> => {
           </body>
         </html>
       `,
+      }),
     });
 
-    console.log("Contact email sent successfully:", emailResponse);
+    if (!emailResponse.ok) {
+      const errorText = await emailResponse.text();
+      console.error("Resend API error:", errorText);
+      throw new Error(`Failed to send email: ${errorText}`);
+    }
+
+    const emailData = await emailResponse.json();
+    console.log("Contact email sent successfully:", emailData);
 
     return new Response(
       JSON.stringify({ success: true }),
@@ -146,10 +161,10 @@ const handler = async (req: Request): Promise<Response> => {
         headers: { "Content-Type": "application/json", ...corsHeaders },
       }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error in send-contact-email function:", error);
     return new Response(
-      JSON.stringify({ error: error.message || "Failed to send contact email" }),
+      JSON.stringify({ error: (error instanceof Error ? error.message : String(error)) || "Failed to send contact email" }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
