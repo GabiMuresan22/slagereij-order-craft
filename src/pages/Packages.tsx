@@ -4,12 +4,15 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Check, ShoppingCart } from "lucide-react";
 import SEO from "@/components/SEO";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Packages() {
+  const { t } = useLanguage();
+  
   const packages = [
     {
       id: 1,
-      title: "Colli varken 1",
+      titleKey: 'packages.pork1.title',
       price: 45,
       items: [
         "1kg spiering",
@@ -21,7 +24,7 @@ export default function Packages() {
     },
     {
       id: 2,
-      title: "Colli varken 2",
+      titleKey: 'packages.pork2.title',
       price: 55,
       items: [
         "1kg spiering",
@@ -34,7 +37,7 @@ export default function Packages() {
     },
     {
       id: 3,
-      title: "Colli kip",
+      titleKey: 'packages.chicken.title',
       price: 50,
       items: [
         "1kg kipfilet",
@@ -46,7 +49,7 @@ export default function Packages() {
     },
     {
       id: 4,
-      title: "Colli kip-varken",
+      titleKey: 'packages.mixed.title',
       price: 60,
       items: [
         "1 kg kipfilet",
@@ -59,7 +62,7 @@ export default function Packages() {
     },
     {
       id: 5,
-      title: "BBQ Colli",
+      titleKey: 'packages.bbq.title',
       price: 55,
       items: [
         "1 kg kip brochette",
@@ -71,7 +74,7 @@ export default function Packages() {
     },
     {
       id: 6,
-      title: "Colli John",
+      titleKey: 'packages.john.title',
       price: 100,
       items: [
         "1kg braadworst",
@@ -92,17 +95,17 @@ export default function Packages() {
   return (
     <div className="min-h-screen py-12 bg-background">
       <SEO 
-        title="Colli Aanbod" 
-        description="Ontdek onze voordelige vleespakketten. Colli varken, kip en BBQ pakketten aan scherpe prijzen."
+        title={t('packages.title')}
+        description={t('packages.subtitle')}
       />
       
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4 text-primary">
-            Onze Colli's
+            {t('packages.title')}
           </h1>
           <p className="text-xl text-muted-foreground">
-            Voordelige vleespakketten voor elke gelegenheid
+            {t('packages.subtitle')}
           </p>
         </div>
 
@@ -111,10 +114,10 @@ export default function Packages() {
             <Card key={pkg.id} className={`flex flex-col h-full hover:shadow-lg transition-all border-2 ${pkg.featured ? 'border-primary/50 shadow-md' : 'border-border'}`}>
               <CardHeader>
                 <div className="flex justify-between items-start">
-                  <CardTitle className="text-2xl font-serif">{pkg.title}</CardTitle>
+                  <CardTitle className="text-2xl font-serif">{t(pkg.titleKey)}</CardTitle>
                   <span className="text-2xl font-bold text-primary">€{pkg.price}</span>
                 </div>
-                {pkg.featured && <Badge className="w-fit bg-primary text-primary-foreground">Aanbevolen</Badge>}
+                {pkg.featured && <Badge className="w-fit bg-primary text-primary-foreground">{t('packages.featured')}</Badge>}
               </CardHeader>
               
               <CardContent className="flex-grow">
@@ -130,12 +133,12 @@ export default function Packages() {
 
               <CardFooter className="flex flex-col gap-3 pt-6">
                 <div className="w-full text-center text-sm italic text-orange-600 bg-orange-50 dark:bg-orange-900/20 py-2 rounded">
-                  Enkel op bestelling!
+                  {t('packages.orderOnly')}
                 </div>
                 <Button className="w-full gap-2" asChild>
                   <Link to="/order">
                     <ShoppingCart className="w-4 h-4" />
-                    Bestel Nu
+                    {t('packages.orderNow')}
                   </Link>
                 </Button>
               </CardFooter>
