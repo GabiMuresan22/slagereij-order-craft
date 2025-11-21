@@ -72,11 +72,11 @@ const translations = {
     
     // Catering Page
     'catering.title': 'Traiteur',
-    'catering.subtitle': 'Zorgeloos genieten van elke gelegenheid',
-    'catering.p1': 'Of u nu een intiem vriendenfeest organiseert of een groot wijkfeest: ons ervaren traiteursteam verzorgt uw maaltijden tot in de puntjes. Wij nemen de volledige organisatie uit handen, zodat u tijd heeft voor uw gasten.',
-    'catering.p2': 'Onze totaalservice omvat:\n\nCulinaire verwennerij: Van voorbereiding tot bediening met onze professionele mobiele barbecue-units.',
-    'catering.p3': 'Volledige ontzorging: Wij regelen het bestek, het bedieningspersoneel én de opruiming achteraf.',
-    'catering.p4': 'Flexibiliteit: Kiest u voor full-service op locatie of haalt u de gerechten liever af? Alles is bespreekbaar.',
+    'catering.subtitle': 'De Authentieke Barbecue-ervaring, direct op jouw evenement',
+    'catering.p1': 'Of je nu een intiem feest met vrienden organiseert of een grote buurtviering, ons team transformeert jouw evenement in een culinair genot. Wij nemen alles wat met het barbecuestation te maken heeft uit handen, zodat jij tijd hebt voor je gasten.',
+    'catering.p2': 'Ons pakket omvat:\n\nCompleet menu: Een gevarieerde selectie van voorgerechten en barbecuegerechten, ter plaatse bereid op onze professionele mobiele units.\n\nDranken: Diverse assortimenten om de maaltijd aan te vullen.',
+    'catering.p3': 'Logistiek inbegrepen: We zorgen voor het nodige bestek en borden.',
+    'catering.p4': 'Flexibiliteit: We bieden volledige service op locatie (koken en serveren bij de barbecue) of de optie om het eten af te halen. Jij kiest, wij zorgen voor het vuur!',
     'catering.gallery.title': 'Onze Traiteurservice',
     
     // Products Page
@@ -455,11 +455,11 @@ const translations = {
     
     // Catering Page
     'catering.title': 'Catering',
-    'catering.subtitle': 'Bucurați-vă fără griji de fiecare ocazie',
-    'catering.p1': 'Fie că organizați o petrecere intimă cu prietenii sau o mare sărbătoare de cartier: echipa noastră experimentată de catering se ocupă de mesele dumneavoastră până în cele mai mici detalii. Ne asumăm întreaga organizare, astfel încât să aveți timp pentru invitații dumneavoastră.',
-    'catering.p2': 'Serviciul nostru complet include:\n\nRăsfăț culinar: De la pregătire până la servire cu unitățile noastre mobile profesionale de grătar.',
-    'catering.p3': 'Servicii complete: Asigurăm tacâmurile, personalul de servire și curățarea după eveniment.',
-    'catering.p4': 'Flexibilitate: Preferați serviciul complet la locație sau ridicați mâncarea? Totul este negociabil.',
+    'catering.subtitle': 'Experiența Autentică a Grătarului, direct la evenimentul tău',
+    'catering.p1': 'Fie că organizați o petrecere intimă cu prietenii sau o mare sărbătoare de cartier, echipa noastră vă transformă evenimentul într-un răsfăț culinar. Noi ne ocupăm de tot ce ține de stația de grătar, astfel încât dumneavoastră să aveți timp pentru invitați.',
+    'catering.p2': 'Pachetul nostru include:\n\nMeniu complet: O selecție variată de aperitive și preparate la grătar, gătite pe loc la unitățile noastre mobile profesionale.\n\nBăuturi: Sortimente diverse pentru a completa masa.',
+    'catering.p3': 'Logistică inclusă: Asigurăm tacâmurile și farfuriile necesare.',
+    'catering.p4': 'Flexibilitate: Oferim servicii complete la locație (gătit și servire la grătar) sau opțiunea de preluare a mâncării. Dumneavoastră alegeți, noi ne ocupăm de foc!',
     'catering.gallery.title': 'Serviciul Nostru de Catering',
     
     // Products Page
