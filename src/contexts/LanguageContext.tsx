@@ -364,6 +364,12 @@ const translations = {
     'order.products.homemadeSausage': 'Huisgemaakte worst',
     'order.products.meatballs': 'Gehaktballen',
     'order.products.bbqPackage': 'BBQ pakket',
+    'order.products.colliPork1': 'Colli varken 1 (€45)',
+    'order.products.colliPork2': 'Colli varken 2 (€55)',
+    'order.products.colliChicken': 'Colli kip (€50)',
+    'order.products.colliMixed': 'Colli kip-varken (€60)',
+    'order.products.colliBBQ': 'BBQ Colli (€55)',
+    'order.products.colliJohn': 'Colli John (€100)',
     
     // Order - Validation
     'order.validation.selectProduct': 'Selecteer een product',
@@ -741,6 +747,12 @@ const translations = {
     'order.products.homemadeSausage': 'Cârnați casnici',
     'order.products.meatballs': 'Chiftele',
     'order.products.bbqPackage': 'Pachet BBQ',
+    'order.products.colliPork1': 'Colli porc 1 (€45)',
+    'order.products.colliPork2': 'Colli porc 2 (€55)',
+    'order.products.colliChicken': 'Colli pui (€50)',
+    'order.products.colliMixed': 'Colli pui-porc (€60)',
+    'order.products.colliBBQ': 'Colli BBQ (€55)',
+    'order.products.colliJohn': 'Colli John (€100)',
     
     // Order - Validation
     'order.validation.selectProduct': 'Selectează un produs',

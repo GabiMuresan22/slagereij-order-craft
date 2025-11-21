@@ -93,6 +93,12 @@ const Order = () => {
     { key: 'homemadeSausage', label: t('order.products.homemadeSausage') },
     { key: 'meatballs', label: t('order.products.meatballs') },
     { key: 'bbqPackage', label: t('order.products.bbqPackage') },
+    { key: 'colliPork1', label: t('order.products.colliPork1') },
+    { key: 'colliPork2', label: t('order.products.colliPork2') },
+    { key: 'colliChicken', label: t('order.products.colliChicken') },
+    { key: 'colliMixed', label: t('order.products.colliMixed') },
+    { key: 'colliBBQ', label: t('order.products.colliBBQ') },
+    { key: 'colliJohn', label: t('order.products.colliJohn') },
   ];
 
   const form = useForm<OrderFormValues>({
