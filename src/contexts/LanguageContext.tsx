@@ -375,6 +375,19 @@ const translations = {
     'order.validation.nameMin': 'Naam moet minimaal 2 karakters zijn',
     'order.validation.phoneMin': 'Telefoonnummer moet minimaal 10 cijfers zijn',
     'order.validation.emailInvalid': 'Ongeldig e-mailadres',
+    
+    // Packages Page
+    'packages.title': 'Onze Colli\'s',
+    'packages.subtitle': 'Voordelige vleespakketten voor elke gelegenheid',
+    'packages.featured': 'Aanbevolen',
+    'packages.orderOnly': 'Enkel op bestelling!',
+    'packages.orderNow': 'Bestel Nu',
+    'packages.pork1.title': 'Colli varken 1',
+    'packages.pork2.title': 'Colli varken 2',
+    'packages.chicken.title': 'Colli kip',
+    'packages.mixed.title': 'Colli kip-varken',
+    'packages.bbq.title': 'BBQ Colli',
+    'packages.john.title': 'Colli John',
   },
   ro: {
     // Navigation
@@ -739,6 +752,19 @@ const translations = {
     'order.validation.nameMin': 'Numele trebuie să aibă cel puțin 2 caractere',
     'order.validation.phoneMin': 'Numărul de telefon trebuie să aibă cel puțin 10 cifre',
     'order.validation.emailInvalid': 'Adresa de email invalidă',
+    
+    // Packages Page
+    'packages.title': 'Pachetele Noastre',
+    'packages.subtitle': 'Pachete avantajoase de carne pentru orice ocazie',
+    'packages.featured': 'Recomandat',
+    'packages.orderOnly': 'Doar la comandă!',
+    'packages.orderNow': 'Comandă Acum',
+    'packages.pork1.title': 'Colli porc 1',
+    'packages.pork2.title': 'Colli porc 2',
+    'packages.chicken.title': 'Colli pui',
+    'packages.mixed.title': 'Colli pui-porc',
+    'packages.bbq.title': 'Colli BBQ',
+    'packages.john.title': 'Colli John',
   },
 };
 
