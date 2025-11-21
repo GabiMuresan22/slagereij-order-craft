@@ -13,6 +13,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Products from "./pages/Products";
+import Packages from "./pages/Packages";
 import Catering from "./pages/Catering";
 import Order from "./pages/Order";
 import Contact from "./pages/Contact";
@@ -43,6 +44,7 @@ const App = () => (
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/products" element={<Products />} />
+                    <Route path="/packages" element={<Packages />} />
                     <Route path="/catering" element={<Catering />} />
                     <Route path="/order" element={<Order />} />
                     <Route path="/contact" element={<Contact />} />
