@@ -209,29 +209,22 @@ const Home = () => {
             {t("home.specials.title")}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <Card className="border-primary/20 hover:shadow-xl transition-shadow">
-              <CardContent className="p-6">
-                <h3 className="text-2xl font-serif font-semibold mb-3 text-primary">
-                  {t("home.specials.steak.title")}
+          <div className="flex justify-center">
+            <Card className="border-primary/20 hover:shadow-xl transition-shadow max-w-2xl w-full">
+              <CardContent className="p-8">
+                <h3 className="text-3xl font-serif font-semibold mb-6 text-primary text-center">
+                  {t("home.specials.promo.title")}
                 </h3>
-                <p className="text-3xl font-bold text-primary mb-2">{t("home.specials.steak.price")}</p>
-                <p className="text-muted-foreground mb-4">{t("home.specials.steak.desc")}</p>
+                <div className="space-y-4 mb-6">
+                  <p className="text-lg text-foreground leading-relaxed">
+                    {t("home.specials.promo.offer1")}
+                  </p>
+                  <p className="text-lg text-foreground leading-relaxed">
+                    {t("home.specials.promo.offer2")}
+                  </p>
+                </div>
                 <Link to="/order">
-                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">{t("home.specials.order")}</Button>
-                </Link>
-              </CardContent>
-            </Card>
-
-            <Card className="border-primary/20 hover:shadow-xl transition-shadow">
-              <CardContent className="p-6">
-                <h3 className="text-2xl font-serif font-semibold mb-3 text-primary">
-                  {t("home.specials.sausage.title")}
-                </h3>
-                <p className="text-3xl font-bold text-primary mb-2">{t("home.specials.sausage.price")}</p>
-                <p className="text-muted-foreground mb-4">{t("home.specials.sausage.desc")}</p>
-                <Link to="/order">
-                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">{t("home.specials.order")}</Button>
+                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 text-lg py-6">{t("home.specials.order")}</Button>
                 </Link>
               </CardContent>
             </Card>
