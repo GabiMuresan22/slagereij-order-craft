@@ -111,7 +111,7 @@ const About = () => {
                   <span className="text-foreground">{t("about.specialties.item1")}</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-accent font-bold mr-3">•</span>
+                  <span className="text-primary font-bold mr-3">•</span>
                   <span className="text-foreground">{t("about.specialties.item2")}</span>
                 </li>
                 <li className="flex items-start">
@@ -123,7 +123,7 @@ const About = () => {
                   <span className="text-foreground">{t('about.specialties.item4')}</span>
                 </li> */}
                 <li className="flex items-start">
-                  <span className="text-muted-foreground font-bold mr-3">•</span>
+                  <span className="text-primary font-bold mr-3">•</span>
                   <span className="text-foreground">{t("about.specialties.item5")}</span>
                 </li>
               </ul>
