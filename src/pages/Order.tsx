@@ -209,6 +209,26 @@ const Order = () => {
         pickupDate: format(data.pickupDate, "yyyy-MM-dd"),
       });
 
+      // Send automatic WhatsApp notification to shop owner
+      const orderDetails = data.orderItems
+        .map((item) => `- ${item.product}: ${item.quantity}${item.unit}`)
+        .join('\n');
+      
+      const shopWhatsAppNumber = "32466186457"; // Shop's Belgium number
+      const whatsappMessage = `🥩 *Nieuwe Bestelling - Slagerij John*\n\n` +
+        `*Klantgegevens:*\n` +
+        `Naam: ${data.customerName}\n` +
+        `Telefoon: ${data.customerPhone}\n` +
+        `Email: ${data.customerEmail}\n\n` +
+        `*Bestelde producten:*\n${orderDetails}\n\n` +
+        `*Afhaalgegevens:*\n` +
+        `Datum: ${format(data.pickupDate, "dd-MM-yyyy")}\n` +
+        `Tijd: ${data.pickupTime}\n` +
+        (data.notes ? `\n*Opmerkingen:*\n${data.notes}` : '');
+      
+      const whatsappUrl = `https://web.whatsapp.com/send?phone=${shopWhatsAppNumber}&text=${encodeURIComponent(whatsappMessage)}`;
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+
       toast({
         title: t('order.success.title'),
         description: "Uw bestelling is succesvol geplaatst!",
