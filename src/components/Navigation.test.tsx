@@ -54,9 +54,9 @@ describe("Navigation", () => {
     expect(screen.getByText(/nav.contact/i)).toBeInTheDocument();
   });
 
-  it("renders language toggle button", () => {
+  it("renders language toggle button with both NL and RO", () => {
     render(<Navigation />);
-    const languageButton = screen.getByText(/NL/i);
+    const languageButton = screen.getByText(/NL \/ RO/i);
     expect(languageButton).toBeInTheDocument();
   });
 

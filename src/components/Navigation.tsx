@@ -111,7 +111,7 @@ const Navigation = () => {
               className="flex items-center gap-2"
             >
               <span className="text-lg">{language === 'nl' ? '🇳🇱' : '🇷🇴'}</span>
-              {language.toUpperCase()}
+              NL / RO
             </Button>
             
             {/* Auth Button */}
