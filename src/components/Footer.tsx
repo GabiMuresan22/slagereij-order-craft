@@ -14,12 +14,12 @@ const Footer = () => {
 
   return (
     <footer className="bg-background text-foreground mt-20">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Contact Info */}
           <div>
-            <h3 className="text-xl font-serif font-semibold mb-4">{t('footer.contact')}</h3>
-            <div className="space-y-3">
+            <h3 className="text-xl font-serif font-semibold mb-6">{t('footer.contact')}</h3>
+            <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 flex-shrink-0 text-primary" />
                 <p className="text-sm text-muted-foreground">
@@ -38,8 +38,8 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-serif font-semibold mb-4">{t('footer.quickLinks')}</h3>
-            <nav className="space-y-2">
+            <h3 className="text-xl font-serif font-semibold mb-6">{t('footer.quickLinks')}</h3>
+            <nav className="space-y-3">
               <Link to="/" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 {t('nav.home')}
               </Link>
@@ -63,7 +63,7 @@ const Footer = () => {
 
           {/* Opening Hours */}
           <div>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-serif font-semibold flex items-center gap-2">
                 <Clock className="w-5 h-5 text-primary" />
                 {t('footer.hours')}
@@ -78,7 +78,7 @@ const Footer = () => {
                 {isOpen ? t('footer.status.open') : t('footer.status.closed')}
               </span>
             </div>
-            <div className="space-y-2.5 text-sm">
+            <div className="space-y-3 text-sm">
               {days.map((day, index) => (
                 <div 
                   key={day} 
@@ -93,17 +93,17 @@ const Footer = () => {
 
           {/* About & Social Media */}
           <div>
-            <div className="mb-4">
-              <img src={logo} alt={t('footer.about.title')} className="h-12 w-auto mb-3" />
+            <div className="mb-6">
+              <img src={logo} alt={t('footer.about.title')} className="h-12 w-auto mb-4" />
             </div>
-            <p className="text-sm leading-relaxed mb-6 text-muted-foreground italic">
+            <p className="text-sm leading-relaxed mb-8 text-muted-foreground italic">
               {t('footer.about.desc')}
             </p>
             
             {/* Social Media Links */}
             <div>
-              <h4 className="font-semibold text-sm mb-3">{t('footer.social')}</h4>
-              <div className="flex items-center gap-3">
+              <h4 className="font-semibold text-sm mb-4">{t('footer.social')}</h4>
+              <div className="flex items-center gap-4">
                 <a 
                   href="https://www.facebook.com/profile.php?id=61560710702910" 
                   target="_blank" 
@@ -136,8 +136,8 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border mt-8 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
+        <div className="border-t border-border mt-12 pt-10">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-muted-foreground">
             <div className="flex flex-col items-center md:items-start gap-2">
               <p>&copy; {new Date().getFullYear()} {t('footer.about.title')}. {t('footer.rights')}</p>
               <a 
