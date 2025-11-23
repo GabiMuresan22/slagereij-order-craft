@@ -87,14 +87,14 @@ const Home = () => {
         <link rel="preload" as="image" href={heroImage} />
       </SEO>
       {/* Hero Section */}
-      <section
-        className="relative h-[550px] md:h-[650px] flex items-start justify-center overflow-hidden"
-        style={{
-          backgroundImage: `url(${heroImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
-        }}
-      >
+      <section className="relative h-[550px] md:h-[650px] flex items-start justify-center overflow-hidden">
+        {/* Hero Image - Optimized for LCP */}
+        <img
+          src={heroImage}
+          alt="Premium quality meat selection at Slagerij John"
+          className="absolute inset-0 w-full h-full object-cover object-[center_top]"
+          fetchPriority="high"
+        />
         {/* Enhanced gradient overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-transparent" />
 
@@ -133,7 +133,14 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             <Card className="overflow-hidden hover:shadow-2xl transition-shadow border-primary/20">
               <CardContent className="p-0">
-                <img src={christmasMenu1} alt="Menu Kerst Nieuwjaar - Tapas en Desserts" className="w-full h-auto" />
+                <img 
+                  src={christmasMenu1} 
+                  alt="Menu Kerst Nieuwjaar - Tapas en Desserts" 
+                  className="w-full h-auto"
+                  loading="lazy"
+                  width="800"
+                  height="1067"
+                />
               </CardContent>
             </Card>
 
@@ -143,6 +150,9 @@ const Home = () => {
                   src={christmasMenu2}
                   alt="Menu Kerst Nieuwjaar - Hapjes en Hoofdgerechten"
                   className="w-full h-auto"
+                  loading="lazy"
+                  width="800"
+                  height="1067"
                 />
               </CardContent>
             </Card>
@@ -180,7 +190,7 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="text-center border-border hover:shadow-lg transition-shadow">
               <CardContent className="pt-8 pb-6">
-                <ShoppingBag className="w-12 h-12 mx-auto mb-4 text-primary" />
+                <ShoppingBag className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden="true" />
                 <h3 className="text-xl font-serif font-semibold mb-3">{t("home.features.online.title")}</h3>
                 <p className="text-muted-foreground">{t("home.features.online.desc")}</p>
               </CardContent>
@@ -188,7 +198,7 @@ const Home = () => {
 
             <Card className="text-center border-border hover:shadow-lg transition-shadow">
               <CardContent className="pt-8 pb-6">
-                <Award className="w-12 h-12 mx-auto mb-4 text-primary" />
+                <Award className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden="true" />
                 <h3 className="text-xl font-serif font-semibold mb-3">{t("home.features.quality.title")}</h3>
                 <p className="text-muted-foreground">{t("home.features.quality.desc")}</p>
               </CardContent>
@@ -196,7 +206,7 @@ const Home = () => {
 
             <Card className="text-center border-border hover:shadow-lg transition-shadow">
               <CardContent className="pt-8 pb-6">
-                <Clock className="w-12 h-12 mx-auto mb-4 text-primary" />
+                <Clock className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden="true" />
                 <h3 className="text-xl font-serif font-semibold mb-3">{t("home.features.fresh.title")}</h3>
                 <p className="text-muted-foreground">{t("home.features.fresh.desc")}</p>
               </CardContent>

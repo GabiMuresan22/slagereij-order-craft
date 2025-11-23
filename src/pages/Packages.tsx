@@ -5,9 +5,15 @@ import { Link } from "react-router-dom";
 import { Check, ShoppingCart } from "lucide-react";
 import SEO from "@/components/SEO";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { getBreadcrumbSchema } from "@/lib/structuredData";
 
 export default function Packages() {
   const { t } = useLanguage();
+  
+  const breadcrumbData = getBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Pakketten", url: "/packages" },
+  ]);
   
   const packages = [
     {
@@ -97,6 +103,8 @@ export default function Packages() {
       <SEO 
         title={t('packages.title')}
         description={t('packages.subtitle')}
+        keywords="vleespakketten, BBQ pakket, varkenspakket, kippakket, Zwevezele, voordeel"
+        structuredData={breadcrumbData}
       />
       
       <div className="container mx-auto px-4">

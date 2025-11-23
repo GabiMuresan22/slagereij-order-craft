@@ -310,6 +310,11 @@ const Order = () => {
       <SEO 
         title={t('order.seo.title')}
         description={t('order.seo.description')}
+        keywords="online bestellen, vlees bestellen, bestelformulier, Zwevezele"
+        structuredData={getBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Bestellen", url: "/order" }
+        ])}
       />
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-3xl mx-auto">
