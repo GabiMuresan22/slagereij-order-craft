@@ -126,9 +126,9 @@ const Home = () => {
       <section className="py-16 bg-gradient-to-b from-primary/5 to-background">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-center mb-3 text-foreground">
-            {t('home.christmas.title')}
+            {t("home.christmas.title")}
           </h2>
-          <p className="text-center text-muted-foreground mb-12 text-base md:text-lg">{t('home.christmas.period')}</p>
+          <p className="text-center text-muted-foreground mb-12 text-base md:text-lg">{t("home.christmas.period")}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             <Card className="overflow-hidden hover:shadow-2xl transition-shadow border-primary/20">
@@ -149,7 +149,7 @@ const Home = () => {
           </div>
 
           <div className="text-center mt-8">
-            <p className="text-muted-foreground mb-4">{t('home.christmas.info')}</p>
+            <p className="text-muted-foreground mb-4">{t("home.christmas.info")}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
@@ -159,10 +159,13 @@ const Home = () => {
                 className="text-lg px-8 py-6"
               >
                 <Download className="mr-2 h-5 w-5" />
-                {isDownloading ? t('home.christmas.downloading') : t('home.christmas.download')}
+                {isDownloading ? t("home.christmas.downloading") : t("home.christmas.download")}
               </Button>
               <Link to="/order">
-                <Button size="lg" className="text-lg px-8 py-6 w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90">
+                <Button
+                  size="lg"
+                  className="text-lg px-8 py-6 w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90"
+                >
                   {t("home.hero.cta")}
                 </Button>
               </Link>
@@ -203,7 +206,7 @@ const Home = () => {
       </section>
 
       {/* Weekly Specials */}
-      <section className="py-16 bg-muted/30">
+      {/* <section className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-serif font-bold text-center mb-12 text-foreground">
             {t("home.specials.title")}
@@ -230,7 +233,7 @@ const Home = () => {
             </Card>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Testimonials Section */}
       <Testimonials />
