@@ -80,7 +80,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Slagerij John <gabimuresan2289@gmail.com>",
+        from: "Slagerij John <noreply@slagerij-john.be>",
         to: ["contact@slagerij-john.be"],
         reply_to: email,
         subject: `Nieuw contactbericht van ${name}`,
