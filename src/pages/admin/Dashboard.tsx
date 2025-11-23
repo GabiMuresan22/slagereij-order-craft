@@ -70,12 +70,11 @@ const statusIcons = {
 };
 
 export default function AdminDashboard() {
-  const { user, loading: authLoading } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const { t } = useLanguage();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [templates, setTemplates] = useState<Record<string, string>>({});
@@ -84,37 +83,6 @@ export default function AdminDashboard() {
     order: null,
     message: ''
   });
-
-  // Check if user is admin
-  useEffect(() => {
-    const checkAdmin = async () => {
-      if (!user) {
-        navigate('/auth');
-        return;
-      }
-
-      try {
-        const { data, error } = await (supabase as any)
-          .rpc('has_role', { _user_id: user.id, _role: 'admin' });
-
-        if (error || !data) {
-          toast.error('Access denied. Admin privileges required.');
-          navigate('/');
-          return;
-        }
-
-        setIsAdmin(true);
-      } catch (err) {
-        console.error('Error checking admin status:', err);
-        toast.error('Access denied. Admin privileges required.');
-        navigate('/');
-      }
-    };
-
-    if (!authLoading) {
-      checkAdmin();
-    }
-  }, [user, authLoading, navigate]);
 
   // Fetch templates
   const fetchTemplates = async () => {
@@ -137,9 +105,9 @@ export default function AdminDashboard() {
 
   // Fetch orders
   useEffect(() => {
-    const fetchOrders = async () => {
-      if (!isAdmin) return;
+    if (!user) return;
 
+    const fetchOrders = async () => {
       setLoading(true);
       const { data, error } = await supabase
         .from('orders')
@@ -162,11 +130,11 @@ export default function AdminDashboard() {
 
     fetchOrders();
     fetchTemplates();
-  }, [isAdmin]);
+  }, [user]);
 
   // Set up real-time updates
   useEffect(() => {
-    if (!isAdmin) return;
+    if (!user) return;
 
     const channel = supabase
       .channel('orders-changes')
@@ -205,7 +173,7 @@ export default function AdminDashboard() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [isAdmin]);
+  }, [user]);
 
   const updateOrderStatus = async (orderId: string, newStatus: string) => {
     try {
@@ -480,7 +448,7 @@ export default function AdminDashboard() {
     completed: orders.filter(o => o.status === 'completed').length,
   };
 
-  if (authLoading || loading || !isAdmin) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
