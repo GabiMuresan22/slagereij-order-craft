@@ -44,6 +44,20 @@ const Navigation = () => {
     { path: "/contact", label: t('nav.contact') },
   ];
 
+  // Language configuration with flags and native names
+  const languageConfig = {
+    nl: { 
+      name: "Dutch", 
+      nativeName: "Nederlands", 
+      flag: "🇳🇱" 
+    },
+    ro: { 
+      name: "Romanian", 
+      nativeName: "Română", 
+      flag: "🇷🇴" 
+    }
+  };
+
   const toggleLanguage = () => {
     if (language === 'nl') {
       setLanguage('ro');
@@ -110,8 +124,8 @@ const Navigation = () => {
               onClick={toggleLanguage}
               className="flex items-center gap-2"
             >
-              <span className="text-lg">{language === 'nl' ? '🇳🇱' : '🇷🇴'}</span>
-              NL / RO
+              <span className="text-lg">{languageConfig[language as keyof typeof languageConfig].flag}</span>
+              <span className="hidden sm:inline">{languageConfig[language as keyof typeof languageConfig].nativeName}</span>
             </Button>
             
             {/* Auth Button */}
@@ -226,8 +240,8 @@ const Navigation = () => {
               }}
               className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[44px] w-full"
             >
-              <span className="text-lg">{language === 'nl' ? '🇳🇱' : '🇷🇴'}</span>
-              {language === 'nl' ? 'Nederlands' : 'Română'}
+              <span className="text-lg">{languageConfig[language as keyof typeof languageConfig].flag}</span>
+              {languageConfig[language as keyof typeof languageConfig].nativeName}
             </button>
             
             {/* Mobile Auth Links */}
