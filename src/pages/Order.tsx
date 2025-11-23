@@ -198,7 +198,7 @@ const Order = () => {
       `Tijd: ${data.pickupTime}\n` +
       (data.notes ? `\n*Opmerkingen:*\n${data.notes}` : '');
     
-    const whatsappUrl = `https://web.whatsapp.com/send?phone=${shopWhatsAppNumber}&text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/${shopWhatsAppNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 

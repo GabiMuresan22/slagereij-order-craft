@@ -247,7 +247,7 @@ export default function AdminDashboard() {
       cleanPhone = '32' + cleanPhone;
     }
     
-    const url = `https://web.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(whatsappDialog.message)}`;
+    const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(whatsappDialog.message)}`;
     window.open(url, '_blank');
     
     // Close dialog
