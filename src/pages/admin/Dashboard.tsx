@@ -37,6 +37,7 @@ interface OrderItem {
   product: string;
   quantity: string;
   unit: string;
+  price?: number;
 }
 
 interface Order {
@@ -583,6 +584,7 @@ export default function AdminDashboard() {
                   <TableRow>
                     <TableHead>Customer</TableHead>
                     <TableHead>Items</TableHead>
+                    <TableHead>Total</TableHead>
                     <TableHead>Pickup</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Created</TableHead>
@@ -592,13 +594,19 @@ export default function AdminDashboard() {
                 <TableBody>
                   {filteredOrders.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                      <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
                         No orders found
                       </TableCell>
                     </TableRow>
                   ) : (
                     filteredOrders.map((order) => {
                       const StatusIcon = statusIcons[order.status as keyof typeof statusIcons];
+                      const orderTotal = order.order_items.reduce((sum, item) => {
+                        const price = item.price || 0;
+                        const quantity = parseFloat(item.quantity) || 0;
+                        return sum + (price * quantity);
+                      }, 0);
+                      
                       return (
                         <TableRow key={order.id}>
                           <TableCell>
@@ -610,6 +618,11 @@ export default function AdminDashboard() {
                               {order.order_items.slice(0, 2).map((item, idx) => (
                                 <div key={idx}>
                                   {item.quantity} {item.unit} {item.product}
+                                  {item.price && (
+                                    <span className="text-muted-foreground ml-1">
+                                      (€{(parseFloat(item.quantity) * item.price).toFixed(2)})
+                                    </span>
+                                  )}
                                 </div>
                               ))}
                               {order.order_items.length > 2 && (
@@ -617,6 +630,11 @@ export default function AdminDashboard() {
                                   +{order.order_items.length - 2} more
                                 </div>
                               )}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="font-semibold text-primary">
+                              €{orderTotal.toFixed(2)}
                             </div>
                           </TableCell>
                           <TableCell>

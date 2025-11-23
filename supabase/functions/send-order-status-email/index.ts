@@ -50,9 +50,34 @@ const validateOrderData = (data: any): data is OrderStatusEmailRequest => {
 const getEmailContent = (data: OrderStatusEmailRequest) => {
   const { customerName, orderId, status, orderItems, pickupDate, pickupTime } = data;
   
+  // Calculate order total and create items list with prices
+  const orderTotal = orderItems.reduce((sum: number, item: any) => {
+    const price = item.price || 0;
+    const quantity = parseFloat(item.quantity) || 0;
+    return sum + (price * quantity);
+  }, 0).toFixed(2);
+
   const itemsList = orderItems
-    .map(item => `<li>${item.quantity} ${item.weight || item.unit || ''} ${item.product}</li>`)
-    .join("");
+    .map((item: any) => {
+      const price = item.price || 0;
+      const quantity = parseFloat(item.quantity) || 0;
+      const itemTotal = (price * quantity).toFixed(2);
+      
+      return `
+        <tr>
+          <td style="padding: 8px 0; color: #666666;">
+            ${item.quantity} ${item.unit || item.weight || ''} ${item.product}
+          </td>
+          <td style="padding: 8px 0; color: #666666; text-align: right;">
+            €${price.toFixed(2)} × ${item.quantity}
+          </td>
+          <td style="padding: 8px 0; color: #333333; font-weight: 600; text-align: right;">
+            €${itemTotal}
+          </td>
+        </tr>
+      `;
+    })
+    .join('');
 
   const statusMessages = {
     pending: {
@@ -126,9 +151,18 @@ const getEmailContent = (data: OrderStatusEmailRequest) => {
                         </p>
                         
                         <h3 style="color: #333333; font-size: 16px; margin-top: 20px; margin-bottom: 10px;">Items:</h3>
-                        <ul style="color: #666666; margin: 0; padding-left: 20px;">
-                          ${itemsList}
-                        </ul>
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+                          <tbody>
+                            ${itemsList}
+                          </tbody>
+                        </table>
+                        
+                        <div style="border-top: 2px solid #8B0000; padding-top: 15px; margin-top: 15px;">
+                          <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #333333; font-size: 18px; font-weight: bold;">Total:</span>
+                            <span style="color: #8B0000; font-size: 24px; font-weight: bold;">€${orderTotal}</span>
+                          </div>
+                        </div>
                       </div>
                       
                       <p style="color: #666666; font-size: 14px; line-height: 1.6; margin-bottom: 0;">

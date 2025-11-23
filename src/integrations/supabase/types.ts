@@ -59,6 +59,42 @@ export type Database = {
         }
         Relationships: []
       }
+      products: {
+        Row: {
+          available: boolean
+          created_at: string | null
+          id: string
+          key: string
+          name_nl: string
+          name_ro: string
+          price: number
+          unit: string
+          updated_at: string | null
+        }
+        Insert: {
+          available?: boolean
+          created_at?: string | null
+          id?: string
+          key: string
+          name_nl: string
+          name_ro: string
+          price: number
+          unit?: string
+          updated_at?: string | null
+        }
+        Update: {
+          available?: boolean
+          created_at?: string | null
+          id?: string
+          key?: string
+          name_nl?: string
+          name_ro?: string
+          price?: number
+          unit?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
