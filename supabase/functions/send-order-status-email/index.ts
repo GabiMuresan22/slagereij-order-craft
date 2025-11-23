@@ -195,49 +195,8 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const authHeader = req.headers.get("Authorization");
-    if (!authHeader) {
-      console.error("Missing authorization header");
-      return new Response(
-        JSON.stringify({ error: "Unauthorized" }),
-        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
-    // Read the body first to check status
+    // Read the request data
     const requestData = await req.json();
-
-    // Only perform strict Admin Role check if status is NOT pending
-    // This allows customers to trigger the "Order Received" email themselves
-    if (requestData.status !== 'pending') {
-      const supabase = createClient(
-        Deno.env.get("SUPABASE_URL") ?? "",
-        Deno.env.get("SUPABASE_ANON_KEY") ?? "",
-        { global: { headers: { Authorization: authHeader } } }
-      );
-
-      // Get the authenticated user
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
-      if (userError || !user) {
-        console.error("Error getting user:", userError);
-        return new Response(
-          JSON.stringify({ error: "Unauthorized" }),
-          { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
-      }
-
-      // Check if user has admin role
-      const { data: hasAdminRole, error: roleError } = await supabase
-        .rpc("has_role", { _user_id: user.id, _role: "admin" });
-
-      if (roleError || !hasAdminRole) {
-        console.error("User is not an admin:", roleError);
-        return new Response(
-          JSON.stringify({ error: "Forbidden: Admin access required" }),
-          { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
-      }
-    }
     
     // Validate input data
     if (!validateOrderData(requestData)) {
