@@ -7,6 +7,20 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 
+// Language configuration with flags and native names
+const languageConfig = {
+  nl: { 
+    name: "Dutch", 
+    nativeName: "Nederlands", 
+    flag: "🇳🇱" 
+  },
+  ro: { 
+    name: "Romanian", 
+    nativeName: "Română", 
+    flag: "🇷🇴" 
+  }
+};
+
 const Navigation = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -43,6 +57,8 @@ const Navigation = () => {
     { path: "/order", label: t('nav.order') },
     { path: "/contact", label: t('nav.contact') },
   ];
+
+  const currentLangConfig = languageConfig[language as keyof typeof languageConfig];
 
   const toggleLanguage = () => {
     if (language === 'nl') {
@@ -110,8 +126,8 @@ const Navigation = () => {
               onClick={toggleLanguage}
               className="flex items-center gap-2"
             >
-              <span className="text-lg">{language === 'nl' ? '🇳🇱' : '🇷🇴'}</span>
-              NL / RO
+              <span className="text-lg">{currentLangConfig.flag}</span>
+              <span className="hidden sm:inline">{currentLangConfig.nativeName}</span>
             </Button>
             
             {/* Auth Button */}
@@ -226,8 +242,8 @@ const Navigation = () => {
               }}
               className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[44px] w-full"
             >
-              <span className="text-lg">{language === 'nl' ? '🇳🇱' : '🇷🇴'}</span>
-              {language === 'nl' ? 'Nederlands' : 'Română'}
+              <span className="text-lg">{currentLangConfig.flag}</span>
+              {currentLangConfig.nativeName}
             </button>
             
             {/* Mobile Auth Links */}
