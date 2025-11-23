@@ -23,7 +23,11 @@ const SEO = ({
 }: SEOProps) => {
   const location = useLocation();
   const baseUrl = 'https://slagerijjohn.be';
-  const currentUrl = `${baseUrl}${location.pathname}`;
+  // Normalize URL: remove trailing slash for consistency
+  const normalizedPath = location.pathname.endsWith('/') && location.pathname !== '/' 
+    ? location.pathname.slice(0, -1) 
+    : location.pathname;
+  const currentUrl = `${baseUrl}${normalizedPath}`;
   const fullTitle = `${title} | Slagerij John`;
 
   return (

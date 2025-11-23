@@ -160,3 +160,76 @@ export const getProductSchema = (name: string, description: string, price?: stri
     }
   })
 });
+
+export const getProductListSchema = () => ({
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Slagerij John Product Range",
+  "description": "Premium quality meat products including beef, pork, poultry, and BBQ specialties",
+  "itemListElement": [
+    {
+      "@type": "Product",
+      "position": 1,
+      "name": "Rundvlees - Premium Beef",
+      "description": "Premium quality beef cuts including steaks, minced beef, and specialty cuts",
+      "brand": {
+        "@type": "Brand",
+        "name": "Slagerij John"
+      },
+      "image": "https://slagerijjohn.be/og-image.jpg",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@type": "Product",
+      "position": 2,
+      "name": "Varkensvlees - Premium Pork",
+      "description": "Fresh pork cuts including chops, bacon, minced pork, and specialty products",
+      "brand": {
+        "@type": "Brand",
+        "name": "Slagerij John"
+      },
+      "image": "https://slagerijjohn.be/og-image.jpg",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@type": "Product",
+      "position": 3,
+      "name": "Gevogelte - Premium Poultry",
+      "description": "Fresh chicken products including breasts, thighs, skewers, and marinated options",
+      "brand": {
+        "@type": "Brand",
+        "name": "Slagerij John"
+      },
+      "image": "https://slagerijjohn.be/og-image.jpg",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@type": "Product",
+      "position": 4,
+      "name": "BBQ Specialiteiten - BBQ Specialties",
+      "description": "Marinated BBQ products including ribs, sausages, and grilling specialties",
+      "brand": {
+        "@type": "Brand",
+        "name": "Slagerij John"
+      },
+      "image": "https://slagerijjohn.be/og-image.jpg",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock"
+      }
+    }
+  ]
+});

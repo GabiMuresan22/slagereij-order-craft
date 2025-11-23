@@ -44,6 +44,9 @@ const About = () => {
               src={storefront}
               alt="Slagerij John storefront with festive opening decorations"
               className="w-full h-auto object-cover"
+              loading="lazy"
+              width="1200"
+              height="800"
             />
           </Card>
         </div>
@@ -142,6 +145,9 @@ const About = () => {
                     src={gallery1}
                     alt="Marinated meat selection with rosemary"
                     className="w-full h-[400px] md:h-[500px] object-cover"
+                    loading="lazy"
+                    width="1200"
+                    height="800"
                   />
                 </Card>
               </CarouselItem>
@@ -151,6 +157,9 @@ const About = () => {
                     src={gallery2}
                     alt="Gourmet meat platter with shrimp"
                     className="w-full h-[400px] md:h-[500px] object-cover"
+                    loading="lazy"
+                    width="1200"
+                    height="800"
                   />
                 </Card>
               </CarouselItem>
@@ -160,6 +169,9 @@ const About = () => {
                     src={gallery3}
                     alt="Premium beef steak with rosemary"
                     className="w-full h-[400px] md:h-[500px] object-cover"
+                    loading="lazy"
+                    width="1200"
+                    height="800"
                   />
                 </Card>
               </CarouselItem>
@@ -169,6 +181,9 @@ const About = () => {
                     src={gallery4}
                     alt="Homemade sausage selection"
                     className="w-full h-[400px] md:h-[500px] object-cover"
+                    loading="lazy"
+                    width="1200"
+                    height="800"
                   />
                 </Card>
               </CarouselItem>
@@ -178,6 +193,9 @@ const About = () => {
                     src={gallery5}
                     alt="Fresh Ardennes pork cutlets"
                     className="w-full h-[400px] md:h-[500px] object-cover"
+                    loading="lazy"
+                    width="1200"
+                    height="800"
                   />
                 </Card>
               </CarouselItem>
@@ -187,6 +205,9 @@ const About = () => {
                     src={gallery6}
                     alt="Assorted gourmet meat platter"
                     className="w-full h-[400px] md:h-[500px] object-cover"
+                    loading="lazy"
+                    width="1200"
+                    height="800"
                   />
                 </Card>
               </CarouselItem>
@@ -196,6 +217,9 @@ const About = () => {
                     src={gallery7}
                     alt="Charcuterie board with cheese and ham"
                     className="w-full h-[400px] md:h-[500px] object-cover"
+                    loading="lazy"
+                    width="1200"
+                    height="800"
                   />
                 </Card>
               </CarouselItem>
@@ -216,6 +240,9 @@ const About = () => {
                 src={teamPortrait}
                 alt="John and his team in the butcher shop"
                 className="w-full h-auto object-cover"
+                loading="lazy"
+                width="1200"
+                height="800"
               />
             </Card>
           </div>

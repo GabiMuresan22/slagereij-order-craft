@@ -10,7 +10,7 @@ import bbqGrillImage from "@/assets/bbq-grill-meats.jpg";
 import specialtyImage from "@/assets/specialty-platter.webp";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
-import { getBreadcrumbSchema } from "@/lib/structuredData";
+import { getBreadcrumbSchema, getProductListSchema } from "@/lib/structuredData";
 
 const Products = () => {
   const { t } = useLanguage();
@@ -19,6 +19,8 @@ const Products = () => {
     { name: "Home", url: "/" },
     { name: "Producten", url: "/products" },
   ]);
+
+  const productListData = getProductListSchema();
 
   const categories = [
     {
@@ -85,7 +87,7 @@ const Products = () => {
         title="Ons Assortiment"
         description="Ontdek ons uitgebreide assortiment: premium rundvlees, verse varkensvlees, gevogelte en huisgemaakte specialiteiten. Kwaliteitsvlees voor elke gelegenheid."
         keywords="rundvlees, varkensvlees, gevogelte, huisgemaakte worst, BBQ vlees, biefstuk, gehakt"
-        structuredData={breadcrumbData}
+        structuredData={[breadcrumbData, productListData]}
       />
 
       {/* Hero Section */}

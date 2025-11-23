@@ -1,6 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { getBreadcrumbSchema } from "@/lib/structuredData";
 
 const Terms = () => {
   const { t } = useLanguage();
@@ -10,11 +11,17 @@ const Terms = () => {
     day: 'numeric' 
   });
 
+  const breadcrumbData = getBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Voorwaarden", url: "/terms" },
+  ]);
+
   return (
     <>
       <SEO
         title={t('terms.title')}
         description={t('terms.subtitle')}
+        structuredData={breadcrumbData}
       />
       
       <div className="min-h-screen bg-background">
