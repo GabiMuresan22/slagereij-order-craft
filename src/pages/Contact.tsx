@@ -2,8 +2,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema, getLocalBusinessSchema } from "@/lib/structuredData";
 import { useForm } from "react-hook-form";
@@ -19,6 +21,9 @@ const contactFormSchema = z.object({
   email: z.string().trim().email({ message: "Invalid email address" }).max(255),
   phone: z.string().trim().min(10, { message: "Phone number must be at least 10 characters" }).max(20),
   message: z.string().trim().min(10, { message: "Message must be at least 10 characters" }).max(1000),
+  consent: z.boolean().refine((val) => val === true, {
+    message: "You must agree to the privacy policy to submit this form",
+  }),
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
@@ -39,6 +44,7 @@ const Contact = () => {
       email: "",
       phone: "",
       message: "",
+      consent: false,
     },
   });
 
@@ -232,10 +238,41 @@ const Contact = () => {
                     )}
                   />
 
+                  <FormField
+                    control={form.control}
+                    name="consent"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <div className="space-y-1 leading-none">
+                          <FormLabel className="text-sm font-normal">
+                            {t('contact.form.consent')}{' '}
+                            <Link to="/privacy" className="text-primary hover:underline">
+                              {t('footer.privacy')}
+                            </Link>
+                          </FormLabel>
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+
                   <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
                     <Send className="w-4 h-4 mr-2" />
                     {isSubmitting ? "Verzenden..." : "Verzenden"}
                   </Button>
+
+                  <p className="text-xs text-muted-foreground text-center">
+                    {t('contact.form.privacyNotice')}{' '}
+                    <Link to="/privacy" className="text-primary hover:underline">
+                      {t('footer.privacy')}
+                    </Link>
+                  </p>
                 </form>
               </Form>
             </CardContent>

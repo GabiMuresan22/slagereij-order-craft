@@ -122,6 +122,30 @@ const Terms = () => {
             </p>
           </section>
 
+          {/* Right of Withdrawal */}
+          <section className="mb-12 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 rounded-lg p-6">
+            <h2 className="text-2xl font-serif font-semibold mb-4">
+              {t('terms.withdrawal.title')}
+            </h2>
+            <p className="text-muted-foreground mb-4">
+              {t('terms.withdrawal.desc')}
+            </p>
+            <ul className="space-y-3 ml-6">
+              <li className="text-muted-foreground list-disc">
+                {t('terms.withdrawal.item1')}
+              </li>
+              <li className="text-muted-foreground list-disc">
+                {t('terms.withdrawal.item2')}
+              </li>
+              <li className="text-muted-foreground list-disc">
+                {t('terms.withdrawal.item3')}
+              </li>
+              <li className="text-muted-foreground list-disc">
+                {t('terms.withdrawal.item4')}
+              </li>
+            </ul>
+          </section>
+
           {/* Liability */}
           <section className="mb-12">
             <h2 className="text-2xl font-serif font-semibold mb-4">
