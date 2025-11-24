@@ -161,7 +161,7 @@ const Footer = () => {
                 onClick={() => CookieConsent.showPreferences()} 
                 className="hover:text-primary transition-colors text-left"
               >
-                Cookie instellingen
+                {t('footer.cookies')}
               </button>
             </div>
           </div>
