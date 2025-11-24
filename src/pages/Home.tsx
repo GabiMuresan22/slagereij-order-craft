@@ -89,12 +89,16 @@ const Home = () => {
       {/* Hero Section */}
       <section className="relative h-[550px] md:h-[650px] flex items-start justify-center overflow-hidden">
         {/* Hero Image - Optimized for LCP */}
+        {/* 1. Real Image Tag for Instant Loading */}
         <img
           src={heroImage}
-          alt="Premium quality meat selection at Slagerij John"
-          className="absolute inset-0 w-full h-full object-cover object-[center_top]"
-          fetchPriority="high"
+          alt="Slagerij John - Ambachtelijke slagerij"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          fetchPriority="high" /* TELLS BROWSER: LOAD THIS FIRST */
         />
+
+        {/* 2. Dark Overlay (Keep this separate) */}
+        <div className="absolute inset-0 bg-black/50" />
         {/* Enhanced gradient overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-transparent" />
 
@@ -133,9 +137,9 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             <Card className="overflow-hidden hover:shadow-2xl transition-shadow border-primary/20">
               <CardContent className="p-0">
-                <img 
-                  src={christmasMenu1} 
-                  alt="Menu Kerst Nieuwjaar - Tapas en Desserts" 
+                <img
+                  src={christmasMenu1}
+                  alt="Menu Kerst Nieuwjaar - Tapas en Desserts"
                   className="w-full h-auto"
                   loading="lazy"
                   width="800"
