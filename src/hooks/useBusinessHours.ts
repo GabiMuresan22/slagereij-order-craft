@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 
-interface BusinessHours {
+export interface BusinessHours {
   [key: number]: { open: string; close: string } | null;
 }
 
-const businessHours: BusinessHours = {
+export const businessHours: BusinessHours = {
   0: { open: '08:00', close: '13:00' }, // Sunday
   1: { open: '13:00', close: '18:00' }, // Monday
   2: { open: '08:00', close: '18:00' }, // Tuesday
