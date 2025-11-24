@@ -37,14 +37,14 @@ export const config = {
       nl: {
         consent_modal: {
           title: 'Wij gebruiken cookies',
-          description: 'Wij gebruiken cookies om uw ervaring te verbeteren en om bezoekersstatistieken bij te houden. Meer informatie vindt u in ons <a href="/privacy">privacybeleid</a>.',
+          description: 'Wij gebruiken cookies om uw ervaring te verbeteren en om bezoekersstatistieken bij te houden. U kunt uw toestemming op elk moment wijzigen via de <button type="button" data-cc="c-settings" class="cc-link">instellingen</button>. Meer informatie vindt u in ons <a href="/privacy">privacybeleid</a>.',
           primary_btn: {
             text: 'Alles accepteren',
             role: 'accept_all'
           },
           secondary_btn: {
-            text: 'Instellingen',
-            role: 'settings'
+            text: 'Alles weigeren',
+            role: 'accept_necessary'
           }
         },
         settings_modal: {
@@ -82,14 +82,14 @@ export const config = {
       ro: {
         consent_modal: {
           title: 'Folosim cookie-uri',
-          description: 'Folosim cookie-uri pentru a vă îmbunătăți experiența și pentru a urmări statisticile vizitatorilor. Mai multe informații găsiți în <a href="/privacy">politica de confidențialitate</a>.',
+          description: 'Folosim cookie-uri pentru a vă îmbunătăți experiența și pentru a urmări statisticile vizitatorilor. Puteți modifica consimțământul în orice moment prin <button type="button" data-cc="c-settings" class="cc-link">setări</button>. Mai multe informații găsiți în <a href="/privacy">politica de confidențialitate</a>.',
           primary_btn: {
             text: 'Acceptă toate',
             role: 'accept_all'
           },
           secondary_btn: {
-            text: 'Setări',
-            role: 'settings'
+            text: 'Refuză toate',
+            role: 'accept_necessary'
           }
         },
         settings_modal: {
