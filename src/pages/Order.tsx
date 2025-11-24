@@ -281,31 +281,6 @@ const Order = () => {
         pickupDate: format(data.pickupDate, "yyyy-MM-dd"),
       });
 
-      // Send automatic WhatsApp notification to shop owner
-      const orderDetails = data.orderItems
-        .map((item) => {
-          const product = products.find(p => p.key === item.product);
-          const itemTotal = product ? (product.price * parseFloat(item.quantity || '0')).toFixed(2) : '0.00';
-          return `- ${item.product}: ${item.quantity}${item.unit} (€${itemTotal})`;
-        })
-        .join('\n');
-      
-      const shopWhatsAppNumber = "32466186457";
-      const whatsappMessage = `🥩 *Nieuwe Bestelling - Slagerij John*\n\n` +
-        `*Klantgegevens:*\n` +
-        `Naam: ${data.customerName}\n` +
-        `Telefoon: ${data.customerPhone}\n` +
-        `Email: ${data.customerEmail}\n\n` +
-        `*Bestelde producten:*\n${orderDetails}\n\n` +
-        `*Totaal: €${orderTotal.toFixed(2)}*\n\n` +
-        `*Afhaalgegevens:*\n` +
-        `Datum: ${format(data.pickupDate, "dd-MM-yyyy")}\n` +
-        `Tijd: ${data.pickupTime}\n` +
-        (data.notes ? `\n*Opmerkingen:*\n${data.notes}` : '');
-      
-      const whatsappUrl = `https://web.whatsapp.com/send?phone=${shopWhatsAppNumber}&text=${encodeURIComponent(whatsappMessage)}`;
-      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-
       toast({
         title: t('order.success.title'),
         description: "Uw bestelling is succesvol geplaatst!",
