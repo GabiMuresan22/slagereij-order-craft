@@ -3,6 +3,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
 import { useBusinessHours } from "@/hooks/useBusinessHours";
+import * as CookieConsent from 'vanilla-cookieconsent';
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -156,6 +157,12 @@ const Footer = () => {
               <Link to="/terms" className="hover:text-primary transition-colors">
                 {t('footer.terms')}
               </Link>
+              <button 
+                onClick={() => CookieConsent.showPreferences()} 
+                className="hover:text-primary transition-colors text-left"
+              >
+                Cookie instellingen
+              </button>
             </div>
           </div>
         </div>
