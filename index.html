@@ -39,29 +39,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Google Analytics 4 -->
+    <!-- Google Analytics 4 - Will be loaded by cookie consent -->
     <script>
-      // Only load GA4 if measurement ID is configured
-      if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        
-        // Measurement ID will be loaded from environment variable
-        const measurementId = '%VITE_GA4_MEASUREMENT_ID%';
-        if (measurementId && measurementId.startsWith('G-')) {
-          gtag('config', measurementId, {
-            'anonymize_ip': true,
-            'cookie_flags': 'SameSite=None;Secure'
-          });
-          
-          // Load GA4 script
-          const script = document.createElement('script');
-          script.async = true;
-          script.src = 'https://www.googletagmanager.com/gtag/js?id=' + measurementId;
-          document.head.appendChild(script);
-        }
-      }
+      // Initialize dataLayer for GA4 (will be configured after consent)
+      window.dataLayer = window.dataLayer || [];
     </script>
   </head>
 
