@@ -37,7 +37,7 @@ export const config = {
       nl: {
         consent_modal: {
           title: 'Wij gebruiken cookies',
-          description: 'Wij gebruiken cookies om uw ervaring te verbeteren en om bezoekersstatistieken bij te houden. U kunt uw toestemming op elk moment wijzigen via de <button type="button" data-cc="c-settings" class="cc-link">instellingen</button>. Meer informatie vindt u in ons <a href="/privacy">privacybeleid</a>.',
+          description: 'Wij gebruiken cookies om uw ervaring te verbeteren en om bezoekersstatistieken bij te houden. U kunt uw toestemming op elk moment wijzigen via de <button type="button" data-cc="c-settings" class="cc-link">instellingen</button>. Meer informatie vindt u in ons <a href="/privacy">privacybeleid</a>.<br/><br/><small>Cookies die we gebruiken:<br/>• Noodzakelijke cookies: Voor basisfunctionaliteit (permanent)<br/>• Google Analytics (_ga, _gid): Voor websitestatistieken (max. 2 jaar)</small>',
           primary_btn: {
             text: 'Alles accepteren',
             role: 'accept_all'
@@ -82,7 +82,7 @@ export const config = {
       ro: {
         consent_modal: {
           title: 'Folosim cookie-uri',
-          description: 'Folosim cookie-uri pentru a vă îmbunătăți experiența și pentru a urmări statisticile vizitatorilor. Puteți modifica consimțământul în orice moment prin <button type="button" data-cc="c-settings" class="cc-link">setări</button>. Mai multe informații găsiți în <a href="/privacy">politica de confidențialitate</a>.',
+          description: 'Folosim cookie-uri pentru a vă îmbunătăți experiența și pentru a urmări statisticile vizitatorilor. Puteți modifica consimțământul în orice moment prin <button type="button" data-cc="c-settings" class="cc-link">setări</button>. Mai multe informații găsiți în <a href="/privacy">politica de confidențialitate</a>.<br/><br/><small>Cookie-urile pe care le folosim:<br/>• Cookie-uri necesare: Pentru funcționalitate de bază (permanent)<br/>• Google Analytics (_ga, _gid): Pentru statistici website (max. 2 ani)</small>',
           primary_btn: {
             text: 'Acceptă toate',
             role: 'accept_all'

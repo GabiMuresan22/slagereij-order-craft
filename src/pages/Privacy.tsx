@@ -49,6 +49,20 @@ const Privacy = () => {
             </p>
           </section>
 
+          {/* Data Controller */}
+          <section className="mb-12 bg-muted/50 rounded-lg p-6">
+            <h2 className="text-2xl font-serif font-semibold mb-4">
+              {t('privacy.controller.title')}
+            </h2>
+            <div className="space-y-2 text-muted-foreground">
+              <p>{t('privacy.controller.name')}</p>
+              <p>{t('privacy.controller.vat')}</p>
+              <p>{t('privacy.controller.kbo')}</p>
+              <p>{t('privacy.controller.address')}</p>
+              <p>{t('privacy.controller.contact')}</p>
+            </div>
+          </section>
+
           {/* Data Collection */}
           <section className="mb-12">
             <h2 className="text-2xl font-serif font-semibold mb-4">
@@ -69,6 +83,33 @@ const Privacy = () => {
               </li>
               <li className="text-muted-foreground list-disc">
                 {t('privacy.collection.item4')}
+              </li>
+              <li className="text-muted-foreground list-disc">
+                {t('privacy.collection.item5')}
+              </li>
+            </ul>
+          </section>
+
+          {/* Legal Basis */}
+          <section className="mb-12">
+            <h2 className="text-2xl font-serif font-semibold mb-4">
+              {t('privacy.legal.title')}
+            </h2>
+            <p className="text-muted-foreground mb-4">
+              {t('privacy.legal.desc')}
+            </p>
+            <ul className="space-y-3 ml-6">
+              <li className="text-muted-foreground list-disc">
+                {t('privacy.legal.item1')}
+              </li>
+              <li className="text-muted-foreground list-disc">
+                {t('privacy.legal.item2')}
+              </li>
+              <li className="text-muted-foreground list-disc">
+                {t('privacy.legal.item3')}
+              </li>
+              <li className="text-muted-foreground list-disc">
+                {t('privacy.legal.item4')}
               </li>
             </ul>
           </section>
@@ -95,6 +136,54 @@ const Privacy = () => {
                 {t('privacy.usage.item4')}
               </li>
             </ul>
+          </section>
+
+          {/* Data Retention */}
+          <section className="mb-12">
+            <h2 className="text-2xl font-serif font-semibold mb-4">
+              {t('privacy.retention.title')}
+            </h2>
+            <p className="text-muted-foreground mb-4">
+              {t('privacy.retention.desc')}
+            </p>
+            <ul className="space-y-3 ml-6">
+              <li className="text-muted-foreground list-disc">
+                {t('privacy.retention.item1')}
+              </li>
+              <li className="text-muted-foreground list-disc">
+                {t('privacy.retention.item2')}
+              </li>
+              <li className="text-muted-foreground list-disc">
+                {t('privacy.retention.item3')}
+              </li>
+              <li className="text-muted-foreground list-disc">
+                {t('privacy.retention.item4')}
+              </li>
+            </ul>
+          </section>
+
+          {/* Third Party Sharing */}
+          <section className="mb-12">
+            <h2 className="text-2xl font-serif font-semibold mb-4">
+              {t('privacy.thirdparty.title')}
+            </h2>
+            <p className="text-muted-foreground mb-4">
+              {t('privacy.thirdparty.desc')}
+            </p>
+            <ul className="space-y-3 ml-6">
+              <li className="text-muted-foreground list-disc">
+                {t('privacy.thirdparty.item1')}
+              </li>
+              <li className="text-muted-foreground list-disc">
+                {t('privacy.thirdparty.item2')}
+              </li>
+              <li className="text-muted-foreground list-disc">
+                {t('privacy.thirdparty.item3')}
+              </li>
+            </ul>
+            <p className="text-sm text-muted-foreground mt-4 italic">
+              {t('privacy.thirdparty.note')}
+            </p>
           </section>
 
           {/* Data Protection */}
@@ -128,7 +217,32 @@ const Privacy = () => {
               <li className="text-muted-foreground list-disc">
                 {t('privacy.rights.item4')}
               </li>
+              <li className="text-muted-foreground list-disc">
+                {t('privacy.rights.item5')}
+              </li>
+              <li className="text-muted-foreground list-disc">
+                {t('privacy.rights.item6')}
+              </li>
+              <li className="text-muted-foreground list-disc">
+                {t('privacy.rights.item7')}
+              </li>
             </ul>
+          </section>
+
+          {/* Complaint Authority */}
+          <section className="mb-12 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 rounded-lg p-6">
+            <h2 className="text-2xl font-serif font-semibold mb-4">
+              {t('privacy.complaint.title')}
+            </h2>
+            <p className="text-muted-foreground mb-4">
+              {t('privacy.complaint.desc')}
+            </p>
+            <div className="space-y-2">
+              <p className="font-semibold">{t('privacy.complaint.authority')}</p>
+              <p className="text-muted-foreground">{t('privacy.complaint.address')}</p>
+              <p className="text-muted-foreground">{t('privacy.complaint.website')}</p>
+              <p className="text-muted-foreground">{t('privacy.complaint.email')}</p>
+            </div>
           </section>
 
           {/* Contact */}
