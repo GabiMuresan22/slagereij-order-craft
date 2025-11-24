@@ -21,6 +21,7 @@ import SEO from "@/components/SEO";
 import { getBreadcrumbSchema } from "@/lib/structuredData";
 import { supabase } from "@/integrations/supabase/client";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { businessHours } from "@/hooks/useBusinessHours";
 
 interface OrderItem {
   product: string;
@@ -36,6 +37,35 @@ interface Product {
   price: number;
   unit: string;
 }
+
+// Helper function to generate time slots based on opening hours
+const generateTimeSlots = (startHour: number, startMin: number, endHour: number, endMin: number): string[] => {
+  const slots: string[] = [];
+  let currentHour = startHour;
+  let currentMin = startMin;
+  
+  while (currentHour < endHour || (currentHour === endHour && currentMin < endMin)) {
+    slots.push(`${String(currentHour).padStart(2, '0')}:${String(currentMin).padStart(2, '0')}`);
+    currentMin += 30;
+    if (currentMin >= 60) {
+      currentMin = 0;
+      currentHour += 1;
+    }
+  }
+  
+  return slots;
+};
+
+// Generate time slots for a specific day based on business hours
+const getTimeSlotsForDay = (dayOfWeek: number): string[] => {
+  const hours = businessHours[dayOfWeek];
+  if (!hours) return [];
+  
+  const [startHour, startMin] = hours.open.split(':').map(Number);
+  const [endHour, endMin] = hours.close.split(':').map(Number);
+  
+  return generateTimeSlots(startHour, startMin, endHour, endMin);
+};
 
 // Create schemas dynamically with translations
 const createOrderSchemas = (t: (key: string) => string) => {
@@ -549,54 +579,7 @@ const Order = () => {
                       name="pickupTime"
                       render={({ field }) => {
                         const selectedDate = form.watch("pickupDate");
-                        
-                        // Generate time slots based on opening hours
-                        const generateTimeSlots = (startHour: number, startMin: number, endHour: number, endMin: number) => {
-                          const slots: string[] = [];
-                          let currentHour = startHour;
-                          let currentMin = startMin;
-                          
-                          while (currentHour < endHour || (currentHour === endHour && currentMin < endMin)) {
-                            slots.push(`${String(currentHour).padStart(2, '0')}:${String(currentMin).padStart(2, '0')}`);
-                            currentMin += 30;
-                            if (currentMin >= 60) {
-                              currentMin = 0;
-                              currentHour += 1;
-                            }
-                          }
-                          
-                          return slots;
-                        };
-                        
-                        let timeSlots: string[] = [];
-                        
-                        if (selectedDate) {
-                          const dayOfWeek = selectedDate.getDay();
-                          
-                          switch (dayOfWeek) {
-                            case 0: // Sunday: 08:00 - 13:00
-                              timeSlots = generateTimeSlots(8, 0, 13, 0);
-                              break;
-                            case 1: // Monday: 13:00 - 18:00
-                              timeSlots = generateTimeSlots(13, 0, 18, 0);
-                              break;
-                            case 2: // Tuesday: 08:00 - 18:00
-                              timeSlots = generateTimeSlots(8, 0, 18, 0);
-                              break;
-                            case 3: // Wednesday: 08:00 - 13:00
-                              timeSlots = generateTimeSlots(8, 0, 13, 0);
-                              break;
-                            case 4: // Thursday: 08:00 - 18:00
-                              timeSlots = generateTimeSlots(8, 0, 18, 0);
-                              break;
-                            case 5: // Friday: 08:00 - 18:00
-                              timeSlots = generateTimeSlots(8, 0, 18, 0);
-                              break;
-                            case 6: // Saturday: 08:00 - 18:00
-                              timeSlots = generateTimeSlots(8, 0, 18, 0);
-                              break;
-                          }
-                        }
+                        const timeSlots = selectedDate ? getTimeSlotsForDay(selectedDate.getDay()) : [];
 
                         return (
                           <FormItem>
