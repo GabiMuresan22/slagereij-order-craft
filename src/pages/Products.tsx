@@ -114,10 +114,7 @@ const Products = () => {
                       role="img"
                       aria-label={t(category.titleKey)}
                     />
-                    {/* Quality badge */}
-                    <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-md font-semibold text-sm shadow-lg">
-                      Vers van het mes
-                    </div>
+
                   </div>
                   <CardContent className="p-8 md:p-12 flex flex-col justify-center">
                     <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-primary">
@@ -166,10 +163,7 @@ const Products = () => {
                   role="img"
                   aria-label={t("products.specialties.title")}
                 />
-                {/* Quality badge */}
-                <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-md font-semibold text-sm shadow-lg">
-                  100% Lokaal
-                </div>
+
               </div>
               <CardContent className="p-6 md:px-16 md:py-12 flex flex-col justify-center">
                 {/* Split heading with eyebrow text */}
