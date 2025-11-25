@@ -115,7 +115,7 @@ export default function AdminDashboard() {
         .order('created_at', { ascending: false });
 
       if (error) {
-        toast.error('Failed to load orders');
+        toast.error(t('admin.toast.loadFailed'));
         console.error('Error fetching orders:', error);
       } else {
         // Cast order_items from Json to our OrderItem[] type
@@ -152,7 +152,7 @@ export default function AdminDashboard() {
               order_items: (payload.new as any).order_items as OrderItem[]
             };
             setOrders((prev) => [newOrder, ...prev]);
-            toast.success('New order received!');
+            toast.success(t('admin.toast.newOrder'));
           } else if (payload.eventType === 'UPDATE') {
             const updatedOrder = {
               ...(payload.new as any),
@@ -206,9 +206,9 @@ export default function AdminDashboard() {
         // Don't fail the status update if email fails
       }
 
-      toast.success('Order status updated successfully');
+      toast.success(t('admin.toast.statusUpdated'));
     } catch (error: any) {
-      toast.error(error.message || 'Failed to update order status');
+      toast.error(error.message || t('admin.toast.statusUpdateFailed'));
       console.error('Error updating order:', error);
     }
   };
@@ -263,10 +263,10 @@ export default function AdminDashboard() {
 
       if (error) throw error;
 
-      toast.success('Template updated successfully');
+      toast.success(t('admin.toast.templateUpdated'));
       setTemplates(prev => ({ ...prev, [status]: messageTemplate }));
     } catch (error: any) {
-      toast.error(error.message || 'Failed to update template');
+      toast.error(error.message || t('admin.toast.templateFailed'));
       console.error('Error updating template:', error);
     }
   };
@@ -274,7 +274,7 @@ export default function AdminDashboard() {
   const printOrder = (order: Order) => {
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
-      toast.error('Please allow popups to print orders');
+      toast.error(t('admin.toast.popupBlocked'));
       return;
     }
 
@@ -282,7 +282,7 @@ export default function AdminDashboard() {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Order #${order.id.slice(0, 8)}</title>
+          <title>${t('admin.orderDetails.orderId')} #${order.id.slice(0, 8)}</title>
           <style>
             body {
               font-family: Arial, sans-serif;
@@ -350,47 +350,47 @@ export default function AdminDashboard() {
           </style>
         </head>
         <body>
-          <h1>Slagerij John - Order Details</h1>
+          <h1>Slagerij John - ${t('admin.print.orderDetails')}</h1>
           
           <div class="section">
-            <h2>Order Information</h2>
+            <h2>${t('admin.print.orderInfo')}</h2>
             <div class="info-row">
-              <span class="info-label">Order ID:</span>
+              <span class="info-label">${t('admin.print.orderId')}</span>
               <span>#${order.id.slice(0, 8)}</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Order Date:</span>
+              <span class="info-label">${t('admin.print.orderDate')}</span>
               <span>${format(new Date(order.created_at), 'dd/MM/yyyy HH:mm')}</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Status:</span>
+              <span class="info-label">${t('admin.print.status')}</span>
               <span class="status-badge status-${order.status}">${order.status}</span>
             </div>
           </div>
 
           <div class="section">
-            <h2>Customer Information</h2>
+            <h2>${t('admin.print.customerInfo')}</h2>
             <div class="info-row">
-              <span class="info-label">Name:</span>
+              <span class="info-label">${t('admin.print.name')}</span>
               <span>${order.customer_name}</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Phone:</span>
+              <span class="info-label">${t('admin.print.phone')}</span>
               <span>${order.customer_phone}</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Email:</span>
+              <span class="info-label">${t('admin.print.email')}</span>
               <span>${order.customer_email}</span>
             </div>
           </div>
 
           <div class="section">
-            <h2>Order Items</h2>
+            <h2>${t('admin.print.orderItems')}</h2>
             <table class="items-table">
               <thead>
                 <tr>
-                  <th>Product</th>
-                  <th>Quantity</th>
+                  <th>${t('admin.print.product')}</th>
+                  <th>${t('admin.print.quantity')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -405,20 +405,20 @@ export default function AdminDashboard() {
           </div>
 
           <div class="section">
-            <h2>Pickup Details</h2>
+            <h2>${t('admin.print.pickupDetails')}</h2>
             <div class="info-row">
-              <span class="info-label">Pickup Date:</span>
+              <span class="info-label">${t('admin.print.pickupDate')}</span>
               <span>${format(new Date(order.pickup_date), 'EEEE, dd MMMM yyyy')}</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Pickup Time:</span>
+              <span class="info-label">${t('admin.print.pickupTime')}</span>
               <span>${order.pickup_time}</span>
             </div>
           </div>
 
           ${order.notes ? `
             <div class="section">
-              <h2>Notes</h2>
+              <h2>${t('admin.print.notes')}</h2>
               <p>${order.notes}</p>
             </div>
           ` : ''}
@@ -464,16 +464,16 @@ export default function AdminDashboard() {
 
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
-          <p className="text-muted-foreground">Manage orders and customer requests</p>
+          <h1 className="text-3xl font-bold mb-2">{t('admin.title')}</h1>
+          <p className="text-muted-foreground">{t('admin.subtitle')}</p>
         </div>
 
         <Tabs defaultValue="orders" className="space-y-6">
           <TabsList>
-            <TabsTrigger value="orders">Orders</TabsTrigger>
+            <TabsTrigger value="orders">{t('admin.tabs.orders')}</TabsTrigger>
             <TabsTrigger value="settings">
               <Settings className="h-4 w-4 mr-2" />
-              Settings
+              {t('admin.tabs.settings')}
             </TabsTrigger>
           </TabsList>
 
@@ -482,7 +482,7 @@ export default function AdminDashboard() {
         <div className="grid gap-4 md:grid-cols-5 mb-8">
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('admin.stats.totalOrders')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{orderStats.total}</div>
@@ -490,7 +490,7 @@ export default function AdminDashboard() {
           </Card>
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">Pending</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('admin.stats.pending')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-yellow-600">{orderStats.pending}</div>
@@ -498,7 +498,7 @@ export default function AdminDashboard() {
           </Card>
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">Confirmed</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('admin.stats.confirmed')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-blue-600">{orderStats.confirmed}</div>
@@ -506,7 +506,7 @@ export default function AdminDashboard() {
           </Card>
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">Ready</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('admin.stats.ready')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-green-600">{orderStats.ready}</div>
@@ -514,7 +514,7 @@ export default function AdminDashboard() {
           </Card>
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">Completed</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('admin.stats.completed')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-gray-600">{orderStats.completed}</div>
@@ -527,20 +527,20 @@ export default function AdminDashboard() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle>Orders</CardTitle>
-                <CardDescription>View and manage customer orders</CardDescription>
+                <CardTitle>{t('admin.orders.title')}</CardTitle>
+                <CardDescription>{t('admin.orders.description')}</CardDescription>
               </div>
               <Select value={statusFilter} onValueChange={setStatusFilter}>
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Filter by status" />
+                  <SelectValue placeholder={t('admin.orders.filterPlaceholder')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Orders</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="confirmed">Confirmed</SelectItem>
-                  <SelectItem value="ready">Ready</SelectItem>
-                  <SelectItem value="completed">Completed</SelectItem>
-                  <SelectItem value="cancelled">Cancelled</SelectItem>
+                  <SelectItem value="all">{t('admin.orders.all')}</SelectItem>
+                  <SelectItem value="pending">{t('admin.orders.pending')}</SelectItem>
+                  <SelectItem value="confirmed">{t('admin.orders.confirmed')}</SelectItem>
+                  <SelectItem value="ready">{t('admin.orders.ready')}</SelectItem>
+                  <SelectItem value="completed">{t('admin.orders.completed')}</SelectItem>
+                  <SelectItem value="cancelled">{t('admin.orders.cancelled')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -550,20 +550,20 @@ export default function AdminDashboard() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Customer</TableHead>
-                    <TableHead>Items</TableHead>
-                    <TableHead>Total</TableHead>
-                    <TableHead>Pickup</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Created</TableHead>
-                    <TableHead>Actions</TableHead>
+                    <TableHead>{t('admin.table.customer')}</TableHead>
+                    <TableHead>{t('admin.table.items')}</TableHead>
+                    <TableHead>{t('admin.table.total')}</TableHead>
+                    <TableHead>{t('admin.table.pickup')}</TableHead>
+                    <TableHead>{t('admin.table.status')}</TableHead>
+                    <TableHead>{t('admin.table.created')}</TableHead>
+                    <TableHead>{t('admin.table.actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredOrders.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
-                        No orders found
+                        {t('admin.orders.noOrders')}
                       </TableCell>
                     </TableRow>
                   ) : (
@@ -595,7 +595,7 @@ export default function AdminDashboard() {
                               ))}
                               {order.order_items.length > 2 && (
                                 <div className="text-muted-foreground">
-                                  +{order.order_items.length - 2} more
+                                  +{order.order_items.length - 2} {t('admin.orders.more')}
                                 </div>
                               )}
                             </div>
@@ -627,7 +627,7 @@ export default function AdminDashboard() {
                                 size="sm"
                                 onClick={() => setSelectedOrder(order)}
                               >
-                                View
+                                {t('admin.orders.view')}
                               </Button>
                               
                               {/* WhatsApp Button */}
@@ -649,11 +649,11 @@ export default function AdminDashboard() {
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  <SelectItem value="pending">Pending</SelectItem>
-                                  <SelectItem value="confirmed">Confirmed</SelectItem>
-                                  <SelectItem value="ready">Ready</SelectItem>
-                                  <SelectItem value="completed">Completed</SelectItem>
-                                  <SelectItem value="cancelled">Cancelled</SelectItem>
+                                  <SelectItem value="pending">{t('admin.orders.pending')}</SelectItem>
+                                  <SelectItem value="confirmed">{t('admin.orders.confirmed')}</SelectItem>
+                                  <SelectItem value="ready">{t('admin.orders.ready')}</SelectItem>
+                                  <SelectItem value="completed">{t('admin.orders.completed')}</SelectItem>
+                                  <SelectItem value="cancelled">{t('admin.orders.cancelled')}</SelectItem>
                                 </SelectContent>
                               </Select>
                             </div>
@@ -672,9 +672,9 @@ export default function AdminDashboard() {
         <Dialog open={!!selectedOrder} onOpenChange={() => setSelectedOrder(null)}>
           <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>Order Details</DialogTitle>
+              <DialogTitle>{t('admin.orderDetails.title')}</DialogTitle>
               <DialogDescription>
-                Order #{selectedOrder?.id.slice(0, 8)}
+                {t('admin.orderDetails.orderId')} #{selectedOrder?.id.slice(0, 8)}
               </DialogDescription>
             </DialogHeader>
             
@@ -682,10 +682,10 @@ export default function AdminDashboard() {
               <div className="space-y-6">
                 {/* Customer Info */}
                 <div>
-                  <h3 className="font-semibold mb-3">Customer Information</h3>
+                  <h3 className="font-semibold mb-3">{t('admin.orderDetails.customerInfo')}</h3>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium">Name:</span>
+                      <span className="font-medium">{t('admin.orderDetails.name')}</span>
                       <span>{selectedOrder.customer_name}</span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -701,7 +701,7 @@ export default function AdminDashboard() {
 
                 {/* Order Items */}
                 <div>
-                  <h3 className="font-semibold mb-3">Order Items</h3>
+                  <h3 className="font-semibold mb-3">{t('admin.orderDetails.orderItems')}</h3>
                   <div className="space-y-2">
                     {selectedOrder.order_items.map((item, idx) => (
                       <div key={idx} className="flex justify-between p-3 bg-muted rounded-lg">
@@ -714,7 +714,7 @@ export default function AdminDashboard() {
 
                 {/* Pickup Details */}
                 <div>
-                  <h3 className="font-semibold mb-3">Pickup Details</h3>
+                  <h3 className="font-semibold mb-3">{t('admin.orderDetails.pickupDetails')}</h3>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4" />
@@ -732,7 +732,7 @@ export default function AdminDashboard() {
                   <div>
                     <h3 className="font-semibold mb-3 flex items-center gap-2">
                       <StickyNote className="h-4 w-4" />
-                      Notes
+                      {t('admin.orderDetails.notes')}
                     </h3>
                     <p className="p-3 bg-muted rounded-lg">{selectedOrder.notes}</p>
                   </div>
@@ -740,7 +740,7 @@ export default function AdminDashboard() {
 
                 {/* Status */}
                 <div>
-                  <h3 className="font-semibold mb-3">Order Status</h3>
+                  <h3 className="font-semibold mb-3">{t('admin.orderDetails.orderStatus')}</h3>
                   <Select
                     value={selectedOrder.status}
                     onValueChange={(value) => {
@@ -752,11 +752,11 @@ export default function AdminDashboard() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="pending">Pending</SelectItem>
-                      <SelectItem value="confirmed">Confirmed</SelectItem>
-                      <SelectItem value="ready">Ready for Pickup</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                      <SelectItem value="cancelled">Cancelled</SelectItem>
+                      <SelectItem value="pending">{t('admin.orders.pending')}</SelectItem>
+                      <SelectItem value="confirmed">{t('admin.orders.confirmed')}</SelectItem>
+                      <SelectItem value="ready">{t('admin.orderDetails.readyForPickup')}</SelectItem>
+                      <SelectItem value="completed">{t('admin.orders.completed')}</SelectItem>
+                      <SelectItem value="cancelled">{t('admin.orders.cancelled')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -771,7 +771,7 @@ export default function AdminDashboard() {
                     className="w-full bg-green-600 hover:bg-green-700"
                   >
                     <MessageCircle className="h-4 w-4 mr-2" />
-                    Send WhatsApp Update
+                    {t('admin.orderDetails.sendWhatsApp')}
                   </Button>
                   
                   <Button
@@ -780,7 +780,7 @@ export default function AdminDashboard() {
                     className="w-full"
                   >
                     <Printer className="h-4 w-4 mr-2" />
-                    Print Order
+                    {t('admin.orderDetails.printOrder')}
                   </Button>
                 </div>
               </div>
@@ -792,16 +792,15 @@ export default function AdminDashboard() {
           <TabsContent value="settings" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>WhatsApp Message Templates</CardTitle>
+                <CardTitle>{t('admin.settings.templatesTitle')}</CardTitle>
                 <CardDescription>
-                  Customize the WhatsApp messages sent to customers for different order statuses.
-                  Use placeholders: {'{customer_name}'}, {'{pickup_date}'}, {'{pickup_time}'}
+                  {t('admin.settings.templatesDescription')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 {['ready', 'confirmed', 'cancelled', 'default'].map((status) => (
                   <div key={status} className="space-y-2">
-                    <Label className="text-base capitalize">{status} Status</Label>
+                    <Label className="text-base capitalize">{status} {t('admin.settings.statusLabel')}</Label>
                     <Textarea
                       value={templates[status] || ''}
                       onChange={(e) => setTemplates(prev => ({ ...prev, [status]: e.target.value }))}
@@ -812,7 +811,7 @@ export default function AdminDashboard() {
                       size="sm"
                       onClick={() => updateTemplate(status, templates[status])}
                     >
-                      Save Template
+                      {t('admin.settings.saveTemplate')}
                     </Button>
                   </div>
                 ))}
@@ -826,9 +825,9 @@ export default function AdminDashboard() {
       <AlertDialog open={whatsappDialog.open} onOpenChange={(open) => setWhatsappDialog({ ...whatsappDialog, open })}>
         <AlertDialogContent className="max-w-lg">
           <AlertDialogHeader>
-            <AlertDialogTitle>Send WhatsApp Message</AlertDialogTitle>
+            <AlertDialogTitle>{t('admin.whatsapp.title')}</AlertDialogTitle>
             <AlertDialogDescription>
-              Customize your message to {whatsappDialog.order?.customer_name}
+              {t('admin.whatsapp.customizeMessage')} {whatsappDialog.order?.customer_name}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <Textarea
@@ -838,10 +837,10 @@ export default function AdminDashboard() {
             className="my-4"
           />
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t('admin.whatsapp.cancel')}</AlertDialogCancel>
             <AlertDialogAction onClick={sendWhatsAppMessage} className="bg-green-600 hover:bg-green-700">
               <MessageCircle className="h-4 w-4 mr-2" />
-              Send WhatsApp
+              {t('admin.whatsapp.send')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
