@@ -85,7 +85,7 @@ const createOrderSchemas = (t: (key: string) => string) => {
 
   const orderFormSchema = z.object({
     orderItems: z.array(orderItemSchema).min(1, t('order.validation.addProduct')).max(50),
-    pickupDate: z.date({ required_error: t('order.validation.selectDate') }),
+    pickupDate: z.date({ message: t('order.validation.selectDate') }),
     pickupTime: z.string().min(1, t('order.validation.selectTime')),
     customerName: z.string()
       .min(2, t('order.validation.nameMin'))

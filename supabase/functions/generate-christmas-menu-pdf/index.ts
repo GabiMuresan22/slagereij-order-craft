@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { PDFDocument } from "https://esm.sh/pdf-lib@1.17.1";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -13,36 +14,39 @@ const RATE_LIMIT_MAX_REQUESTS = 10; // Max 10 requests per minute per IP
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB max per image
 const MAX_BASE64_SIZE = 15 * 1024 * 1024; // ~15MB base64 (accounts for encoding overhead)
 
-// Validation functions
-const isValidBase64Image = (base64: string): boolean => {
-  // Check if it's a valid base64 string
-  if (!base64 || typeof base64 !== 'string') return false;
-  
-  // Check base64 format (should start with data:image/...;base64,)
-  const base64ImageRegex = /^data:image\/(jpeg|jpg|png|webp);base64,/i;
-  if (!base64ImageRegex.test(base64)) return false;
-  
-  // Check size (base64 is ~33% larger than binary)
-  if (base64.length > MAX_BASE64_SIZE) return false;
-  
-  // Try to decode base64
-  try {
-    const base64Data = base64.split(',')[1];
-    if (!base64Data) return false;
-    
-    // Validate base64 characters
-    const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/;
-    if (!base64Regex.test(base64Data)) return false;
-    
-    // Check decoded size
-    const decodedSize = (base64Data.length * 3) / 4;
-    if (decodedSize > MAX_IMAGE_SIZE) return false;
-    
-    return true;
-  } catch {
-    return false;
-  }
-};
+// Zod validation schema
+const base64ImageSchema = z.string()
+  .refine((val) => {
+    if (!val || typeof val !== 'string') return false;
+    // Check base64 format (should start with data:image/...;base64,)
+    const base64ImageRegex = /^data:image\/(jpeg|jpg|png|webp);base64,/i;
+    return base64ImageRegex.test(val);
+  }, { message: 'Invalid base64 image format. Must be JPEG, PNG, or WebP.' })
+  .refine((val) => {
+    // Check size (base64 is ~33% larger than binary)
+    return val.length <= MAX_BASE64_SIZE;
+  }, { message: `Image too large. Maximum size is ${MAX_BASE64_SIZE / 1024 / 1024}MB (base64 encoded).` })
+  .refine((val) => {
+    try {
+      const base64Data = val.split(',')[1];
+      if (!base64Data) return false;
+      
+      // Validate base64 characters
+      const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/;
+      if (!base64Regex.test(base64Data)) return false;
+      
+      // Check decoded size
+      const decodedSize = (base64Data.length * 3) / 4;
+      return decodedSize <= MAX_IMAGE_SIZE;
+    } catch {
+      return false;
+    }
+  }, { message: `Decoded image size exceeds ${MAX_IMAGE_SIZE / 1024 / 1024}MB.` });
+
+const pdfRequestSchema = z.object({
+  image1Base64: base64ImageSchema,
+  image2Base64: base64ImageSchema,
+});
 
 const getClientIP = (req: Request): string => {
   // Try to get IP from various headers (for proxies/load balancers)
@@ -109,34 +113,26 @@ serve(async (req) => {
 
     console.log('Starting PDF generation for Christmas menu...');
 
-    // Create a new PDF document
-    const pdfDoc = await PDFDocument.create();
-
-    // Get the base64 images from the request body
+    // Get the base64 images from the request body and validate with Zod
     const body = await req.json();
-    const { image1Base64, image2Base64 } = body;
-
-    if (!image1Base64 || !image2Base64) {
+    
+    const validationResult = pdfRequestSchema.safeParse(body);
+    
+    if (!validationResult.success) {
+      console.error("Invalid PDF request data:", validationResult.error.issues);
       return new Response(
-        JSON.stringify({ error: 'Image data is required' }),
+        JSON.stringify({ 
+          error: 'Invalid image data',
+          details: validationResult.error.issues.map(issue => ({
+            path: issue.path.join('.'),
+            message: issue.message
+          }))
+        }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    // Validate base64 image format and size
-    if (!isValidBase64Image(image1Base64)) {
-      return new Response(
-        JSON.stringify({ error: 'Invalid image1 format or size. Images must be JPEG/PNG/WebP and under 10MB.' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    if (!isValidBase64Image(image2Base64)) {
-      return new Response(
-        JSON.stringify({ error: 'Invalid image2 format or size. Images must be JPEG/PNG/WebP and under 10MB.' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
+    const { image1Base64, image2Base64 } = validationResult.data;
 
     console.log('Processing base64 images...');
 
@@ -160,6 +156,9 @@ serve(async (req) => {
     const image2Bytes = base64ToBytes(image2Base64);
 
     console.log('Embedding images in PDF...');
+
+    // Create a new PDF document
+    const pdfDoc = await PDFDocument.create();
 
     // Embed the images
     const image1 = await pdfDoc.embedJpg(image1Bytes);
