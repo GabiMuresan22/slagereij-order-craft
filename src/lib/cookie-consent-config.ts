@@ -126,19 +126,19 @@ export const config = {
       }
     }
   },
-  onAccept: () => {
+  onAccept: async () => {
     // Load GA4 if analytics consent is given
     const measurementId = import.meta.env.VITE_GA4_MEASUREMENT_ID;
     if (measurementId && measurementId.startsWith('G-')) {
-      const { acceptedCategory } = require('vanilla-cookieconsent');
-      if (acceptedCategory('analytics') && typeof window !== 'undefined') {
-        // Initialize GA4
+      const { acceptedCategory } = await import('vanilla-cookieconsent');
+      if (acceptedCategory && acceptedCategory('analytics') && typeof window !== 'undefined') {
+        // Initialize GA4 - set window.gtag globally so Analytics.tsx can use it
         window.dataLayer = window.dataLayer || [];
-        function gtag(...args: any[]) {
-          window.dataLayer?.push(args);
-        }
-        gtag('js', new Date());
-        gtag('config', measurementId, {
+        window.gtag = function(command: string, ...args: unknown[]) {
+          window.dataLayer?.push([command, ...args]);
+        };
+        window.gtag('js', new Date());
+        window.gtag('config', measurementId, {
           anonymize_ip: true,
           cookie_flags: 'SameSite=None;Secure'
         });
