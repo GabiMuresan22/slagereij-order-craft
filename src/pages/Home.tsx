@@ -6,9 +6,10 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { trackMenuDownload } from "@/components/Analytics";
-import heroImage from "@/assets/hero-steak.webp";
-import christmasMenu1 from "@/assets/christmas-menu-1.jpg";
-import christmasMenu2 from "@/assets/christmas-menu-2.jpg";
+import heroImageDesktop from "@/assets/hero-steak.webp";
+import heroImageMobile from "@/assets/hero-steak-mobile.webp";
+import christmasMenu1 from "@/assets/christmas-menu-1.webp";
+import christmasMenu2 from "@/assets/christmas-menu-2.webp";
 import Testimonials from "@/components/Testimonials";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
@@ -84,18 +85,22 @@ const Home = () => {
         keywords="slagerij, kwaliteitsvlees, Zwevezele, online bestellen, huisgemaakte worst, BBQ vlees, verse vleeswaren"
         structuredData={structuredData}
       >
-        <link rel="preload" as="image" href={heroImage} />
+        <link rel="preload" as="image" href={heroImageDesktop} media="(min-width: 768px)" />
+        <link rel="preload" as="image" href={heroImageMobile} media="(max-width: 767px)" />
       </SEO>
       {/* Hero Section */}
       <section className="relative h-[550px] md:h-[650px] flex items-start justify-center overflow-hidden">
-        {/* Hero Image - Optimized for LCP */}
-        {/* 1. Real Image Tag for Instant Loading */}
-        <img
-          src={heroImage}
-          alt="Slagerij John - Ambachtelijke slagerij"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-          fetchPriority="high" /* TELLS BROWSER: LOAD THIS FIRST */
-        />
+        {/* Hero Image - Optimized for LCP with responsive images */}
+        <picture>
+          <source media="(min-width: 768px)" srcSet={heroImageDesktop} />
+          <source media="(max-width: 767px)" srcSet={heroImageMobile} />
+          <img
+            src={heroImageDesktop}
+            alt="Slagerij John - Ambachtelijke slagerij"
+            className="absolute inset-0 w-full h-full object-cover object-center"
+            fetchPriority="high" /* TELLS BROWSER: LOAD THIS FIRST */
+          />
+        </picture>
 
         {/* 2. Dark Overlay (Keep this separate) */}
         <div className="absolute inset-0 bg-black/50" />
