@@ -77,7 +77,13 @@ const Navigation = () => {
             <img 
               src={logo} 
               alt="Slagerij John Logo" 
-              className="h-14 lg:h-20 w-auto object-contain"
+              className="h-12 lg:h-16 w-auto object-contain"
+              style={{
+                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
+                padding: '4px',
+                background: 'white',
+                borderRadius: '50%',
+              }}
             />
           </Link>
 
