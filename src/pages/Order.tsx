@@ -252,7 +252,12 @@ const Order = () => {
         };
       });
 
-      const { data: orderData, error } = await supabase.from("orders").insert({
+      // Generate a UUID for the order on the client side
+      // This ensures we have an order ID even if the RLS policy prevents returning the inserted row
+      const orderId = crypto.randomUUID();
+      
+      const { error } = await supabase.from("orders").insert({
+        id: orderId,
         customer_name: data.customerName,
         customer_phone: data.customerPhone,
         customer_email: data.customerEmail,
@@ -263,7 +268,7 @@ const Order = () => {
         status: "pending",
         user_id: user?.id || null,
         language: language,
-      }).select().single();
+      });
 
       if (error) throw error;
 
@@ -273,7 +278,7 @@ const Order = () => {
           body: {
             customerName: data.customerName,
             customerEmail: data.customerEmail,
-            orderId: orderData.id,
+            orderId: orderId,
             status: "pending",
             orderItems: orderItemsWithPrices,
             pickupDate: format(data.pickupDate, "dd-MM-yyyy"),
