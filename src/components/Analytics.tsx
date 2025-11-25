@@ -105,9 +105,8 @@ export const trackContactClick = (method: 'phone' | 'email' | 'whatsapp') => {
 declare global {
   interface Window {
     gtag?: (
-      command: 'config' | 'event' | 'js',
-      targetId: string,
-      config?: Record<string, unknown>
+      command: string,
+      ...args: unknown[]
     ) => void;
     dataLayer?: unknown[];
   }
