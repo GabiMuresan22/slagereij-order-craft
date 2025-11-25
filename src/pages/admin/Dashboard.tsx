@@ -4,12 +4,15 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Helmet } from 'react-helmet-async';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, PackageCheck, Clock, CheckCircle2, XCircle, Phone, Mail, Calendar, StickyNote } from 'lucide-react';
+import { Loader2, PackageCheck, Clock, CheckCircle2, XCircle, Phone, Mail, Calendar, StickyNote, MessageCircle, Settings, Printer } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import {
@@ -19,11 +22,22 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface OrderItem {
   product: string;
   quantity: string;
   unit: string;
+  price?: number;
 }
 
 interface Order {
@@ -56,51 +70,44 @@ const statusIcons = {
 };
 
 export default function AdminDashboard() {
-  const { user, loading: authLoading } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const { t } = useLanguage();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [templates, setTemplates] = useState<Record<string, string>>({});
+  const [whatsappDialog, setWhatsappDialog] = useState<{ open: boolean; order: Order | null; message: string }>({
+    open: false,
+    order: null,
+    message: ''
+  });
 
-  // Check if user is admin
-  useEffect(() => {
-    const checkAdmin = async () => {
-      if (!user) {
-        navigate('/auth');
-        return;
-      }
+  // Fetch templates
+  const fetchTemplates = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('whatsapp_templates')
+        .select('*');
 
-      try {
-        const { data, error } = await (supabase as any)
-          .rpc('has_role', { _user_id: user.id, _role: 'admin' });
+      if (error) throw error;
 
-        if (error || !data) {
-          toast.error('Access denied. Admin privileges required.');
-          navigate('/');
-          return;
-        }
-
-        setIsAdmin(true);
-      } catch (err) {
-        console.error('Error checking admin status:', err);
-        toast.error('Access denied. Admin privileges required.');
-        navigate('/');
-      }
-    };
-
-    if (!authLoading) {
-      checkAdmin();
+      const templatesMap: Record<string, string> = {};
+      data?.forEach((template: any) => {
+        templatesMap[template.status] = template.message_template;
+      });
+      setTemplates(templatesMap);
+    } catch (error: any) {
+      console.error('Error fetching templates:', error);
     }
-  }, [user, authLoading, navigate]);
+  };
 
   // Fetch orders
   useEffect(() => {
-    const fetchOrders = async () => {
-      if (!isAdmin) return;
+    if (!user) return;
 
+    const fetchOrders = async () => {
       setLoading(true);
       const { data, error } = await supabase
         .from('orders')
@@ -122,11 +129,12 @@ export default function AdminDashboard() {
     };
 
     fetchOrders();
-  }, [isAdmin]);
+    fetchTemplates();
+  }, [user]);
 
   // Set up real-time updates
   useEffect(() => {
-    if (!isAdmin) return;
+    if (!user) return;
 
     const channel = supabase
       .channel('orders-changes')
@@ -165,7 +173,7 @@ export default function AdminDashboard() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [isAdmin]);
+  }, [user]);
 
   const updateOrderStatus = async (orderId: string, newStatus: string) => {
     try {
@@ -205,6 +213,229 @@ export default function AdminDashboard() {
     }
   };
 
+  // Open WhatsApp dialog with pre-filled message
+  const openWhatsAppDialog = (order: Order) => {
+    // Get template or use fallback
+    const template = templates[order.status] || templates['default'] || 'Hallo {customer_name}, een update over uw bestelling bij Slagerij John.';
+    
+    // Replace placeholders
+    const message = template
+      .replace(/{customer_name}/g, order.customer_name)
+      .replace(/{pickup_date}/g, format(new Date(order.pickup_date), 'dd/MM/yyyy'))
+      .replace(/{pickup_time}/g, order.pickup_time);
+    
+    setWhatsappDialog({
+      open: true,
+      order,
+      message
+    });
+  };
+
+  // Send WhatsApp message with custom text
+  const sendWhatsAppMessage = () => {
+    if (!whatsappDialog.order) return;
+    
+    // Strip non-numeric characters
+    let cleanPhone = whatsappDialog.order.customer_phone.replace(/[^0-9]/g, '');
+    
+    // Handle Belgian phone number formatting
+    if (cleanPhone.startsWith('00')) {
+      cleanPhone = cleanPhone.substring(2);
+    } else if (cleanPhone.startsWith('0')) {
+      cleanPhone = '32' + cleanPhone.substring(1);
+    } else if (!cleanPhone.startsWith('32')) {
+      cleanPhone = '32' + cleanPhone;
+    }
+    
+    const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(whatsappDialog.message)}`;
+    window.open(url, '_blank');
+    
+    // Close dialog
+    setWhatsappDialog({ open: false, order: null, message: '' });
+  };
+
+  const updateTemplate = async (status: string, messageTemplate: string) => {
+    try {
+      const { error } = await supabase
+        .from('whatsapp_templates')
+        .update({ message_template: messageTemplate })
+        .eq('status', status);
+
+      if (error) throw error;
+
+      toast.success('Template updated successfully');
+      setTemplates(prev => ({ ...prev, [status]: messageTemplate }));
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to update template');
+      console.error('Error updating template:', error);
+    }
+  };
+
+  const printOrder = (order: Order) => {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      toast.error('Please allow popups to print orders');
+      return;
+    }
+
+    const printContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Order #${order.id.slice(0, 8)}</title>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              max-width: 800px;
+              margin: 40px auto;
+              padding: 20px;
+              color: #000;
+            }
+            h1 {
+              text-align: center;
+              color: #8B4513;
+              margin-bottom: 30px;
+            }
+            .section {
+              margin-bottom: 30px;
+              padding: 15px;
+              border: 1px solid #ddd;
+              border-radius: 8px;
+            }
+            .section h2 {
+              margin-top: 0;
+              color: #8B4513;
+              font-size: 18px;
+              border-bottom: 2px solid #8B4513;
+              padding-bottom: 10px;
+            }
+            .info-row {
+              display: flex;
+              margin-bottom: 10px;
+            }
+            .info-label {
+              font-weight: bold;
+              width: 150px;
+            }
+            .items-table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-top: 10px;
+            }
+            .items-table th,
+            .items-table td {
+              padding: 10px;
+              text-align: left;
+              border-bottom: 1px solid #ddd;
+            }
+            .items-table th {
+              background-color: #f5f5f5;
+              font-weight: bold;
+            }
+            .status-badge {
+              display: inline-block;
+              padding: 5px 15px;
+              border-radius: 20px;
+              font-weight: bold;
+              text-transform: uppercase;
+            }
+            .status-pending { background-color: #fef3c7; color: #92400e; }
+            .status-confirmed { background-color: #dbeafe; color: #1e40af; }
+            .status-ready { background-color: #d1fae5; color: #065f46; }
+            .status-completed { background-color: #e5e7eb; color: #374151; }
+            .status-cancelled { background-color: #fee2e2; color: #991b1b; }
+            @media print {
+              body { margin: 0; padding: 20px; }
+            }
+          </style>
+        </head>
+        <body>
+          <h1>Slagerij John - Order Details</h1>
+          
+          <div class="section">
+            <h2>Order Information</h2>
+            <div class="info-row">
+              <span class="info-label">Order ID:</span>
+              <span>#${order.id.slice(0, 8)}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Order Date:</span>
+              <span>${format(new Date(order.created_at), 'dd/MM/yyyy HH:mm')}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Status:</span>
+              <span class="status-badge status-${order.status}">${order.status}</span>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Customer Information</h2>
+            <div class="info-row">
+              <span class="info-label">Name:</span>
+              <span>${order.customer_name}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Phone:</span>
+              <span>${order.customer_phone}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Email:</span>
+              <span>${order.customer_email}</span>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Order Items</h2>
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${order.order_items.map(item => `
+                  <tr>
+                    <td>${item.product}</td>
+                    <td>${item.quantity} ${item.unit}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="section">
+            <h2>Pickup Details</h2>
+            <div class="info-row">
+              <span class="info-label">Pickup Date:</span>
+              <span>${format(new Date(order.pickup_date), 'EEEE, dd MMMM yyyy')}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Pickup Time:</span>
+              <span>${order.pickup_time}</span>
+            </div>
+          </div>
+
+          ${order.notes ? `
+            <div class="section">
+              <h2>Notes</h2>
+              <p>${order.notes}</p>
+            </div>
+          ` : ''}
+
+          <script>
+            window.onload = function() {
+              window.print();
+            };
+          </script>
+        </body>
+      </html>
+    `;
+
+    printWindow.document.write(printContent);
+    printWindow.document.close();
+  };
+
   const filteredOrders = statusFilter === 'all' 
     ? orders 
     : orders.filter(order => order.status === statusFilter);
@@ -217,7 +448,7 @@ export default function AdminDashboard() {
     completed: orders.filter(o => o.status === 'completed').length,
   };
 
-  if (authLoading || loading || !isAdmin) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -237,6 +468,16 @@ export default function AdminDashboard() {
           <p className="text-muted-foreground">Manage orders and customer requests</p>
         </div>
 
+        <Tabs defaultValue="orders" className="space-y-6">
+          <TabsList>
+            <TabsTrigger value="orders">Orders</TabsTrigger>
+            <TabsTrigger value="settings">
+              <Settings className="h-4 w-4 mr-2" />
+              Settings
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="orders" className="space-y-6">
         {/* Stats Cards */}
         <div className="grid gap-4 md:grid-cols-5 mb-8">
           <Card>
@@ -311,6 +552,7 @@ export default function AdminDashboard() {
                   <TableRow>
                     <TableHead>Customer</TableHead>
                     <TableHead>Items</TableHead>
+                    <TableHead>Total</TableHead>
                     <TableHead>Pickup</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Created</TableHead>
@@ -320,13 +562,19 @@ export default function AdminDashboard() {
                 <TableBody>
                   {filteredOrders.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                      <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
                         No orders found
                       </TableCell>
                     </TableRow>
                   ) : (
                     filteredOrders.map((order) => {
                       const StatusIcon = statusIcons[order.status as keyof typeof statusIcons];
+                      const orderTotal = order.order_items.reduce((sum, item) => {
+                        const price = item.price || 0;
+                        const quantity = parseFloat(item.quantity) || 0;
+                        return sum + (price * quantity);
+                      }, 0);
+                      
                       return (
                         <TableRow key={order.id}>
                           <TableCell>
@@ -338,6 +586,11 @@ export default function AdminDashboard() {
                               {order.order_items.slice(0, 2).map((item, idx) => (
                                 <div key={idx}>
                                   {item.quantity} {item.unit} {item.product}
+                                  {item.price && (
+                                    <span className="text-muted-foreground ml-1">
+                                      (€{(parseFloat(item.quantity) * item.price).toFixed(2)})
+                                    </span>
+                                  )}
                                 </div>
                               ))}
                               {order.order_items.length > 2 && (
@@ -345,6 +598,11 @@ export default function AdminDashboard() {
                                   +{order.order_items.length - 2} more
                                 </div>
                               )}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="font-semibold text-primary">
+                              €{orderTotal.toFixed(2)}
                             </div>
                           </TableCell>
                           <TableCell>
@@ -363,7 +621,7 @@ export default function AdminDashboard() {
                             {format(new Date(order.created_at), 'dd/MM/yyyy HH:mm')}
                           </TableCell>
                           <TableCell>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 items-center">
                               <Button
                                 variant="outline"
                                 size="sm"
@@ -371,6 +629,18 @@ export default function AdminDashboard() {
                               >
                                 View
                               </Button>
+                              
+                              {/* WhatsApp Button */}
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="text-green-600 hover:text-green-700 hover:bg-green-50"
+                                title="Stuur WhatsApp update"
+                                onClick={() => openWhatsAppDialog(order)}
+                              >
+                                <MessageCircle className="h-4 w-4" />
+                              </Button>
+
                               <Select
                                 value={order.status}
                                 onValueChange={(value) => updateOrderStatus(order.id, value)}
@@ -490,11 +760,92 @@ export default function AdminDashboard() {
                     </SelectContent>
                   </Select>
                 </div>
+
+                {/* Action Buttons */}
+                <div className="pt-4 border-t space-y-2">
+                  <Button
+                    onClick={() => {
+                      openWhatsAppDialog(selectedOrder);
+                      setSelectedOrder(null);
+                    }}
+                    className="w-full bg-green-600 hover:bg-green-700"
+                  >
+                    <MessageCircle className="h-4 w-4 mr-2" />
+                    Send WhatsApp Update
+                  </Button>
+                  
+                  <Button
+                    onClick={() => printOrder(selectedOrder)}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    <Printer className="h-4 w-4 mr-2" />
+                    Print Order
+                  </Button>
+                </div>
               </div>
             )}
           </DialogContent>
         </Dialog>
+          </TabsContent>
+
+          <TabsContent value="settings" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>WhatsApp Message Templates</CardTitle>
+                <CardDescription>
+                  Customize the WhatsApp messages sent to customers for different order statuses.
+                  Use placeholders: {'{customer_name}'}, {'{pickup_date}'}, {'{pickup_time}'}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {['ready', 'confirmed', 'cancelled', 'default'].map((status) => (
+                  <div key={status} className="space-y-2">
+                    <Label className="text-base capitalize">{status} Status</Label>
+                    <Textarea
+                      value={templates[status] || ''}
+                      onChange={(e) => setTemplates(prev => ({ ...prev, [status]: e.target.value }))}
+                      rows={3}
+                      className="font-mono text-sm"
+                    />
+                    <Button
+                      size="sm"
+                      onClick={() => updateTemplate(status, templates[status])}
+                    >
+                      Save Template
+                    </Button>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
+
+      {/* WhatsApp Message Customization Dialog */}
+      <AlertDialog open={whatsappDialog.open} onOpenChange={(open) => setWhatsappDialog({ ...whatsappDialog, open })}>
+        <AlertDialogContent className="max-w-lg">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Send WhatsApp Message</AlertDialogTitle>
+            <AlertDialogDescription>
+              Customize your message to {whatsappDialog.order?.customer_name}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <Textarea
+            value={whatsappDialog.message}
+            onChange={(e) => setWhatsappDialog({ ...whatsappDialog, message: e.target.value })}
+            rows={6}
+            className="my-4"
+          />
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={sendWhatsAppMessage} className="bg-green-600 hover:bg-green-700">
+              <MessageCircle className="h-4 w-4 mr-2" />
+              Send WhatsApp
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }

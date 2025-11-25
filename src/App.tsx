@@ -7,16 +7,23 @@ import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { Analytics } from "./components/Analytics";
+import CookieConsentBanner from "./components/CookieConsent";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
+import AdminRoute from "./components/AdminRoute";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Products from "./pages/Products";
+import Packages from "./pages/Packages";
+import Catering from "./pages/Catering";
 import Order from "./pages/Order";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import MyAccount from "./pages/MyAccount";
 import AdminDashboard from "./pages/admin/Dashboard";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,8 +33,10 @@ const App = () => (
     <HelmetProvider>
       <TooltipProvider>
         <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <ScrollToTop />
           <LanguageProvider>
             <AuthProvider>
+              <CookieConsentBanner />
               <Analytics />
               <Toaster />
               <Sonner />
@@ -38,11 +47,15 @@ const App = () => (
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/products" element={<Products />} />
+                    <Route path="/packages" element={<Packages />} />
+                    <Route path="/catering" element={<Catering />} />
                     <Route path="/order" element={<Order />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/my-account" element={<MyAccount />} />
-                    <Route path="/admin" element={<AdminDashboard />} />
+                    <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+                    <Route path="/privacy" element={<Privacy />} />
+                    <Route path="/terms" element={<Terms />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </main>

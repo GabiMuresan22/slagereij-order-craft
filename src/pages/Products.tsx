@@ -1,157 +1,266 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import beefImage from "@/assets/beef-products.jpg";
+import { Flame, ChefHat, ArrowRight } from "lucide-react";
+import displayCaseImage from "@/assets/display-case.webp";
+import tomatoImage from "@/assets/tomahawk-steaks.webp";
 import porkImage from "@/assets/pork-products.jpg";
 import poultryImage from "@/assets/poultry-products.jpg";
+import bbqGrillImage from "@/assets/bbq-grill-meats.jpg";
+import specialtyImage from "@/assets/specialty-platter.webp";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
-import { getBreadcrumbSchema } from "@/lib/structuredData";
+import { getBreadcrumbSchema, getProductListSchema } from "@/lib/structuredData";
 
 const Products = () => {
   const { t } = useLanguage();
 
   const breadcrumbData = getBreadcrumbSchema([
-    { name: 'Home', url: '/' },
-    { name: 'Producten', url: '/products' }
+    { name: "Home", url: "/" },
+    { name: "Producten", url: "/products" },
   ]);
+
+  const productListData = getProductListSchema();
 
   const categories = [
     {
       titleKey: "products.beef.title",
-      image: beefImage,
-      descriptionKey: "products.beef.description",
+      subtitleKey: "products.beef.subtitle",
+      image: tomatoImage,
       itemKeys: [
         "products.beef.item1",
         "products.beef.item2",
         "products.beef.item3",
         "products.beef.item4",
         "products.beef.item5",
-        "products.beef.item6"
-      ]
+        "products.beef.item6",
+      ],
+      ctaKey: "products.beef.cta",
     },
     {
       titleKey: "products.pork.title",
+      subtitleKey: "products.pork.subtitle",
       image: porkImage,
-      descriptionKey: "products.pork.description",
       itemKeys: [
         "products.pork.item1",
         "products.pork.item2",
         "products.pork.item3",
         "products.pork.item4",
         "products.pork.item5",
-        "products.pork.item6"
-      ]
+        "products.pork.item6",
+      ],
+      ctaKey: "products.pork.cta",
     },
     {
       titleKey: "products.poultry.title",
+      subtitleKey: "products.poultry.subtitle",
       image: poultryImage,
-      descriptionKey: "products.poultry.description",
       itemKeys: [
         "products.poultry.item1",
         "products.poultry.item2",
         "products.poultry.item3",
         "products.poultry.item4",
         "products.poultry.item5",
-        "products.poultry.item6"
-      ]
-    }
+        "products.poultry.item6",
+      ],
+      ctaKey: "products.poultry.cta",
+    },
+    {
+      titleKey: "products.bbq.title",
+      subtitleKey: "products.bbq.subtitle",
+      image: bbqGrillImage,
+      itemKeys: [
+        "products.bbq.item1",
+        "products.bbq.item2",
+        "products.bbq.item3",
+        "products.bbq.item4",
+        "products.bbq.item5",
+        "products.bbq.item6",
+      ],
+      ctaKey: "products.bbq.cta",
+    },
   ];
 
   return (
-    <div className="min-h-screen py-12">
-      <SEO 
+    <div className="min-h-screen">
+      <SEO
         title="Ons Assortiment"
         description="Ontdek ons uitgebreide assortiment: premium rundvlees, verse varkensvlees, gevogelte en huisgemaakte specialiteiten. Kwaliteitsvlees voor elke gelegenheid."
         keywords="rundvlees, varkensvlees, gevogelte, huisgemaakte worst, BBQ vlees, biefstuk, gehakt"
-        structuredData={breadcrumbData}
+        structuredData={[breadcrumbData, productListData]}
       />
-      <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 text-primary">
-            {t('products.title')}
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            {t('products.subtitle')}
-          </p>
-        </div>
 
+      {/* Hero Section */}
+      <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center">
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${displayCaseImage})` }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
+        <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
+          <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6">{t("products.hero.title")}</h1>
+          <p className="text-xl md:text-2xl">{t("products.hero.subtitle")}</p>
+        </div>
+      </section>
+
+      <div className="container mx-auto px-4 py-16">
         {/* Product Categories */}
-        <div className="space-y-12 mb-16">
+        <div className="space-y-20 mb-20">
           {categories.map((category, index) => (
-            <Card key={index} className="overflow-hidden border-border hover:shadow-xl transition-shadow">
-              <div className="grid md:grid-cols-2 gap-0">
-                <div 
-          className="h-64 md:h-auto bg-cover bg-center"
-          style={{ backgroundImage: `url(${category.image})` }}
-          role="img"
-          aria-label={t(category.titleKey)}
-        />
-                <CardContent className="p-8 flex flex-col justify-center">
-                  <h2 className="text-3xl font-serif font-bold mb-4 text-primary">
-                    {t(category.titleKey)}
-                  </h2>
-                  <p className="text-lg text-muted-foreground mb-6">
-                    {t(category.descriptionKey)}
-                  </p>
-                  <ul className="space-y-2 mb-6">
-                    {category.itemKeys.map((itemKey, itemIndex) => (
-                      <li key={itemIndex} className="flex items-center text-foreground">
-                        <span className="w-2 h-2 bg-primary rounded-full mr-3" />
-                        {t(itemKey)}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </div>
-            </Card>
+            <section key={index}>
+              <Card className="overflow-hidden border-0 hover:shadow-2xl transition-all duration-300 max-w-6xl mx-auto">
+                <div className="grid md:grid-cols-2 gap-0 md:items-center">
+                  <div className="relative h-80 md:h-full md:min-h-[500px]">
+                    <div
+                      className="absolute inset-0 bg-cover bg-center"
+                      style={{ backgroundImage: `url(${category.image})` }}
+                      role="img"
+                      aria-label={t(category.titleKey)}
+                    />
+                    {/* Quality badge */}
+                    <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-md font-semibold text-sm shadow-lg">
+                      Vers van het mes
+                    </div>
+                  </div>
+                  <CardContent className="p-8 md:p-12 flex flex-col justify-center">
+                    <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-primary">
+                      {t(category.titleKey)}
+                    </h2>
+                    <p className="text-lg text-muted-foreground mb-8 leading-relaxed">{t(category.subtitleKey)}</p>
+                    <ul className="space-y-3 mb-8">
+                      {category.itemKeys.map((itemKey, itemIndex) => {
+                        const itemText = t(itemKey);
+                        const colonIndex = itemText.indexOf(':');
+                        const itemName = colonIndex > 0 ? itemText.substring(0, colonIndex) : itemText;
+                        const itemDesc = colonIndex > 0 ? itemText.substring(colonIndex + 1) : '';
+                        
+                        return (
+                          <li key={itemIndex} className="flex items-start text-foreground leading-relaxed">
+                            <span className="text-primary mr-3 mt-0.5 flex-shrink-0 font-bold">✓</span>
+                            <span>
+                              <strong className="font-semibold">{itemName}</strong>
+                              {itemDesc && <span>{':' + itemDesc}</span>}
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                    <Link to="/order">
+                      <Button variant="outline" className="w-full md:w-auto border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 group">
+                        {t(category.ctaKey)}
+                        <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </div>
+              </Card>
+            </section>
           ))}
         </div>
 
-        {/* Additional Products */}
-        <Card className="bg-muted/30 border-border mb-12">
-          <CardContent className="p-8 md:p-12">
-            <h2 className="text-3xl font-serif font-semibold mb-6 text-center text-foreground">
-              {t('products.specialties.title')}
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6 text-lg">
-              <div>
-                <h3 className="font-semibold mb-3 text-xl text-primary">{t('products.specialties.homemade')}</h3>
-                <ul className="space-y-2 text-foreground/90">
-                  <li>• {t('products.specialties.homemade.item1')}</li>
-                  <li>• {t('products.specialties.homemade.item2')}</li>
-                  <li>• {t('products.specialties.homemade.item3')}</li>
-                  <li>• {t('products.specialties.homemade.item4')}</li>
-                </ul>
+        {/* Specialties Section */}
+        <section className="mb-20">
+          <Card className="overflow-hidden border-0 hover:shadow-2xl transition-all duration-300 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-0 md:items-center">
+              <div className="relative h-80 md:h-full md:min-h-[500px]">
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${specialtyImage})` }}
+                  role="img"
+                  aria-label={t("products.specialties.title")}
+                />
+                {/* Quality badge */}
+                <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-md font-semibold text-sm shadow-lg">
+                  100% Lokaal
+                </div>
               </div>
-              <div>
-                <h3 className="font-semibold mb-3 text-xl text-primary">{t('products.specialties.bbq')}</h3>
-                <ul className="space-y-2 text-foreground/90">
-                  <li>• {t('products.specialties.bbq.item1')}</li>
-                  <li>• {t('products.specialties.bbq.item2')}</li>
-                  <li>• {t('products.specialties.bbq.item3')}</li>
-                  <li>• {t('products.specialties.bbq.item4')}</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+              <CardContent className="p-6 md:px-16 md:py-12 flex flex-col justify-center">
+                {/* Split heading with eyebrow text */}
+                <p className="text-sm md:text-base uppercase tracking-wider text-primary/80 mb-2 font-semibold">
+                  Onze Specialiteiten
+                </p>
+                <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-primary">
+                  Smaakmakers van Slager John
+                </h2>
+                <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                  {t("products.specialties.subtitle")}
+                </p>
 
-        {/* CTA */}
-        <div className="text-center">
-          <h2 className="text-3xl font-serif font-bold mb-4 text-foreground">
-            {t('products.cta.title')}
-          </h2>
-          <p className="text-lg text-muted-foreground mb-6">
-            {t('products.cta.subtitle')}
+                <div className="space-y-8">
+                  <div>
+                    <h3 className="font-bold text-xl mb-5 text-primary flex items-center gap-2">
+                      <ChefHat className="w-5 h-5" />
+                      {t("products.specialties.homemade.title")}
+                    </h3>
+                    <ul className="space-y-4">
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: "1.6" }}>
+                        <ChefHat className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
+                        <span>{t("products.specialties.homemade.item1")}</span>
+                      </li>
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: "1.6" }}>
+                        <ChefHat className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
+                        <span>{t("products.specialties.homemade.item2")}</span>
+                      </li>
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: "1.6" }}>
+                        <ChefHat className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
+                        <span>{t("products.specialties.homemade.item3")}</span>
+                      </li>
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: "1.6" }}>
+                        <ChefHat className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
+                        <span>{t("products.specialties.homemade.item4")}</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* <div>
+                    <h3 className="font-bold text-xl mb-5 text-primary flex items-center gap-2">
+                      <Flame className="w-5 h-5" />
+                      {t('products.specialties.bbq.title')}
+                    </h3>
+                    <ul className="space-y-4">
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: '1.6' }}>
+                        <Flame className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
+                        <span>{t('products.specialties.bbq.item1')}</span>
+                      </li>
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: '1.6' }}>
+                        <Flame className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
+                        <span>{t('products.specialties.bbq.item2')}</span>
+                      </li>
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: '1.6' }}>
+                        <Flame className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
+                        <span>{t('products.specialties.bbq.item3')}</span>
+                      </li>
+                      <li className="flex items-start text-foreground leading-relaxed" style={{ lineHeight: '1.6' }}>
+                        <Flame className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
+                        <span>{t('products.specialties.bbq.item4')}</span>
+                      </li>
+                    </ul>
+                  </div> */}
+
+                  <Link to="/order" className="inline-block">
+                    <Button
+                      size="lg"
+                      className="w-full md:w-auto px-8 py-6 text-lg font-semibold hover:shadow-lg transition-all duration-300 group"
+                    >
+                      {t("products.specialties.cta")}
+                      <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </div>
+          </Card>
+        </section>
+
+        {/* Final CTA */}
+        <section className="text-center bg-muted/30 rounded-lg p-12 md:p-16">
+          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-foreground">{t("products.cta.title")}</h2>
+          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            {t("products.cta.subtitle")}
           </p>
           <Link to="/order">
-            <Button size="lg" className="text-lg px-8 py-6">
-              {t('products.cta.button')}
+            <Button size="lg" className="text-lg px-10 py-6">
+              {t("products.cta.button")}
             </Button>
           </Link>
-        </div>
+        </section>
       </div>
     </div>
   );

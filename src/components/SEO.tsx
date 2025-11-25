@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
+import { ReactNode } from 'react';
 
 interface SEOProps {
   title: string;
@@ -7,7 +8,8 @@ interface SEOProps {
   keywords?: string;
   image?: string;
   type?: string;
-  structuredData?: object;
+  structuredData?: object | object[];
+  children?: ReactNode;
 }
 
 const SEO = ({ 
@@ -16,11 +18,16 @@ const SEO = ({
   keywords, 
   image = '/og-image.jpg',
   type = 'website',
-  structuredData 
+  structuredData,
+  children
 }: SEOProps) => {
   const location = useLocation();
   const baseUrl = 'https://slagerijjohn.be';
-  const currentUrl = `${baseUrl}${location.pathname}`;
+  // Normalize URL: remove trailing slash for consistency
+  const normalizedPath = location.pathname.endsWith('/') && location.pathname !== '/' 
+    ? location.pathname.slice(0, -1) 
+    : location.pathname;
+  const currentUrl = `${baseUrl}${normalizedPath}`;
   const fullTitle = `${title} | Slagerij John`;
 
   return (
@@ -47,10 +54,21 @@ const SEO = ({
 
       {/* Structured Data */}
       {structuredData && (
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
+        Array.isArray(structuredData) ? (
+          structuredData.map((data, index) => (
+            <script key={index} type="application/ld+json">
+              {JSON.stringify(data)}
+            </script>
+          ))
+        ) : (
+          <script type="application/ld+json">
+            {JSON.stringify(structuredData)}
+          </script>
+        )
       )}
+      
+      {/* Additional custom head elements */}
+      {children}
     </Helmet>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { CalendarIcon, ShoppingCart, Loader2 } from "lucide-react";
+import { CalendarIcon, ShoppingCart, Loader2, CheckCircle2, MessageCircle } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -20,16 +20,55 @@ import { trackOrderSubmit } from "@/components/Analytics";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema } from "@/lib/structuredData";
 import { supabase } from "@/integrations/supabase/client";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { businessHours } from "@/hooks/useBusinessHours";
 
 interface OrderItem {
   product: string;
   quantity: string;
   unit: string;
+  price?: number;
 }
+
+interface Product {
+  key: string;
+  name_nl: string;
+  name_ro: string;
+  price: number;
+  unit: string;
+}
+
+// Helper function to generate time slots based on opening hours
+const generateTimeSlots = (startHour: number, startMin: number, endHour: number, endMin: number): string[] => {
+  const slots: string[] = [];
+  let currentHour = startHour;
+  let currentMin = startMin;
+  
+  while (currentHour < endHour || (currentHour === endHour && currentMin < endMin)) {
+    slots.push(`${String(currentHour).padStart(2, '0')}:${String(currentMin).padStart(2, '0')}`);
+    currentMin += 30;
+    if (currentMin >= 60) {
+      currentMin = 0;
+      currentHour += 1;
+    }
+  }
+  
+  return slots;
+};
+
+// Generate time slots for a specific day based on business hours
+const getTimeSlotsForDay = (dayOfWeek: number): string[] => {
+  const hours = businessHours[dayOfWeek];
+  if (!hours) return [];
+  
+  const [startHour, startMin] = hours.open.split(':').map(Number);
+  const [endHour, endMin] = hours.close.split(':').map(Number);
+  
+  return generateTimeSlots(startHour, startMin, endHour, endMin);
+};
 
 // Create schemas dynamically with translations
 const createOrderSchemas = (t: (key: string) => string) => {
-  // Phone number validation regex (supports international formats)
   const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/;
   
   const orderItemSchema = z.object({
@@ -38,13 +77,14 @@ const createOrderSchemas = (t: (key: string) => string) => {
       .min(1, t('order.validation.enterQuantity'))
       .refine((val) => {
         const num = parseFloat(val);
-        return !isNaN(num) && num > 0 && num <= 1000; // Max 1000 kg/units
+        return !isNaN(num) && num > 0 && num <= 1000;
       }, { message: t('order.validation.quantityInvalid') || 'Quantity must be between 0.1 and 1000' }),
     unit: z.string().min(1, t('order.validation.selectUnit')),
+    price: z.number().optional(),
   });
 
   const orderFormSchema = z.object({
-    orderItems: z.array(orderItemSchema).min(1, t('order.validation.addProduct')).max(50), // Max 50 items
+    orderItems: z.array(orderItemSchema).min(1, t('order.validation.addProduct')).max(50),
     pickupDate: z.date({ required_error: t('order.validation.selectDate') }),
     pickupTime: z.string().min(1, t('order.validation.selectTime')),
     customerName: z.string()
@@ -68,32 +108,50 @@ const createOrderSchemas = (t: (key: string) => string) => {
 const Order = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { user } = useAuth();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
 
-  // Get translated schemas
+  // Fetch products with prices from database
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .eq('available', true)
+          .order('key');
+        
+        if (error) throw error;
+        setProducts(data || []);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load products. Please refresh the page.",
+          variant: "destructive",
+        });
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+
+    fetchProducts();
+  }, [toast]);
+
   const { orderFormSchema } = createOrderSchemas(t);
-  
   type OrderFormValues = z.infer<typeof orderFormSchema>;
 
-  const productOptions = [
-    { key: 'steak', label: t('order.products.steak') },
-    { key: 'roast', label: t('order.products.roast') },
-    { key: 'beefMince', label: t('order.products.beefMince') },
-    { key: 'stew', label: t('order.products.stew') },
-    { key: 'porkTenderloin', label: t('order.products.porkTenderloin') },
-    { key: 'chops', label: t('order.products.chops') },
-    { key: 'porkMince', label: t('order.products.porkMince') },
-    { key: 'sausage', label: t('order.products.sausage') },
-    { key: 'wholeChicken', label: t('order.products.wholeChicken') },
-    { key: 'chickenBreast', label: t('order.products.chickenBreast') },
-    { key: 'chickenThighs', label: t('order.products.chickenThighs') },
-    { key: 'homemadeSausage', label: t('order.products.homemadeSausage') },
-    { key: 'meatballs', label: t('order.products.meatballs') },
-    { key: 'bbqPackage', label: t('order.products.bbqPackage') },
-  ];
+  // Get product options with prices
+  const productOptions = products.map(p => ({
+    key: p.key,
+    label: language === 'nl' ? p.name_nl : p.name_ro,
+    price: p.price,
+    unit: p.unit
+  }));
 
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
@@ -108,6 +166,20 @@ const Order = () => {
   });
 
   const orderItems = form.watch("orderItems");
+
+  // Calculate order total
+  const calculateTotal = () => {
+    const items = form.getValues("orderItems");
+    return items.reduce((total, item) => {
+      if (!item.product || !item.quantity) return total;
+      const product = products.find(p => p.key === item.product);
+      if (!product) return total;
+      const quantity = parseFloat(item.quantity) || 0;
+      return total + (product.price * quantity);
+    }, 0);
+  };
+
+  const orderTotal = calculateTotal();
 
   const addOrderItem = () => {
     const currentItems = form.getValues("orderItems");
@@ -134,12 +206,14 @@ const Order = () => {
   };
 
   const sendWhatsAppConfirmation = (data: OrderFormValues) => {
-    // Shop's WhatsApp number (format: country code + number without + or spaces)
-    const shopWhatsAppNumber = "32466186457"; // Belgium number
+    const shopWhatsAppNumber = "32466186457";
     
-    // Build order details message
     const orderDetails = data.orderItems
-      .map((item, index) => `${index + 1}. ${item.product} - ${item.quantity} ${item.unit}`)
+      .map((item, index) => {
+        const product = products.find(p => p.key === item.product);
+        const itemTotal = product ? (product.price * parseFloat(item.quantity || '0')).toFixed(2) : '0.00';
+        return `${index + 1}. ${item.product} - ${item.quantity} ${item.unit} (€${itemTotal})`;
+      })
       .join('\n');
     
     const message = `🥩 *Nieuwe Bestelling - Slagerij John*\n\n` +
@@ -148,62 +222,101 @@ const Order = () => {
       `Telefoon: ${data.customerPhone}\n` +
       `Email: ${data.customerEmail}\n\n` +
       `*Bestelde producten:*\n${orderDetails}\n\n` +
+      `*Totaal: €${orderTotal.toFixed(2)}*\n\n` +
       `*Afhaalgegevens:*\n` +
       `Datum: ${format(data.pickupDate, "dd-MM-yyyy")}\n` +
       `Tijd: ${data.pickupTime}\n` +
       (data.notes ? `\n*Opmerkingen:*\n${data.notes}` : '');
     
-    // Create WhatsApp link with encoded message
     const whatsappUrl = `https://wa.me/${shopWhatsAppNumber}?text=${encodeURIComponent(message)}`;
-    
-    // Open WhatsApp in new tab (use location.href for better compatibility)
-    const newWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-    if (!newWindow) {
-      // Fallback if popup blocked
-      window.location.href = whatsappUrl;
-    }
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 
   const handleSubmit = async (data: OrderFormValues) => {
     setIsSubmitting(true);
     
     try {
-      const { error } = await supabase.from("orders").insert({
+      // Add prices to order items before saving
+      const orderItemsWithPrices = data.orderItems.map(item => {
+        const product = products.find(p => p.key === item.product);
+        return {
+          ...item,
+          price: product?.price || 0
+        };
+      });
+
+      const { data: orderData, error } = await supabase.from("orders").insert({
         customer_name: data.customerName,
         customer_phone: data.customerPhone,
         customer_email: data.customerEmail,
-        order_items: data.orderItems,
+        order_items: orderItemsWithPrices,
         pickup_date: format(data.pickupDate, "yyyy-MM-dd"),
         pickup_time: data.pickupTime,
         notes: data.notes || null,
         status: "pending",
-        user_id: user?.id || null, // Set user_id if user is authenticated
-      });
+        user_id: user?.id || null,
+      }).select().single();
 
       if (error) throw error;
 
-      // Track order submission
+      // Send confirmation email via Edge Function
+      try {
+        await supabase.functions.invoke('send-order-status-email', {
+          body: {
+            customerName: data.customerName,
+            customerEmail: data.customerEmail,
+            orderId: orderData.id,
+            status: "pending",
+            orderItems: orderItemsWithPrices,
+            pickupDate: format(data.pickupDate, "dd-MM-yyyy"),
+            pickupTime: data.pickupTime,
+          }
+        });
+      } catch (emailError) {
+        console.error("Error sending confirmation email:", emailError);
+      }
+
       trackOrderSubmit({
         items: data.orderItems.length,
         pickupDate: format(data.pickupDate, "yyyy-MM-dd"),
       });
 
-      // Send WhatsApp confirmation
-      sendWhatsAppConfirmation(data);
+      // Send automatic WhatsApp notification to shop owner
+      const orderDetails = data.orderItems
+        .map((item) => {
+          const product = products.find(p => p.key === item.product);
+          const itemTotal = product ? (product.price * parseFloat(item.quantity || '0')).toFixed(2) : '0.00';
+          return `- ${item.product}: ${item.quantity}${item.unit} (€${itemTotal})`;
+        })
+        .join('\n');
+      
+      const shopWhatsAppNumber = "32466186457";
+      const whatsappMessage = `🥩 *Nieuwe Bestelling - Slagerij John*\n\n` +
+        `*Klantgegevens:*\n` +
+        `Naam: ${data.customerName}\n` +
+        `Telefoon: ${data.customerPhone}\n` +
+        `Email: ${data.customerEmail}\n\n` +
+        `*Bestelde producten:*\n${orderDetails}\n\n` +
+        `*Totaal: €${orderTotal.toFixed(2)}*\n\n` +
+        `*Afhaalgegevens:*\n` +
+        `Datum: ${format(data.pickupDate, "dd-MM-yyyy")}\n` +
+        `Tijd: ${data.pickupTime}\n` +
+        (data.notes ? `\n*Opmerkingen:*\n${data.notes}` : '');
+      
+      const whatsappUrl = `https://web.whatsapp.com/send?phone=${shopWhatsAppNumber}&text=${encodeURIComponent(whatsappMessage)}`;
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 
       toast({
         title: t('order.success.title'),
-        description: "Uw bestelling is geplaatst! WhatsApp wordt geopend om uw bestelling te bevestigen.",
+        description: "Uw bestelling is succesvol geplaatst!",
       });
 
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
+      setStep(4);
     } catch (error) {
       console.error("Error submitting order:", error);
       toast({
         title: t('order.error.title'),
-        description: "Er is iets misgegaan. Probeer het opnieuw.",
+        description: t('order.error.description'),
         variant: "destructive",
       });
     } finally {
@@ -211,352 +324,432 @@ const Order = () => {
     }
   };
 
-  const breadcrumbData = getBreadcrumbSchema([
-    { name: 'Home', url: '/' },
-    { name: 'Bestel Online', url: '/order' }
-  ]);
+  if (loadingProducts) {
+    return (
+      <div className="container mx-auto px-4 py-16 flex justify-center items-center min-h-[400px]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading products...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen py-12">
+    <>
       <SEO 
-        title="Bestel Online"
-        description="Bestel gemakkelijk online bij Slagerij John. Kies uw producten, selecteer een afhaaltijd en haal uw bestelling af in onze winkel in Zwevezele."
-        keywords="online bestellen, vlees bestellen, afhalen, bestelformulier, Zwevezele"
-        structuredData={breadcrumbData}
+        title={t('order.seo.title')}
+        description={t('order.seo.description')}
+        keywords="online bestellen, vlees bestellen, bestelformulier, Zwevezele"
+        structuredData={getBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Bestellen", url: "/order" }
+        ])}
       />
-      <div className="container mx-auto px-4 max-w-4xl">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 text-primary">
-            {t('order.title')}
-          </h1>
-          <p className="text-xl text-muted-foreground">
-            {t('order.subtitle')}
-          </p>
-        </div>
+      <div className="container mx-auto px-4 py-16">
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-4xl font-bold mb-8 text-center">{t('order.title')}</h1>
 
-        {/* Delivery Information */}
-        <Card className="mb-8 border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5">
-          <CardHeader>
-            <CardTitle className="text-2xl font-serif text-primary">
-              {t('order.delivery.title')}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-foreground font-medium">
-              {t('order.delivery.intro')}
-            </p>
-            
-            <div className="space-y-3">
-              <div className="border-l-4 border-primary pl-4">
-                <p className="font-semibold text-lg">{t('order.delivery.minimum')}</p>
-                <p className="text-muted-foreground">{t('order.delivery.tier1.free')}</p>
-                <p className="text-muted-foreground">{t('order.delivery.tier1.paid')}</p>
+          {/* Progress Steps */}
+          <div className="flex justify-between mb-8">
+            {[1, 2, 3, 4].map((s) => (
+              <div key={s} className="flex flex-col items-center flex-1">
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                    step >= s ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
+                  }`}
+                >
+                  {s === 4 && step === 4 ? <CheckCircle2 className="h-6 w-6" /> : s}
+                </div>
+                <span className="text-sm mt-2">
+                  {s === 1 && t('order.steps.products')}
+                  {s === 2 && t('order.steps.pickup')}
+                  {s === 3 && t('order.steps.contact')}
+                  {s === 4 && t('order.steps.confirm')}
+                </span>
               </div>
-              
-              <div className="border-l-4 border-accent pl-4">
-                <p className="font-semibold text-lg">{t('order.delivery.minimum100')}</p>
-                <p className="text-muted-foreground">{t('order.delivery.tier2.free')}</p>
-                <p className="text-muted-foreground">{t('order.delivery.tier2.paid')}</p>
-              </div>
-            </div>
+            ))}
+          </div>
 
-            <div className="pt-4 border-t border-border space-y-2">
-              <p className="font-medium">{t('order.delivery.schedule')}</p>
-              <p className="font-medium">
-                {t('order.delivery.phone')} <a href="tel:+32466186457" className="text-primary hover:underline">+32 466 18 64 57</a>
-              </p>
-              <p className="text-sm text-muted-foreground">{t('order.delivery.address')}</p>
-              <p className="text-sm italic text-primary font-medium">{t('order.delivery.tagline')}</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Progress Steps */}
-        <div className="flex justify-between mb-8">
-          {[1, 2, 3].map((s) => (
-            <div key={s} className="flex items-center flex-1">
-              <div className={`flex items-center justify-center w-10 h-10 rounded-full ${
-                step >= s ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
-              }`}>
-                {s}
-              </div>
-              {s < 3 && (
-                <div className={`flex-1 h-1 mx-2 ${
-                  step > s ? 'bg-primary' : 'bg-muted'
-                }`} />
-              )}
-            </div>
-          ))}
-        </div>
-
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)}>
-            {/* Step 1: Select Products */}
-            {step === 1 && (
-              <Card className="border-border">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-serif flex items-center">
-                    <ShoppingCart className="w-6 h-6 mr-2 text-primary" />
-                    {t('order.step1.title')}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  {orderItems.map((item, index) => (
-                    <div key={index} className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 border border-border rounded-lg">
-                      <div className="md:col-span-2">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+              {/* Step 1: Product Selection */}
+              {step === 1 && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <ShoppingCart className="h-5 w-5" />
+                      {t('order.steps.products')}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {orderItems.map((item, index) => (
+                      <div key={index} className="flex gap-3 items-end pb-4 border-b last:border-0">
                         <FormField
                           control={form.control}
                           name={`orderItems.${index}.product`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>{t('order.product.label')}</FormLabel>
-                              <FormControl>
-                                <select
-                                  className="w-full p-2 border border-input rounded-md bg-background"
-                                  {...field}
-                                >
-                                  <option value="">{t('order.product.placeholder')}</option>
-                                  {productOptions.map((product) => (
-                                    <option key={product.key} value={product.label}>{product.label}</option>
-                                  ))}
-                                </select>
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
+                          render={({ field }) => {
+                            const selectedProduct = productOptions.find(p => p.key === field.value);
+                            return (
+                              <FormItem className="flex-1">
+                                <FormLabel>{t('order.form.product')}</FormLabel>
+                                <Select onValueChange={field.onChange} value={field.value}>
+                                  <FormControl>
+                                    <SelectTrigger>
+                                      <SelectValue placeholder={t('order.form.selectProduct')} />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    {productOptions.map((option) => (
+                                      <SelectItem key={option.key} value={option.key}>
+                                        <div className="flex justify-between items-center gap-4 w-full">
+                                          <span>{option.label}</span>
+                                          <span className="text-sm font-semibold text-primary">
+                                            €{option.price.toFixed(2)}/{option.unit}
+                                          </span>
+                                        </div>
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                                {selectedProduct && (
+                                  <p className="text-xs text-muted-foreground">
+                                    €{selectedProduct.price.toFixed(2)} per {selectedProduct.unit}
+                                  </p>
+                                )}
+                                <FormMessage />
+                              </FormItem>
+                            );
+                          }}
                         />
-                      </div>
-                      <div>
+
                         <FormField
                           control={form.control}
                           name={`orderItems.${index}.quantity`}
+                          render={({ field }) => {
+                            const item = orderItems[index];
+                            const product = products.find(p => p.key === item?.product);
+                            const itemTotal = product && item?.quantity 
+                              ? (product.price * parseFloat(item.quantity || '0')).toFixed(2)
+                              : '0.00';
+                            
+                            return (
+                              <FormItem className="w-32">
+                                <FormLabel>{t('order.form.quantity')}</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    type="number"
+                                    step="0.1"
+                                    min="0.1"
+                                    max="1000"
+                                    placeholder="1.0"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                {product && item?.quantity && parseFloat(item.quantity) > 0 && (
+                                  <p className="text-xs font-semibold text-primary">
+                                    €{itemTotal}
+                                  </p>
+                                )}
+                                <FormMessage />
+                              </FormItem>
+                            );
+                          }}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name={`orderItems.${index}.unit`}
                           render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>{t('order.quantity.label')}</FormLabel>
-                              <FormControl>
-                                <Input {...field} type="number" step="0.1" min="0" />
-                              </FormControl>
+                            <FormItem className="w-24">
+                              <FormLabel>{t('order.form.unit')}</FormLabel>
+                              <Select onValueChange={field.onChange} value={field.value}>
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="kg">kg</SelectItem>
+                                  <SelectItem value="stuks">stuks</SelectItem>
+                                  <SelectItem value="stuk">stuk</SelectItem>
+                                </SelectContent>
+                              </Select>
                               <FormMessage />
                             </FormItem>
                           )}
                         />
-                      </div>
-                      <div className="flex items-end gap-2">
-                        <div className="flex-1">
-                          <FormField
-                            control={form.control}
-                            name={`orderItems.${index}.unit`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <select
-                                    className="w-full p-2 border border-input rounded-md bg-background"
-                                    {...field}
-                                  >
-                                    <option value="kg">{t('order.unit.kg')}</option>
-                                    <option value="stuks">{t('order.unit.pieces')}</option>
-                                  </select>
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
+
                         {orderItems.length > 1 && (
                           <Button
                             type="button"
                             variant="destructive"
-                            size="sm"
+                            size="icon"
                             onClick={() => removeOrderItem(index)}
+                            className="mb-2"
                           >
                             ×
                           </Button>
                         )}
                       </div>
-                    </div>
-                  ))}
-                  <Button type="button" variant="outline" onClick={addOrderItem} className="w-full">
-                    {t('order.addProduct')}
-                  </Button>
-                  <Button type="button" onClick={nextStep} className="w-full" size="lg">
-                    {t('order.nextStep')}
-                  </Button>
-                </CardContent>
-              </Card>
-            )}
+                    ))}
 
-            {/* Step 2: Select Pickup Time */}
-            {step === 2 && (
-              <Card className="border-border">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-serif flex items-center">
-                    <CalendarIcon className="w-6 h-6 mr-2 text-primary" />
-                    {t('order.step2.title')}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="pickupDate"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col">
-                        <FormLabel>{t('order.pickupDate.label')}</FormLabel>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <FormControl>
-                              <Button
-                                variant="outline"
-                                className="w-full justify-start text-left font-normal"
-                              >
-                                <CalendarIcon className="mr-2 h-4 w-4" />
-                                {field.value ? format(field.value, "PPP", { locale: nl }) : t('order.pickupDate.placeholder')}
-                              </Button>
-                            </FormControl>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={field.value}
-                              onSelect={field.onChange}
-                              disabled={(date) => date < new Date() || date.getDay() === 0}
-                              initialFocus
-                            />
-                          </PopoverContent>
-                        </Popover>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                    <div className="space-y-3">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={addOrderItem}
+                        className="w-full"
+                      >
+                        {t('order.form.addItem')}
+                      </Button>
 
-                  <FormField
-                    control={form.control}
-                    name="pickupTime"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t('order.pickupTime.label')}</FormLabel>
-                        <FormControl>
-                          <select
-                            className="w-full p-2 border border-input rounded-md bg-background"
-                            {...field}
-                          >
-                            <option value="">{t('order.pickupTime.placeholder')}</option>
-                            <option value="09:00">09:00</option>
-                            <option value="10:00">10:00</option>
-                            <option value="11:00">11:00</option>
-                            <option value="12:00">12:00</option>
-                            <option value="14:00">14:00</option>
-                            <option value="15:00">15:00</option>
-                            <option value="16:00">16:00</option>
-                            <option value="17:00">17:00</option>
-                          </select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <div className="flex gap-4">
-                    <Button type="button" variant="outline" onClick={() => setStep(1)} className="flex-1">
-                      {t('order.back')}
-                    </Button>
-                    <Button type="button" onClick={nextStep} className="flex-1">
-                      {t('order.nextStep')}
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Step 3: Customer Information */}
-            {step === 3 && (
-              <Card className="border-border">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-serif">{t('order.step3.title')}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="customerName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t('order.name.label')}</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="customerPhone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t('order.phone.label')}</FormLabel>
-                        <FormControl>
-                          <Input {...field} type="tel" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="customerEmail"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t('order.email.label')}</FormLabel>
-                        <FormControl>
-                          <Input {...field} type="email" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="notes"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t('order.notes.label')}</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            {...field}
-                            rows={4}
-                            placeholder={t('order.notes.placeholder')}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <div className="flex gap-4">
-                    <Button type="button" variant="outline" onClick={() => setStep(2)} className="flex-1">
-                      {t('order.back')}
-                    </Button>
-                    <Button type="submit" className="flex-1" disabled={isSubmitting}>
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Bezig met verzenden...
-                        </>
-                      ) : (
-                        t('order.placeOrder')
+                      {orderItems.some(item => item.product && item.quantity && parseFloat(item.quantity) > 0) && (
+                        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                          <div className="flex justify-between items-center">
+                            <span className="text-lg font-semibold">{t('order.total') || 'Totaal'}:</span>
+                            <span className="text-2xl font-bold text-primary">
+                              €{orderTotal.toFixed(2)}
+                            </span>
+                          </div>
+                        </div>
                       )}
+                    </div>
+
+                    <Button type="button" onClick={nextStep} className="w-full" size="lg">
+                      {t('order.form.continue')}
                     </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </form>
-        </Form>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Step 2: Pickup Date & Time */}
+              {step === 2 && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <CalendarIcon className="h-5 w-5" />
+                      {t('order.steps.pickup')}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <FormField
+                      control={form.control}
+                      name="pickupDate"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-col">
+                          <FormLabel>{t('order.form.pickupDate')}</FormLabel>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  variant="outline"
+                                  className={`w-full pl-3 text-left font-normal ${
+                                    !field.value && "text-muted-foreground"
+                                  }`}
+                                >
+                                  {field.value ? (
+                                    format(field.value, "PPP", { locale: nl })
+                                  ) : (
+                                    <span>{t('order.form.selectDate')}</span>
+                                  )}
+                                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0" align="start">
+                              <Calendar
+                                mode="single"
+                                selected={field.value}
+                                onSelect={field.onChange}
+                                disabled={(date) =>
+                                  date < new Date() || date < new Date("1900-01-01")
+                                }
+                                initialFocus
+                              />
+                            </PopoverContent>
+                          </Popover>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="pickupTime"
+                      render={({ field }) => {
+                        const selectedDate = form.watch("pickupDate");
+                        const timeSlots = selectedDate ? getTimeSlotsForDay(selectedDate.getDay()) : [];
+
+                        return (
+                          <FormItem>
+                            <FormLabel>{t('order.form.pickupTime')}</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder={t('order.form.selectTime')} />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {timeSlots.map((time) => (
+                                  <SelectItem key={time} value={time}>
+                                    {time}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    />
+
+                    <div className="flex gap-3">
+                      <Button type="button" variant="outline" onClick={() => setStep(1)} className="flex-1">
+                        {t('order.form.back')}
+                      </Button>
+                      <Button type="button" onClick={nextStep} className="flex-1">
+                        {t('order.form.continue')}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Step 3: Customer Information */}
+              {step === 3 && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{t('order.steps.contact')}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <FormField
+                      control={form.control}
+                      name="customerName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t('order.form.name')}</FormLabel>
+                          <FormControl>
+                            <Input placeholder={t('order.form.namePlaceholder')} {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="customerPhone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t('order.form.phone')}</FormLabel>
+                          <FormControl>
+                            <Input placeholder="+32 XXX XX XX XX" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="customerEmail"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t('order.form.email')}</FormLabel>
+                          <FormControl>
+                            <Input type="email" placeholder="naam@voorbeeld.be" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="notes"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t('order.form.notes')}</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              placeholder={t('order.form.notesPlaceholder')}
+                              className="resize-none"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <div className="flex gap-3">
+                      <Button type="button" variant="outline" onClick={() => setStep(2)} className="flex-1">
+                        {t('order.form.back')}
+                      </Button>
+                      <Button type="submit" className="flex-1" disabled={isSubmitting}>
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            {t('order.form.submitting')}
+                          </>
+                        ) : (
+                          t('order.form.submit')
+                        )}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Step 4: Success */}
+              {step === 4 && (
+                <Card>
+                  <CardHeader>
+                    <div className="flex flex-col items-center text-center space-y-4">
+                      <div className="rounded-full bg-green-100 p-6">
+                        <CheckCircle2 className="h-16 w-16 text-green-600" />
+                      </div>
+                      <CardTitle className="text-2xl">{t('order.success.title')}</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-6 text-center">
+                    <p className="text-muted-foreground">
+                      {t('order.success.description')}
+                    </p>
+                    
+                    <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                      <p className="text-sm font-semibold mb-2">{t('order.success.orderTotal')}:</p>
+                      <p className="text-3xl font-bold text-primary">€{orderTotal.toFixed(2)}</p>
+                    </div>
+
+                    <div className="space-y-3">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full"
+                        onClick={() => sendWhatsAppConfirmation(form.getValues())}
+                      >
+                        <MessageCircle className="mr-2 h-4 w-4" />
+                        {t('order.success.sendWhatsApp')}
+                      </Button>
+
+                      <Button
+                        type="button"
+                        onClick={() => navigate('/')}
+                        className="w-full"
+                      >
+                        {t('order.success.backToHome')}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </form>
+          </Form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

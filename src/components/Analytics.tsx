@@ -6,25 +6,37 @@ export const Analytics = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Only track if GA4 measurement ID is configured
+    // Only track if GA4 measurement ID is configured and analytics consent is given
     const measurementId = import.meta.env.VITE_GA4_MEASUREMENT_ID;
     
     if (!measurementId || typeof window === 'undefined' || !window.gtag) {
       return;
     }
 
-    // Track page views on route change
-    window.gtag('config', measurementId, {
-      page_path: location.pathname + location.search,
-      page_title: document.title,
-    });
+    // Check for analytics consent using vanilla-cookieconsent
+    const checkConsent = async () => {
+      try {
+        const cc = await import('vanilla-cookieconsent');
+        if (cc.acceptedCategory && cc.acceptedCategory('analytics')) {
+          // Track page views on route change
+          window.gtag('config', measurementId, {
+            page_path: location.pathname + location.search,
+            page_title: document.title,
+          });
+        }
+      } catch (error) {
+        console.warn('Cookie consent not available:', error);
+      }
+    };
+
+    checkConsent();
   }, [location]);
 
   return null;
 };
 
 // Custom event tracking functions
-export const trackEvent = (
+export const trackEvent = async (
   eventName: string,
   eventParams?: Record<string, unknown>
 ) => {
@@ -34,7 +46,15 @@ export const trackEvent = (
     return;
   }
 
-  window.gtag('event', eventName, eventParams);
+  // Check for analytics consent
+  try {
+    const cc = await import('vanilla-cookieconsent');
+    if (cc.acceptedCategory && cc.acceptedCategory('analytics')) {
+      window.gtag('event', eventName, eventParams);
+    }
+  } catch (error) {
+    console.warn('Cookie consent not available:', error);
+  }
 };
 
 // Predefined tracking events for common actions

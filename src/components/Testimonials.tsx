@@ -47,7 +47,6 @@ export default function Testimonials() {
             </div>
             <span className="text-3xl font-bold text-foreground">4.9</span>
           </div>
-          <p className="text-muted-foreground">{t('testimonials.basedOn')}</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">

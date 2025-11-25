@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@/test/test-utils";
 import Navigation from "./Navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -54,9 +54,9 @@ describe("Navigation", () => {
     expect(screen.getByText(/nav.contact/i)).toBeInTheDocument();
   });
 
-  it("renders language toggle button", () => {
+  it("renders language toggle button with native name", () => {
     render(<Navigation />);
-    const languageButton = screen.getByText(/NL/i);
+    const languageButton = screen.getByText(/Nederlands/i);
     expect(languageButton).toBeInTheDocument();
   });
 

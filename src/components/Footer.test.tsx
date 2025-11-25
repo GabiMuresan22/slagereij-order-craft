@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@/test/test-utils";
 import Footer from "./Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -40,6 +40,11 @@ describe("Footer", () => {
     expect(phoneLink).toHaveAttribute("href", "tel:+32466186457");
   });
 
+  it("renders quick links navigation", () => {
+    render(<Footer />);
+    expect(screen.getByText(/footer.quickLinks/i)).toBeInTheDocument();
+  });
+
   it("renders social media links", () => {
     render(<Footer />);
     const facebookLink = screen.getByLabelText(/Facebook/i);
@@ -49,12 +54,30 @@ describe("Footer", () => {
     expect(facebookLink).toBeInTheDocument();
     expect(tiktokLink).toBeInTheDocument();
     expect(mapsLink).toBeInTheDocument();
+    
+    // Verify the social media heading text
+    expect(screen.getByText(/footer.social/i)).toBeInTheDocument();
+  });
+
+  it("renders legal links", () => {
+    render(<Footer />);
+    expect(screen.getByText(/footer.privacy/i)).toBeInTheDocument();
+    expect(screen.getByText(/footer.terms/i)).toBeInTheDocument();
   });
 
   it("renders copyright with current year", () => {
     render(<Footer />);
     const currentYear = new Date().getFullYear();
     expect(screen.getByText(new RegExp(currentYear.toString()))).toBeInTheDocument();
+  });
+
+  it("renders website credit link", () => {
+    render(<Footer />);
+    const creditLink = screen.getByText(/footer.credit/i);
+    expect(creditLink).toBeInTheDocument();
+    expect(creditLink).toHaveAttribute("href", "https://gabimuresan.com/");
+    expect(creditLink).toHaveAttribute("target", "_blank");
+    expect(creditLink).toHaveAttribute("rel", "noopener noreferrer");
   });
 });
 

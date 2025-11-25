@@ -7,6 +7,20 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 
+// Language configuration with flags and native names
+const languageConfig = {
+  nl: { 
+    name: "Dutch", 
+    nativeName: "Nederlands", 
+    flag: "🇳🇱" 
+  },
+  ro: { 
+    name: "Romanian", 
+    nativeName: "Română", 
+    flag: "🇷🇴" 
+  }
+};
+
 const Navigation = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -36,11 +50,15 @@ const Navigation = () => {
 
   const navItems = [
     { path: "/", label: t('nav.home') },
+    { path: "/packages", label: "Colli's Menu" },
     { path: "/about", label: t('nav.about') },
     { path: "/products", label: t('nav.products') },
+    { path: "/catering", label: t('nav.catering') },
     { path: "/order", label: t('nav.order') },
     { path: "/contact", label: t('nav.contact') },
   ];
+
+  const currentLangConfig = languageConfig[language as keyof typeof languageConfig];
 
   const toggleLanguage = () => {
     if (language === 'nl') {
@@ -51,41 +69,65 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="bg-card border-b border-border sticky top-0 z-50 shadow-sm">
+    <nav className="bg-background border-b border-border sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img 
               src={logo} 
               alt="Slager John Logo" 
-              className="h-14 md:h-16 w-auto"
+              className="h-12 lg:h-16 w-auto object-contain"
+              style={{
+                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
+                padding: '4px',
+                background: 'white',
+                borderRadius: '50%',
+              }}
             />
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`text-base font-medium transition-colors hover:text-primary ${
-                  location.pathname === item.path
-                    ? "text-primary font-semibold"
-                    : "text-foreground"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+          {/* Desktop Navigation - Hidden below 950px */}
+          <div className="hidden lg:flex items-center space-x-8">
+            {navItems.map((item) => {
+              // Make "Order Online" a primary button
+              if (item.path === "/order") {
+                return (
+                  <Button
+                    key={item.path}
+                    asChild
+                    size="sm"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-6"
+                  >
+                    <Link to={item.path}>
+                      {item.label}
+                    </Link>
+                  </Button>
+                );
+              }
+              
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`text-base font-medium transition-colors hover:text-primary ${
+                    location.pathname === item.path
+                      ? "text-primary font-semibold"
+                      : "text-foreground"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
             <Button
               variant="outline"
               size="sm"
               onClick={toggleLanguage}
               className="flex items-center gap-2"
             >
-              <span className="text-lg">{language === 'nl' ? '🇳🇱' : '🇷🇴'}</span>
-              {language.toUpperCase()}
+              <span className="text-lg">{currentLangConfig.flag}</span>
+              <span className="hidden sm:inline">{currentLangConfig.nativeName}</span>
             </Button>
             
             {/* Auth Button */}
@@ -144,88 +186,110 @@ const Navigation = () => {
             )}
           </div>
 
-          {/* Mobile Menu Button & Language Toggle */}
-          <div className="md:hidden flex items-center gap-2">
+          {/* Tablet/Mobile Navigation (below 950px) - Keep "Bestel Online" visible */}
+          <div className="lg:hidden flex items-center gap-2">
+            {/* Always show Order button as primary CTA */}
             <Button
-              variant="outline"
+              asChild
               size="sm"
-              onClick={toggleLanguage}
-              className="flex items-center gap-1"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-4 text-sm"
             >
-              <span className="text-base">{language === 'nl' ? '🇳🇱' : '🇷🇴'}</span>
-              {language.toUpperCase()}
+              <Link to="/order">
+                {t('nav.order')}
+              </Link>
             </Button>
             
-            {/* Mobile Auth Button */}
-            {!loading && !user && (
-              <Button
-                variant="ghost"
-                size="sm"
-                asChild
-              >
-                <Link to="/auth">
-                  <User className="h-4 w-4" />
-                </Link>
-              </Button>
-            )}
-            
             <button
-              className="text-foreground"
+              className="text-foreground p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile/Tablet Navigation - Hamburger Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden pb-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`block py-3 text-base font-medium transition-colors hover:text-primary ${
-                  location.pathname === item.path
-                    ? "text-primary font-semibold"
-                    : "text-foreground"
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
-            
-            {/* Mobile Auth Link */}
-            {!loading && user && (
-              <>
+          <div className="lg:hidden pb-4 pt-2">
+            {navItems.map((item) => {
+              // Skip Order button since it's visible in header
+              if (item.path === "/order") {
+                return null;
+              }
+              
+              return (
                 <Link
-                  to="/my-account"
-                  className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary"
+                  key={item.path}
+                  to={item.path}
+                  className={`block py-3 text-base font-medium transition-colors hover:text-primary min-h-[44px] flex items-center ${
+                    location.pathname === item.path
+                      ? "text-primary font-semibold"
+                      : "text-foreground"
+                  }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <UserCircle className="h-4 w-4" />
-                  My Account
+                  {item.label}
                 </Link>
-                {isAdmin && (
+              );
+            })}
+            
+            {/* Language Toggle in Menu */}
+            <button
+              onClick={() => {
+                toggleLanguage();
+                setMobileMenuOpen(false);
+              }}
+              className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[44px] w-full"
+            >
+              <span className="text-lg">{currentLangConfig.flag}</span>
+              {currentLangConfig.nativeName}
+            </button>
+            
+            {/* Mobile Auth Links */}
+            {!loading && (
+              <>
+                {user ? (
+                  <>
+                    <Link
+                      to="/my-account"
+                      className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[44px]"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <UserCircle className="h-4 w-4" />
+                      My Account
+                    </Link>
+                    {isAdmin && (
+                      <Link
+                        to="/admin"
+                        className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[44px]"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <Shield className="h-4 w-4" />
+                        Admin
+                      </Link>
+                    )}
+                    <button
+                      onClick={() => {
+                        signOut();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[44px] w-full text-left"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      {t('auth.logout')}
+                    </button>
+                  </>
+                ) : (
                   <Link
-                    to="/admin"
-                    className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary"
+                    to="/auth"
+                    className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[44px]"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <Shield className="h-4 w-4" />
-                    Admin
+                    <User className="h-4 w-4" />
+                    {t('auth.login')}
                   </Link>
                 )}
-                <button
-                  onClick={() => {
-                    signOut();
-                    setMobileMenuOpen(false);
-                  }}
-                  className="block w-full text-left py-3 text-base font-medium text-foreground hover:text-primary"
-                >
-                  {t('auth.logout')}
-                </button>
               </>
             )}
           </div>
