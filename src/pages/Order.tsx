@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { CalendarIcon, ShoppingCart, Loader2, CheckCircle2, MessageCircle } from "lucide-react";
+import { CalendarIcon, ShoppingCart, Loader2, CheckCircle2 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -211,34 +211,6 @@ const Order = () => {
     }
   };
 
-  const sendWhatsAppConfirmation = (data: OrderFormValues) => {
-    const shopWhatsAppNumber = "32466186457";
-    
-      const orderDetails = data.orderItems
-        .map((item, index) => {
-          const product = products.find(p => p.key === item.product);
-          const showPrice = product && isColliProduct(product.key);
-          const itemTotal = showPrice ? (product.price * parseFloat(item.quantity || '0')).toFixed(2) : null;
-          return `${index + 1}. ${item.product} - ${item.quantity} ${item.unit}${itemTotal ? ` (€${itemTotal})` : ''}`;
-        })
-        .join('\n');
-    
-      const message = `🥩 *Nieuwe Bestelling - Slagerij John*\n\n` +
-        `*Klantgegevens:*\n` +
-        `Naam: ${data.customerName}\n` +
-        `Telefoon: ${data.customerPhone}\n` +
-        `Email: ${data.customerEmail}\n\n` +
-        `*Bestelde producten:*\n${orderDetails}\n` +
-        (hasColliItems && orderTotal > 0 ? `\n*Totaal: €${orderTotal.toFixed(2)}*\n` : '') +
-        `\n*Afhaalgegevens:*\n` +
-        `Datum: ${format(data.pickupDate, "dd-MM-yyyy")}\n` +
-        `Tijd: ${data.pickupTime}\n` +
-        (data.notes ? `\n*Opmerkingen:*\n${data.notes}` : '');
-    
-    const whatsappUrl = `https://wa.me/${shopWhatsAppNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-  };
-
   const handleSubmit = async (data: OrderFormValues) => {
     setIsSubmitting(true);
     
@@ -296,31 +268,6 @@ const Order = () => {
       });
 
       // Send automatic WhatsApp notification to shop owner
-      const orderDetails = data.orderItems
-        .map((item) => {
-          const product = products.find(p => p.key === item.product);
-          const showPrice = product && isColliProduct(product.key);
-          const itemTotal = showPrice ? (product.price * parseFloat(item.quantity || '0')).toFixed(2) : null;
-          return `- ${item.product}: ${item.quantity}${item.unit}${itemTotal ? ` (€${itemTotal})` : ''}`;
-        })
-        .join('\n');
-      
-      const shopWhatsAppNumber = "32466186457";
-      const whatsappMessage = `🥩 *Nieuwe Bestelling - Slagerij John*\n\n` +
-        `*Klantgegevens:*\n` +
-        `Naam: ${data.customerName}\n` +
-        `Telefoon: ${data.customerPhone}\n` +
-        `Email: ${data.customerEmail}\n\n` +
-        `*Bestelde producten:*\n${orderDetails}\n` +
-        (hasColliItems && orderTotal > 0 ? `\n*Totaal: €${orderTotal.toFixed(2)}*\n` : '') +
-        `\n*Afhaalgegevens:*\n` +
-        `Datum: ${format(data.pickupDate, "dd-MM-yyyy")}\n` +
-        `Tijd: ${data.pickupTime}\n` +
-        (data.notes ? `\n*Opmerkingen:*\n${data.notes}` : '');
-      
-      const whatsappUrl = `https://web.whatsapp.com/send?phone=${shopWhatsAppNumber}&text=${encodeURIComponent(whatsappMessage)}`;
-      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-
       toast({
         title: t('order.success.title'),
         description: "Uw bestelling is succesvol geplaatst!",
@@ -744,16 +691,6 @@ const Order = () => {
                     )}
 
                     <div className="space-y-3">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="w-full"
-                        onClick={() => sendWhatsAppConfirmation(form.getValues())}
-                      >
-                        <MessageCircle className="mr-2 h-4 w-4" />
-                        {t('order.success.sendWhatsApp')}
-                      </Button>
-
                       <Button
                         type="button"
                         onClick={() => navigate('/')}
