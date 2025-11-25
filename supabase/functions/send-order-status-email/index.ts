@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
@@ -14,49 +15,33 @@ type SupportedLanguage = 'nl' | 'ro';
 type OrderStatus = 'pending' | 'confirmed' | 'ready' | 'completed';
 
 const DEFAULT_LANGUAGE: SupportedLanguage = 'nl';
-const VALID_STATUSES: OrderStatus[] = ['pending', 'confirmed', 'ready', 'completed'];
 
-interface OrderStatusEmailRequest {
-  customerName: string;
-  customerEmail: string;
-  orderId: string;
-  status: string;
-  orderItems: Array<{ product: string; quantity: number | string; weight?: string; unit?: string }>;
-  pickupDate: string;
-  pickupTime: string;
-  language?: SupportedLanguage;
-}
+// Zod validation schemas
+const orderItemSchema = z.object({
+  product: z.string().min(1).max(200),
+  quantity: z.union([z.number(), z.string()]).refine(
+    (val) => {
+      const num = typeof val === 'string' ? parseFloat(val) : val;
+      return !isNaN(num) && num > 0 && num <= 1000;
+    },
+    { message: 'Quantity must be between 0 and 1000' }
+  ),
+  weight: z.string().optional(),
+  unit: z.string().optional(),
+});
 
-// Validation functions
-const isValidEmail = (email: string): boolean => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email) && email.length <= 255;
-};
+const orderStatusEmailSchema = z.object({
+  customerName: z.string().min(1).max(100),
+  customerEmail: z.string().email().max(255),
+  orderId: z.string().min(1).max(100),
+  status: z.enum(['pending', 'confirmed', 'ready', 'completed']),
+  orderItems: z.array(orderItemSchema).min(1).max(50),
+  pickupDate: z.string().min(1),
+  pickupTime: z.string().min(1).max(50),
+  language: z.enum(['nl', 'ro']).optional(),
+});
 
-const validateOrderData = (data: any): data is OrderStatusEmailRequest => {
-  if (!data || typeof data !== 'object') return false;
-  
-  // Validate required fields
-  if (!data.customerName || typeof data.customerName !== 'string' || data.customerName.length > 100) return false;
-  if (!data.customerEmail || !isValidEmail(data.customerEmail)) return false;
-  if (!data.orderId || typeof data.orderId !== 'string' || data.orderId.length > 100) return false;
-  if (!data.status || typeof data.status !== 'string' || !VALID_STATUSES.includes(data.status as OrderStatus)) return false;
-  if (!data.pickupDate || typeof data.pickupDate !== 'string') return false;
-  if (!data.pickupTime || typeof data.pickupTime !== 'string' || data.pickupTime.length > 50) return false;
-  
-  // Validate optional language field
-  if (data.language !== undefined && data.language !== 'nl' && data.language !== 'ro') return false;
-  
-  // Validate orderItems array
-  if (!Array.isArray(data.orderItems) || data.orderItems.length === 0 || data.orderItems.length > 50) return false;
-  for (const item of data.orderItems) {
-    if (!item.product || typeof item.product !== 'string' || item.product.length > 200) return false;
-    if (typeof item.quantity !== 'number' && typeof item.quantity !== 'string') return false;
-    // Weight/unit is optional for flexibility
-  }
-  
-  return true;
-};
+type OrderStatusEmailRequest = z.infer<typeof orderStatusEmailSchema>;
 
 const getEmailContent = async (data: OrderStatusEmailRequest) => {
   const { customerName, orderId, status, orderItems, pickupDate, pickupTime, language = DEFAULT_LANGUAGE } = data;
@@ -195,8 +180,7 @@ const getEmailContent = async (data: OrderStatusEmailRequest) => {
   const t = language in translations ? translations[language] : translations[DEFAULT_LANGUAGE];
   
   // Type-safe status lookup with fallback
-  const isValidStatus = (s: string): s is OrderStatus => VALID_STATUSES.includes(s as OrderStatus);
-  const orderStatus: OrderStatus = isValidStatus(status) ? status : 'confirmed';
+  const orderStatus: OrderStatus = status as OrderStatus;
   
   const content = t[orderStatus];
   const statusLabel = t.statusLabels[orderStatus];
@@ -295,19 +279,28 @@ const handler = async (req: Request): Promise<Response> => {
     // Read the request data
     const requestData = await req.json();
     
-    // Validate input data
-    if (!validateOrderData(requestData)) {
-      console.error("Invalid order data received:", requestData);
+    // Validate input data with Zod
+    const validationResult = orderStatusEmailSchema.safeParse(requestData);
+    
+    if (!validationResult.success) {
+      console.error("Invalid order data received:", validationResult.error.issues);
       return new Response(
-        JSON.stringify({ error: "Invalid request data. Please check all fields are valid." }),
+        JSON.stringify({ 
+          error: "Invalid request data. Please check all fields are valid.",
+          details: validationResult.error.issues.map(issue => ({
+            path: issue.path.join('.'),
+            message: issue.message
+          }))
+        }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    console.log("Sending order status email:", requestData);
+    const data = validationResult.data;
+    console.log("Sending order status email:", data);
 
-    const { customerEmail } = requestData;
-    const emailContent = await getEmailContent(requestData);
+    const { customerEmail } = data;
+    const emailContent = await getEmailContent(data);
 
     // Use direct fetch to Resend API instead of SDK
     const emailResponse = await fetch("https://api.resend.com/emails", {
