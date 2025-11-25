@@ -25,6 +25,7 @@ CREATE POLICY "Admins can manage products"
   USING (has_role(auth.uid(), 'admin'::app_role));
 
 -- Insert initial products with prices (in euros)
+-- Colli prices match the Packages page (Colli's menu)
 INSERT INTO public.products (key, name_nl, name_ro, price, unit) VALUES
   ('beef', 'Rundvlees', 'Carne de vită', 18.50, 'kg'),
   ('pork', 'Varkensvlees', 'Carne de porc', 12.00, 'kg'),
@@ -41,9 +42,9 @@ INSERT INTO public.products (key, name_nl, name_ro, price, unit) VALUES
   ('homemadeSausage', 'Huisgemaakte worst', 'Cârnați de casă', 14.00, 'kg'),
   ('meatballs', 'Gehaktballen', 'Chiftele', 10.00, 'kg'),
   ('bbqPackage', 'BBQ Pakket', 'Pachet BBQ', 45.00, 'stuk'),
-  ('colliPork1', 'Colli Varken 1', 'Colli Porc 1', 85.00, 'stuk'),
-  ('colliPork2', 'Colli Varken 2', 'Colli Porc 2', 120.00, 'stuk'),
-  ('colliChicken', 'Colli Kip', 'Colli Pui', 75.00, 'stuk'),
-  ('colliMixed', 'Colli Gemengd', 'Colli Mixt', 95.00, 'stuk'),
-  ('colliBBQ', 'Colli BBQ', 'Colli BBQ', 110.00, 'stuk'),
-  ('colliJohn', 'Colli John', 'Colli John', 150.00, 'stuk');
+  ('colliPork1', 'Colli Varken 1', 'Colli Porc 1', 45.00, 'stuk'),
+  ('colliPork2', 'Colli Varken 2', 'Colli Porc 2', 55.00, 'stuk'),
+  ('colliChicken', 'Colli Kip', 'Colli Pui', 50.00, 'stuk'),
+  ('colliMixed', 'Colli Gemengd', 'Colli Mixt', 60.00, 'stuk'),
+  ('colliBBQ', 'Colli BBQ', 'Colli BBQ', 55.00, 'stuk'),
+  ('colliJohn', 'Colli John', 'Colli John', 100.00, 'stuk');
