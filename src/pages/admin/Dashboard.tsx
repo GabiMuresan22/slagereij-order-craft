@@ -54,6 +54,7 @@ interface Order {
   notes?: string | null;
   status: string;
   created_at: string;
+  language?: string;
 }
 
 const statusColors = {
@@ -215,7 +216,7 @@ export default function AdminDashboard() {
             orderItems: order.order_items,
             pickupDate: new Date(order.pickup_date).toLocaleDateString(),
             pickupTime: order.pickup_time,
-            language: DEFAULT_EMAIL_LANGUAGE,
+            language: order.language || DEFAULT_EMAIL_LANGUAGE,
           },
         });
         console.log('Status update email sent');
