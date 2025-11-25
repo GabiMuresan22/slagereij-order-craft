@@ -8,7 +8,7 @@ DROP POLICY IF EXISTS "Users can view their own orders or admins can view all" O
 -- Create updated SELECT policy that properly handles guest orders
 -- For authenticated users: can view their own orders or if admin
 -- For guest orders: they cannot view orders (they get confirmation via email)
-CREATE POLICY "Users can view their own orders or admins can view all" ON public.orders
+CREATE POLICY "Authenticated users can view own orders admins can view all" ON public.orders
 FOR SELECT USING (
   -- Admins can view all orders
   public.has_role(auth.uid(), 'admin'::app_role)

@@ -254,6 +254,7 @@ const Order = () => {
 
       // Generate a UUID for the order on the client side
       // This ensures we have an order ID even if the RLS policy prevents returning the inserted row
+      // Using crypto.randomUUID() which is supported in all modern browsers (Chrome 92+, Firefox 95+, Safari 15.4+)
       const orderId = crypto.randomUUID();
       
       const { error } = await supabase.from("orders").insert({
