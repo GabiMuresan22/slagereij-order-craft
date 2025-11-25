@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(), 
     mode === "development" && componentTagger(),
-    sitemap({
+    mode === "production" && sitemap({
       hostname: "https://slagerijjohn.be",
       dynamicRoutes: [
         "/about",
