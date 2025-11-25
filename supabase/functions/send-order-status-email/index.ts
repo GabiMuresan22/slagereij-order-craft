@@ -17,6 +17,7 @@ interface OrderStatusEmailRequest {
   orderItems: Array<{ product: string; quantity: number | string; weight?: string; unit?: string }>;
   pickupDate: string;
   pickupTime: string;
+  language?: 'nl' | 'ro';
 }
 
 // Validation functions
@@ -36,6 +37,9 @@ const validateOrderData = (data: any): data is OrderStatusEmailRequest => {
   if (!data.pickupDate || typeof data.pickupDate !== 'string') return false;
   if (!data.pickupTime || typeof data.pickupTime !== 'string' || data.pickupTime.length > 50) return false;
   
+  // Validate optional language field (default is 'nl')
+  if (data.language !== undefined && data.language !== 'nl' && data.language !== 'ro') return false;
+  
   // Validate orderItems array
   if (!Array.isArray(data.orderItems) || data.orderItems.length === 0 || data.orderItems.length > 50) return false;
   for (const item of data.orderItems) {
@@ -48,7 +52,7 @@ const validateOrderData = (data: any): data is OrderStatusEmailRequest => {
 };
 
 const getEmailContent = (data: OrderStatusEmailRequest) => {
-  const { customerName, orderId, status, orderItems, pickupDate, pickupTime } = data;
+  const { customerName, orderId, status, orderItems, pickupDate, pickupTime, language = 'nl' } = data;
   
   // Calculate order total and create items list with prices
   const orderTotal = orderItems.reduce((sum: number, item: any) => {
@@ -79,30 +83,96 @@ const getEmailContent = (data: OrderStatusEmailRequest) => {
     })
     .join('');
 
-  const statusMessages = {
-    pending: {
-      subject: "Bestelling Ontvangen - Slagerij John",
-      title: "Bedankt voor uw bestelling!",
-      message: "We hebben uw bestelling goed ontvangen. We gaan er zo snel mogelijk mee aan de slag.",
+  // Translation dictionaries for email content
+  const translations = {
+    nl: {
+      pending: {
+        subject: "Bestelling Ontvangen - Slagerij John",
+        title: "Bedankt voor uw bestelling!",
+        message: "We hebben uw bestelling goed ontvangen. We gaan er zo snel mogelijk mee aan de slag.",
+      },
+      confirmed: {
+        subject: "Bestelling Bevestigd - Slagerij John",
+        title: "Uw bestelling is bevestigd",
+        message: "Goed nieuws! We hebben uw bestelling bevestigd en zijn begonnen met de voorbereiding. U ontvangt een nieuwe melding wanneer uw bestelling klaar is voor afhaling.",
+      },
+      ready: {
+        subject: "Bestelling Klaar voor Afhaling - Slagerij John",
+        title: "Uw bestelling is klaar",
+        message: `Uw bestelling is klaar voor afhaling! Kom gerust langs op ${pickupDate} om ${pickupTime} om uw verse producten op te halen.`,
+      },
+      completed: {
+        subject: "Bestelling Voltooid - Bedankt! - Slagerij John",
+        title: "Bestelling Voltooid",
+        message: "Bedankt voor uw bestelling! We hopen dat u geniet van uw verse vleesproducten.",
+      },
+      greeting: "Hallo",
+      orderDetails: "Bestelgegevens",
+      orderId: "Bestelling ID",
+      status: "Status",
+      pickup: "Afhalen",
+      at: "om",
+      items: "Artikelen",
+      total: "Totaal",
+      questions: "Als u vragen heeft, aarzel dan niet om contact met ons op te nemen.",
+      footer: "Bedankt dat u voor onze slagerij kiest!",
+      statusLabels: {
+        pending: "In Behandeling",
+        confirmed: "Bevestigd",
+        ready: "Klaar",
+        completed: "Voltooid",
+      },
     },
-    confirmed: {
-      subject: "Order Confirmed - We're preparing your order!",
-      title: "Your Order Has Been Confirmed",
-      message: "Great news! We've confirmed your order and started preparing it. You'll receive another notification when it's ready for pickup.",
-    },
-    ready: {
-      subject: "Order Ready for Pickup!",
-      title: "Your Order Is Ready",
-      message: `Your order is ready for pickup! Please come by on ${pickupDate} at ${pickupTime} to collect your fresh products.`,
-    },
-    completed: {
-      subject: "Order Completed - Thank you!",
-      title: "Order Completed",
-      message: "Thank you for your order! We hope you enjoy your fresh meat products.",
+    ro: {
+      pending: {
+        subject: "Comandă Primită - Măcelăria John",
+        title: "Vă mulțumim pentru comandă!",
+        message: "Am primit comanda dumneavoastră. O vom pregăti cât mai curând posibil.",
+      },
+      confirmed: {
+        subject: "Comandă Confirmată - Măcelăria John",
+        title: "Comanda dumneavoastră a fost confirmată",
+        message: "Vești bune! Am confirmat comanda și am început pregătirea. Veți primi o notificare când comanda este gata de ridicare.",
+      },
+      ready: {
+        subject: "Comandă Gata de Ridicare - Măcelăria John",
+        title: "Comanda dumneavoastră este gata",
+        message: `Comanda dumneavoastră este gata de ridicare! Vă rugăm să veniți pe ${pickupDate} la ora ${pickupTime} pentru a vă ridica produsele proaspete.`,
+      },
+      completed: {
+        subject: "Comandă Finalizată - Mulțumim! - Măcelăria John",
+        title: "Comandă Finalizată",
+        message: "Vă mulțumim pentru comandă! Sperăm să vă bucurați de produsele proaspete.",
+      },
+      greeting: "Salut",
+      orderDetails: "Detalii comandă",
+      orderId: "ID comandă",
+      status: "Stare",
+      pickup: "Ridicare",
+      at: "ora",
+      items: "Articole",
+      total: "Total",
+      questions: "Dacă aveți întrebări, nu ezitați să ne contactați.",
+      footer: "Vă mulțumim că ați ales măcelăria noastră!",
+      statusLabels: {
+        pending: "În Așteptare",
+        confirmed: "Confirmat",
+        ready: "Gata",
+        completed: "Finalizat",
+      },
     },
   };
 
+  const t = translations[language] || translations.nl;
+  const statusMessages = {
+    pending: t.pending,
+    confirmed: t.confirmed,
+    ready: t.ready,
+    completed: t.completed,
+  };
+
   const content = statusMessages[status as keyof typeof statusMessages] || statusMessages.confirmed;
+  const statusLabel = t.statusLabels[status as keyof typeof t.statusLabels] || status;
 
   return {
     subject: content.subject,
@@ -130,7 +200,7 @@ const getEmailContent = (data: OrderStatusEmailRequest) => {
                   <tr>
                     <td style="padding: 40px 30px;">
                       <p style="color: #333333; font-size: 16px; line-height: 1.6; margin-top: 0;">
-                        Hello ${customerName},
+                        ${t.greeting} ${customerName},
                       </p>
                       
                       <p style="color: #333333; font-size: 16px; line-height: 1.6;">
@@ -139,18 +209,18 @@ const getEmailContent = (data: OrderStatusEmailRequest) => {
                       
                       <!-- Order Details -->
                       <div style="background-color: #f9f9f9; border-radius: 6px; padding: 20px; margin: 30px 0;">
-                        <h2 style="color: #8B0000; font-size: 18px; margin-top: 0;">Order Details</h2>
+                        <h2 style="color: #8B0000; font-size: 18px; margin-top: 0;">${t.orderDetails}</h2>
                         <p style="color: #666666; margin: 5px 0;">
-                          <strong>Order ID:</strong> ${orderId.slice(0, 8)}
+                          <strong>${t.orderId}:</strong> ${orderId.slice(0, 8)}
                         </p>
                         <p style="color: #666666; margin: 5px 0;">
-                          <strong>Status:</strong> <span style="color: #8B0000; text-transform: capitalize;">${status}</span>
+                          <strong>${t.status}:</strong> <span style="color: #8B0000; text-transform: capitalize;">${statusLabel}</span>
                         </p>
                         <p style="color: #666666; margin: 5px 0;">
-                          <strong>Pickup:</strong> ${pickupDate} at ${pickupTime}
+                          <strong>${t.pickup}:</strong> ${pickupDate}, ${t.at} ${pickupTime}
                         </p>
                         
-                        <h3 style="color: #333333; font-size: 16px; margin-top: 20px; margin-bottom: 10px;">Items:</h3>
+                        <h3 style="color: #333333; font-size: 16px; margin-top: 20px; margin-bottom: 10px;">${t.items}:</h3>
                         <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
                           <tbody>
                             ${itemsList}
@@ -159,14 +229,14 @@ const getEmailContent = (data: OrderStatusEmailRequest) => {
                         
                         <div style="border-top: 2px solid #8B0000; padding-top: 15px; margin-top: 15px;">
                           <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #333333; font-size: 18px; font-weight: bold;">Total:</span>
+                            <span style="color: #333333; font-size: 18px; font-weight: bold;">${t.total}:</span>
                             <span style="color: #8B0000; font-size: 24px; font-weight: bold;">€${orderTotal}</span>
                           </div>
                         </div>
                       </div>
                       
                       <p style="color: #666666; font-size: 14px; line-height: 1.6; margin-bottom: 0;">
-                        If you have any questions, please don't hesitate to contact us.
+                        ${t.questions}
                       </p>
                     </td>
                   </tr>
@@ -175,7 +245,7 @@ const getEmailContent = (data: OrderStatusEmailRequest) => {
                   <tr>
                     <td style="background-color: #f9f9f9; padding: 20px 30px; text-align: center; border-top: 1px solid #eeeeee;">
                       <p style="color: #999999; font-size: 12px; margin: 0;">
-                        Thank you for choosing our butcher shop!
+                        ${t.footer}
                       </p>
                     </td>
                   </tr>
