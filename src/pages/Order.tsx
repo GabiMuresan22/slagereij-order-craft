@@ -268,7 +268,6 @@ const Order = () => {
         notes: data.notes || null,
         status: "pending",
         user_id: user?.id || null,
-        language: language,
       });
 
       if (error) throw error;
