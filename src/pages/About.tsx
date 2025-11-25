@@ -11,7 +11,7 @@ import gallery4 from "@/assets/gallery-4.webp";
 import gallery6 from "@/assets/gallery-6.webp";
 import gallery7 from "@/assets/gallery-7.webp";
 import storefront from "@/assets/storefront.webp";
-import teamPortrait from "@/assets/team-portrait.jpg";
+import teamPortrait from "@/assets/team-portrait.webp";
 
 const About = () => {
   const { t } = useLanguage();

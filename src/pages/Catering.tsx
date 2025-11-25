@@ -1,22 +1,22 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema } from "@/lib/structuredData";
-import cateringChef from "@/assets/catering-chef-grilling.jpg";
-import cateringChefServing from "@/assets/catering-chef-serving.jpg";
-import cateringSalads from "@/assets/catering-salads.jpg";
-import cateringSausages from "@/assets/catering-sausages.jpg";
-import cateringPorkChops from "@/assets/catering-pork-chops.jpg";
+import cateringChef from "@/assets/catering-chef-grilling.webp";
+import cateringChefServing from "@/assets/catering-chef-serving.webp";
+import cateringSalads from "@/assets/catering-salads.webp";
+import cateringSausages from "@/assets/catering-sausages.webp";
+import cateringPorkChops from "@/assets/catering-pork-chops.webp";
 import cateringRibs from "@/assets/catering-ribs.jpg";
-import cateringCharcuterie from "@/assets/catering-charcuterie.jpg";
-import cateringPartySpread from "@/assets/catering-party-spread.jpg";
-import cateringBeefSteak from "@/assets/catering-beef-steak.jpg";
-import cateringGrainBowls from "@/assets/catering-grain-bowls.jpg";
-import cateringTacos from "@/assets/catering-tacos.jpg";
+import cateringCharcuterie from "@/assets/catering-charcuterie.webp";
+import cateringPartySpread from "@/assets/catering-party-spread.webp";
+import cateringBeefSteak from "@/assets/catering-beef-steak.webp";
+import cateringGrainBowls from "@/assets/catering-grain-bowls.webp";
+import cateringTacos from "@/assets/catering-tacos.webp";
 import cateringBuffetSpread from "@/assets/catering-buffet-spread.jpg";
-import cateringPastaBowls from "@/assets/catering-pasta-bowls.jpg";
-import cateringPartyPlatter from "@/assets/catering-party-platter.jpg";
-import cateringCheesePlatter from "@/assets/catering-cheese-platter.jpg";
-import cateringTomatoSalad from "@/assets/catering-tomato-salad.jpg";
+import cateringPastaBowls from "@/assets/catering-pasta-bowls.webp";
+import cateringPartyPlatter from "@/assets/catering-party-platter.webp";
+import cateringCheesePlatter from "@/assets/catering-cheese-platter.webp";
+import cateringTomatoSalad from "@/assets/catering-tomato-salad.webp";
 
 export default function Catering() {
   const { t } = useLanguage();
