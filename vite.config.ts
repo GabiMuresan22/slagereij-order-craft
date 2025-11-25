@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
-import sitemap from "vite-plugin-sitemap";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -13,24 +12,6 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(), 
     mode === "development" && componentTagger(),
-    mode === "production" && sitemap({
-      hostname: "https://slagerijjohn.be",
-      dynamicRoutes: [
-        "/about",
-        "/products",
-        "/packages",
-        "/catering",
-        "/order",
-        "/contact",
-        "/privacy",
-        "/terms",
-      ],
-      changefreq: "weekly",
-      priority: 0.7,
-      lastmod: new Date(),
-      exclude: ["/auth", "/my-account", "/admin"],
-      robots: [], // Don't modify robots.txt, we have one in public/
-    })
   ].filter(Boolean),
   resolve: {
     alias: {
