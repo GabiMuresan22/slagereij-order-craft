@@ -8,13 +8,20 @@ export default function CookieConsentBanner() {
   const { language } = useLanguage();
 
   useEffect(() => {
-    // Initialize cookie consent
-    CookieConsent.run(config as any);
+    // Only run in browser environment
+    if (typeof window === 'undefined') return;
+    
+    // Initialize cookie consent after a small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      CookieConsent.run(config as any);
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     // Update language when it changes
-    if (CookieConsent.setLanguage) {
+    if (typeof window !== 'undefined' && CookieConsent.setLanguage) {
       CookieConsent.setLanguage(language);
     }
   }, [language]);
