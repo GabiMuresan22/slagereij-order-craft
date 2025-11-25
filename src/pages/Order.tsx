@@ -245,6 +245,7 @@ const Order = () => {
       if (error) throw error;
 
       // Send confirmation email via Edge Function
+      let emailFailed = false;
       try {
         await supabase.functions.invoke('send-order-status-email', {
           body: {
@@ -260,6 +261,7 @@ const Order = () => {
         });
       } catch (emailError) {
         console.error("Error sending confirmation email:", emailError);
+        emailFailed = true;
       }
 
       trackOrderSubmit({
@@ -267,11 +269,18 @@ const Order = () => {
         pickupDate: format(data.pickupDate, "yyyy-MM-dd"),
       });
 
-      // Send automatic WhatsApp notification to shop owner
-      toast({
-        title: t('order.success.title'),
-        description: "Uw bestelling is succesvol geplaatst!",
-      });
+      // Show appropriate toast based on email status
+      if (emailFailed) {
+        toast({
+          title: t('order.success.title'),
+          description: "Order saved, but email confirmation failed. We will contact you.",
+        });
+      } else {
+        toast({
+          title: t('order.success.title'),
+          description: "Uw bestelling is succesvol geplaatst!",
+        });
+      }
 
       setStep(4);
     } catch (error) {
