@@ -29,6 +29,7 @@ export default defineConfig(({ mode }) => ({
       priority: 0.7,
       lastmod: new Date(),
       exclude: ["/auth", "/my-account", "/admin"],
+      robots: [], // Don't modify robots.txt, we have one in public/
     })
   ].filter(Boolean),
   resolve: {
