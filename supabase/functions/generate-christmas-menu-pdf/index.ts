@@ -13,6 +13,7 @@ const RATE_LIMIT_WINDOW = 60000; // 1 minute
 const RATE_LIMIT_MAX_REQUESTS = 10; // Max 10 requests per minute per IP
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB max per image
 const MAX_BASE64_SIZE = 15 * 1024 * 1024; // ~15MB base64 (accounts for encoding overhead)
+const MAX_RATE_LIMIT_ENTRIES = 10000; // Prevent memory exhaustion
 
 // Zod validation schema
 const base64ImageSchema = z.string()
@@ -50,42 +51,81 @@ const pdfRequestSchema = z.object({
 
 const getClientIP = (req: Request): string => {
   // Try to get IP from various headers (for proxies/load balancers)
+  // x-forwarded-for can contain multiple IPs (client, proxy1, proxy2...)
   const forwarded = req.headers.get('x-forwarded-for');
   if (forwarded) {
-    return forwarded.split(',')[0].trim();
+    // Get the first IP (the original client)
+    const ip = forwarded.split(',')[0].trim();
+    // Validate IP format (basic check)
+    if (ip && /^[\d\.a-f:]+$/.test(ip)) {
+      return ip;
+    }
   }
+  
+  // Try x-real-ip header
   const realIP = req.headers.get('x-real-ip');
-  if (realIP) return realIP;
+  if (realIP && /^[\d\.a-f:]+$/.test(realIP)) {
+    return realIP;
+  }
+  
+  // Try cf-connecting-ip (Cloudflare)
+  const cfIP = req.headers.get('cf-connecting-ip');
+  if (cfIP && /^[\d\.a-f:]+$/.test(cfIP)) {
+    return cfIP;
+  }
+  
+  // Fallback to unknown (will still be rate limited as a group)
   return 'unknown';
 };
 
-const checkRateLimit = (ip: string): boolean => {
+const cleanupExpiredEntries = () => {
   const now = Date.now();
+  const expiredKeys: string[] = [];
+  
+  // Find expired entries
+  for (const [ip, record] of rateLimitMap.entries()) {
+    if (now > record.resetTime) {
+      expiredKeys.push(ip);
+    }
+  }
+  
+  // Delete expired entries
+  expiredKeys.forEach(key => rateLimitMap.delete(key));
+  
+  // If map is still too large, remove oldest entries
+  if (rateLimitMap.size > MAX_RATE_LIMIT_ENTRIES) {
+    const entries = Array.from(rateLimitMap.entries());
+    entries.sort((a, b) => a[1].resetTime - b[1].resetTime);
+    const toRemove = entries.slice(0, rateLimitMap.size - MAX_RATE_LIMIT_ENTRIES);
+    toRemove.forEach(([key]) => rateLimitMap.delete(key));
+    console.warn(`Rate limit map size exceeded. Removed ${toRemove.length} oldest entries.`);
+  }
+};
+
+const checkRateLimit = (ip: string): { allowed: boolean; retryAfter?: number } => {
+  const now = Date.now();
+  
+  // Cleanup expired entries on each check (edge functions are stateless anyway)
+  cleanupExpiredEntries();
+  
   const record = rateLimitMap.get(ip);
   
   if (!record || now > record.resetTime) {
     // Reset or create new record
     rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
-    return true;
+    return { allowed: true };
   }
   
   if (record.count >= RATE_LIMIT_MAX_REQUESTS) {
-    return false; // Rate limit exceeded
+    // Calculate retry after in seconds
+    const retryAfter = Math.ceil((record.resetTime - now) / 1000);
+    console.warn(`Rate limit exceeded for IP: ${ip}. Requests: ${record.count}/${RATE_LIMIT_MAX_REQUESTS}`);
+    return { allowed: false, retryAfter };
   }
   
   record.count++;
-  return true;
+  return { allowed: true };
 };
-
-// Clean up old rate limit entries periodically
-setInterval(() => {
-  const now = Date.now();
-  for (const [ip, record] of rateLimitMap.entries()) {
-    if (now > record.resetTime) {
-      rateLimitMap.delete(ip);
-    }
-  }
-}, RATE_LIMIT_WINDOW);
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -96,16 +136,21 @@ serve(async (req) => {
   try {
     // Rate limiting
     const clientIP = getClientIP(req);
-    if (!checkRateLimit(clientIP)) {
-      console.warn(`Rate limit exceeded for IP: ${clientIP}`);
+    const rateLimitResult = checkRateLimit(clientIP);
+    
+    if (!rateLimitResult.allowed) {
+      console.warn(`Rate limit exceeded for IP: ${clientIP}. Total map size: ${rateLimitMap.size}`);
       return new Response(
-        JSON.stringify({ error: 'Too many requests. Please try again later.' }),
+        JSON.stringify({ 
+          error: 'Too many requests. Please try again later.',
+          retryAfter: rateLimitResult.retryAfter 
+        }),
         {
           status: 429,
           headers: {
             ...corsHeaders,
             'Content-Type': 'application/json',
-            'Retry-After': '60',
+            'Retry-After': String(rateLimitResult.retryAfter || 60),
           },
         }
       );
