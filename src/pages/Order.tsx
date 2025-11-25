@@ -273,12 +273,12 @@ const Order = () => {
       if (emailFailed) {
         toast({
           title: t('order.success.title'),
-          description: "Order saved, but email confirmation failed. We will contact you.",
+          description: t('order.success.emailFailed'),
         });
       } else {
         toast({
           title: t('order.success.title'),
-          description: "Uw bestelling is succesvol geplaatst!",
+          description: t('order.success.description'),
         });
       }
 
