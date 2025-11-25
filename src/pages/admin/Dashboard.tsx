@@ -208,7 +208,7 @@ export default function AdminDashboard() {
 
       toast.success(t('admin.toast.statusUpdated'));
     } catch (error: any) {
-      toast.error(error.message || t('admin.toast.statusUpdated'));
+      toast.error(error.message || t('admin.toast.statusUpdateFailed'));
       console.error('Error updating order:', error);
     }
   };
