@@ -73,6 +73,20 @@ const statusIcons = {
   cancelled: XCircle,
 };
 
+// Translation keys for order statuses
+const statusTranslationKeys = {
+  pending: 'admin.orders.pending',
+  confirmed: 'admin.orders.confirmed',
+  ready: 'admin.orders.ready',
+  completed: 'admin.orders.completed',
+  cancelled: 'admin.orders.cancelled',
+} as const;
+
+// Helper function to get translated status
+const getStatusTranslationKey = (status: string): string => {
+  return statusTranslationKeys[status as keyof typeof statusTranslationKeys] || status;
+};
+
 export default function AdminDashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -369,7 +383,7 @@ export default function AdminDashboard() {
             </div>
             <div class="info-row">
               <span class="info-label">${t('admin.print.status')}</span>
-              <span class="status-badge status-${order.status}">${order.status}</span>
+              <span class="status-badge status-${order.status}">${t(getStatusTranslationKey(order.status))}</span>
             </div>
           </div>
 
@@ -619,7 +633,7 @@ export default function AdminDashboard() {
                           <TableCell>
                             <Badge className={statusColors[order.status as keyof typeof statusColors]}>
                               <StatusIcon className="h-3 w-3 mr-1" />
-                              {order.status}
+                              {t(getStatusTranslationKey(order.status))}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-sm text-muted-foreground">
