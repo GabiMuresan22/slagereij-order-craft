@@ -58,21 +58,42 @@ const validateOrderData = (data: any): data is OrderStatusEmailRequest => {
   return true;
 };
 
-const getEmailContent = (data: OrderStatusEmailRequest) => {
+const getEmailContent = async (data: OrderStatusEmailRequest) => {
   const { customerName, orderId, status, orderItems, pickupDate, pickupTime, language = DEFAULT_LANGUAGE } = data;
   
-  // Calculate order total and create items list with prices
+  // Create Supabase client to fetch official prices
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  
+  // Fetch all products from database to get official prices
+  const { data: products, error: productsError } = await supabase
+    .from('products')
+    .select('key, price');
+  
+  if (productsError) {
+    console.error('Error fetching products:', productsError);
+    throw new Error('Failed to fetch product prices from database');
+  }
+  
+  // Create a map of product keys to prices for quick lookup
+  const priceMap = new Map<string, number>();
+  products?.forEach(product => {
+    priceMap.set(product.key, Number(product.price));
+  });
+  
+  // Calculate order total using official database prices
   const orderTotal = orderItems.reduce((sum: number, item: any) => {
-    const price = item.price || 0;
+    const officialPrice = priceMap.get(item.product) || 0;
     const quantity = parseFloat(item.quantity) || 0;
-    return sum + (price * quantity);
+    return sum + (officialPrice * quantity);
   }, 0).toFixed(2);
 
   const itemsList = orderItems
     .map((item: any) => {
-      const price = item.price || 0;
+      const officialPrice = priceMap.get(item.product) || 0;
       const quantity = parseFloat(item.quantity) || 0;
-      const itemTotal = (price * quantity).toFixed(2);
+      const itemTotal = (officialPrice * quantity).toFixed(2);
       
       return `
         <tr>
@@ -80,7 +101,7 @@ const getEmailContent = (data: OrderStatusEmailRequest) => {
             ${item.quantity} ${item.unit || item.weight || ''} ${item.product}
           </td>
           <td style="padding: 8px 0; color: #666666; text-align: right;">
-            €${price.toFixed(2)} × ${item.quantity}
+            €${officialPrice.toFixed(2)} × ${item.quantity}
           </td>
           <td style="padding: 8px 0; color: #333333; font-weight: 600; text-align: right;">
             €${itemTotal}
@@ -286,7 +307,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Sending order status email:", requestData);
 
     const { customerEmail } = requestData;
-    const emailContent = getEmailContent(requestData);
+    const emailContent = await getEmailContent(requestData);
 
     // Use direct fetch to Resend API instead of SDK
     const emailResponse = await fetch("https://api.resend.com/emails", {
