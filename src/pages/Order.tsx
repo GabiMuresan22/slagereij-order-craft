@@ -262,6 +262,7 @@ const Order = () => {
         notes: data.notes || null,
         status: "pending",
         user_id: user?.id || null,
+        language: language,
       }).select().single();
 
       if (error) throw error;
@@ -277,6 +278,7 @@ const Order = () => {
             orderItems: orderItemsWithPrices,
             pickupDate: format(data.pickupDate, "dd-MM-yyyy"),
             pickupTime: data.pickupTime,
+            language: language,
           }
         });
       } catch (emailError) {
