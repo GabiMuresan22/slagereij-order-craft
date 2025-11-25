@@ -9,6 +9,13 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
+// Type definitions
+type SupportedLanguage = 'nl' | 'ro';
+type OrderStatus = 'pending' | 'confirmed' | 'ready' | 'completed';
+
+const DEFAULT_LANGUAGE: SupportedLanguage = 'nl';
+const VALID_STATUSES: OrderStatus[] = ['pending', 'confirmed', 'ready', 'completed'];
+
 interface OrderStatusEmailRequest {
   customerName: string;
   customerEmail: string;
@@ -17,7 +24,7 @@ interface OrderStatusEmailRequest {
   orderItems: Array<{ product: string; quantity: number | string; weight?: string; unit?: string }>;
   pickupDate: string;
   pickupTime: string;
-  language?: 'nl' | 'ro';
+  language?: SupportedLanguage;
 }
 
 // Validation functions
@@ -33,11 +40,11 @@ const validateOrderData = (data: any): data is OrderStatusEmailRequest => {
   if (!data.customerName || typeof data.customerName !== 'string' || data.customerName.length > 100) return false;
   if (!data.customerEmail || !isValidEmail(data.customerEmail)) return false;
   if (!data.orderId || typeof data.orderId !== 'string' || data.orderId.length > 100) return false;
-  if (!data.status || typeof data.status !== 'string' || !['pending', 'confirmed', 'ready', 'completed'].includes(data.status)) return false;
+  if (!data.status || typeof data.status !== 'string' || !VALID_STATUSES.includes(data.status as OrderStatus)) return false;
   if (!data.pickupDate || typeof data.pickupDate !== 'string') return false;
   if (!data.pickupTime || typeof data.pickupTime !== 'string' || data.pickupTime.length > 50) return false;
   
-  // Validate optional language field (default is 'nl')
+  // Validate optional language field
   if (data.language !== undefined && data.language !== 'nl' && data.language !== 'ro') return false;
   
   // Validate orderItems array
@@ -52,7 +59,7 @@ const validateOrderData = (data: any): data is OrderStatusEmailRequest => {
 };
 
 const getEmailContent = (data: OrderStatusEmailRequest) => {
-  const { customerName, orderId, status, orderItems, pickupDate, pickupTime, language = 'nl' } = data;
+  const { customerName, orderId, status, orderItems, pickupDate, pickupTime, language = DEFAULT_LANGUAGE } = data;
   
   // Calculate order total and create items list with prices
   const orderTotal = orderItems.reduce((sum: number, item: any) => {
@@ -163,16 +170,15 @@ const getEmailContent = (data: OrderStatusEmailRequest) => {
     },
   };
 
-  const t = translations[language] || translations.nl;
-  const statusMessages = {
-    pending: t.pending,
-    confirmed: t.confirmed,
-    ready: t.ready,
-    completed: t.completed,
-  };
-
-  const content = statusMessages[status as keyof typeof statusMessages] || statusMessages.confirmed;
-  const statusLabel = t.statusLabels[status as keyof typeof t.statusLabels] || status;
+  // Type-safe language lookup with fallback to default
+  const t = language in translations ? translations[language] : translations[DEFAULT_LANGUAGE];
+  
+  // Type-safe status lookup with fallback
+  const isValidStatus = (s: string): s is OrderStatus => VALID_STATUSES.includes(s as OrderStatus);
+  const orderStatus: OrderStatus = isValidStatus(status) ? status : 'confirmed';
+  
+  const content = t[orderStatus];
+  const statusLabel = t.statusLabels[orderStatus];
 
   return {
     subject: content.subject,

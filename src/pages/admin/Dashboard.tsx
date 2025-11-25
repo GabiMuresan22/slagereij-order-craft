@@ -33,6 +33,9 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
+// Default language for email notifications
+const DEFAULT_EMAIL_LANGUAGE = 'nl' as const;
+
 interface OrderItem {
   product: string;
   quantity: string;
@@ -199,7 +202,7 @@ export default function AdminDashboard() {
             orderItems: order.order_items,
             pickupDate: new Date(order.pickup_date).toLocaleDateString(),
             pickupTime: order.pickup_time,
-            language: order.language || 'nl',
+            language: order.language || DEFAULT_EMAIL_LANGUAGE,
           },
         });
         console.log('Status update email sent');
