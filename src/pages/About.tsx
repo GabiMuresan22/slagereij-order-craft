@@ -8,7 +8,6 @@ import gallery1 from "@/assets/gallery-1.webp";
 import gallery2 from "@/assets/gallery-2.webp";
 import gallery3 from "@/assets/gallery-3.webp";
 import gallery4 from "@/assets/gallery-4.webp";
-import gallery5 from "@/assets/gallery-5.webp";
 import gallery6 from "@/assets/gallery-6.webp";
 import gallery7 from "@/assets/gallery-7.webp";
 import storefront from "@/assets/storefront.webp";
@@ -180,18 +179,6 @@ const About = () => {
                   <img
                     src={gallery4}
                     alt="Homemade sausage selection"
-                    className="w-full h-[400px] md:h-[500px] object-cover"
-                    loading="lazy"
-                    width="1200"
-                    height="800"
-                  />
-                </Card>
-              </CarouselItem>
-              <CarouselItem>
-                <Card className="border-border overflow-hidden">
-                  <img
-                    src={gallery5}
-                    alt="Fresh Ardennes pork cutlets"
                     className="w-full h-[400px] md:h-[500px] object-cover"
                     loading="lazy"
                     width="1200"

@@ -1,6 +1,7 @@
 import { MapPin, Phone, Clock, Facebook, Clapperboard, MapPinned } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
+import logo from "@/assets/logo.png";
 import { useBusinessHours } from "@/hooks/useBusinessHours";
 import * as CookieConsent from 'vanilla-cookieconsent';
 
@@ -94,7 +95,7 @@ const Footer = () => {
           {/* About & Social Media */}
           <div>
             <div className="mb-6">
-              <h2 className="text-2xl font-serif font-bold text-primary">{t('footer.about.title')}</h2>
+              <img src={logo} alt={t('footer.about.title')} className="h-16 w-auto brightness-0 invert dark:brightness-100 dark:invert-0" />
             </div>
             <p className="text-sm leading-relaxed mb-8 text-muted-foreground italic">
               {t('footer.about.desc')}
