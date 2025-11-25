@@ -167,19 +167,25 @@ const Order = () => {
 
   const orderItems = form.watch("orderItems");
 
-  // Calculate order total
+  // Helper to check if product is a Colli (package)
+  const isColliProduct = (productKey: string) => {
+    return productKey.toLowerCase().includes('colli');
+  };
+
+  // Calculate order total (only for Colli products)
   const calculateTotal = () => {
     const items = form.getValues("orderItems");
     return items.reduce((total, item) => {
       if (!item.product || !item.quantity) return total;
       const product = products.find(p => p.key === item.product);
-      if (!product) return total;
+      if (!product || !isColliProduct(product.key)) return total;
       const quantity = parseFloat(item.quantity) || 0;
       return total + (product.price * quantity);
     }, 0);
   };
 
   const orderTotal = calculateTotal();
+  const hasColliItems = orderItems.some(item => item.product && isColliProduct(item.product));
 
   const addOrderItem = () => {
     const currentItems = form.getValues("orderItems");
@@ -208,25 +214,26 @@ const Order = () => {
   const sendWhatsAppConfirmation = (data: OrderFormValues) => {
     const shopWhatsAppNumber = "32466186457";
     
-    const orderDetails = data.orderItems
-      .map((item, index) => {
-        const product = products.find(p => p.key === item.product);
-        const itemTotal = product ? (product.price * parseFloat(item.quantity || '0')).toFixed(2) : '0.00';
-        return `${index + 1}. ${item.product} - ${item.quantity} ${item.unit} (€${itemTotal})`;
-      })
-      .join('\n');
+      const orderDetails = data.orderItems
+        .map((item, index) => {
+          const product = products.find(p => p.key === item.product);
+          const showPrice = product && isColliProduct(product.key);
+          const itemTotal = showPrice ? (product.price * parseFloat(item.quantity || '0')).toFixed(2) : null;
+          return `${index + 1}. ${item.product} - ${item.quantity} ${item.unit}${itemTotal ? ` (€${itemTotal})` : ''}`;
+        })
+        .join('\n');
     
-    const message = `🥩 *Nieuwe Bestelling - Slagerij John*\n\n` +
-      `*Klantgegevens:*\n` +
-      `Naam: ${data.customerName}\n` +
-      `Telefoon: ${data.customerPhone}\n` +
-      `Email: ${data.customerEmail}\n\n` +
-      `*Bestelde producten:*\n${orderDetails}\n\n` +
-      `*Totaal: €${orderTotal.toFixed(2)}*\n\n` +
-      `*Afhaalgegevens:*\n` +
-      `Datum: ${format(data.pickupDate, "dd-MM-yyyy")}\n` +
-      `Tijd: ${data.pickupTime}\n` +
-      (data.notes ? `\n*Opmerkingen:*\n${data.notes}` : '');
+      const message = `🥩 *Nieuwe Bestelling - Slagerij John*\n\n` +
+        `*Klantgegevens:*\n` +
+        `Naam: ${data.customerName}\n` +
+        `Telefoon: ${data.customerPhone}\n` +
+        `Email: ${data.customerEmail}\n\n` +
+        `*Bestelde producten:*\n${orderDetails}\n` +
+        (hasColliItems && orderTotal > 0 ? `\n*Totaal: €${orderTotal.toFixed(2)}*\n` : '') +
+        `\n*Afhaalgegevens:*\n` +
+        `Datum: ${format(data.pickupDate, "dd-MM-yyyy")}\n` +
+        `Tijd: ${data.pickupTime}\n` +
+        (data.notes ? `\n*Opmerkingen:*\n${data.notes}` : '');
     
     const whatsappUrl = `https://wa.me/${shopWhatsAppNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
@@ -285,8 +292,9 @@ const Order = () => {
       const orderDetails = data.orderItems
         .map((item) => {
           const product = products.find(p => p.key === item.product);
-          const itemTotal = product ? (product.price * parseFloat(item.quantity || '0')).toFixed(2) : '0.00';
-          return `- ${item.product}: ${item.quantity}${item.unit} (€${itemTotal})`;
+          const showPrice = product && isColliProduct(product.key);
+          const itemTotal = showPrice ? (product.price * parseFloat(item.quantity || '0')).toFixed(2) : null;
+          return `- ${item.product}: ${item.quantity}${item.unit}${itemTotal ? ` (€${itemTotal})` : ''}`;
         })
         .join('\n');
       
@@ -296,9 +304,9 @@ const Order = () => {
         `Naam: ${data.customerName}\n` +
         `Telefoon: ${data.customerPhone}\n` +
         `Email: ${data.customerEmail}\n\n` +
-        `*Bestelde producten:*\n${orderDetails}\n\n` +
-        `*Totaal: €${orderTotal.toFixed(2)}*\n\n` +
-        `*Afhaalgegevens:*\n` +
+        `*Bestelde producten:*\n${orderDetails}\n` +
+        (hasColliItems && orderTotal > 0 ? `\n*Totaal: €${orderTotal.toFixed(2)}*\n` : '') +
+        `\n*Afhaalgegevens:*\n` +
         `Datum: ${format(data.pickupDate, "dd-MM-yyyy")}\n` +
         `Tijd: ${data.pickupTime}\n` +
         (data.notes ? `\n*Opmerkingen:*\n${data.notes}` : '');
@@ -404,15 +412,17 @@ const Order = () => {
                                       <SelectItem key={option.key} value={option.key}>
                                         <div className="flex justify-between items-center gap-4 w-full">
                                           <span>{option.label}</span>
-                                          <span className="text-sm font-semibold text-primary">
-                                            €{option.price.toFixed(2)}/{option.unit}
-                                          </span>
+                                          {isColliProduct(option.key) && (
+                                            <span className="text-sm font-semibold text-primary">
+                                              €{option.price.toFixed(2)}/{option.unit}
+                                            </span>
+                                          )}
                                         </div>
                                       </SelectItem>
                                     ))}
                                   </SelectContent>
                                 </Select>
-                                {selectedProduct && (
+                                {selectedProduct && isColliProduct(selectedProduct.key) && (
                                   <p className="text-xs text-muted-foreground">
                                     €{selectedProduct.price.toFixed(2)} per {selectedProduct.unit}
                                   </p>
@@ -429,7 +439,8 @@ const Order = () => {
                           render={({ field }) => {
                             const item = orderItems[index];
                             const product = products.find(p => p.key === item?.product);
-                            const itemTotal = product && item?.quantity 
+                            const showPrice = product && isColliProduct(product.key);
+                            const itemTotal = showPrice && item?.quantity 
                               ? (product.price * parseFloat(item.quantity || '0')).toFixed(2)
                               : '0.00';
                             
@@ -446,7 +457,7 @@ const Order = () => {
                                     {...field}
                                   />
                                 </FormControl>
-                                {product && item?.quantity && parseFloat(item.quantity) > 0 && (
+                                {showPrice && item?.quantity && parseFloat(item.quantity) > 0 && (
                                   <p className="text-xs font-semibold text-primary">
                                     €{itemTotal}
                                   </p>
@@ -504,7 +515,7 @@ const Order = () => {
                         {t('order.form.addItem')}
                       </Button>
 
-                      {orderItems.some(item => item.product && item.quantity && parseFloat(item.quantity) > 0) && (
+                      {hasColliItems && orderTotal > 0 && (
                         <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
                           <div className="flex justify-between items-center">
                             <span className="text-lg font-semibold">{t('order.total') || 'Totaal'}:</span>
@@ -718,10 +729,12 @@ const Order = () => {
                       {t('order.success.description')}
                     </p>
                     
-                    <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
-                      <p className="text-sm font-semibold mb-2">{t('order.success.orderTotal')}:</p>
-                      <p className="text-3xl font-bold text-primary">€{orderTotal.toFixed(2)}</p>
-                    </div>
+                    {hasColliItems && orderTotal > 0 && (
+                      <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                        <p className="text-sm font-semibold mb-2">{t('order.success.orderTotal')}:</p>
+                        <p className="text-3xl font-bold text-primary">€{orderTotal.toFixed(2)}</p>
+                      </div>
+                    )}
 
                     <div className="space-y-3">
                       <Button
