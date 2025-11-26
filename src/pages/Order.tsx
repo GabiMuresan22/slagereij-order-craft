@@ -21,6 +21,8 @@ import SEO from "@/components/SEO";
 import { getBreadcrumbSchema } from "@/lib/structuredData";
 import { supabase } from "@/integrations/supabase/client";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 import { businessHours } from "@/hooks/useBusinessHours";
 
 interface OrderItem {
@@ -84,6 +86,7 @@ const createOrderSchemas = (t: (key: string) => string) => {
   });
 
   const orderFormSchema = z.object({
+    deliveryMethod: z.enum(['pickup', 'delivery']),
     orderItems: z.array(orderItemSchema).min(1, t('order.validation.addProduct')).max(50),
     pickupDate: z.date({ message: t('order.validation.selectDate') }),
     pickupTime: z.string().min(1, t('order.validation.selectTime')),
@@ -156,6 +159,7 @@ const Order = () => {
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
     defaultValues: {
+      deliveryMethod: "pickup",
       orderItems: [{ product: "", quantity: "", unit: "kg" }],
       pickupTime: "",
       customerName: "",
@@ -195,7 +199,7 @@ const Order = () => {
     let isValid = false;
     
     if (step === 1) {
-      isValid = await form.trigger("orderItems");
+      isValid = await form.trigger(["deliveryMethod", "orderItems"]);
     } else if (step === 2) {
       isValid = await form.trigger(["pickupDate", "pickupTime"]);
     }
@@ -348,14 +352,152 @@ const Order = () => {
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
               {/* Step 1: Product Selection */}
               {step === 1 && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <ShoppingCart className="h-5 w-5" />
-                      {t('order.steps.products')}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
+                <>
+                  {/* Delivery Information Card */}
+                  <Card className="bg-card/80 backdrop-blur">
+                    <CardHeader>
+                      <CardTitle className="text-center flex items-center justify-center gap-2">
+                        📍 {t('order.deliveryInfo.title')}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid md:grid-cols-2 gap-6">
+                        {/* Dutch Column */}
+                        <div className="space-y-3">
+                          <h3 className="font-bold text-lg mb-3">🇳🇱 {t('order.deliveryInfo.dutch')}</h3>
+                          <ul className="space-y-2 text-sm">
+                            <li className="flex items-start gap-2">
+                              <span className="text-primary font-semibold">•</span>
+                              <span>{t('order.deliveryInfo.minimum')}</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <span className="text-primary font-semibold">•</span>
+                              <span>{t('order.deliveryInfo.freeUnder10')}</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <span className="text-primary font-semibold">•</span>
+                              <span>{t('order.deliveryInfo.over10')}</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <span className="text-primary font-semibold">•</span>
+                              <span>{t('order.deliveryInfo.freeOver100')}</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <span className="text-primary font-semibold">•</span>
+                              <span>{t('order.deliveryInfo.schedule')}</span>
+                            </li>
+                            <li className="flex items-start gap-2 pt-2">
+                              <span className="text-primary">📞</span>
+                              <a href="tel:+32466186457" className="hover:text-primary transition-colors">+32 466 18 64 57</a>
+                            </li>
+                          </ul>
+                        </div>
+                        
+                        {/* Romanian Column */}
+                        <div className="space-y-3">
+                          <h3 className="font-bold text-lg mb-3">🇷🇴 {t('order.deliveryInfo.romanian')}</h3>
+                          <ul className="space-y-2 text-sm">
+                            <li className="flex items-start gap-2">
+                              <span className="text-primary font-semibold">•</span>
+                              <span>Comandă minimă: €50</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <span className="text-primary font-semibold">•</span>
+                              <span>&lt; 10 km: Livrare GRATUITĂ</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <span className="text-primary font-semibold">•</span>
+                              <span>&gt; 10 km: €1 / km</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <span className="text-primary font-semibold">•</span>
+                              <span>Livrare GRATUITĂ (20km): Comenzi peste €100</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <span className="text-primary font-semibold">•</span>
+                              <span>Program: Luni-Sâmbătă de la 18:00</span>
+                            </li>
+                            <li className="flex items-start gap-2 pt-2">
+                              <span className="text-primary">📞</span>
+                              <a href="tel:+32466186457" className="hover:text-primary transition-colors">+32 466 18 64 57</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      
+                      {/* Address */}
+                      <div className="mt-6 pt-4 border-t border-border text-center text-sm">
+                        <p className="flex items-center justify-center gap-2">
+                          <span>📍</span>
+                          <span>{t('order.deliveryInfo.address')}</span>
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Products Card */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <ShoppingCart className="h-5 w-5" />
+                        {t('order.steps.products')}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      {/* Delivery Method Toggle */}
+                      <FormField
+                        control={form.control}
+                        name="deliveryMethod"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-base font-bold">
+                              {t('order.method.label')}
+                            </FormLabel>
+                            <FormControl>
+                              <RadioGroup
+                                onValueChange={field.onChange}
+                                value={field.value}
+                                className="grid grid-cols-2 gap-4"
+                              >
+                                <div>
+                                  <RadioGroupItem
+                                    value="pickup"
+                                    id="pickup"
+                                    className="peer sr-only"
+                                  />
+                                  <Label
+                                    htmlFor="pickup"
+                                    className="flex flex-col items-center justify-center rounded-lg border-2 border-muted bg-background p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary peer-data-[state=checked]:text-primary-foreground cursor-pointer transition-all"
+                                  >
+                                    <div className="text-2xl mb-2">🏪</div>
+                                    <div className="font-bold text-base">{t('order.method.pickup.title')}</div>
+                                    <div className="text-sm opacity-80">{t('order.method.pickup.location')}</div>
+                                  </Label>
+                                </div>
+                                <div>
+                                  <RadioGroupItem
+                                    value="delivery"
+                                    id="delivery"
+                                    className="peer sr-only"
+                                  />
+                                  <Label
+                                    htmlFor="delivery"
+                                    className="flex flex-col items-center justify-center rounded-lg border-2 border-muted bg-background p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary peer-data-[state=checked]:text-primary-foreground cursor-pointer transition-all"
+                                  >
+                                    <div className="text-2xl mb-2">🚗</div>
+                                    <div className="font-bold text-base">{t('order.method.delivery.title')}</div>
+                                    <div className="text-sm opacity-80">{t('order.method.delivery.location')}</div>
+                                  </Label>
+                                </div>
+                              </RadioGroup>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      {/* Product Selection */}
+                      {/* Product Selection */}
                     {orderItems.map((item, index) => (
                       <div key={index} className="flex gap-3 items-end pb-4 border-b last:border-0">
                         <FormField
@@ -496,6 +638,7 @@ const Order = () => {
                     </Button>
                   </CardContent>
                 </Card>
+                </>
               )}
 
               {/* Step 2: Pickup Date & Time */}
