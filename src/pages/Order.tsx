@@ -372,23 +372,26 @@ const Order = () => {
                                     </SelectTrigger>
                                   </FormControl>
                                   <SelectContent>
-                                    {productOptions.map((option) => (
-                                      <SelectItem key={option.key} value={option.key}>
-                                        <div className="flex justify-between items-center gap-4 w-full">
-                                          <span>{option.label}</span>
-                                          {isColliProduct(option.key) && (
-                                            <span className="text-sm font-semibold text-primary">
-                                              €{option.price.toFixed(2)}/{option.unit}
-                                            </span>
-                                          )}
-                                        </div>
-                                      </SelectItem>
-                                    ))}
+                                    {productOptions.map((option) => {
+                                      const isColli = isColliProduct(option.key);
+                                      return (
+                                        <SelectItem key={option.key} value={option.key}>
+                                          <div className="flex justify-between items-center gap-4 w-full">
+                                            <span className={isColli ? "font-medium" : ""}>{option.label}</span>
+                                            {isColli && option.price && (
+                                              <span className="text-sm font-semibold text-primary whitespace-nowrap">
+                                                €{option.price.toFixed(2)}/{option.unit}
+                                              </span>
+                                            )}
+                                          </div>
+                                        </SelectItem>
+                                      );
+                                    })}
                                   </SelectContent>
                                 </Select>
-                                {selectedProduct && isColliProduct(selectedProduct.key) && (
-                                  <p className="text-xs text-muted-foreground">
-                                    €{selectedProduct.price.toFixed(2)} per {selectedProduct.unit}
+                                {selectedProduct && isColliProduct(selectedProduct.key) && selectedProduct.price && (
+                                  <p className="text-xs text-muted-foreground mt-1">
+                                    {t('order.form.price')}: €{selectedProduct.price.toFixed(2)} per {selectedProduct.unit}
                                   </p>
                                 )}
                                 <FormMessage />
