@@ -223,6 +223,13 @@ const Order = () => {
       // Using crypto.randomUUID() which is supported in all modern browsers (Chrome 92+, Firefox 95+, Safari 15.4+)
       const orderId = crypto.randomUUID();
       
+      // Get the latest user state directly from Supabase to ensure it matches the database session
+      // This prevents race conditions where React state might be stale
+      const { data: { user: currentUser } } = await supabase.auth.getUser();
+      
+      // Use this fresh ID - if user is logged in, use their ID; otherwise null for guest orders
+      const userIdToSave = currentUser?.id || null;
+      
       const { error } = await supabase.from("orders").insert({
         id: orderId,
         customer_name: data.customerName,
@@ -233,7 +240,7 @@ const Order = () => {
         pickup_time: data.pickupTime,
         notes: data.notes || null,
         status: "pending",
-        user_id: user?.id || null,
+        user_id: userIdToSave,
         language: language,
       });
 
