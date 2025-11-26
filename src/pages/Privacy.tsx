@@ -59,7 +59,9 @@ const Privacy = () => {
               <p>{t('privacy.controller.vat')}</p>
               <p>{t('privacy.controller.kbo')}</p>
               <p>{t('privacy.controller.address')}</p>
-              <p>{t('privacy.controller.contact')}</p>
+              <p>
+                Contact: <a href="mailto:contact@slagerij-john.be" className="text-primary hover:underline">contact@slagerij-john.be</a> | +32 466 18 64 57
+              </p>
             </div>
           </section>
 
