@@ -362,9 +362,6 @@ const Order = () => {
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-3 max-w-md mx-auto">
-                        <h3 className="font-bold text-lg mb-3 text-center">
-                          {language === 'nl' ? '🇳🇱 ' + t('order.deliveryInfo.dutch') : '🇷🇴 ' + t('order.deliveryInfo.romanian')}
-                        </h3>
                         <ul className="space-y-2 text-sm">
                           <li className="flex items-start gap-2">
                             <span className="text-primary font-semibold">•</span>
