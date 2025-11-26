@@ -361,68 +361,36 @@ const Order = () => {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="grid md:grid-cols-2 gap-6">
-                        {/* Dutch Column */}
-                        <div className="space-y-3">
-                          <h3 className="font-bold text-lg mb-3">🇳🇱 {t('order.deliveryInfo.dutch')}</h3>
-                          <ul className="space-y-2 text-sm">
-                            <li className="flex items-start gap-2">
-                              <span className="text-primary font-semibold">•</span>
-                              <span>{t('order.deliveryInfo.minimum')}</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <span className="text-primary font-semibold">•</span>
-                              <span>{t('order.deliveryInfo.freeUnder10')}</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <span className="text-primary font-semibold">•</span>
-                              <span>{t('order.deliveryInfo.over10')}</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <span className="text-primary font-semibold">•</span>
-                              <span>{t('order.deliveryInfo.freeOver100')}</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <span className="text-primary font-semibold">•</span>
-                              <span>{t('order.deliveryInfo.schedule')}</span>
-                            </li>
-                            <li className="flex items-start gap-2 pt-2">
-                              <span className="text-primary">📞</span>
-                              <a href="tel:+32466186457" className="hover:text-primary transition-colors">+32 466 18 64 57</a>
-                            </li>
-                          </ul>
-                        </div>
-                        
-                        {/* Romanian Column */}
-                        <div className="space-y-3">
-                          <h3 className="font-bold text-lg mb-3">🇷🇴 {t('order.deliveryInfo.romanian')}</h3>
-                          <ul className="space-y-2 text-sm">
-                            <li className="flex items-start gap-2">
-                              <span className="text-primary font-semibold">•</span>
-                              <span>Comandă minimă: €50</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <span className="text-primary font-semibold">•</span>
-                              <span>&lt; 10 km: Livrare GRATUITĂ</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <span className="text-primary font-semibold">•</span>
-                              <span>&gt; 10 km: €1 / km</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <span className="text-primary font-semibold">•</span>
-                              <span>Livrare GRATUITĂ (20km): Comenzi peste €100</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <span className="text-primary font-semibold">•</span>
-                              <span>Program: Luni-Sâmbătă de la 18:00</span>
-                            </li>
-                            <li className="flex items-start gap-2 pt-2">
-                              <span className="text-primary">📞</span>
-                              <a href="tel:+32466186457" className="hover:text-primary transition-colors">+32 466 18 64 57</a>
-                            </li>
-                          </ul>
-                        </div>
+                      <div className="space-y-3 max-w-md mx-auto">
+                        <h3 className="font-bold text-lg mb-3 text-center">
+                          {language === 'nl' ? '🇳🇱 ' + t('order.deliveryInfo.dutch') : '🇷🇴 ' + t('order.deliveryInfo.romanian')}
+                        </h3>
+                        <ul className="space-y-2 text-sm">
+                          <li className="flex items-start gap-2">
+                            <span className="text-primary font-semibold">•</span>
+                            <span>{t('order.deliveryInfo.minimum')}</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-primary font-semibold">•</span>
+                            <span>{t('order.deliveryInfo.freeUnder10')}</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-primary font-semibold">•</span>
+                            <span>{t('order.deliveryInfo.over10')}</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-primary font-semibold">•</span>
+                            <span>{t('order.deliveryInfo.freeOver100')}</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-primary font-semibold">•</span>
+                            <span>{t('order.deliveryInfo.schedule')}</span>
+                          </li>
+                          <li className="flex items-start gap-2 pt-2">
+                            <span className="text-primary">📞</span>
+                            <a href="tel:+32466186457" className="hover:text-primary transition-colors">+32 466 18 64 57</a>
+                          </li>
+                        </ul>
                       </div>
                       
                       {/* Address */}
