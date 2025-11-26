@@ -6,13 +6,11 @@ import cateringChefServing from "@/assets/catering-chef-serving.webp";
 import cateringSalads from "@/assets/catering-salads.webp";
 import cateringSausages from "@/assets/catering-sausages.webp";
 import cateringPorkChops from "@/assets/catering-pork-chops.webp";
-import cateringRibs from "@/assets/catering-ribs.jpg";
 import cateringCharcuterie from "@/assets/catering-charcuterie.webp";
 import cateringPartySpread from "@/assets/catering-party-spread.webp";
 import cateringBeefSteak from "@/assets/catering-beef-steak.webp";
 import cateringGrainBowls from "@/assets/catering-grain-bowls.webp";
 import cateringTacos from "@/assets/catering-tacos.webp";
-import cateringBuffetSpread from "@/assets/catering-buffet-spread.jpg";
 import cateringPastaBowls from "@/assets/catering-pasta-bowls.webp";
 import cateringPartyPlatter from "@/assets/catering-party-platter.webp";
 import cateringCheesePlatter from "@/assets/catering-cheese-platter.webp";
@@ -30,7 +28,6 @@ export default function Catering() {
     { src: cateringChef, alt: "Professional chef grilling at outdoor catering event" },
     { src: cateringChefServing, alt: "Chef presenting gourmet catering dishes on serving tray" },
     { src: cateringCharcuterie, alt: "Artisanal charcuterie platter with premium meats and accompaniments" },
-    { src: cateringRibs, alt: "Perfectly grilled spare ribs with smoky glaze" },
     { src: cateringPorkChops, alt: "Juicy grilled pork chops on professional BBQ" },
     { src: cateringSausages, alt: "Fresh homemade sausages grilling to perfection" },
     { src: cateringSalads, alt: "Fresh colorful salad bowls with vegetables" },
@@ -38,7 +35,6 @@ export default function Catering() {
     { src: cateringTacos, alt: "Artfully arranged taco platter with fresh toppings" },
     { src: cateringGrainBowls, alt: "Gourmet grain bowls with salmon and vegetables" },
     { src: cateringBeefSteak, alt: "Premium beef steak with rosemary and peppercorns" },
-    { src: cateringBuffetSpread, alt: "Colorful buffet spread with salads, donuts and side dishes" },
     { src: cateringPastaBowls, alt: "Gourmet pasta bowls with fresh vegetables in ceramic dishes" },
     { src: cateringPartyPlatter, alt: "Premium party platter with cold cuts, cheese, olives and garnishes" },
     { src: cateringCheesePlatter, alt: "Artisanal cheese platter with grapes, walnuts and dried fruits" },
