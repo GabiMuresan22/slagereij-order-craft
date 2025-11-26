@@ -167,25 +167,19 @@ const Order = () => {
 
   const orderItems = form.watch("orderItems");
 
-  // Helper to check if product is a Colli (package)
-  const isColliProduct = (productKey: string) => {
-    return productKey.toLowerCase().includes('colli');
-  };
-
-  // Calculate order total (only for Colli products)
+  // Calculate order total for all products
   const calculateTotal = () => {
     const items = form.getValues("orderItems");
     return items.reduce((total, item) => {
       if (!item.product || !item.quantity) return total;
       const product = products.find(p => p.key === item.product);
-      if (!product || !isColliProduct(product.key)) return total;
+      if (!product) return total;
       const quantity = parseFloat(item.quantity) || 0;
       return total + (product.price * quantity);
     }, 0);
   };
 
   const orderTotal = calculateTotal();
-  const hasColliItems = orderItems.some(item => item.product && isColliProduct(item.product));
 
   const addOrderItem = () => {
     const currentItems = form.getValues("orderItems");
@@ -372,24 +366,21 @@ const Order = () => {
                                     </SelectTrigger>
                                   </FormControl>
                                   <SelectContent>
-                                    {productOptions.map((option) => {
-                                      const isColli = isColliProduct(option.key);
-                                      return (
-                                        <SelectItem key={option.key} value={option.key}>
-                                          <div className="flex justify-between items-center gap-4 w-full">
-                                            <span className={isColli ? "font-medium" : ""}>{option.label}</span>
-                                            {isColli && option.price && (
-                                              <span className="text-sm font-semibold text-primary whitespace-nowrap">
-                                                €{option.price.toFixed(2)}/{option.unit}
-                                              </span>
-                                            )}
-                                          </div>
-                                        </SelectItem>
-                                      );
-                                    })}
+                                    {productOptions.map((option) => (
+                                      <SelectItem key={option.key} value={option.key}>
+                                        <div className="flex justify-between items-center gap-4 w-full">
+                                          <span className="font-medium">{option.label}</span>
+                                          {option.price && (
+                                            <span className="text-sm font-semibold text-primary whitespace-nowrap">
+                                              €{option.price.toFixed(2)}/{option.unit}
+                                            </span>
+                                          )}
+                                        </div>
+                                      </SelectItem>
+                                    ))}
                                   </SelectContent>
                                 </Select>
-                                {selectedProduct && isColliProduct(selectedProduct.key) && selectedProduct.price && (
+                                {selectedProduct && selectedProduct.price && (
                                   <p className="text-xs text-muted-foreground mt-1">
                                     {t('order.form.price')}: €{selectedProduct.price.toFixed(2)} per {selectedProduct.unit}
                                   </p>
@@ -406,8 +397,7 @@ const Order = () => {
                           render={({ field }) => {
                             const item = orderItems[index];
                             const product = products.find(p => p.key === item?.product);
-                            const showPrice = product && isColliProduct(product.key);
-                            const itemTotal = showPrice && item?.quantity 
+                            const itemTotal = product && item?.quantity 
                               ? (product.price * parseFloat(item.quantity || '0')).toFixed(2)
                               : '0.00';
                             
@@ -424,7 +414,7 @@ const Order = () => {
                                     {...field}
                                   />
                                 </FormControl>
-                                {showPrice && item?.quantity && parseFloat(item.quantity) > 0 && (
+                                {product && item?.quantity && parseFloat(item.quantity) > 0 && (
                                   <p className="text-xs font-semibold text-primary">
                                     €{itemTotal}
                                   </p>
@@ -482,7 +472,7 @@ const Order = () => {
                         {t('order.form.addItem')}
                       </Button>
 
-                      {hasColliItems && orderTotal > 0 && (
+                      {orderTotal > 0 && (
                         <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
                           <div className="flex justify-between items-center">
                             <span className="text-lg font-semibold">{t('order.total') || 'Totaal'}:</span>
@@ -696,7 +686,7 @@ const Order = () => {
                       {t('order.success.description')}
                     </p>
                     
-                    {hasColliItems && orderTotal > 0 && (
+                    {orderTotal > 0 && (
                       <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
                         <p className="text-sm font-semibold mb-2">{t('order.success.orderTotal')}:</p>
                         <p className="text-3xl font-bold text-primary">€{orderTotal.toFixed(2)}</p>
