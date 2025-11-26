@@ -243,21 +243,21 @@ export default function Auth() {
             {isPasswordRecovery ? (
               <form onSubmit={handleUpdatePassword} className="space-y-4">
                 <div className="text-center mb-4">
-                  <h3 className="text-xl font-semibold mb-2">Set New Password</h3>
+                  <h3 className="text-xl font-semibold mb-2">{t('auth.passwordReset.title')}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Enter your new password below
+                    {t('auth.passwordReset.description')}
                   </p>
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="new-password">New Password</Label>
+                  <Label htmlFor="new-password">{t('auth.passwordReset.newPassword')}</Label>
                   <div className="relative">
                     <Input
                       id="new-password"
                       type={showPassword ? 'text' : 'password'}
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
-                      placeholder="Enter new password"
+                      placeholder={t('auth.passwordReset.newPasswordPlaceholder')}
                       className={errors.password ? 'border-destructive' : ''}
                       required
                     />
@@ -275,13 +275,13 @@ export default function Auth() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="confirm-new-password">Confirm New Password</Label>
+                  <Label htmlFor="confirm-new-password">{t('auth.passwordReset.confirmPassword')}</Label>
                   <Input
                     id="confirm-new-password"
                     type={showPassword ? 'text' : 'password'}
                     value={confirmNewPassword}
                     onChange={(e) => setConfirmNewPassword(e.target.value)}
-                    placeholder="Confirm new password"
+                    placeholder={t('auth.passwordReset.confirmPasswordPlaceholder')}
                     className={errors.confirmPassword ? 'border-destructive' : ''}
                     required
                   />
@@ -295,7 +295,7 @@ export default function Auth() {
                 )}
 
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? 'Updating...' : 'Update Password'}
+                  {loading ? t('auth.passwordReset.updating') : t('auth.passwordReset.update')}
                 </Button>
               </form>
             ) : (

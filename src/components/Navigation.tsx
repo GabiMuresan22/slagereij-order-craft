@@ -50,7 +50,7 @@ const Navigation = () => {
 
   const navItems = [
     { path: "/", label: t('nav.home') },
-    { path: "/packages", label: "Colli's Menu" },
+    { path: "/packages", label: t('nav.packages') },
     { path: "/about", label: t('nav.about') },
     { path: "/products", label: t('nav.products') },
     { path: "/catering", label: t('nav.catering') },
@@ -143,7 +143,7 @@ const Navigation = () => {
                     >
                       <Link to="/my-account">
                         <UserCircle className="h-4 w-4" />
-                        <span>My Account</span>
+                        <span>{t('nav.myAccount')}</span>
                       </Link>
                     </Button>
                     {isAdmin && (
@@ -155,7 +155,7 @@ const Navigation = () => {
                       >
                         <Link to="/admin">
                           <Shield className="h-4 w-4" />
-                          <span>Admin</span>
+                          <span>{t('nav.admin')}</span>
                         </Link>
                       </Button>
                     )}
@@ -257,7 +257,7 @@ const Navigation = () => {
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <UserCircle className="h-4 w-4" />
-                      My Account
+                      {t('nav.myAccount')}
                     </Link>
                     {isAdmin && (
                       <Link
@@ -266,7 +266,7 @@ const Navigation = () => {
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <Shield className="h-4 w-4" />
-                        Admin
+                        {t('nav.admin')}
                       </Link>
                     )}
                     <button

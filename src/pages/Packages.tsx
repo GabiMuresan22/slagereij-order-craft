@@ -20,79 +20,79 @@ export default function Packages() {
       id: 1,
       titleKey: 'packages.pork1.title',
       price: 45,
-      items: [
-        "1kg spiering",
-        "1kg filet kotelet",
-        "1kg spek",
-        "1kg worst",
-        "1kg gehakt"
+      itemKeys: [
+        'packages.pork1.item1',
+        'packages.pork1.item2',
+        'packages.pork1.item3',
+        'packages.pork1.item4',
+        'packages.pork1.item5',
       ],
     },
     {
       id: 2,
       titleKey: 'packages.pork2.title',
       price: 55,
-      items: [
-        "1kg spiering",
-        "1kg filet kotelet",
-        "1kg spek",
-        "1kg worst",
-        "1kg burger",
-        "1kg gehakt"
+      itemKeys: [
+        'packages.pork2.item1',
+        'packages.pork2.item2',
+        'packages.pork2.item3',
+        'packages.pork2.item4',
+        'packages.pork2.item5',
+        'packages.pork2.item6',
       ],
     },
     {
       id: 3,
       titleKey: 'packages.chicken.title',
       price: 50,
-      items: [
-        "1kg kipfilet",
-        "1 kg kip schnitzel",
-        "1kg kip gyros",
-        "1 kg kip brochette",
-        "1 kg kippenboutjes"
+      itemKeys: [
+        'packages.chicken.item1',
+        'packages.chicken.item2',
+        'packages.chicken.item3',
+        'packages.chicken.item4',
+        'packages.chicken.item5',
       ],
     },
     {
       id: 4,
       titleKey: 'packages.mixed.title',
       price: 60,
-      items: [
-        "1 kg kipfilet",
-        "1kg kip schnitzel",
-        "1kg varkens gehakt",
-        "1kg filet kotelet",
-        "1kg spiering",
-        "1 kg spek"
+      itemKeys: [
+        'packages.mixed.item1',
+        'packages.mixed.item2',
+        'packages.mixed.item3',
+        'packages.mixed.item4',
+        'packages.mixed.item5',
+        'packages.mixed.item6',
       ],
     },
     {
       id: 5,
       titleKey: 'packages.bbq.title',
       price: 55,
-      items: [
-        "1 kg kip brochette",
-        "1 kg braadworst",
-        "1 kg mici",
-        "1kg gemarineerde spek",
-        "1 kg gemarineerde ribbetjes"
+      itemKeys: [
+        'packages.bbq.item1',
+        'packages.bbq.item2',
+        'packages.bbq.item3',
+        'packages.bbq.item4',
+        'packages.bbq.item5',
       ],
     },
     {
       id: 6,
       titleKey: 'packages.john.title',
       price: 100,
-      items: [
-        "1kg braadworst",
-        "1kg varkens gehakt",
-        "1kg burger",
-        "1 kg boomstammetjes",
-        "1 kg filet kotelet",
-        "1 kg kip gyros",
-        "1 kg kip brochette",
-        "1 kg kippenboutjes",
-        "1 kg kip schnitzel",
-        "1 kg kipfilet"
+      itemKeys: [
+        'packages.john.item1',
+        'packages.john.item2',
+        'packages.john.item3',
+        'packages.john.item4',
+        'packages.john.item5',
+        'packages.john.item6',
+        'packages.john.item7',
+        'packages.john.item8',
+        'packages.john.item9',
+        'packages.john.item10',
       ],
       featured: true
     }
@@ -130,10 +130,10 @@ export default function Packages() {
               
               <CardContent className="flex-grow">
                 <ul className="space-y-2">
-                  {pkg.items.map((item, idx) => (
+                  {pkg.itemKeys.map((itemKey, idx) => (
                     <li key={idx} className="flex items-start text-sm text-muted-foreground">
                       <Check className="h-4 w-4 text-primary mr-2 mt-0.5 shrink-0" />
-                      {item}
+                      {t(itemKey)}
                     </li>
                   ))}
                 </ul>

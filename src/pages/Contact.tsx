@@ -57,11 +57,11 @@ const Contact = () => {
 
       if (error) throw error;
 
-      toast.success("Bericht verzonden! We nemen zo snel mogelijk contact met u op.");
+      toast.success(t('contact.form.success'));
       form.reset();
     } catch (error: any) {
       console.error("Error sending contact form:", error);
-      toast.error("Er is een fout opgetreden. Probeer het later opnieuw of bel ons direct.");
+      toast.error(t('contact.form.error'));
     } finally {
       setIsSubmitting(false);
     }
@@ -175,7 +175,7 @@ const Contact = () => {
           {/* Contact Form */}
           <Card className="border-border">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-semibold mb-6">Stuur ons een bericht</h3>
+              <h3 className="text-2xl font-semibold mb-6">{t('contact.form.title')}</h3>
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
@@ -183,9 +183,9 @@ const Contact = () => {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Naam</FormLabel>
+                        <FormLabel>{t('contact.form.name')}</FormLabel>
                         <FormControl>
-                          <Input placeholder="Uw naam" {...field} />
+                          <Input placeholder={t('contact.form.namePlaceholder')} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -197,9 +197,9 @@ const Contact = () => {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>{t('contact.form.email')}</FormLabel>
                         <FormControl>
-                          <Input type="email" placeholder="uw.email@voorbeeld.be" {...field} />
+                          <Input type="email" placeholder={t('contact.form.emailPlaceholder')} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -211,9 +211,9 @@ const Contact = () => {
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Telefoon</FormLabel>
+                        <FormLabel>{t('contact.form.phone')}</FormLabel>
                         <FormControl>
-                          <Input type="tel" placeholder="+32 466 18 64 57" {...field} />
+                          <Input type="tel" placeholder={t('contact.form.phonePlaceholder')} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -225,10 +225,10 @@ const Contact = () => {
                     name="message"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Bericht</FormLabel>
+                        <FormLabel>{t('contact.form.message')}</FormLabel>
                         <FormControl>
                           <Textarea 
-                            placeholder="Hoe kunnen we u helpen?" 
+                            placeholder={t('contact.form.messagePlaceholder')} 
                             className="min-h-[120px]"
                             {...field} 
                           />
@@ -264,7 +264,7 @@ const Contact = () => {
 
                   <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
                     <Send className="w-4 h-4 mr-2" />
-                    {isSubmitting ? "Verzenden..." : "Verzenden"}
+                    {isSubmitting ? t('contact.form.submitting') : t('contact.form.submit')}
                   </Button>
 
                   <p className="text-xs text-muted-foreground text-center">
