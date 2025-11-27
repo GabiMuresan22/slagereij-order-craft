@@ -417,6 +417,25 @@ const translations = {
     'home.christmas.downloading': 'Downloaden...',
     'home.christmas.download': 'Download PDF Menu',
     
+    // Christmas Menu Display
+    'christmas.menu.packages': 'Feestmenu\'s',
+    'christmas.menu.catering': 'Catering Menu',
+    'christmas.menu.prices': 'Prijzen',
+    'christmas.menu.persons': 'pers',
+    'christmas.menu.person': 'pers',
+    'christmas.menu.hapjes': 'Hapjes',
+    'christmas.menu.tapas': 'Tapas',
+    'christmas.menu.miniSandwiches': 'Mini Broodjes',
+    'christmas.menu.perPiece': 'per stuk',
+    'christmas.menu.socialDining': 'Gezellig Tafelen',
+    'christmas.menu.mainCourses': 'Hoofdgerechten',
+    'christmas.menu.warmVegetables': 'Warme Groenten',
+    'christmas.menu.soups': 'Soepen',
+    'christmas.menu.liter': 'liter',
+    'christmas.menu.desserts': 'Desserts',
+    'christmas.menu.buffets': 'Buffetten',
+    'christmas.menu.alaCarte': 'À la Carte',
+    
     // Order - Products List
     'order.products.steak': 'Biefstuk',
     'order.products.roast': 'Rosbief',
@@ -1027,6 +1046,25 @@ const translations = {
     'home.christmas.info': 'Pentru mai multe informații, te așteptăm cu drag în magazinul nostru!',
     'home.christmas.downloading': 'Se descarcă...',
     'home.christmas.download': 'Descarcă Meniul PDF',
+    
+    // Christmas Menu Display
+    'christmas.menu.packages': 'Meniuri de Sărbători',
+    'christmas.menu.catering': 'Meniu Catering',
+    'christmas.menu.prices': 'Prețuri',
+    'christmas.menu.persons': 'pers',
+    'christmas.menu.person': 'pers',
+    'christmas.menu.hapjes': 'Gustări',
+    'christmas.menu.tapas': 'Tapas',
+    'christmas.menu.miniSandwiches': 'Mini Sandvișuri',
+    'christmas.menu.perPiece': 'per bucată',
+    'christmas.menu.socialDining': 'Fondue & Gourmet',
+    'christmas.menu.mainCourses': 'Feluri Principale',
+    'christmas.menu.warmVegetables': 'Legume Calde',
+    'christmas.menu.soups': 'Supe',
+    'christmas.menu.liter': 'litru',
+    'christmas.menu.desserts': 'Deserturi',
+    'christmas.menu.buffets': 'Bufete',
+    'christmas.menu.alaCarte': 'À la Carte',
     
     // Order - Products List
     'order.products.steak': 'Mușchi',

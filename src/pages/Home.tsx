@@ -11,6 +11,7 @@ import heroImageMobile from "@/assets/hero-steak-mobile.webp";
 import christmasMenu1 from "@/assets/christmas-menu-1.webp";
 import christmasMenu2 from "@/assets/christmas-menu-2.webp";
 import Testimonials from "@/components/Testimonials";
+import ChristmasMenuDisplay from "@/components/ChristmasMenuDisplay";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getLocalBusinessSchema, getReviewsSchema } from "@/lib/structuredData";
@@ -166,6 +167,9 @@ const Home = () => {
               </CardContent>
             </Card>
           </div>
+
+          {/* Christmas Menu Display with detailed menu data */}
+          <ChristmasMenuDisplay />
 
           <div className="text-center mt-8">
             <p className="text-muted-foreground mb-4">{t("home.christmas.info")}</p>
