@@ -140,34 +140,6 @@ const Home = () => {
           </h2>
           <p className="text-center text-muted-foreground mb-12 text-base md:text-lg">{t("home.christmas.period")}</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <Card className="overflow-hidden hover:shadow-2xl transition-shadow border-primary/20">
-              <CardContent className="p-0">
-                <img
-                  src={christmasMenu1}
-                  alt="Menu Kerst Nieuwjaar - Tapas en Desserts"
-                  className="w-full h-auto"
-                  loading="lazy"
-                  width="800"
-                  height="1067"
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden hover:shadow-2xl transition-shadow border-primary/20">
-              <CardContent className="p-0">
-                <img
-                  src={christmasMenu2}
-                  alt="Menu Kerst Nieuwjaar - Hapjes en Hoofdgerechten"
-                  className="w-full h-auto"
-                  loading="lazy"
-                  width="800"
-                  height="1067"
-                />
-              </CardContent>
-            </Card>
-          </div>
-
           {/* Christmas Menu Display with detailed menu data */}
           <ChristmasMenuDisplay />
 
