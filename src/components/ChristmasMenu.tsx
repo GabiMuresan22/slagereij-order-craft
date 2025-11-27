@@ -7,6 +7,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Download } from "lucide-react";
 import { trackMenuDownload } from "@/components/Analytics";
 import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import christmasMenu1 from "@/assets/christmas-menu-1.webp";
 import christmasMenu2 from "@/assets/christmas-menu-2.webp";
 
@@ -89,6 +90,7 @@ const menuItems: MenuItem[] = [
 
 const ChristmasMenu = () => {
   const { t } = useLanguage();
+  const { toast } = useToast();
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownloadPdf = async () => {
@@ -120,8 +122,18 @@ const ChristmasMenu = () => {
         throw error;
       }
 
-      // Create blob and download
-      const pdfBlob = new Blob([data], { type: 'application/pdf' });
+      // Handle the response data - ensure it's in the correct format
+      let pdfBlob: Blob;
+      if (data instanceof Blob) {
+        pdfBlob = data;
+      } else if (data instanceof ArrayBuffer) {
+        pdfBlob = new Blob([data], { type: 'application/pdf' });
+      } else {
+        // If data is already a Blob-like object or other format
+        pdfBlob = new Blob([data], { type: 'application/pdf' });
+      }
+
+      // Create download link
       const url = window.URL.createObjectURL(pdfBlob);
       const link = document.createElement('a');
       link.href = url;
@@ -135,6 +147,11 @@ const ChristmasMenu = () => {
       trackMenuDownload();
     } catch (error) {
       console.error('Error downloading PDF:', error);
+      toast({
+        title: "Download failed",
+        description: "Could not download the menu. Please try again later.",
+        variant: "destructive",
+      });
     } finally {
       setIsDownloading(false);
     }
