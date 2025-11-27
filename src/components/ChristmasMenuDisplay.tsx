@@ -215,9 +215,11 @@ const ChristmasMenuDisplay = () => {
                     <div key={index} className="flex justify-between items-center py-1 border-b border-muted">
                       <span className="text-sm">{item.name}</span>
                       <span className="text-sm font-semibold text-primary">
-                        {item.price_per_person
+                        {item.price_per_person !== undefined
                           ? `€${item.price_per_person}/${t("christmas.menu.person")}`
-                          : `€${item.price_total}`}
+                          : item.price_total !== undefined
+                            ? `€${item.price_total}`
+                            : ""}
                       </span>
                     </div>
                   ))}
