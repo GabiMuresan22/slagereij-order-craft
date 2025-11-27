@@ -103,11 +103,11 @@ const ChristmasMenu = () => {
           {menuItems.map((menu) => (
             <Card 
               key={menu.id} 
-              className="bg-neutral-800 border-neutral-700 hover:border-primary transition-all duration-300 flex flex-col overflow-hidden group"
+              className="bg-neutral-800 border-primary transition-all duration-300 flex flex-col overflow-hidden group"
             >
               {/* Card Header */}
               <CardHeader className="text-center pb-2 relative">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
                 <CardTitle className="text-xl font-serif font-bold text-primary min-h-[3.5rem] flex items-center justify-center">
                   {menu.title}
                 </CardTitle>
