@@ -87,11 +87,11 @@ const ChristmasMenu = () => {
         
         {/* Header Section */}
         <div className="text-center mb-12 space-y-4">
-          <Badge variant="outline" className="text-amber-500 border-amber-500 uppercase tracking-widest px-4 py-1">
+          <Badge variant="outline" className="text-primary border-primary uppercase tracking-widest px-4 py-1">
             Sezonul Sărbătorilor
           </Badge>
           <h2 className="text-3xl md:text-5xl font-serif font-bold text-white">
-            Meniuri <span className="text-amber-500">Speciale</span>
+            Meniuri <span className="text-primary">Speciale</span>
           </h2>
           <p className="text-neutral-400 max-w-2xl mx-auto">
             Preparate tradiționale autentice pentru masa de Crăciun și Revelion.
@@ -103,12 +103,12 @@ const ChristmasMenu = () => {
           {menuItems.map((menu) => (
             <Card 
               key={menu.id} 
-              className="bg-neutral-800 border-neutral-700 hover:border-amber-500 transition-all duration-300 flex flex-col overflow-hidden group"
+              className="bg-neutral-800 border-neutral-700 hover:border-primary transition-all duration-300 flex flex-col overflow-hidden group"
             >
               {/* Card Header */}
               <CardHeader className="text-center pb-2 relative">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <CardTitle className="text-xl font-serif font-bold text-amber-500 min-h-[3.5rem] flex items-center justify-center">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <CardTitle className="text-xl font-serif font-bold text-primary min-h-[3.5rem] flex items-center justify-center">
                   {menu.title}
                 </CardTitle>
                 {menu.price && menu.unit ? (
@@ -139,7 +139,7 @@ const ChristmasMenu = () => {
                 <ul className="space-y-3">
                   {menu.ingredients.map((ingredient, idx) => (
                     <li key={idx} className="flex items-start text-sm text-neutral-300 leading-relaxed">
-                      <span className="mr-3 text-amber-500 mt-1.5 text-[10px]">◆</span>
+                      <span className="mr-3 text-primary mt-1.5 text-[10px]">◆</span>
                       <span>{ingredient}</span>
                     </li>
                   ))}
@@ -150,7 +150,7 @@ const ChristmasMenu = () => {
               <CardFooter className="pt-4 border-t border-neutral-700">
                 <Link to="/order" className="w-full">
                   <Button 
-                    className="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold tracking-wide"
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold tracking-wide"
                   >
                     Comandă Acum
                   </Button>
