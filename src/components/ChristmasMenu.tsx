@@ -24,17 +24,21 @@ const menuItems: MenuItem[] = [
   {
     id: 1,
     title: "Meniu Traditional John",
-    price: "12.00 €",
-    unit: "/ p.p",
-    description: "Platou aperitiv (koud)",
+    prices: [
+      { persons: 2, price: "€195" },
+      { persons: 4, price: "€380" },
+      { persons: 6, price: "€565" }
+    ],
+    description: "Meniu complet tradițional",
     ingredients: [
-      "Salam de casa cu sunca",
-      "Salam de vita",
-      "Slanina, Toba & Parizer",
-      "Carnati semi-afumati",
-      "Jumari & Ceapa crud-uscata",
-      "Branza, Oua umplute",
-      "Masline, Rosi cherry, Ceapa"
+      "Platou aperitiv (salam de casa cu sunca, salam de vita, slanina, toba, carnati semi-afumati, parizer, jumari, ceafa crud-uscata (afumata), branza, oua umplute, masline, rosi cherry, ceapa)",
+      "Salata Boeuf",
+      "Sarmale in foi de varza",
+      "Ciorba de perisoare",
+      "Platou mix gratar (ceafa, carnati subtiri cu usturoi, mici, frigarui de pui, cartofi la cuptor sau legume, salata de varza)",
+      "Mix de prajituri (3 mini prajituri /p)",
+      "Vin",
+      "Suc"
     ]
   },
   {
