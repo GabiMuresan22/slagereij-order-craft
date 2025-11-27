@@ -12,9 +12,7 @@ interface PriceOption {
 interface MenuItem {
   id: number;
   title: string;
-  price?: string;
-  unit?: string;
-  prices?: PriceOption[];
+  prices: PriceOption[];
   description: string;
   ingredients: string[];
 }
@@ -63,8 +61,11 @@ const menuItems: MenuItem[] = [
   {
     id: 3,
     title: "Meniu Traditia Bunicilor",
-    price: "€170 / €330 / €490",
-    unit: "(2/4/6 pers)",
+    prices: [
+      { persons: 2, price: "€170" },
+      { persons: 4, price: "€330" },
+      { persons: 6, price: "€490" }
+    ],
     description: "Meniu complet tradițional",
     ingredients: [
       "Platou aperitiv (salam de casa, slanina, toba, carnati semi-afumati, parizer, jumari, branza, masline, ceapa)",
@@ -111,12 +112,7 @@ const ChristmasMenu = () => {
                 <CardTitle className="text-xl font-serif font-bold text-primary min-h-[3.5rem] flex items-center justify-center">
                   {menu.title}
                 </CardTitle>
-                {menu.price && menu.unit ? (
-                  <div className="flex items-baseline justify-center gap-1 mt-2">
-                    <span className="text-3xl font-bold text-primary">{menu.price}</span>
-                    <span className="text-sm text-neutral-400">{menu.unit}</span>
-                  </div>
-                ) : menu.prices ? (
+                {menu.prices && (
                   <div className="flex flex-wrap items-center justify-center gap-3 mt-3">
                     {menu.prices.map((priceOption, idx) => (
                       <div key={idx} className="flex flex-col items-center px-3 py-1 bg-neutral-900 rounded-lg border border-neutral-700">
@@ -125,7 +121,7 @@ const ChristmasMenu = () => {
                       </div>
                     ))}
                   </div>
-                ) : null}
+                )}
               </CardHeader>
 
               {/* Card Content */}
