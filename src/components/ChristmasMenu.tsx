@@ -4,8 +4,23 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 
+interface PriceOption {
+  persons: number;
+  price: string;
+}
+
+interface MenuItem {
+  id: number;
+  title: string;
+  price?: string;
+  unit?: string;
+  prices?: PriceOption[];
+  description: string;
+  ingredients: string[];
+}
+
 // Data extracted directly from your photos
-const menuItems = [
+const menuItems: MenuItem[] = [
   {
     id: 1,
     title: "Meniu Traditional John",
@@ -25,12 +40,20 @@ const menuItems = [
   {
     id: 2,
     title: "Meniu Ca La Mama Acasa",
-    price: "15.00 €",
-    unit: "/ p.p",
-    description: "Platou aperitiv + Salata Boeuf",
+    prices: [
+      { persons: 2, price: "€140" },
+      { persons: 4, price: "€270" },
+      { persons: 6, price: "€400" }
+    ],
+    description: "Meniu complet cu preparate tradiționale",
     ingredients: [
-      "Platou aperitiv: Salam de casa, Slanina, Kaizer, Toba, Carnati semi-afumati, Cascaval, Oua umplute, Masline, Ceapa",
-      "Salata Boeuf (pui / vita)"
+      "Platou aperitiv (salam de casa, slanina, kaizer, toba, carnati semi-afumati, cascaval, oua umplute, masline, ceapa)",
+      "Salata Boeuf (carne de pui sau vita)",
+      "Sarmale in foi de varza",
+      "Ceafa de porc cu cartofi la cuptor sau legume",
+      "Mix de prajituri (3 mini prajituri /p)",
+      "Vin",
+      "Suc"
     ]
   },
   {
@@ -77,10 +100,21 @@ const ChristmasMenu = () => {
                 <CardTitle className="text-xl font-serif font-bold text-amber-500 min-h-[3.5rem] flex items-center justify-center">
                   {menu.title}
                 </CardTitle>
-                <div className="flex items-baseline justify-center gap-1 mt-2">
-                  <span className="text-3xl font-bold text-white">{menu.price}</span>
-                  <span className="text-sm text-neutral-400">{menu.unit}</span>
-                </div>
+                {menu.price && menu.unit ? (
+                  <div className="flex items-baseline justify-center gap-1 mt-2">
+                    <span className="text-3xl font-bold text-white">{menu.price}</span>
+                    <span className="text-sm text-neutral-400">{menu.unit}</span>
+                  </div>
+                ) : menu.prices ? (
+                  <div className="flex flex-wrap items-center justify-center gap-3 mt-3">
+                    {menu.prices.map((priceOption, idx) => (
+                      <div key={idx} className="flex flex-col items-center px-3 py-1 bg-neutral-900 rounded-lg border border-neutral-700">
+                        <span className="text-lg font-bold text-white">{priceOption.price}</span>
+                        <span className="text-xs text-neutral-400">{priceOption.persons} pers</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
               </CardHeader>
 
               {/* Card Content */}
