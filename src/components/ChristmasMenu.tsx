@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Download } from "lucide-react";
+import { trackMenuDownload } from "@/components/Analytics";
+import { supabase } from "@/integrations/supabase/client";
+import christmasMenu1 from "@/assets/christmas-menu-1.webp";
+import christmasMenu2 from "@/assets/christmas-menu-2.webp";
 
 interface PriceOption {
   persons: number;
@@ -84,6 +89,56 @@ const menuItems: MenuItem[] = [
 
 const ChristmasMenu = () => {
   const { t } = useLanguage();
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownloadPdf = async () => {
+    setIsDownloading(true);
+    try {
+      // Convert images to base64
+      const imageToBase64 = async (imageSrc: string): Promise<string> => {
+        const response = await fetch(imageSrc);
+        const blob = await response.blob();
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      };
+
+      const [image1Base64, image2Base64] = await Promise.all([
+        imageToBase64(christmasMenu1),
+        imageToBase64(christmasMenu2),
+      ]);
+
+      // Call the Supabase Edge Function to generate PDF
+      const { data, error } = await supabase.functions.invoke('generate-christmas-menu-pdf', {
+        body: { image1Base64, image2Base64 },
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      // Create blob and download
+      const pdfBlob = new Blob([data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(pdfBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'Menu-Kerst-Nieuwjaar-Slagerij-John.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      // Track the download
+      trackMenuDownload();
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   return (
     <section className="w-full py-12 bg-neutral-900 text-white">
@@ -157,6 +212,20 @@ const ChristmasMenu = () => {
               </CardFooter>
             </Card>
           ))}
+        </div>
+
+        {/* Download Menu Button */}
+        <div className="text-center mt-12">
+          <Button
+            onClick={handleDownloadPdf}
+            disabled={isDownloading}
+            variant="outline"
+            size="lg"
+            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+          >
+            <Download className="w-5 h-5 mr-2" />
+            {isDownloading ? t('home.christmas.downloading') : t('home.christmas.download')}
+          </Button>
         </div>
       </div>
     </section>
