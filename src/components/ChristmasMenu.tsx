@@ -59,12 +59,19 @@ const menuItems: MenuItem[] = [
   {
     id: 3,
     title: "Meniu Traditia Bunicilor",
-    price: "15.00 €",
-    unit: "/ p.p",
-    description: "Platou aperitiv + Piftie",
+    price: "€170 / €330 / €490",
+    unit: "(2/4/6 pers)",
+    description: "Meniu complet tradițional",
     ingredients: [
-      "Platou aperitiv: Salam de casa, Slanina, Toba, Carnati semi-afumati, Parizer, Jumari, Branza, Masline, Ceapa",
-      "Piftie"
+      "Platou aperitiv (salam de casa, slanina, toba, carnati semi-afumati, parizer, jumari, branza, masline, ceapa)",
+      "Piftie",
+      "Salata Boeuf",
+      "Sarmale in foi de varza",
+      "Ciorba de perisoare",
+      "Carne la garnita",
+      "Mix de prajituri (3 mini prajituri/p)",
+      "Vin",
+      "Suc"
     ]
   }
 ];
