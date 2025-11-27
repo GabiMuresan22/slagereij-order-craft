@@ -49,11 +49,6 @@ const menuItems = [
       "Mix de prajituri (3 mini prajituri/p)",
       "Vin",
       "Suc"
-    ],
-    pricing: [
-      { persons: 2, price: "€170" },
-      { persons: 4, price: "€330" },
-      { persons: 6, price: "€490" }
     ]
   }
 ];
