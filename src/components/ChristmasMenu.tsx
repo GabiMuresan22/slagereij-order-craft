@@ -113,7 +113,7 @@ const ChristmasMenu = () => {
                 </CardTitle>
                 {menu.price && menu.unit ? (
                   <div className="flex items-baseline justify-center gap-1 mt-2">
-                    <span className="text-3xl font-bold text-white">{menu.price}</span>
+                    <span className="text-3xl font-bold text-primary">{menu.price}</span>
                     <span className="text-sm text-neutral-400">{menu.unit}</span>
                   </div>
                 ) : menu.prices ? (
