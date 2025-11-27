@@ -96,21 +96,33 @@ const ChristmasMenu = () => {
   const handleDownloadPdf = async () => {
     setIsDownloading(true);
     try {
-      // Convert images to base64
-      const imageToBase64 = async (imageSrc: string): Promise<string> => {
-        const response = await fetch(imageSrc);
-        const blob = await response.blob();
+      // Convert images to JPEG base64 format (required for PDF generation)
+      const imageToJpegBase64 = async (imageSrc: string): Promise<string> => {
         return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result as string);
-          reader.onerror = reject;
-          reader.readAsDataURL(blob);
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+              reject(new Error('Failed to get canvas context'));
+              return;
+            }
+            ctx.drawImage(img, 0, 0);
+            // Convert to JPEG format with high quality
+            const jpegBase64 = canvas.toDataURL('image/jpeg', 0.95);
+            resolve(jpegBase64);
+          };
+          img.onerror = () => reject(new Error('Failed to load image'));
+          img.src = imageSrc;
         });
       };
 
       const [image1Base64, image2Base64] = await Promise.all([
-        imageToBase64(christmasMenu1),
-        imageToBase64(christmasMenu2),
+        imageToJpegBase64(christmasMenu1),
+        imageToJpegBase64(christmasMenu2),
       ]);
 
       // Call the Supabase Edge Function to generate PDF
