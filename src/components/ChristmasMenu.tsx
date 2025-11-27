@@ -88,6 +88,9 @@ const menuItems: MenuItem[] = [
   }
 ];
 
+// JPEG quality for PDF menu image conversion (0.0 - 1.0)
+const JPEG_QUALITY = 0.95;
+
 const ChristmasMenu = () => {
   const { t } = useLanguage();
   const { toast } = useToast();
@@ -112,7 +115,7 @@ const ChristmasMenu = () => {
             }
             ctx.drawImage(img, 0, 0);
             // Convert to JPEG format with high quality
-            const jpegBase64 = canvas.toDataURL('image/jpeg', 0.95);
+            const jpegBase64 = canvas.toDataURL('image/jpeg', JPEG_QUALITY);
             resolve(jpegBase64);
           };
           img.onerror = () => reject(new Error('Failed to load image'));
