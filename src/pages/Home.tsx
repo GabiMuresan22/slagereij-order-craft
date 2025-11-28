@@ -27,10 +27,10 @@ const Home = () => {
         <link rel="preload" as="image" href={heroImageMobile} media="(max-width: 767px)" />
       </SEO>
       {/* Closure Alert */}
-      <Alert variant="destructive" className="rounded-none border-x-0">
+      <Alert className="rounded-none border-x-0 bg-primary/10 border-primary text-primary [&>svg]:text-primary">
         <AlertCircle className="h-4 w-4" />
         <AlertTitle>{t("home.alert.title")}</AlertTitle>
-        <AlertDescription>
+        <AlertDescription className="text-primary/90">
           {t("home.alert.description")}
         </AlertDescription>
       </Alert>
