@@ -29,9 +29,9 @@ const Home = () => {
       {/* Closure Alert */}
       <Alert variant="destructive" className="rounded-none border-x-0">
         <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Belangrijke Mededeling</AlertTitle>
+        <AlertTitle>{t("home.alert.title")}</AlertTitle>
         <AlertDescription>
-          Wij zijn tijdelijk gesloten. Excuses voor het ongemak.
+          {t("home.alert.description")}
         </AlertDescription>
       </Alert>
 

@@ -60,10 +60,10 @@ describe("Home", () => {
     render(<Home />);
     // Check that the alert is present
     expect(screen.getByRole("alert")).toBeInTheDocument();
-    // Check for the alert title
-    expect(screen.getByText("Belangrijke Mededeling")).toBeInTheDocument();
+    // Check for the alert title (using translation key as mock returns the key)
+    expect(screen.getByText("home.alert.title")).toBeInTheDocument();
     // Check for the alert description
-    expect(screen.getByText("Wij zijn tijdelijk gesloten. Excuses voor het ongemak.")).toBeInTheDocument();
+    expect(screen.getByText("home.alert.description")).toBeInTheDocument();
   });
 });
 
