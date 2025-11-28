@@ -62,10 +62,18 @@
       rel="stylesheet"
     />
 
-    <!-- Google Analytics 4 - Will be loaded by cookie consent -->
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-XGNKV7Y3EY"
+    ></script>
     <script>
-      // Initialize dataLayer for GA4 (will be configured after consent)
       window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-XGNKV7Y3EY");
     </script>
   </head>
 
