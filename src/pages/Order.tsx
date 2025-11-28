@@ -117,6 +117,7 @@ const Order = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
+  const [customItems, setCustomItems] = useState<Set<number>>(new Set());
 
   // Fetch products with prices from database
   useEffect(() => {
@@ -193,6 +194,20 @@ const Order = () => {
   const removeOrderItem = (index: number) => {
     const currentItems = form.getValues("orderItems");
     form.setValue("orderItems", currentItems.filter((_, i) => i !== index));
+    
+    // Remove from custom items set and adjust indices
+    setCustomItems(prev => {
+      const newSet = new Set<number>();
+      prev.forEach(itemIndex => {
+        if (itemIndex < index) {
+          newSet.add(itemIndex);
+        } else if (itemIndex > index) {
+          newSet.add(itemIndex - 1);
+        }
+        // Skip the removed index
+      });
+      return newSet;
+    });
   };
 
   const nextStep = async () => {
@@ -462,48 +477,99 @@ const Order = () => {
                       />
 
                       {/* Product Selection */}
-                      {/* Product Selection */}
-                    {orderItems.map((item, index) => (
-                      <div key={index} className="flex gap-3 items-end pb-4 border-b last:border-0">
-                        <FormField
-                          control={form.control}
-                          name={`orderItems.${index}.product`}
-                          render={({ field }) => {
-                            const selectedProduct = productOptions.find(p => p.key === field.value);
-                            return (
-                              <FormItem className="flex-1">
-                                <FormLabel>{t('order.form.product')}</FormLabel>
-                                <Select onValueChange={field.onChange} value={field.value}>
-                                  <FormControl>
-                                    <SelectTrigger>
-                                      <SelectValue placeholder={t('order.form.selectProduct')} />
-                                    </SelectTrigger>
-                                  </FormControl>
-                                  <SelectContent>
-                                    {productOptions.map((option) => (
-                                      <SelectItem key={option.key} value={option.key}>
-                                        <div className="flex justify-between items-center gap-4 w-full">
-                                          <span className="font-medium">{option.label}</span>
-                                          {option.price && (
-                                            <span className="text-sm font-semibold text-primary whitespace-nowrap">
-                                              €{option.price.toFixed(2)}/{option.unit}
-                                            </span>
-                                          )}
-                                        </div>
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
-                                {selectedProduct && selectedProduct.price && (
-                                  <p className="text-xs text-muted-foreground mt-1">
-                                    {t('order.form.price')}: €{selectedProduct.price.toFixed(2)} per {selectedProduct.unit}
-                                  </p>
-                                )}
-                                <FormMessage />
-                              </FormItem>
-                            );
-                          }}
-                        />
+                    {orderItems.map((item, index) => {
+                      const isCustomItem = customItems.has(index);
+                      
+                      return (
+                        <div key={index} className="flex gap-3 items-end pb-4 border-b last:border-0">
+                          <FormField
+                            control={form.control}
+                            name={`orderItems.${index}.product`}
+                            render={({ field }) => {
+                              const selectedProduct = productOptions.find(p => p.key === field.value);
+                              
+                              const handleProductChange = (value: string) => {
+                                if (value === '__custom__') {
+                                  // Switch to custom input mode
+                                  setCustomItems(prev => new Set(prev).add(index));
+                                  field.onChange('');
+                                } else {
+                                  // Switch back to dropdown mode
+                                  setCustomItems(prev => {
+                                    const newSet = new Set(prev);
+                                    newSet.delete(index);
+                                    return newSet;
+                                  });
+                                  field.onChange(value);
+                                }
+                              };
+                              
+                              return (
+                                <FormItem className="flex-1">
+                                  <FormLabel>{t('order.form.product')}</FormLabel>
+                                  {isCustomItem ? (
+                                    <div className="space-y-2">
+                                      <FormControl>
+                                        <Input
+                                          type="text"
+                                          placeholder={language === 'nl' ? 'Typ uw product...' : 'Introduceți produsul...'}
+                                          value={field.value}
+                                          onChange={(e) => field.onChange(e.target.value)}
+                                          className="border-primary focus-visible:ring-primary"
+                                        />
+                                      </FormControl>
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => handleProductChange('')}
+                                        className="text-xs text-muted-foreground hover:text-foreground"
+                                      >
+                                        ← {language === 'nl' ? 'Terug naar menu' : 'Înapoi la meniu'}
+                                      </Button>
+                                    </div>
+                                  ) : (
+                                    <>
+                                      <Select onValueChange={handleProductChange} value={field.value}>
+                                        <FormControl>
+                                          <SelectTrigger>
+                                            <SelectValue placeholder={t('order.form.selectProduct')} />
+                                          </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                          {productOptions.map((option) => (
+                                            <SelectItem key={option.key} value={option.key}>
+                                              <div className="flex justify-between items-center gap-4 w-full">
+                                                <span className="font-medium">{option.label}</span>
+                                                {option.price && (
+                                                  <span className="text-sm font-semibold text-primary whitespace-nowrap">
+                                                    €{option.price.toFixed(2)}/{option.unit}
+                                                  </span>
+                                                )}
+                                              </div>
+                                            </SelectItem>
+                                          ))}
+                                          <SelectItem value="__custom__">
+                                            <div className="flex items-center gap-2">
+                                              <span className="font-medium text-primary">
+                                                {language === 'nl' ? '✏️ Anders...' : '✏️ Alte...'}
+                                              </span>
+                                            </div>
+                                          </SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                      {selectedProduct && selectedProduct.price && (
+                                        <p className="text-xs text-muted-foreground mt-1">
+                                          {t('order.form.price')}: €{selectedProduct.price.toFixed(2)} per {selectedProduct.unit}
+                                        </p>
+                                      )}
+                                    </>
+                                  )}
+                                  <FormMessage />
+                                </FormItem>
+                              );
+                            }}
+                          />
 
                         <FormField
                           control={form.control}
@@ -574,7 +640,8 @@ const Order = () => {
                           </Button>
                         )}
                       </div>
-                    ))}
+                    );
+                  })}
 
                     <div className="space-y-3">
                       <Button
