@@ -394,18 +394,19 @@ const ChristmasMenu = () => {
         {/* Additional Menu Items Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
           {additionalMenuItems.map((menu) => (
-        {/* À La Carte Section Header */}
-        <div className="text-center mt-16 mb-12 space-y-4">
-          <h3 className="text-2xl md:text-4xl font-serif font-bold text-white">
-            {t('christmasMenu.alacarte.titlePrefix')} <span className="text-primary">{t('christmasMenu.alacarte.title')}</span>
-          </h3>
-          <p className="text-neutral-400 max-w-2xl mx-auto">
-            {t('christmasMenu.alacarte.subtitle')}
-          </p>
-        </div>
+            <>
+              {/* À La Carte Section Header */}
+              <div className="text-center mt-16 mb-12 space-y-4">
+                <h3 className="text-2xl md:text-4xl font-serif font-bold text-white">
+                  {t('christmasMenu.alacarte.titlePrefix')} <span className="text-primary">{t('christmasMenu.alacarte.title')}</span>
+                </h3>
+                <p className="text-neutral-400 max-w-2xl mx-auto">
+                  {t('christmasMenu.alacarte.subtitle')}
+                </p>
+              </div>
 
-        {/* À La Carte Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {/* À La Carte Cards Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {aLaCarteMenus.map((menu) => (
             <Card 
               key={menu.id} 
@@ -469,6 +470,9 @@ const ChristmasMenu = () => {
                 </Link>
               </CardFooter>
             </Card>
+          ))}
+              </div>
+            </>
           ))}
         </div>
 
