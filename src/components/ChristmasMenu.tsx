@@ -10,6 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import christmasMenu1 from "@/assets/christmas-menu-1.webp";
 import christmasMenu2 from "@/assets/christmas-menu-2.webp";
+import christmasMenu3 from "@/assets/christmas-menu-3.webp";
 
 interface PriceOption {
   persons: number;
@@ -108,14 +109,15 @@ const ChristmasMenu = () => {
         });
       };
 
-      const [image1Base64, image2Base64] = await Promise.all([
+      const [image1Base64, image2Base64, image3Base64] = await Promise.all([
         imageToBase64(christmasMenu1),
         imageToBase64(christmasMenu2),
+        imageToBase64(christmasMenu3),
       ]);
 
       // Call the Supabase Edge Function to generate PDF
       const { data, error } = await supabase.functions.invoke('generate-christmas-menu-pdf', {
-        body: { image1Base64, image2Base64 },
+        body: { image1Base64, image2Base64, image3Base64 },
       });
 
       if (error) {
