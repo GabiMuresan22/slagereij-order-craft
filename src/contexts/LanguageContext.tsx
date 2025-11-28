@@ -455,6 +455,49 @@ const translations = {
     'christmasMenu.menu3.item8': 'Wijn',
     'christmasMenu.menu3.item9': 'Frisdrank',
     
+    // Christmas Menu - Additional Items
+    'christmasMenu.miniBroodjes.title': 'Mini Belegde Broodjes',
+    'christmasMenu.miniBroodjes.description': '€1,70/st',
+    'christmasMenu.miniBroodjes.item1': 'Kipcurry / Vleessalade',
+    'christmasMenu.miniBroodjes.item2': 'Hesp / Salami / Kaas',
+    'christmasMenu.miniBroodjes.item3': 'Tonijn / Préparé',
+    
+    'christmasMenu.dessert.title': 'Dessert / Fruit',
+    'christmasMenu.dessert.description': 'Diverse desserts en fruit',
+    'christmasMenu.dessert.item1': 'Dessertbuffet 1 (3 soorten) €7/pers',
+    'christmasMenu.dessert.item2': 'Dessertbuffet 2 (5 soorten) €12/pers',
+    'christmasMenu.dessert.item3': 'Fruit buffet (6 soorten) €4/pers',
+    'christmasMenu.dessert.item4': 'Meloen – Druiven',
+    'christmasMenu.dessert.item5': 'Ananas – Kiwi',
+    'christmasMenu.dessert.item6': 'Mandarijn – Kaki',
+    
+    'christmasMenu.keuzeDessert.title': 'Keuze Dessert',
+    'christmasMenu.keuzeDessert.description': 'Individuele desserts',
+    'christmasMenu.keuzeDessert.item1': 'Vanille pudding €2',
+    'christmasMenu.keuzeDessert.item2': 'Tiramisu €2,50',
+    'christmasMenu.keuzeDessert.item3': 'Donut €2',
+    'christmasMenu.keuzeDessert.item4': 'Mini donut €1',
+    'christmasMenu.keuzeDessert.item5': 'Macarons €2',
+    
+    'christmasMenu.tapas.title': 'Tapas',
+    'christmasMenu.tapas.description': 'Diverse tapas opties',
+    'christmasMenu.tapas.item1': 'Kinder tapas €9/pers',
+    'christmasMenu.tapas.item2': 'Tapas 2 €30 (4-5 pers)',
+    'christmasMenu.tapas.item3': 'Tapas mix €40 (5-6 pers)',
+    'christmasMenu.tapas.item4': 'Tapas John 1 €50 (5-6 pers)',
+    'christmasMenu.tapas.item5': 'Tapas John 2 €60 (7-9 pers)',
+    'christmasMenu.tapas.item6': 'Roemeense Tapas €40 (5-6 pers)',
+    
+    'christmasMenu.fondue.title': 'Fondue',
+    'christmasMenu.fondue.description': '10 soorten',
+    'christmasMenu.fondue.item1': 'Vanaf €10/pers',
+    
+    'christmasMenu.gourmet.title': 'Gourmet',
+    'christmasMenu.gourmet.description': 'Diverse gourmet opties',
+    'christmasMenu.gourmet.item1': 'Gourmet (9 soorten) €10/pers',
+    'christmasMenu.gourmet.item2': 'Gourmet (10 soorten) €11/pers',
+    'christmasMenu.gourmet.item3': 'Gourmet Luxe (10 soorten) €15/pers',
+    
     // Order - Products List
     'order.products.steak': 'Biefstuk',
     'order.products.roast': 'Rosbief',
@@ -1103,6 +1146,49 @@ const translations = {
     'christmasMenu.menu3.item7': 'Mix de prajituri (3 mini prajituri/p)',
     'christmasMenu.menu3.item8': 'Vin',
     'christmasMenu.menu3.item9': 'Suc',
+    
+    // Christmas Menu - Additional Items
+    'christmasMenu.miniBroodjes.title': 'Mini Sandvișuri',
+    'christmasMenu.miniBroodjes.description': '€1,70/buc',
+    'christmasMenu.miniBroodjes.item1': 'Curry de pui / Salată de carne',
+    'christmasMenu.miniBroodjes.item2': 'Șuncă / Salam / Cașcaval',
+    'christmasMenu.miniBroodjes.item3': 'Ton / Préparé',
+    
+    'christmasMenu.dessert.title': 'Deserturi / Fructe',
+    'christmasMenu.dessert.description': 'Diverse deserturi și fructe',
+    'christmasMenu.dessert.item1': 'Bufet deserturi 1 (3 sortimente) €7/pers',
+    'christmasMenu.dessert.item2': 'Bufet deserturi 2 (5 sortimente) €12/pers',
+    'christmasMenu.dessert.item3': 'Bufet fructe (6 sortimente) €4/pers',
+    'christmasMenu.dessert.item4': 'Pepene galben – Struguri',
+    'christmasMenu.dessert.item5': 'Ananas – Kiwi',
+    'christmasMenu.dessert.item6': 'Mandarine – Kaki',
+    
+    'christmasMenu.keuzeDessert.title': 'Desert la Alegere',
+    'christmasMenu.keuzeDessert.description': 'Deserturi individuale',
+    'christmasMenu.keuzeDessert.item1': 'Budincă de vanilie €2',
+    'christmasMenu.keuzeDessert.item2': 'Tiramisu €2,50',
+    'christmasMenu.keuzeDessert.item3': 'Gogoașă €2',
+    'christmasMenu.keuzeDessert.item4': 'Mini gogoașă €1',
+    'christmasMenu.keuzeDessert.item5': 'Macarons €2',
+    
+    'christmasMenu.tapas.title': 'Tapas',
+    'christmasMenu.tapas.description': 'Diverse opțiuni tapas',
+    'christmasMenu.tapas.item1': 'Tapas pentru copii €9/pers',
+    'christmasMenu.tapas.item2': 'Tapas 2 €30 (4-5 pers)',
+    'christmasMenu.tapas.item3': 'Tapas mix €40 (5-6 pers)',
+    'christmasMenu.tapas.item4': 'Tapas John 1 €50 (5-6 pers)',
+    'christmasMenu.tapas.item5': 'Tapas John 2 €60 (7-9 pers)',
+    'christmasMenu.tapas.item6': 'Tapas Românești €40 (5-6 pers)',
+    
+    'christmasMenu.fondue.title': 'Fondue',
+    'christmasMenu.fondue.description': '10 sortimente',
+    'christmasMenu.fondue.item1': 'De la €10/pers',
+    
+    'christmasMenu.gourmet.title': 'Gourmet',
+    'christmasMenu.gourmet.description': 'Diverse opțiuni gourmet',
+    'christmasMenu.gourmet.item1': 'Gourmet (9 sortimente) €10/pers',
+    'christmasMenu.gourmet.item2': 'Gourmet (10 sortimente) €11/pers',
+    'christmasMenu.gourmet.item3': 'Gourmet Luxe (10 sortimente) €15/pers',
     
     // Order - Products List
     'order.products.steak': 'Mușchi',

@@ -20,7 +20,7 @@ interface PriceOption {
 interface MenuItem {
   id: number;
   titleKey: string;
-  prices: PriceOption[];
+  prices?: PriceOption[];
   descriptionKey: string;
   ingredientKeys: string[];
 }
@@ -85,6 +85,76 @@ const menuItems: MenuItem[] = [
       "christmasMenu.menu3.item7",
       "christmasMenu.menu3.item8",
       "christmasMenu.menu3.item9"
+    ]
+  }
+];
+
+// Additional menu items (simple items without person-based pricing)
+const additionalMenuItems: MenuItem[] = [
+  {
+    id: 4,
+    titleKey: "christmasMenu.miniBroodjes.title",
+    descriptionKey: "christmasMenu.miniBroodjes.description",
+    ingredientKeys: [
+      "christmasMenu.miniBroodjes.item1",
+      "christmasMenu.miniBroodjes.item2",
+      "christmasMenu.miniBroodjes.item3"
+    ]
+  },
+  {
+    id: 5,
+    titleKey: "christmasMenu.dessert.title",
+    descriptionKey: "christmasMenu.dessert.description",
+    ingredientKeys: [
+      "christmasMenu.dessert.item1",
+      "christmasMenu.dessert.item2",
+      "christmasMenu.dessert.item3",
+      "christmasMenu.dessert.item4",
+      "christmasMenu.dessert.item5",
+      "christmasMenu.dessert.item6"
+    ]
+  },
+  {
+    id: 6,
+    titleKey: "christmasMenu.keuzeDessert.title",
+    descriptionKey: "christmasMenu.keuzeDessert.description",
+    ingredientKeys: [
+      "christmasMenu.keuzeDessert.item1",
+      "christmasMenu.keuzeDessert.item2",
+      "christmasMenu.keuzeDessert.item3",
+      "christmasMenu.keuzeDessert.item4",
+      "christmasMenu.keuzeDessert.item5"
+    ]
+  },
+  {
+    id: 7,
+    titleKey: "christmasMenu.tapas.title",
+    descriptionKey: "christmasMenu.tapas.description",
+    ingredientKeys: [
+      "christmasMenu.tapas.item1",
+      "christmasMenu.tapas.item2",
+      "christmasMenu.tapas.item3",
+      "christmasMenu.tapas.item4",
+      "christmasMenu.tapas.item5",
+      "christmasMenu.tapas.item6"
+    ]
+  },
+  {
+    id: 8,
+    titleKey: "christmasMenu.fondue.title",
+    descriptionKey: "christmasMenu.fondue.description",
+    ingredientKeys: [
+      "christmasMenu.fondue.item1"
+    ]
+  },
+  {
+    id: 9,
+    titleKey: "christmasMenu.gourmet.title",
+    descriptionKey: "christmasMenu.gourmet.description",
+    ingredientKeys: [
+      "christmasMenu.gourmet.item1",
+      "christmasMenu.gourmet.item2",
+      "christmasMenu.gourmet.item3"
     ]
   }
 ];
@@ -211,6 +281,53 @@ const ChristmasMenu = () => {
                     ))}
                   </div>
                 )}
+              </CardHeader>
+
+              {/* Card Content */}
+              <CardContent className="flex-grow pt-4">
+                <div className="mb-4 text-center">
+                  <span className="inline-block px-3 py-1 bg-neutral-900 rounded-full text-xs font-semibold text-neutral-300 border border-neutral-700">
+                    {t(menu.descriptionKey)}
+                  </span>
+                </div>
+                
+                <ul className="space-y-3">
+                  {menu.ingredientKeys.map((ingredientKey, idx) => (
+                    <li key={idx} className="flex items-start text-sm text-neutral-300 leading-relaxed">
+                      <span className="mr-3 text-primary mt-1.5 text-[10px]">◆</span>
+                      <span>{t(ingredientKey)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+
+              {/* Card Footer (Optional Order Button) */}
+              <CardFooter className="pt-4 border-t border-neutral-700">
+                <Link to="/order" className="w-full">
+                  <Button 
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold tracking-wide"
+                  >
+                    {t('christmasMenu.orderNow')}
+                  </Button>
+                </Link>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+
+        {/* Additional Menu Items Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+          {additionalMenuItems.map((menu) => (
+            <Card 
+              key={menu.id} 
+              className="bg-neutral-800 border-primary transition-all duration-300 flex flex-col overflow-hidden group"
+            >
+              {/* Card Header */}
+              <CardHeader className="text-center pb-2 relative">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
+                <CardTitle className="text-xl font-serif font-bold text-primary min-h-[2.5rem] flex items-center justify-center">
+                  {t(menu.titleKey)}
+                </CardTitle>
               </CardHeader>
 
               {/* Card Content */}
