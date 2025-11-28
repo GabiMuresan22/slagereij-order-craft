@@ -455,6 +455,59 @@ const translations = {
     'christmasMenu.menu3.item8': 'Wijn',
     'christmasMenu.menu3.item9': 'Frisdrank',
     
+    // Christmas Menu - À La Carte Section
+    'christmasMenu.alacarte.titlePrefix': 'À La Carte',
+    'christmasMenu.alacarte.title': 'Opties',
+    'christmasMenu.alacarte.subtitle': 'Individuele gerechten en hapjes voor uw feestmenu.',
+    
+    // Hapjes (Appetizers)
+    'christmasMenu.hapjes.title': 'Hapjes',
+    'christmasMenu.hapjes.scampi': 'Scampi (2st)',
+    'christmasMenu.hapjes.lepelScampi': 'Lepeltje scampi',
+    'christmasMenu.hapjes.lepelMeloenSerrano': 'Lepeltje meloen & serrano',
+    'christmasMenu.hapjes.lepelPate': 'Lepeltje paté',
+    'christmasMenu.hapjes.lepelGeitenkaas': 'Lepeltje geitenkaas',
+    'christmasMenu.hapjes.lepelZalm': 'Lepeltje zalm',
+    'christmasMenu.hapjes.tacoGehakt': 'Taco gehakt',
+    'christmasMenu.hapjes.tacoKip': 'Taco kip',
+    'christmasMenu.hapjes.bliniZalm': 'Blini\'s met gerookte zalm',
+    'christmasMenu.hapjes.bruschetaGeitenkaas': 'Bruschetta geitenkaas',
+    'christmasMenu.hapjes.bruschetaZalm': 'Bruschetta zalm',
+    'christmasMenu.hapjes.bruschetaTomaat': 'Bruschetta tomaat',
+    'christmasMenu.hapjes.wrapsZalm': 'Wraps zalm',
+    'christmasMenu.hapjes.wrapsHesp': 'Wraps hesp',
+    'christmasMenu.hapjes.wrapsKip': 'Wraps kip',
+    'christmasMenu.hapjes.bulgurFeta': 'Bulgur feta',
+    'christmasMenu.hapjes.bulgurFetaMeloen': 'Bulgur feta & meloen',
+    'christmasMenu.hapjes.bulgurZalm': 'Bulgur zalm',
+    'christmasMenu.hapjes.bulgurGarnaal': 'Bulgur garnaal',
+    'christmasMenu.hapjes.hawaiiSalade': 'Hawaii salade',
+    
+    // Vleeshoofdgerechten (Meat Main Courses)
+    'christmasMenu.vleeshoofdgerechten.title': 'Vleeshoofdgerechten',
+    'christmasMenu.vleeshoofdgerechten.ardeensGebraad': 'Ardeens gebraad in champignonsaus',
+    'christmasMenu.vleeshoofdgerechten.varkenshaasje': 'Varkenshaasje in sausje met spek',
+    'christmasMenu.vleeshoofdgerechten.orloffgebraad': 'Orloffgebraad in kaassaus',
+    'christmasMenu.vleeshoofdgerechten.kalkoen': 'Kalkoen in champignonsaus',
+    'christmasMenu.vleeshoofdgerechten.hamrol': 'Hamrol met witloof in kaassaus',
+    'christmasMenu.vleeshoofdgerechten.kipfilet': 'Kipfilet in curry saus',
+    'christmasMenu.vleeshoofdgerechten.zalm': 'Zalm in bearnaisesaus',
+    
+    // Warme Groenten (Warm Vegetables)
+    'christmasMenu.warmeGroenten.title': 'Warme Groenten',
+    'christmasMenu.warmeGroenten.description': '€5/pers',
+    'christmasMenu.warmeGroenten.bloemkool': 'Bloemkool',
+    'christmasMenu.warmeGroenten.boontjes': 'Boontjes',
+    'christmasMenu.warmeGroenten.wortel': 'Wortel',
+    'christmasMenu.warmeGroenten.witloofSpek': 'Witloof met spek',
+    
+    // Soep (Soup)
+    'christmasMenu.soep.title': 'Soep',
+    'christmasMenu.soep.tomatensoep': 'Tomatensoep',
+    'christmasMenu.soep.tomatensoepBalletjes': 'Tomatensoep met balletjes',
+    'christmasMenu.soep.pompoensoep': 'Pompoensoep',
+    'christmasMenu.soep.broccolisoep': 'Broccolisoep',
+    
     // Order - Products List
     'order.products.steak': 'Biefstuk',
     'order.products.roast': 'Rosbief',
@@ -1103,6 +1156,59 @@ const translations = {
     'christmasMenu.menu3.item7': 'Mix de prajituri (3 mini prajituri/p)',
     'christmasMenu.menu3.item8': 'Vin',
     'christmasMenu.menu3.item9': 'Suc',
+    
+    // Christmas Menu - À La Carte Section
+    'christmasMenu.alacarte.titlePrefix': 'À La Carte',
+    'christmasMenu.alacarte.title': 'Opțiuni',
+    'christmasMenu.alacarte.subtitle': 'Preparate și aperitive individuale pentru meniul dvs. festiv.',
+    
+    // Hapjes (Aperitive)
+    'christmasMenu.hapjes.title': 'Aperitive',
+    'christmasMenu.hapjes.scampi': 'Scampi (2 buc)',
+    'christmasMenu.hapjes.lepelScampi': 'Lingurică scampi',
+    'christmasMenu.hapjes.lepelMeloenSerrano': 'Lingurică pepene & serrano',
+    'christmasMenu.hapjes.lepelPate': 'Lingurică pate',
+    'christmasMenu.hapjes.lepelGeitenkaas': 'Lingurică brânză de capră',
+    'christmasMenu.hapjes.lepelZalm': 'Lingurică somon',
+    'christmasMenu.hapjes.tacoGehakt': 'Taco carne tocată',
+    'christmasMenu.hapjes.tacoKip': 'Taco pui',
+    'christmasMenu.hapjes.bliniZalm': 'Blini cu somon afumat',
+    'christmasMenu.hapjes.bruschetaGeitenkaas': 'Bruschetta brânză de capră',
+    'christmasMenu.hapjes.bruschetaZalm': 'Bruschetta somon',
+    'christmasMenu.hapjes.bruschetaTomaat': 'Bruschetta roșii',
+    'christmasMenu.hapjes.wrapsZalm': 'Wraps somon',
+    'christmasMenu.hapjes.wrapsHesp': 'Wraps șuncă',
+    'christmasMenu.hapjes.wrapsKip': 'Wraps pui',
+    'christmasMenu.hapjes.bulgurFeta': 'Bulgur feta',
+    'christmasMenu.hapjes.bulgurFetaMeloen': 'Bulgur feta & pepene',
+    'christmasMenu.hapjes.bulgurZalm': 'Bulgur somon',
+    'christmasMenu.hapjes.bulgurGarnaal': 'Bulgur creveți',
+    'christmasMenu.hapjes.hawaiiSalade': 'Salată Hawaii',
+    
+    // Vleeshoofdgerechten (Feluri Principale de Carne)
+    'christmasMenu.vleeshoofdgerechten.title': 'Feluri Principale',
+    'christmasMenu.vleeshoofdgerechten.ardeensGebraad': 'Friptură ardelenească în sos de ciuperci',
+    'christmasMenu.vleeshoofdgerechten.varkenshaasje': 'Mușchiuleț de porc în sos cu bacon',
+    'christmasMenu.vleeshoofdgerechten.orloffgebraad': 'Friptură Orloff în sos de brânză',
+    'christmasMenu.vleeshoofdgerechten.kalkoen': 'Curcan în sos de ciuperci',
+    'christmasMenu.vleeshoofdgerechten.hamrol': 'Rulou de șuncă cu andive în sos de brânză',
+    'christmasMenu.vleeshoofdgerechten.kipfilet': 'Piept de pui în sos curry',
+    'christmasMenu.vleeshoofdgerechten.zalm': 'Somon în sos bearnaise',
+    
+    // Warme Groenten (Legume Calde)
+    'christmasMenu.warmeGroenten.title': 'Legume Calde',
+    'christmasMenu.warmeGroenten.description': '€5/pers',
+    'christmasMenu.warmeGroenten.bloemkool': 'Conopidă',
+    'christmasMenu.warmeGroenten.boontjes': 'Fasole verde',
+    'christmasMenu.warmeGroenten.wortel': 'Morcov',
+    'christmasMenu.warmeGroenten.witloofSpek': 'Andive cu bacon',
+    
+    // Soep (Supă)
+    'christmasMenu.soep.title': 'Supă',
+    'christmasMenu.soep.tomatensoep': 'Supă de roșii',
+    'christmasMenu.soep.tomatensoepBalletjes': 'Supă de roșii cu chifteluțe',
+    'christmasMenu.soep.pompoensoep': 'Supă de dovleac',
+    'christmasMenu.soep.broccolisoep': 'Supă de broccoli',
     
     // Order - Products List
     'order.products.steak': 'Mușchi',
