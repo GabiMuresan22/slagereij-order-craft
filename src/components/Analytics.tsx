@@ -7,7 +7,8 @@ export const Analytics = () => {
 
   useEffect(() => {
     // Only track if GA4 measurement ID is configured and analytics consent is given
-    const measurementId = import.meta.env.VITE_GA4_MEASUREMENT_ID;
+    // Use environment variable if set, otherwise use default tracking ID
+    const measurementId = import.meta.env.VITE_GA4_MEASUREMENT_ID || 'G-XGNKV7Y3EY';
     
     if (!measurementId || typeof window === 'undefined' || !window.gtag) {
       return;
@@ -40,7 +41,8 @@ export const trackEvent = async (
   eventName: string,
   eventParams?: Record<string, unknown>
 ) => {
-  const measurementId = import.meta.env.VITE_GA4_MEASUREMENT_ID;
+  // Use environment variable if set, otherwise use default tracking ID
+  const measurementId = import.meta.env.VITE_GA4_MEASUREMENT_ID || 'G-XGNKV7Y3EY';
   
   if (!measurementId || typeof window === 'undefined' || !window.gtag) {
     return;
