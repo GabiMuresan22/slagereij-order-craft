@@ -1,80 +1,17 @@
-  import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ShoppingBag, Clock, Award, Download } from "lucide-react";
-import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
-import { trackMenuDownload } from "@/components/Analytics";
+import { ShoppingBag, Clock, Award } from "lucide-react";
 import heroImageDesktop from "@/assets/hero-steak.webp";
 import heroImageMobile from "@/assets/hero-steak-mobile.webp";
-import christmasMenu1 from "@/assets/christmas-menu-1.webp";
-import christmasMenu2 from "@/assets/christmas-menu-2.webp";
 import Testimonials from "@/components/Testimonials";
+import ChristmasMenu from "@/components/ChristmasMenu";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getLocalBusinessSchema, getReviewsSchema } from "@/lib/structuredData";
 
 const Home = () => {
   const { t } = useLanguage();
-  const [isDownloading, setIsDownloading] = useState(false);
-
-  const handleDownloadPDF = async () => {
-    try {
-      setIsDownloading(true);
-      toast.info("PDF wordt gegenereerd...");
-
-      // Convert images to base64
-      const imageToBase64 = async (url: string): Promise<string> => {
-        const response = await fetch(url);
-        const blob = await response.blob();
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result as string);
-          reader.onerror = reject;
-          reader.readAsDataURL(blob);
-        });
-      };
-
-      const [image1Base64, image2Base64] = await Promise.all([
-        imageToBase64(christmasMenu1),
-        imageToBase64(christmasMenu2),
-      ]);
-
-      // Call the edge function with base64 data
-      const { data, error } = await supabase.functions.invoke("generate-christmas-menu-pdf", {
-        body: { image1Base64, image2Base64 },
-      });
-
-      if (error) throw error;
-
-      // Create blob from response
-      const blob = new Blob([data], { type: "application/pdf" });
-
-      // Create download link
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "Menu-Kerst-Nieuwjaar-Slagerij-John.pdf";
-      document.body.appendChild(a);
-      a.click();
-
-      // Cleanup
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-
-      // Track download event
-      trackMenuDownload();
-
-      toast.success("PDF gedownload!");
-    } catch (error) {
-      console.error("Error downloading PDF:", error);
-      toast.error("Fout bij downloaden van PDF");
-    } finally {
-      setIsDownloading(false);
-    }
-  };
-
   const structuredData = [getLocalBusinessSchema(), getReviewsSchema()];
 
   return (
@@ -132,66 +69,7 @@ const Home = () => {
       </section>
 
       {/* Christmas Menu Section */}
-      <section className="py-16 bg-gradient-to-b from-primary/5 to-background">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-center mb-3 text-foreground">
-            {t("home.christmas.title")}
-          </h2>
-          <p className="text-center text-muted-foreground mb-12 text-base md:text-lg">{t("home.christmas.period")}</p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <Card className="overflow-hidden hover:shadow-2xl transition-shadow border-primary/20">
-              <CardContent className="p-0">
-                <img
-                  src={christmasMenu1}
-                  alt="Menu Kerst Nieuwjaar - Tapas en Desserts"
-                  className="w-full h-auto"
-                  loading="lazy"
-                  width="800"
-                  height="1067"
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden hover:shadow-2xl transition-shadow border-primary/20">
-              <CardContent className="p-0">
-                <img
-                  src={christmasMenu2}
-                  alt="Menu Kerst Nieuwjaar - Hapjes en Hoofdgerechten"
-                  className="w-full h-auto"
-                  loading="lazy"
-                  width="800"
-                  height="1067"
-                />
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="text-center mt-8">
-            <p className="text-muted-foreground mb-4">{t("home.christmas.info")}</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={handleDownloadPDF}
-                disabled={isDownloading}
-                className="text-lg px-8 py-6"
-              >
-                <Download className="mr-2 h-5 w-5" />
-                {isDownloading ? t("home.christmas.downloading") : t("home.christmas.download")}
-              </Button>
-              <Link to="/order">
-                <Button
-                  size="lg"
-                  className="text-lg px-8 py-6 w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90"
-                >
-                  {t("home.hero.cta")}
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ChristmasMenu />
 
       {/* Features */}
       <section className="py-16 bg-background">

@@ -15,14 +15,14 @@ const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB max per image
 const MAX_BASE64_SIZE = 15 * 1024 * 1024; // ~15MB base64 (accounts for encoding overhead)
 const MAX_RATE_LIMIT_ENTRIES = 10000; // Prevent memory exhaustion
 
-// Zod validation schema
+// Zod validation schema - only JPEG and PNG are supported by pdf-lib
 const base64ImageSchema = z.string()
   .refine((val) => {
     if (!val || typeof val !== 'string') return false;
     // Check base64 format (should start with data:image/...;base64,)
-    const base64ImageRegex = /^data:image\/(jpeg|jpg|png|webp);base64,/i;
+    const base64ImageRegex = /^data:image\/(jpeg|jpg|png);base64,/i;
     return base64ImageRegex.test(val);
-  }, { message: 'Invalid base64 image format. Must be JPEG, PNG, or WebP.' })
+  }, { message: 'Invalid base64 image format. Must be JPEG or PNG (WEBP not supported).' })
   .refine((val) => {
     // Check size (base64 is ~33% larger than binary)
     return val.length <= MAX_BASE64_SIZE;
@@ -47,6 +47,7 @@ const base64ImageSchema = z.string()
 const pdfRequestSchema = z.object({
   image1Base64: base64ImageSchema,
   image2Base64: base64ImageSchema,
+  image3Base64: base64ImageSchema,
 });
 
 const getClientIP = (req: Request): string => {
@@ -177,7 +178,7 @@ serve(async (req) => {
       );
     }
 
-    const { image1Base64, image2Base64 } = validationResult.data;
+    const { image1Base64, image2Base64, image3Base64 } = validationResult.data;
 
     console.log('Processing base64 images...');
 
@@ -199,19 +200,32 @@ serve(async (req) => {
 
     const image1Bytes = base64ToBytes(image1Base64);
     const image2Bytes = base64ToBytes(image2Base64);
+    const image3Bytes = base64ToBytes(image3Base64);
 
     console.log('Embedding images in PDF...');
 
     // Create a new PDF document
     const pdfDoc = await PDFDocument.create();
 
-    // Embed the images
-    const image1 = await pdfDoc.embedJpg(image1Bytes);
-    const image2 = await pdfDoc.embedJpg(image2Bytes);
+    // Helper function to embed image based on format
+    const embedImage = async (imageBytes: Uint8Array, base64String: string) => {
+      const mimeType = base64String.split(';')[0].split(':')[1];
+      if (mimeType.includes('png')) {
+        return await pdfDoc.embedPng(imageBytes);
+      } else {
+        return await pdfDoc.embedJpg(imageBytes);
+      }
+    };
+
+    // Embed the images with format detection
+    const image1 = await embedImage(image1Bytes, image1Base64);
+    const image2 = await embedImage(image2Bytes, image2Base64);
+    const image3 = await embedImage(image3Bytes, image3Base64);
 
     // Get image dimensions
     const image1Dims = image1.scale(1);
     const image2Dims = image2.scale(1);
+    const image3Dims = image3.scale(1);
 
     // Calculate scale to fit A4 page (595 x 842 points)
     const pageWidth = 595;
@@ -226,6 +240,9 @@ serve(async (req) => {
     
     const scale2 = availableWidth / image2Dims.width;
     const scaledHeight2 = image2Dims.height * scale2;
+
+    const scale3 = availableWidth / image3Dims.width;
+    const scaledHeight3 = image3Dims.height * scale3;
 
     // Add first page with first image
     const page1 = pdfDoc.addPage([pageWidth, pageHeight]);
@@ -243,6 +260,15 @@ serve(async (req) => {
       y: pageHeight - margin - scaledHeight2,
       width: availableWidth,
       height: scaledHeight2,
+    });
+
+    // Add third page with third image
+    const page3 = pdfDoc.addPage([pageWidth, pageHeight]);
+    page3.drawImage(image3, {
+      x: margin,
+      y: pageHeight - margin - scaledHeight3,
+      width: availableWidth,
+      height: scaledHeight3,
     });
 
     console.log('Saving PDF...');
