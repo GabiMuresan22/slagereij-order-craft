@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ShoppingBag, Clock, Award, AlertCircle } from "lucide-react";
+import { ShoppingBag, Clock, Award, AlertCircle, X } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import heroImageDesktop from "@/assets/hero-steak.webp";
 import heroImageMobile from "@/assets/hero-steak-mobile.webp";
@@ -14,6 +15,16 @@ import { getLocalBusinessSchema, getReviewsSchema } from "@/lib/structuredData";
 const Home = () => {
   const { t } = useLanguage();
   const structuredData = [getLocalBusinessSchema(), getReviewsSchema()];
+  const [showAlert, setShowAlert] = useState(true);
+
+  // Auto-dismiss alert after 30 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 30000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -27,13 +38,22 @@ const Home = () => {
         <link rel="preload" as="image" href={heroImageMobile} media="(max-width: 767px)" />
       </SEO>
       {/* Closure Alert */}
-      <Alert className="rounded-none border-x-0 bg-primary/10 border-primary text-primary [&>svg]:text-primary">
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>{t("home.alert.title")}</AlertTitle>
-        <AlertDescription className="text-primary/90">
-          {t("home.alert.description")}
-        </AlertDescription>
-      </Alert>
+      {showAlert && (
+        <Alert className="rounded-none border-x-0 bg-primary/10 border-primary text-primary [&>svg]:text-primary relative">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>{t("home.alert.title")}</AlertTitle>
+          <AlertDescription className="text-primary/90">
+            {t("home.alert.description")}
+          </AlertDescription>
+          <button
+            onClick={() => setShowAlert(false)}
+            className="absolute right-4 top-4 text-primary hover:text-primary/70 transition-colors"
+            aria-label="Close alert"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </Alert>
+      )}
 
       {/* Hero Section */}
       <section className="relative h-[550px] md:h-[650px] flex items-start justify-center overflow-hidden">
