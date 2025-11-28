@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ShoppingBag, Clock, Award } from "lucide-react";
+import { ShoppingBag, Clock, Award, AlertCircle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import heroImageDesktop from "@/assets/hero-steak.webp";
 import heroImageMobile from "@/assets/hero-steak-mobile.webp";
 import Testimonials from "@/components/Testimonials";
@@ -25,6 +26,15 @@ const Home = () => {
         <link rel="preload" as="image" href={heroImageDesktop} media="(min-width: 768px)" />
         <link rel="preload" as="image" href={heroImageMobile} media="(max-width: 767px)" />
       </SEO>
+      {/* Closure Alert */}
+      <Alert variant="destructive" className="rounded-none border-x-0">
+        <AlertCircle className="h-4 w-4" />
+        <AlertTitle>Belangrijke Mededeling</AlertTitle>
+        <AlertDescription>
+          Wij zijn tijdelijk gesloten. Excuses voor het ongemak.
+        </AlertDescription>
+      </Alert>
+
       {/* Hero Section */}
       <section className="relative h-[550px] md:h-[650px] flex items-start justify-center overflow-hidden">
         {/* Hero Image - Optimized for LCP with responsive images */}

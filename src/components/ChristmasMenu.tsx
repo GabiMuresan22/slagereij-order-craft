@@ -391,9 +391,6 @@ const ChristmasMenu = () => {
           ))}
         </div>
 
-        {/* Additional Menu Items Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-          {additionalMenuItems.map((menu) => (
         {/* À La Carte Section Header */}
         <div className="text-center mt-16 mb-12 space-y-4">
           <h3 className="text-2xl md:text-4xl font-serif font-bold text-white">
@@ -417,9 +414,6 @@ const ChristmasMenu = () => {
                 <CardTitle className="text-xl font-serif font-bold text-primary min-h-[2.5rem] flex items-center justify-center">
                   {t(menu.titleKey)}
                 </CardTitle>
-                <CardTitle className="text-xl font-serif font-bold text-primary min-h-[3rem] flex items-center justify-center">
-                  {t(menu.titleKey)}
-                </CardTitle>
                 {menu.descriptionKey && (
                   <div className="mt-2">
                     <span className="inline-block px-3 py-1 bg-neutral-900 rounded-full text-xs font-semibold text-neutral-300 border border-neutral-700">
@@ -431,17 +425,6 @@ const ChristmasMenu = () => {
 
               {/* Card Content */}
               <CardContent className="flex-grow pt-4">
-                <div className="mb-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-neutral-900 rounded-full text-xs font-semibold text-neutral-300 border border-neutral-700">
-                    {t(menu.descriptionKey)}
-                  </span>
-                </div>
-                
-                <ul className="space-y-3">
-                  {menu.ingredientKeys.map((ingredientKey, idx) => (
-                    <li key={idx} className="flex items-start text-sm text-neutral-300 leading-relaxed">
-                      <span className="mr-3 text-primary mt-1.5 text-[10px]">◆</span>
-                      <span>{t(ingredientKey)}</span>
                 <ul className="space-y-2">
                   {menu.items.map((item, idx) => (
                     <li key={idx} className="flex items-center justify-between text-sm text-neutral-300">
@@ -457,7 +440,6 @@ const ChristmasMenu = () => {
                 </ul>
               </CardContent>
 
-              {/* Card Footer (Optional Order Button) */}
               {/* Card Footer */}
               <CardFooter className="pt-4 border-t border-neutral-700">
                 <Link to="/order" className="w-full">
