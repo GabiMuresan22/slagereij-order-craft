@@ -72,10 +72,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Christmas Menu Section - Only show for Romanian language */}
-      {language === 'ro' && (
-        <ChristmasMenu />
-      )}
+      {/* Christmas Menu Section - Show for both languages, content varies by language */}
+      <ChristmasMenu />
 
       {/* Features */}
       <section className="py-16 bg-background">
