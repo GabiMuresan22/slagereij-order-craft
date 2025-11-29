@@ -516,7 +516,7 @@ const Order = () => {
                                     <button
                                       type="button"
                                       onClick={handleToggleCustom}
-                                      className="text-[#FFC107] hover:underline transition-all cursor-pointer font-normal"
+                                      className="text-yellow-600 dark:text-yellow-500 hover:underline transition-all cursor-pointer font-normal"
                                       style={{ fontSize: '0.85rem', textDecoration: 'none' }}
                                     >
                                       {isCustomItem ? t('order.form.backToMenu') : t('order.form.customProductToggle')}

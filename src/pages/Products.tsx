@@ -27,6 +27,7 @@ const Products = () => {
       titleKey: "products.beef.title",
       subtitleKey: "products.beef.subtitle",
       image: tomatoImage,
+      imageLabelKey: "products.beef.imageLabel",
       itemKeys: [
         "products.beef.item1",
         "products.beef.item2",
@@ -41,6 +42,7 @@ const Products = () => {
       titleKey: "products.pork.title",
       subtitleKey: "products.pork.subtitle",
       image: porkImage,
+      imageLabelKey: "products.pork.imageLabel",
       itemKeys: [
         "products.pork.item1",
         "products.pork.item2",
@@ -55,6 +57,7 @@ const Products = () => {
       titleKey: "products.poultry.title",
       subtitleKey: "products.poultry.subtitle",
       image: poultryImage,
+      imageLabelKey: "products.poultry.imageLabel",
       itemKeys: [
         "products.poultry.item1",
         "products.poultry.item2",
@@ -69,6 +72,7 @@ const Products = () => {
       titleKey: "products.bbq.title",
       subtitleKey: "products.bbq.subtitle",
       image: bbqGrillImage,
+      imageLabelKey: "products.bbq.imageLabel",
       itemKeys: [
         "products.bbq.item1",
         "products.bbq.item2",
@@ -112,7 +116,7 @@ const Products = () => {
                       className="absolute inset-0 bg-cover bg-center"
                       style={{ backgroundImage: `url(${category.image})` }}
                       role="img"
-                      aria-label={t(category.titleKey)}
+                      aria-label={t(category.imageLabelKey)}
                     />
 
                   </div>
@@ -161,7 +165,7 @@ const Products = () => {
                   className="absolute inset-0 bg-cover bg-center"
                   style={{ backgroundImage: `url(${specialtyImage})` }}
                   role="img"
-                  aria-label={t("products.specialties.title")}
+                  aria-label={t("products.specialties.imageLabel")}
                 />
 
               </div>
