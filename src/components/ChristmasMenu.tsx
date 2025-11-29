@@ -42,6 +42,7 @@ const aLaCarteMenus: ALaCarteMenu[] = [
   {
     id: 'hapjes',
     titleKey: 'christmasMenu.hapjes.title',
+    descriptionKey: 'christmasMenu.hapjes.description',
     items: [
       { nameKey: 'christmasMenu.hapjes.scampi', price: '€4' },
       { nameKey: 'christmasMenu.hapjes.lepelScampi', price: '€2' },
@@ -68,6 +69,7 @@ const aLaCarteMenus: ALaCarteMenu[] = [
   {
     id: 'vleeshoofdgerechten',
     titleKey: 'christmasMenu.vleeshoofdgerechten.title',
+    descriptionKey: 'christmasMenu.vleeshoofdgerechten.description',
     items: [
       { nameKey: 'christmasMenu.vleeshoofdgerechten.ardeensGebraad', price: '€6,50' },
       { nameKey: 'christmasMenu.vleeshoofdgerechten.varkenshaasje', price: '€8' },
@@ -92,6 +94,7 @@ const aLaCarteMenus: ALaCarteMenu[] = [
   {
     id: 'soep',
     titleKey: 'christmasMenu.soep.title',
+    descriptionKey: 'christmasMenu.soep.description',
     items: [
       { nameKey: 'christmasMenu.soep.tomatensoep', price: '€5,20/l' },
       { nameKey: 'christmasMenu.soep.tomatensoepBalletjes', price: '€5,60/l' },
