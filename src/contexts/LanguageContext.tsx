@@ -549,7 +549,7 @@ const translations = {
     
     // Soep (Soup)
     'christmasMenu.soep.title': 'Soep',
-    'christmasMenu.soep.description': 'Prijs/l',
+    'christmasMenu.soep.description': 'Prijs/pers',
     'christmasMenu.soep.tomatensoep': 'Tomatensoep',
     'christmasMenu.soep.tomatensoepBalletjes': 'Tomatensoep met balletjes',
     'christmasMenu.soep.pompoensoep': 'Pompoensoep',
@@ -1298,7 +1298,7 @@ const translations = {
     
     // Soep (Supă)
     'christmasMenu.soep.title': 'Supă',
-    'christmasMenu.soep.description': 'Preț/l',
+    'christmasMenu.soep.description': 'Preț/pers',
     'christmasMenu.soep.tomatensoep': 'Supă de roșii',
     'christmasMenu.soep.tomatensoepBalletjes': 'Supă de roșii cu chifteluțe',
     'christmasMenu.soep.pompoensoep': 'Supă de dovleac',
