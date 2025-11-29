@@ -499,6 +499,12 @@ const translations = {
     'christmasMenu.gourmet.item1': 'Gourmet (9 soorten) €10/pers',
     'christmasMenu.gourmet.item2': 'Gourmet (10 soorten) €11/pers',
     'christmasMenu.gourmet.item3': 'Gourmet Luxe (10 soorten) €15/pers',
+    
+    // Christmas Menu - Additional Items Section
+    'christmasMenu.additional.titlePrefix': 'Extra',
+    'christmasMenu.additional.title': 'Menu Opties',
+    'christmasMenu.additional.subtitle': 'Broodjes, desserts, tapas en meer voor uw feestmenu.',
+    
     // Christmas Menu - À La Carte Section
     'christmasMenu.alacarte.titlePrefix': 'À La Carte',
     'christmasMenu.alacarte.title': 'Opties',
@@ -1248,6 +1254,12 @@ const translations = {
     'christmasMenu.gourmet.item1': 'Gourmet (9 sortimente) €10/pers',
     'christmasMenu.gourmet.item2': 'Gourmet (10 sortimente) €11/pers',
     'christmasMenu.gourmet.item3': 'Gourmet Luxe (10 sortimente) €15/pers',
+    
+    // Christmas Menu - Additional Items Section
+    'christmasMenu.additional.titlePrefix': 'Extra',
+    'christmasMenu.additional.title': 'Opțiuni Meniu',
+    'christmasMenu.additional.subtitle': 'Sandvișuri, deserturi, tapas și multe altele pentru meniul dvs. festiv.',
+    
     // Christmas Menu - À La Carte Section
     'christmasMenu.alacarte.titlePrefix': 'À La Carte',
     'christmasMenu.alacarte.title': 'Opțiuni',
