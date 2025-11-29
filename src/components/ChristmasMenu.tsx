@@ -239,7 +239,7 @@ const additionalMenuItems: MenuItem[] = [
 ];
 
 const ChristmasMenu = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { toast } = useToast();
   const [isDownloading, setIsDownloading] = useState(false);
 
@@ -323,62 +323,64 @@ const ChristmasMenu = () => {
           </p>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {menuItems.map((menu) => (
-            <Card 
-              key={menu.id} 
-              className="bg-neutral-800 border-primary transition-all duration-300 flex flex-col overflow-hidden group"
-            >
-              {/* Card Header */}
-              <CardHeader className="text-center pb-2 relative">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
-                <CardTitle className="text-xl font-serif font-bold text-primary min-h-[3.5rem] flex items-center justify-center">
-                  {t(menu.titleKey)}
-                </CardTitle>
-                {menu.prices && (
-                  <div className="flex flex-wrap items-center justify-center gap-3 mt-3">
-                    {menu.prices.map((priceOption, idx) => (
-                      <div key={idx} className="flex flex-col items-center px-3 py-1 bg-neutral-900 rounded-lg border border-neutral-700">
-                        <span className="text-lg font-bold text-white">{priceOption.price}</span>
-                        <span className="text-xs text-neutral-400">{priceOption.persons} {t('christmasMenu.persons')}</span>
-                      </div>
-                    ))}
+        {/* Cards Grid - Only show main menus for Romanian language */}
+        {language === 'ro' && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {menuItems.map((menu) => (
+              <Card 
+                key={menu.id} 
+                className="bg-neutral-800 border-primary transition-all duration-300 flex flex-col overflow-hidden group"
+              >
+                {/* Card Header */}
+                <CardHeader className="text-center pb-2 relative">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
+                  <CardTitle className="text-xl font-serif font-bold text-primary min-h-[3.5rem] flex items-center justify-center">
+                    {t(menu.titleKey)}
+                  </CardTitle>
+                  {menu.prices && (
+                    <div className="flex flex-wrap items-center justify-center gap-3 mt-3">
+                      {menu.prices.map((priceOption, idx) => (
+                        <div key={idx} className="flex flex-col items-center px-3 py-1 bg-neutral-900 rounded-lg border border-neutral-700">
+                          <span className="text-lg font-bold text-white">{priceOption.price}</span>
+                          <span className="text-xs text-neutral-400">{priceOption.persons} {t('christmasMenu.persons')}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </CardHeader>
+
+                {/* Card Content */}
+                <CardContent className="flex-grow pt-4">
+                  <div className="mb-4 text-center">
+                    <span className="inline-block px-3 py-1 bg-neutral-900 rounded-full text-xs font-semibold text-neutral-300 border border-neutral-700">
+                      {t(menu.descriptionKey)}
+                    </span>
                   </div>
-                )}
-              </CardHeader>
+                  
+                  <ul className="space-y-3">
+                    {menu.ingredientKeys.map((ingredientKey, idx) => (
+                      <li key={idx} className="flex items-start text-sm text-neutral-300 leading-relaxed">
+                        <span className="mr-3 text-primary mt-1.5 text-[10px]">◆</span>
+                        <span>{t(ingredientKey)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
 
-              {/* Card Content */}
-              <CardContent className="flex-grow pt-4">
-                <div className="mb-4 text-center">
-                  <span className="inline-block px-3 py-1 bg-neutral-900 rounded-full text-xs font-semibold text-neutral-300 border border-neutral-700">
-                    {t(menu.descriptionKey)}
-                  </span>
-                </div>
-                
-                <ul className="space-y-3">
-                  {menu.ingredientKeys.map((ingredientKey, idx) => (
-                    <li key={idx} className="flex items-start text-sm text-neutral-300 leading-relaxed">
-                      <span className="mr-3 text-primary mt-1.5 text-[10px]">◆</span>
-                      <span>{t(ingredientKey)}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-
-              {/* Card Footer (Optional Order Button) */}
-              <CardFooter className="pt-4 border-t border-neutral-700">
-                <Link to="/order" className="w-full">
-                  <Button 
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold tracking-wide"
-                  >
-                    {t('christmasMenu.orderNow')}
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
+                {/* Card Footer (Optional Order Button) */}
+                <CardFooter className="pt-4 border-t border-neutral-700">
+                  <Link to="/order" className="w-full">
+                    <Button 
+                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold tracking-wide"
+                    >
+                      {t('christmasMenu.orderNow')}
+                    </Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        )}
 
         {/* À La Carte Section Header */}
         <div className="text-center mt-16 mb-12 space-y-4">
