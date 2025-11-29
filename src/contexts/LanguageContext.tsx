@@ -26,7 +26,7 @@ const translations = {
     
     // Home Page
     'home.alert.title': 'Belangrijke Mededeling',
-    'home.alert.description': 'Wij zijn gesloten tot 30.11.2025. Excuses voor het ongemak.',
+    'home.alert.description': 'Op 30 november is de winkel gesloten, we zijn te vinden in Roeselare (8800), Acaciastraat 6. We nodigen je uit om samen met ons de nationale feestdag van Roemenië te vieren.',
     'home.hero.title': 'Uw Kwaliteitsslager in Zwevezele',
     'home.hero.subtitle': 'Traditioneel ambacht\nmet moderne service',
     'home.hero.cta': 'Bestel Nu Online',
@@ -781,7 +781,7 @@ const translations = {
     
     // Home Page
     'home.alert.title': 'Anunț Important',
-    'home.alert.description': 'Suntem închiși până la 30.11.2025. Ne cerem scuze pentru inconveniență.',
+    'home.alert.description': 'Pe 30 noiembrie magazinul este închis, ne găsiți în Roeselare (8800), Acaciastraat 6. Te invităm să sărbătorești alături de noi Ziua Națională a României.',
     'home.hero.title': 'Măcelarul Dvs. de Calitate în Zwevezele',
     'home.hero.subtitle': 'Meșteșug tradițional\ncu servicii moderne',
     'home.hero.cta': 'Comandă Acum Online',
