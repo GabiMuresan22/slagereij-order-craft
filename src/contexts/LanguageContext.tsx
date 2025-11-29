@@ -599,6 +599,9 @@ const translations = {
     'order.form.notes': 'Opmerkingen',
     'order.form.notesPlaceholder': 'Speciale wensen of opmerkingen...',
     'order.form.price': 'Prijs',
+    'order.form.customProductToggle': 'Niet in de lijst?',
+    'order.form.backToMenu': 'Terug naar lijst',
+    'order.form.customProductPlaceholder': 'Beschrijf wat u wilt bestellen...',
     'order.form.consent': 'Ik ga akkoord met de verwerking van mijn persoonsgegevens volgens het',
     'order.form.privacyNotice': 'Uw persoonlijke gegevens worden verwerkt volgens ons privacybeleid. U heeft recht op toegang, correctie of verwijdering van uw gegevens.',
     
@@ -1343,6 +1346,9 @@ const translations = {
     'order.form.notes': 'Observații',
     'order.form.notesPlaceholder': 'Dorințe speciale sau observații...',
     'order.form.price': 'Preț',
+    'order.form.customProductToggle': 'Nu e în listă?',
+    'order.form.backToMenu': 'Înapoi la listă',
+    'order.form.customProductPlaceholder': 'Descrieți ce doriți să comandați...',
     'order.form.consent': 'Sunt de acord cu procesarea datelor mele personale conform',
     'order.form.privacyNotice': 'Datele dumneavoastră personale sunt procesate conform politicii noastre de confidențialitate. Aveți dreptul de acces, corectare sau ștergere a datelor.',
     
