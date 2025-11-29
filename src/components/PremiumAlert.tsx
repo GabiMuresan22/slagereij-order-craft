@@ -41,7 +41,7 @@ const PremiumAlert = () => {
     <div
       className={`
         fixed left-0 w-full z-[99999]
-        bg-[#111] border-b-2 border-primary
+        bg-neutral-900 border-b-2 border-primary
         text-white shadow-[0_4px_15px_rgba(0,0,0,0.6)]
         font-sans transition-[top] duration-500 ease-in-out
         ${isVisible ? 'top-0' : '-top-[100px]'}
@@ -56,7 +56,7 @@ const PremiumAlert = () => {
             <strong className="text-primary uppercase text-xs md:text-sm tracking-wider mb-0.5 md:mb-0">
               {t('home.alert.title')}
             </strong>
-            <span className="text-[13px] md:text-sm text-[#f0f0f0]">
+            <span className="text-[13px] md:text-sm text-neutral-100">
               {t('home.alert.description')}
             </span>
           </div>
