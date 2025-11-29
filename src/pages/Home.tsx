@@ -12,7 +12,7 @@ import SEO from "@/components/SEO";
 import { getLocalBusinessSchema, getReviewsSchema } from "@/lib/structuredData";
 
 const Home = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const structuredData = [getLocalBusinessSchema(), getReviewsSchema()];
 
   return (
@@ -72,8 +72,10 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Christmas Menu Section */}
-      <ChristmasMenu />
+      {/* Christmas Menu Section - Only show for Romanian language */}
+      {language === 'ro' && (
+        <ChristmasMenu />
+      )}
 
       {/* Features */}
       <section className="py-16 bg-background">
