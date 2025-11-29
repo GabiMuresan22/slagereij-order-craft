@@ -64,8 +64,15 @@ const Contact = () => {
   const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
     try {
+      // Add consent proof with timestamp for GDPR compliance
+      const payload = {
+        ...data,
+        consent_given: true,
+        consent_timestamp: new Date().toISOString(),
+      };
+      
       const { error } = await supabase.functions.invoke('send-contact-email', {
-        body: data,
+        body: payload,
       });
 
       if (error) throw error;

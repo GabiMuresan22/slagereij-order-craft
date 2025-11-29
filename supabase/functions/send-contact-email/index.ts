@@ -13,6 +13,8 @@ interface ContactEmailRequest {
   email: string;
   phone: string;
   message: string;
+  consent_given?: boolean;
+  consent_timestamp?: string;
 }
 
 // Validation functions
@@ -70,7 +72,7 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    const { name, email, phone, message } = requestData;
+    const { name, email, phone, message, consent_given, consent_timestamp } = requestData;
 
     // Send email to business using direct fetch to Resend API
     const emailResponse = await fetch("https://api.resend.com/emails", {
@@ -136,6 +138,16 @@ const handler = async (req: Request): Promise<Response> => {
                           <p style="font-weight: bold; color: #8B4513; margin: 0 0 10px 0;">Bericht:</p>
                           <p style="color: #333333; margin: 0; white-space: pre-wrap;">${message}</p>
                         </div>
+                        
+                        ${consent_given && consent_timestamp ? `
+                        <div style="background-color: #e8f5e9; border-left: 4px solid #4caf50; padding: 15px; margin: 20px 0; border-radius: 4px;">
+                          <p style="font-weight: bold; color: #2e7d32; margin: 0 0 10px 0;">✓ Privacy Toestemming:</p>
+                          <p style="color: #333333; margin: 0; font-size: 14px;">
+                            <strong>Toestemming gegeven:</strong> Ja<br>
+                            <strong>Datum/Tijd:</strong> ${new Date(consent_timestamp).toLocaleString('nl-BE', { dateStyle: 'long', timeStyle: 'short' })}
+                          </p>
+                        </div>
+                        ` : ''}
                       </td>
                     </tr>
                     
