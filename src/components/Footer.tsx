@@ -3,7 +3,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
 import { useBusinessHours } from "@/hooks/useBusinessHours";
-import * as CookieConsent from 'vanilla-cookieconsent';
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -158,8 +157,10 @@ const Footer = () => {
                 {t('footer.terms')}
               </Link>
               <button 
-                onClick={() => CookieConsent.showPreferences()} 
-                className="hover:text-primary transition-colors text-left"
+                type="button"
+                data-cc="c-settings"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                aria-label={t('footer.cookies')}
               >
                 {t('footer.cookies')}
               </button>
