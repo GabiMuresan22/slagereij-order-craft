@@ -506,6 +506,7 @@ const translations = {
     
     // Hapjes (Appetizers)
     'christmasMenu.hapjes.title': 'Hapjes',
+    'christmasMenu.hapjes.description': 'Prijs/pers',
     'christmasMenu.hapjes.scampi': 'Scampi (2st)',
     'christmasMenu.hapjes.lepelScampi': 'Lepeltje scampi',
     'christmasMenu.hapjes.lepelMeloenSerrano': 'Lepeltje meloen & serrano',
@@ -529,6 +530,7 @@ const translations = {
     
     // Vleeshoofdgerechten (Meat Main Courses)
     'christmasMenu.vleeshoofdgerechten.title': 'Vleeshoofdgerechten',
+    'christmasMenu.vleeshoofdgerechten.description': 'Prijs/pers',
     'christmasMenu.vleeshoofdgerechten.ardeensGebraad': 'Ardeens gebraad in champignonsaus',
     'christmasMenu.vleeshoofdgerechten.varkenshaasje': 'Varkenshaasje in sausje met spek',
     'christmasMenu.vleeshoofdgerechten.orloffgebraad': 'Orloffgebraad in kaassaus',
@@ -547,6 +549,7 @@ const translations = {
     
     // Soep (Soup)
     'christmasMenu.soep.title': 'Soep',
+    'christmasMenu.soep.description': 'Prijs/pers',
     'christmasMenu.soep.tomatensoep': 'Tomatensoep',
     'christmasMenu.soep.tomatensoepBalletjes': 'Tomatensoep met balletjes',
     'christmasMenu.soep.pompoensoep': 'Pompoensoep',
@@ -1252,6 +1255,7 @@ const translations = {
     
     // Hapjes (Aperitive)
     'christmasMenu.hapjes.title': 'Aperitive',
+    'christmasMenu.hapjes.description': 'Preț/pers',
     'christmasMenu.hapjes.scampi': 'Scampi (2 buc)',
     'christmasMenu.hapjes.lepelScampi': 'Lingurică scampi',
     'christmasMenu.hapjes.lepelMeloenSerrano': 'Lingurică pepene & serrano',
@@ -1275,6 +1279,7 @@ const translations = {
     
     // Vleeshoofdgerechten (Feluri Principale de Carne)
     'christmasMenu.vleeshoofdgerechten.title': 'Feluri Principale',
+    'christmasMenu.vleeshoofdgerechten.description': 'Preț/pers',
     'christmasMenu.vleeshoofdgerechten.ardeensGebraad': 'Friptură ardelenească în sos de ciuperci',
     'christmasMenu.vleeshoofdgerechten.varkenshaasje': 'Mușchiuleț de porc în sos cu bacon',
     'christmasMenu.vleeshoofdgerechten.orloffgebraad': 'Friptură Orloff în sos de brânză',
@@ -1293,6 +1298,7 @@ const translations = {
     
     // Soep (Supă)
     'christmasMenu.soep.title': 'Supă',
+    'christmasMenu.soep.description': 'Preț/pers',
     'christmasMenu.soep.tomatensoep': 'Supă de roșii',
     'christmasMenu.soep.tomatensoepBalletjes': 'Supă de roșii cu chifteluțe',
     'christmasMenu.soep.pompoensoep': 'Supă de dovleac',
