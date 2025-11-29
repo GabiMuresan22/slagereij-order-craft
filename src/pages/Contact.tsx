@@ -305,14 +305,15 @@ const Contact = () => {
         <Card className="border-border overflow-hidden max-w-6xl mx-auto mb-12">
           <CardContent className="p-0 h-[500px] relative">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2507.8!2d3.277!3d51.059!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c34b4c0b5e5e5f%3A0x5e5e5e5e5e5e5e5e!2sBruggestraat%20146A%2C%208750%20Zwevezele!5e0!3m2!1snl!2sbe!4v1234567890&style=feature:all%7Celement:geometry%7Ccolor:0x242f3e&style=feature:all%7Celement:labels.text.stroke%7Ccolor:0x242f3e&style=feature:all%7Celement:labels.text.fill%7Ccolor:0x746855&style=feature:water%7Celement:geometry%7Ccolor:0x17263c&style=feature:road%7Celement:geometry%7Ccolor:0x38414e&style=feature:road%7Celement:geometry.stroke%7Ccolor:0x212a37"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2507.8!2d3.277!3d51.059!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c34b4c0b5e5e5f%3A0x5e5e5e5e5e5e5e!2sBruggestraat%20146A%2C%208750%20Zwevezele%2C%20Belgium!5e0!3m2!1sen!2sbe!4v1234567890"
               width="100%"
               height="100%"
               style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg)' }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Slagerij John Location"
+              title="Slagerij John Location - Bruggestraat 146A, 8750 Zwevezele, Belgium"
+              aria-label="Google Maps showing Slagerij John location at Bruggestraat 146A, 8750 Zwevezele, Belgium"
             />
             <a
               href="https://www.google.com/maps/place/Bruggestraat+146A,+8750+Zwevezele"

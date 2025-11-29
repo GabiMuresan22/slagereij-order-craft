@@ -246,39 +246,25 @@ const ChristmasMenu = () => {
   const handleDownloadPdf = async () => {
     setIsDownloading(true);
     try {
-      // Convert WEBP images to JPEG for PDF compatibility
-      const convertToJpeg = async (imageSrc: string): Promise<string> => {
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-          img.crossOrigin = 'anonymous';
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            if (!ctx) {
-              reject(new Error('Failed to get canvas context'));
-              return;
-            }
-            ctx.drawImage(img, 0, 0);
-            // Convert to JPEG with high quality
-            const jpegBase64 = canvas.toDataURL('image/jpeg', 0.95);
-            resolve(jpegBase64);
-          };
-          img.onerror = () => reject(new Error('Failed to load image'));
-          img.src = imageSrc;
-        });
+      // Convert relative image paths to absolute URLs for Edge Function
+      // Vite imports return paths that need to be made absolute
+      const getAbsoluteUrl = (relativePath: string): string => {
+        // If already absolute, return as-is
+        if (relativePath.startsWith('http://') || relativePath.startsWith('https://')) {
+          return relativePath;
+        }
+        // Construct absolute URL from current origin
+        return `${window.location.origin}${relativePath.startsWith('/') ? relativePath : '/' + relativePath}`;
       };
 
-      const [image1Base64, image2Base64, image3Base64] = await Promise.all([
-        convertToJpeg(christmasMenu1),
-        convertToJpeg(christmasMenu2),
-        convertToJpeg(christmasMenu3),
-      ]);
-
-      // Call the Supabase Edge Function to generate PDF
+      // Pass image URLs directly to Edge Function - let server handle fetching and conversion
+      // This avoids CORS issues and reduces client-side processing
       const { data, error } = await supabase.functions.invoke('generate-christmas-menu-pdf', {
-        body: { image1Base64, image2Base64, image3Base64 },
+        body: { 
+          image1Url: getAbsoluteUrl(christmasMenu1),
+          image2Url: getAbsoluteUrl(christmasMenu2),
+          image3Url: getAbsoluteUrl(christmasMenu3),
+        },
       });
 
       if (error) {

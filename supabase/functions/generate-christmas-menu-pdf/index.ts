@@ -12,42 +12,20 @@ const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_WINDOW = 60000; // 1 minute
 const RATE_LIMIT_MAX_REQUESTS = 10; // Max 10 requests per minute per IP
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB max per image
-const MAX_BASE64_SIZE = 15 * 1024 * 1024; // ~15MB base64 (accounts for encoding overhead)
 const MAX_RATE_LIMIT_ENTRIES = 10000; // Prevent memory exhaustion
 
-// Zod validation schema - only JPEG and PNG are supported by pdf-lib
-const base64ImageSchema = z.string()
+// Zod validation schema for image URLs
+const imageUrlSchema = z.string()
+  .url({ message: 'Invalid image URL format' })
   .refine((val) => {
-    if (!val || typeof val !== 'string') return false;
-    // Check base64 format (should start with data:image/...;base64,)
-    const base64ImageRegex = /^data:image\/(jpeg|jpg|png);base64,/i;
-    return base64ImageRegex.test(val);
-  }, { message: 'Invalid base64 image format. Must be JPEG or PNG (WEBP not supported).' })
-  .refine((val) => {
-    // Check size (base64 is ~33% larger than binary)
-    return val.length <= MAX_BASE64_SIZE;
-  }, { message: `Image too large. Maximum size is ${MAX_BASE64_SIZE / 1024 / 1024}MB (base64 encoded).` })
-  .refine((val) => {
-    try {
-      const base64Data = val.split(',')[1];
-      if (!base64Data) return false;
-      
-      // Validate base64 characters
-      const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/;
-      if (!base64Regex.test(base64Data)) return false;
-      
-      // Check decoded size
-      const decodedSize = (base64Data.length * 3) / 4;
-      return decodedSize <= MAX_IMAGE_SIZE;
-    } catch {
-      return false;
-    }
-  }, { message: `Decoded image size exceeds ${MAX_IMAGE_SIZE / 1024 / 1024}MB.` });
+    // Basic URL validation - must be http/https
+    return val.startsWith('http://') || val.startsWith('https://');
+  }, { message: 'Image URL must use http or https protocol' });
 
 const pdfRequestSchema = z.object({
-  image1Base64: base64ImageSchema,
-  image2Base64: base64ImageSchema,
-  image3Base64: base64ImageSchema,
+  image1Url: imageUrlSchema,
+  image2Url: imageUrlSchema,
+  image3Url: imageUrlSchema,
 });
 
 const getClientIP = (req: Request): string => {
@@ -159,7 +137,7 @@ serve(async (req) => {
 
     console.log('Starting PDF generation for Christmas menu...');
 
-    // Get the base64 images from the request body and validate with Zod
+    // Get the image URLs from the request body and validate with Zod
     const body = await req.json();
     
     const validationResult = pdfRequestSchema.safeParse(body);
@@ -168,7 +146,7 @@ serve(async (req) => {
       console.error("Invalid PDF request data:", validationResult.error.issues);
       return new Response(
         JSON.stringify({ 
-          error: 'Invalid image data',
+          error: 'Invalid image URLs',
           details: validationResult.error.issues.map(issue => ({
             path: issue.path.join('.'),
             message: issue.message
@@ -178,29 +156,29 @@ serve(async (req) => {
       );
     }
 
-    const { image1Base64, image2Base64, image3Base64 } = validationResult.data;
+    const { image1Url, image2Url, image3Url } = validationResult.data;
 
-    console.log('Processing base64 images...');
+    console.log('Fetching images from URLs...');
 
-    // Convert base64 to bytes (remove data:image/jpeg;base64, prefix)
-    const base64ToBytes = (base64: string): Uint8Array => {
+    // Fetch images from URLs
+    const fetchImage = async (url: string): Promise<Uint8Array> => {
       try {
-        const base64Data = base64.split(',')[1];
-        if (!base64Data) throw new Error('Invalid base64 format');
-        const binaryString = atob(base64Data);
-        const bytes = new Uint8Array(binaryString.length);
-        for (let i = 0; i < binaryString.length; i++) {
-          bytes[i] = binaryString.charCodeAt(i);
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch image: ${response.status} ${response.statusText}`);
         }
-        return bytes;
+        const arrayBuffer = await response.arrayBuffer();
+        return new Uint8Array(arrayBuffer);
       } catch (error) {
-        throw new Error('Failed to decode base64 image');
+        throw new Error(`Error fetching image from ${url}: ${error instanceof Error ? error.message : 'Unknown error'}`);
       }
     };
 
-    const image1Bytes = base64ToBytes(image1Base64);
-    const image2Bytes = base64ToBytes(image2Base64);
-    const image3Bytes = base64ToBytes(image3Base64);
+    const [image1Bytes, image2Bytes, image3Bytes] = await Promise.all([
+      fetchImage(image1Url),
+      fetchImage(image2Url),
+      fetchImage(image3Url),
+    ]);
 
     console.log('Embedding images in PDF...');
 
@@ -208,19 +186,25 @@ serve(async (req) => {
     const pdfDoc = await PDFDocument.create();
 
     // Helper function to embed image based on format
-    const embedImage = async (imageBytes: Uint8Array, base64String: string) => {
-      const mimeType = base64String.split(';')[0].split(':')[1];
-      if (mimeType.includes('png')) {
+    // Try PNG first, then JPEG (WEBP will fail and we'll catch it)
+    const embedImage = async (imageBytes: Uint8Array): Promise<any> => {
+      try {
+        // Try PNG first
         return await pdfDoc.embedPng(imageBytes);
-      } else {
-        return await pdfDoc.embedJpg(imageBytes);
+      } catch {
+        try {
+          // Fall back to JPEG
+          return await pdfDoc.embedJpg(imageBytes);
+        } catch (error) {
+          throw new Error(`Unsupported image format. PDF-lib only supports PNG and JPEG. ${error instanceof Error ? error.message : ''}`);
+        }
       }
     };
 
     // Embed the images with format detection
-    const image1 = await embedImage(image1Bytes, image1Base64);
-    const image2 = await embedImage(image2Bytes, image2Base64);
-    const image3 = await embedImage(image3Bytes, image3Base64);
+    const image1 = await embedImage(image1Bytes);
+    const image2 = await embedImage(image2Bytes);
+    const image3 = await embedImage(image3Bytes);
 
     // Get image dimensions
     const image1Dims = image1.scale(1);
