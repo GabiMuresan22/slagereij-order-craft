@@ -382,18 +382,20 @@ const ChristmasMenu = () => {
           </div>
         )}
 
-        {/* À La Carte Section Header */}
-        <div className="text-center mt-16 mb-12 space-y-4">
-          <h3 className="text-2xl md:text-4xl font-serif font-bold text-white">
-            {t('christmasMenu.alacarte.titlePrefix')} <span className="text-primary">{t('christmasMenu.alacarte.title')}</span>
-          </h3>
-          <p className="text-neutral-400 max-w-2xl mx-auto">
-            {t('christmasMenu.alacarte.subtitle')}
-          </p>
-        </div>
+        {/* À La Carte Section Header - Show for both Dutch and Romanian */}
+        {(language === 'nl' || language === 'ro') && (
+          <>
+            <div className="text-center mt-16 mb-12 space-y-4">
+              <h3 className="text-2xl md:text-4xl font-serif font-bold text-white">
+                {t('christmasMenu.alacarte.titlePrefix')} <span className="text-primary">{t('christmasMenu.alacarte.title')}</span>
+              </h3>
+              <p className="text-neutral-400 max-w-2xl mx-auto">
+                {t('christmasMenu.alacarte.subtitle')}
+              </p>
+            </div>
 
-        {/* À La Carte Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* À La Carte Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {aLaCarteMenus.map((menu) => (
             <Card 
               key={menu.id} 
@@ -443,20 +445,24 @@ const ChristmasMenu = () => {
               </CardFooter>
             </Card>
           ))}
-        </div>
+            </div>
+          </>
+        )}
 
-        {/* Additional Menu Items Section Header */}
-        <div className="text-center mt-16 mb-12 space-y-4">
-          <h3 className="text-2xl md:text-4xl font-serif font-bold text-white">
-            {t('christmasMenu.additional.titlePrefix')} <span className="text-primary">{t('christmasMenu.additional.title')}</span>
-          </h3>
-          <p className="text-neutral-400 max-w-2xl mx-auto">
-            {t('christmasMenu.additional.subtitle')}
-          </p>
-        </div>
+        {/* Additional Menu Items Section Header - Show for both Dutch and Romanian */}
+        {(language === 'nl' || language === 'ro') && (
+          <>
+            <div className="text-center mt-16 mb-12 space-y-4">
+              <h3 className="text-2xl md:text-4xl font-serif font-bold text-white">
+                {t('christmasMenu.additional.titlePrefix')} <span className="text-primary">{t('christmasMenu.additional.title')}</span>
+              </h3>
+              <p className="text-neutral-400 max-w-2xl mx-auto">
+                {t('christmasMenu.additional.subtitle')}
+              </p>
+            </div>
 
-        {/* Additional Menu Items Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Additional Menu Items Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {additionalMenuItems.map((menu) => (
             <Card 
               key={menu.id} 
@@ -499,7 +505,9 @@ const ChristmasMenu = () => {
               </CardFooter>
             </Card>
           ))}
-        </div>
+            </div>
+          </>
+        )}
 
         {/* Download Menu Button */}
         <div className="text-center mt-12">
