@@ -391,52 +391,6 @@ const ChristmasMenu = () => {
           ))}
         </div>
 
-        {/* Additional Menu Items Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-          {additionalMenuItems.map((menu) => (
-            <Card 
-              key={menu.id} 
-              className="bg-neutral-800 border-primary transition-all duration-300 flex flex-col overflow-hidden group"
-            >
-              {/* Card Header */}
-              <CardHeader className="text-center pb-2 relative">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
-                <CardTitle className="text-xl font-serif font-bold text-primary min-h-[3.5rem] flex items-center justify-center">
-                  {t(menu.titleKey)}
-                </CardTitle>
-                <div className="mt-2">
-                  <span className="inline-block px-3 py-1 bg-neutral-900 rounded-full text-xs font-semibold text-neutral-300 border border-neutral-700">
-                    {t(menu.descriptionKey)}
-                  </span>
-                </div>
-              </CardHeader>
-
-              {/* Card Content */}
-              <CardContent className="flex-grow pt-4">
-                <ul className="space-y-3">
-                  {menu.ingredientKeys.map((ingredientKey, idx) => (
-                    <li key={idx} className="flex items-start text-sm text-neutral-300 leading-relaxed">
-                      <span className="mr-3 text-primary mt-1.5 text-[10px]">◆</span>
-                      <span>{t(ingredientKey)}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-
-              {/* Card Footer */}
-              <CardFooter className="pt-4 border-t border-neutral-700">
-                <Link to="/order" className="w-full">
-                  <Button 
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold tracking-wide"
-                  >
-                    {t('christmasMenu.orderNow')}
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-
         {/* À La Carte Section Header */}
         <div className="text-center mt-16 mb-12 space-y-4">
           <h3 className="text-2xl md:text-4xl font-serif font-bold text-white">
@@ -457,7 +411,7 @@ const ChristmasMenu = () => {
               {/* Card Header */}
               <CardHeader className="text-center pb-2 relative">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
-                <CardTitle className="text-xl font-serif font-bold text-primary min-h-[3rem] flex items-center justify-center">
+                <CardTitle className="text-xl font-serif font-bold text-primary min-h-[2.5rem] flex items-center justify-center">
                   {t(menu.titleKey)}
                 </CardTitle>
                 {menu.descriptionKey && (

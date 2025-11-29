@@ -4,14 +4,26 @@ import Home from "./Home";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 // Mock dependencies
-vi.mock("@/contexts/LanguageContext", () => ({
-  useLanguage: vi.fn(),
+vi.mock("@/contexts/LanguageContext", async () => {
+  const React = await import("react");
+  return {
+    useLanguage: vi.fn(),
+    LanguageProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  };
+});
+
+vi.mock("@/components/ChristmasMenu", () => ({
+  default: () => <div data-testid="christmas-menu-mock">ChristmasMenu Mock</div>,
 }));
 
 vi.mock("@/integrations/supabase/client", () => ({
   supabase: {
     functions: {
       invoke: vi.fn(),
+    },
+    auth: {
+      getSession: vi.fn().mockResolvedValue({ data: { session: null } }),
+      onAuthStateChange: vi.fn().mockReturnValue({ data: { subscription: { unsubscribe: vi.fn() } } }),
     },
   },
 }));
@@ -40,9 +52,18 @@ describe("Home", () => {
 
   it("renders home page content", () => {
     render(<Home />);
-    // The home page should render some content
-    // This is a basic test - you can expand based on actual content
-    expect(screen.getByRole("main") || document.body).toBeTruthy();
+    // The home page should render some content - verify the hero title is present
+    expect(screen.getByText("home.hero.title")).toBeInTheDocument();
+  });
+
+  it("renders the closure alert with destructive variant", () => {
+    render(<Home />);
+    // Check that the alert is present
+    expect(screen.getByRole("alert")).toBeInTheDocument();
+    // Check for the alert title (using translation key as mock returns the key)
+    expect(screen.getByText("home.alert.title")).toBeInTheDocument();
+    // Check for the alert description
+    expect(screen.getByText("home.alert.description")).toBeInTheDocument();
   });
 });
 

@@ -25,6 +25,8 @@ const translations = {
     'nav.admin': 'Admin',
     
     // Home Page
+    'home.alert.title': 'Belangrijke Mededeling',
+    'home.alert.description': 'Wij zijn gesloten tot 30.11.2025. Excuses voor het ongemak.',
     'home.hero.title': 'Uw Kwaliteitsslager in Zwevezele',
     'home.hero.subtitle': 'Traditioneel ambacht\nmet moderne service',
     'home.hero.cta': 'Bestel Nu Online',
@@ -769,6 +771,8 @@ const translations = {
     'nav.admin': 'Admin',
     
     // Home Page
+    'home.alert.title': 'Anunț Important',
+    'home.alert.description': 'Suntem închiși până la 30.11.2025. Ne cerem scuze pentru inconveniență.',
     'home.hero.title': 'Măcelarul Dvs. de Calitate în Zwevezele',
     'home.hero.subtitle': 'Meșteșug tradițional\ncu servicii moderne',
     'home.hero.cta': 'Comandă Acum Online',
