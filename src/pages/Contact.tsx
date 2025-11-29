@@ -16,21 +16,34 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 
-const contactFormSchema = z.object({
-  name: z.string().trim().min(2, { message: "Name must be at least 2 characters" }).max(100),
-  email: z.string().trim().email({ message: "Invalid email address" }).max(255),
-  phone: z.string().trim().min(10, { message: "Phone number must be at least 10 characters" }).max(20),
-  message: z.string().trim().min(10, { message: "Message must be at least 10 characters" }).max(1000),
-  consent: z.boolean().refine((val) => val === true, {
-    message: "You must agree to the privacy policy to submit this form",
-  }),
-});
+// Create schema dynamically with translations
+const createContactFormSchema = (t: (key: string) => string) => {
+  return z.object({
+    name: z.string().trim()
+      .min(2, { message: t('contact.validation.nameMin') })
+      .max(100, { message: t('contact.validation.nameMax') }),
+    email: z.string().trim()
+      .email({ message: t('contact.validation.emailInvalid') })
+      .max(255, { message: t('contact.validation.emailMax') }),
+    phone: z.string().trim()
+      .min(10, { message: t('contact.validation.phoneMin') })
+      .max(20, { message: t('contact.validation.phoneMax') }),
+    message: z.string().trim()
+      .min(10, { message: t('contact.validation.messageMin') })
+      .max(1000, { message: t('contact.validation.messageMax') }),
+    consent: z.boolean().refine((val) => val === true, {
+      message: t('contact.validation.consentRequired'),
+    }),
+  });
+};
 
-type ContactFormValues = z.infer<typeof contactFormSchema>;
+type ContactFormValues = z.infer<ReturnType<typeof createContactFormSchema>>;
 
 const Contact = () => {
   const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const contactFormSchema = createContactFormSchema(t);
 
   const breadcrumbData = getBreadcrumbSchema([
     { name: "Home", url: "/" },
@@ -59,8 +72,17 @@ const Contact = () => {
 
       toast.success(t('contact.form.success'));
       form.reset();
-    } catch (error: any) {
-      console.error("Error sending contact form:", error);
+    } catch (error) {
+      // Proper error handling with type checking
+      if (error instanceof Error) {
+        console.error("Error sending contact form:", error.message, error);
+      } else if (typeof error === 'object' && error !== null) {
+        // Handle Supabase errors or other structured errors
+        const errorObj = error as { message?: string; error?: string };
+        console.error("Error sending contact form:", errorObj.message || errorObj.error || error);
+      } else {
+        console.error("Error sending contact form:", String(error));
+      }
       toast.error(t('contact.form.error'));
     } finally {
       setIsSubmitting(false);

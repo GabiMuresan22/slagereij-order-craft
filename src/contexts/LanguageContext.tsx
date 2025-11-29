@@ -226,6 +226,17 @@ const translations = {
     'contact.form.consent': 'Ik ga akkoord met de verwerking van mijn persoonsgegevens volgens het',
     'contact.form.privacyNotice': 'Uw persoonlijke gegevens worden verwerkt volgens ons',
     
+    // Contact - Validation
+    'contact.validation.nameMin': 'Naam moet minimaal 2 karakters zijn',
+    'contact.validation.nameMax': 'Naam mag maximaal 100 karakters zijn',
+    'contact.validation.emailInvalid': 'Ongeldig e-mailadres',
+    'contact.validation.emailMax': 'E-mailadres mag maximaal 255 karakters zijn',
+    'contact.validation.phoneMin': 'Telefoonnummer moet minimaal 10 karakters zijn',
+    'contact.validation.phoneMax': 'Telefoonnummer mag maximaal 20 karakters zijn',
+    'contact.validation.messageMin': 'Bericht moet minimaal 10 karakters zijn',
+    'contact.validation.messageMax': 'Bericht mag maximaal 1000 karakters zijn',
+    'contact.validation.consentRequired': 'U moet akkoord gaan met het privacybeleid om dit formulier te verzenden',
+    
     // Footer
     'footer.contact': 'Contact',
     'footer.quickLinks': 'Snelmenu',
@@ -983,6 +994,17 @@ const translations = {
     'contact.form.error': 'A apărut o eroare. Vă rugăm să încercați din nou mai târziu sau să ne sunați direct.',
     'contact.form.consent': 'Sunt de acord cu procesarea datelor mele personale conform',
     'contact.form.privacyNotice': 'Datele dumneavoastră personale sunt procesate conform',
+    
+    // Contact - Validation
+    'contact.validation.nameMin': 'Numele trebuie să aibă cel puțin 2 caractere',
+    'contact.validation.nameMax': 'Numele nu poate depăși 100 de caractere',
+    'contact.validation.emailInvalid': 'Adresă de e-mail invalidă',
+    'contact.validation.emailMax': 'Adresa de e-mail nu poate depăși 255 de caractere',
+    'contact.validation.phoneMin': 'Numărul de telefon trebuie să aibă cel puțin 10 caractere',
+    'contact.validation.phoneMax': 'Numărul de telefon nu poate depăși 20 de caractere',
+    'contact.validation.messageMin': 'Mesajul trebuie să aibă cel puțin 10 caractere',
+    'contact.validation.messageMax': 'Mesajul nu poate depăși 1000 de caractere',
+    'contact.validation.consentRequired': 'Trebuie să fiți de acord cu politica de confidențialitate pentru a trimite acest formular',
     
     // Footer
     'footer.contact': 'Contact',
