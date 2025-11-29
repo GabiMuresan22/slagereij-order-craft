@@ -25,6 +25,8 @@ const translations = {
     'nav.admin': 'Admin',
     
     // Home Page
+    'home.alert.title': 'Belangrijke Mededeling',
+    'home.alert.description': 'Op 30 november is de winkel gesloten, we zijn te vinden in Roeselare (8800), Acaciastraat 6. We nodigen je uit om samen met ons de nationale feestdag van Roemenië te vieren.',
     'home.hero.title': 'Uw Kwaliteitsslager in Zwevezele',
     'home.hero.subtitle': 'Traditioneel ambacht\nmet moderne service',
     'home.hero.cta': 'Bestel Nu Online',
@@ -497,6 +499,12 @@ const translations = {
     'christmasMenu.gourmet.item1': 'Gourmet (9 soorten) €10/pers',
     'christmasMenu.gourmet.item2': 'Gourmet (10 soorten) €11/pers',
     'christmasMenu.gourmet.item3': 'Gourmet Luxe (10 soorten) €15/pers',
+    
+    // Christmas Menu - Additional Items Section
+    'christmasMenu.additional.titlePrefix': 'Extra',
+    'christmasMenu.additional.title': 'Menu Opties',
+    'christmasMenu.additional.subtitle': 'Broodjes, desserts, tapas en meer voor uw feestmenu.',
+    
     // Christmas Menu - À La Carte Section
     'christmasMenu.alacarte.titlePrefix': 'À La Carte',
     'christmasMenu.alacarte.title': 'Opties',
@@ -504,6 +512,7 @@ const translations = {
     
     // Hapjes (Appetizers)
     'christmasMenu.hapjes.title': 'Hapjes',
+    'christmasMenu.hapjes.description': 'Prijs/pers',
     'christmasMenu.hapjes.scampi': 'Scampi (2st)',
     'christmasMenu.hapjes.lepelScampi': 'Lepeltje scampi',
     'christmasMenu.hapjes.lepelMeloenSerrano': 'Lepeltje meloen & serrano',
@@ -527,6 +536,7 @@ const translations = {
     
     // Vleeshoofdgerechten (Meat Main Courses)
     'christmasMenu.vleeshoofdgerechten.title': 'Vleeshoofdgerechten',
+    'christmasMenu.vleeshoofdgerechten.description': 'Prijs/pers',
     'christmasMenu.vleeshoofdgerechten.ardeensGebraad': 'Ardeens gebraad in champignonsaus',
     'christmasMenu.vleeshoofdgerechten.varkenshaasje': 'Varkenshaasje in sausje met spek',
     'christmasMenu.vleeshoofdgerechten.orloffgebraad': 'Orloffgebraad in kaassaus',
@@ -545,6 +555,7 @@ const translations = {
     
     // Soep (Soup)
     'christmasMenu.soep.title': 'Soep',
+    'christmasMenu.soep.description': 'Prijs/pers',
     'christmasMenu.soep.tomatensoep': 'Tomatensoep',
     'christmasMenu.soep.tomatensoepBalletjes': 'Tomatensoep met balletjes',
     'christmasMenu.soep.pompoensoep': 'Pompoensoep',
@@ -772,6 +783,8 @@ const translations = {
     'nav.admin': 'Admin',
     
     // Home Page
+    'home.alert.title': 'Anunț Important',
+    'home.alert.description': 'Pe 30 noiembrie magazinul este închis, ne găsiți în Roeselare (8800), Acaciastraat 6. Te invităm să sărbătorești alături de noi Ziua Națională a României.',
     'home.hero.title': 'Măcelarul Dvs. de Calitate în Zwevezele',
     'home.hero.subtitle': 'Meșteșug tradițional\ncu servicii moderne',
     'home.hero.cta': 'Comandă Acum Online',
@@ -1244,6 +1257,12 @@ const translations = {
     'christmasMenu.gourmet.item1': 'Gourmet (9 sortimente) €10/pers',
     'christmasMenu.gourmet.item2': 'Gourmet (10 sortimente) €11/pers',
     'christmasMenu.gourmet.item3': 'Gourmet Luxe (10 sortimente) €15/pers',
+    
+    // Christmas Menu - Additional Items Section
+    'christmasMenu.additional.titlePrefix': 'Extra',
+    'christmasMenu.additional.title': 'Opțiuni Meniu',
+    'christmasMenu.additional.subtitle': 'Sandvișuri, deserturi, tapas și multe altele pentru meniul dvs. festiv.',
+    
     // Christmas Menu - À La Carte Section
     'christmasMenu.alacarte.titlePrefix': 'À La Carte',
     'christmasMenu.alacarte.title': 'Opțiuni',
@@ -1251,6 +1270,7 @@ const translations = {
     
     // Hapjes (Aperitive)
     'christmasMenu.hapjes.title': 'Aperitive',
+    'christmasMenu.hapjes.description': 'Preț/pers',
     'christmasMenu.hapjes.scampi': 'Scampi (2 buc)',
     'christmasMenu.hapjes.lepelScampi': 'Lingurică scampi',
     'christmasMenu.hapjes.lepelMeloenSerrano': 'Lingurică pepene & serrano',
@@ -1274,6 +1294,7 @@ const translations = {
     
     // Vleeshoofdgerechten (Feluri Principale de Carne)
     'christmasMenu.vleeshoofdgerechten.title': 'Feluri Principale',
+    'christmasMenu.vleeshoofdgerechten.description': 'Preț/pers',
     'christmasMenu.vleeshoofdgerechten.ardeensGebraad': 'Friptură ardelenească în sos de ciuperci',
     'christmasMenu.vleeshoofdgerechten.varkenshaasje': 'Mușchiuleț de porc în sos cu bacon',
     'christmasMenu.vleeshoofdgerechten.orloffgebraad': 'Friptură Orloff în sos de brânză',
@@ -1292,6 +1313,7 @@ const translations = {
     
     // Soep (Supă)
     'christmasMenu.soep.title': 'Supă',
+    'christmasMenu.soep.description': 'Preț/pers',
     'christmasMenu.soep.tomatensoep': 'Supă de roșii',
     'christmasMenu.soep.tomatensoepBalletjes': 'Supă de roșii cu chifteluțe',
     'christmasMenu.soep.pompoensoep': 'Supă de dovleac',
