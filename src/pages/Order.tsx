@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
 import * as z from "zod";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -115,36 +116,37 @@ const Order = () => {
   const { user } = useAuth();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loadingProducts, setLoadingProducts] = useState(true);
   const [customItems, setCustomItems] = useState<Set<number>>(new Set());
 
-  // Fetch products with prices from database
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('products')
-          .select('*')
-          .eq('available', true)
-          .order('key');
-        
-        if (error) throw error;
-        setProducts(data || []);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-        toast({
-          title: "Error",
-          description: "Failed to load products. Please refresh the page.",
-          variant: "destructive",
-        });
-      } finally {
-        setLoadingProducts(false);
-      }
-    };
+  // Fetch products with prices from database using TanStack Query for caching
+  // This provides state persistence across navigation
+  const { data: products = [], isLoading: loadingProducts, error: productsError } = useQuery({
+    queryKey: ['products'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('available', true)
+        .order('key');
+      
+      if (error) throw error;
+      return data || [];
+    },
+    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+    cacheTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
+  });
 
-    fetchProducts();
-  }, [toast]);
+  // Show error toast if products fetch fails (only once)
+  useEffect(() => {
+    if (productsError) {
+      console.error('Error fetching products:', productsError);
+      toast({
+        title: "Error",
+        description: "Failed to load products. Please refresh the page.",
+        variant: "destructive",
+      });
+    }
+  }, [productsError, toast]);
 
   const { orderFormSchema } = createOrderSchemas(t);
   type OrderFormValues = z.infer<typeof orderFormSchema>;
@@ -228,14 +230,15 @@ const Order = () => {
     setIsSubmitting(true);
     
     try {
-      // Add prices to order items before saving
-      const orderItemsWithPrices = data.orderItems.map(item => {
-        const product = products.find(p => p.key === item.product);
-        return {
-          ...item,
-          price: product?.price || 0
-        };
-      });
+      // SECURITY: Never trust client-side prices!
+      // Send only product key, quantity, and unit - let database trigger calculate prices
+      // The validate_order_prices() trigger will fetch authoritative prices from products table
+      const orderItemsWithoutPrices = data.orderItems.map(item => ({
+        product: item.product,
+        quantity: item.quantity,
+        unit: item.unit,
+        // Explicitly exclude price - database will calculate it
+      }));
 
       // Generate a UUID for the order on the client side
       // This ensures we have an order ID even if the RLS policy prevents returning the inserted row
@@ -254,7 +257,7 @@ const Order = () => {
         customer_name: data.customerName,
         customer_phone: data.customerPhone,
         customer_email: data.customerEmail,
-        order_items: orderItemsWithPrices,
+        order_items: orderItemsWithoutPrices, // No prices - database trigger will add them
         pickup_date: format(data.pickupDate, "yyyy-MM-dd"),
         pickup_time: data.pickupTime,
         notes: data.notes || null,
@@ -266,6 +269,7 @@ const Order = () => {
       if (error) throw error;
 
       // Send confirmation email via Edge Function
+      // Note: Edge Function will fetch official prices from database
       let emailFailed = false;
       try {
         await supabase.functions.invoke('send-order-status-email', {
@@ -274,7 +278,7 @@ const Order = () => {
             customerEmail: data.customerEmail,
             orderId: orderId,
             status: "pending",
-            orderItems: orderItemsWithPrices,
+            orderItems: orderItemsWithoutPrices, // Edge Function will fetch prices
             pickupDate: format(data.pickupDate, "dd-MM-yyyy"),
             pickupTime: data.pickupTime,
             language: language,
