@@ -6,7 +6,6 @@ import heroImageDesktop from "@/assets/hero-steak.webp";
 import heroImageMobile from "@/assets/hero-steak-mobile.webp";
 import Testimonials from "@/components/Testimonials";
 import ChristmasMenu from "@/components/ChristmasMenu";
-import PremiumAlert from "@/components/PremiumAlert";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getLocalBusinessSchema, getReviewsSchema } from "@/lib/structuredData";
@@ -26,9 +25,6 @@ const Home = () => {
         <link rel="preload" as="image" href={heroImageDesktop} media="(min-width: 768px)" />
         <link rel="preload" as="image" href={heroImageMobile} media="(max-width: 767px)" />
       </SEO>
-      {/* Premium Closure Alert */}
-      <PremiumAlert />
-
       {/* Hero Section */}
       <section className="relative h-[550px] md:h-[650px] flex items-start justify-center overflow-hidden">
         {/* Hero Image - Optimized for LCP with responsive images */}
