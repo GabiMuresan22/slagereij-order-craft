@@ -129,7 +129,7 @@ export const config = {
   onAccept: async () => {
     // Load GA4 if analytics consent is given
     // Use environment variable if set, otherwise use default tracking ID
-    const measurementId = import.meta.env.VITE_GA4_MEASUREMENT_ID || 'G-XGNKV7Y3EY';
+    const measurementId = import.meta.env.VITE_GA4_MEASUREMENT_ID || 'G-G5QGY974Y7';
     if (measurementId && measurementId.startsWith('G-')) {
       const { acceptedCategory } = await import('vanilla-cookieconsent');
       if (acceptedCategory && acceptedCategory('analytics') && typeof window !== 'undefined') {
