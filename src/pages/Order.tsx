@@ -485,7 +485,8 @@ const Order = () => {
                       const isCustomItem = customItems.has(index);
                       
                       return (
-                        <div key={index} className="flex gap-3 items-end pb-4 border-b last:border-0">
+                        <div key={index} className="space-y-4 pb-6 border-b last:border-0 mt-8 first:mt-0">
+                          {/* Row 1: Product dropdown (full width on mobile) */}
                           <FormField
                             control={form.control}
                             name={`orderItems.${index}.product`}
@@ -514,18 +515,8 @@ const Order = () => {
                               };
                               
                               return (
-                                <FormItem className="flex-1">
-                                  <div className="flex justify-between items-center mb-2">
-                                    <FormLabel className="font-bold">{t('order.form.product')}</FormLabel>
-                                    <button
-                                      type="button"
-                                      onClick={handleToggleCustom}
-                                      className="text-yellow-600 dark:text-yellow-500 hover:underline transition-all cursor-pointer font-normal"
-                                      style={{ fontSize: '0.85rem', textDecoration: 'none' }}
-                                    >
-                                      {isCustomItem ? t('order.form.backToMenu') : t('order.form.customProductToggle')}
-                                    </button>
-                                  </div>
+                                <FormItem className="w-full">
+                                  <FormLabel className="font-bold">{t('order.form.product')}</FormLabel>
                                   <div className="relative min-h-[40px]">
                                     {isCustomItem ? (
                                       <FormControl>
@@ -571,85 +562,96 @@ const Order = () => {
                                       </div>
                                     )}
                                   </div>
+                                  {/* Link moved below dropdown for better mobile UX */}
+                                  <button
+                                    type="button"
+                                    onClick={handleToggleCustom}
+                                    className="text-yellow-600 dark:text-yellow-500 hover:underline transition-all cursor-pointer font-normal mt-2 text-sm"
+                                  >
+                                    {isCustomItem ? t('order.form.backToMenu') : t('order.form.customProductToggle')}
+                                  </button>
                                   <FormMessage />
                                 </FormItem>
                               );
                             }}
                           />
 
-                        <FormField
-                          control={form.control}
-                          name={`orderItems.${index}.quantity`}
-                          render={({ field }) => {
-                            const item = orderItems[index];
-                            const product = products.find(p => p.key === item?.product);
-                            const itemTotal = product && item?.quantity 
-                              ? (product.price * parseFloat(item.quantity || '0')).toFixed(2)
-                              : '0.00';
-                            
-                            return (
-                              <FormItem className="w-32">
-                                <FormLabel>{t('order.form.quantity')}</FormLabel>
-                                <FormControl>
-                                  <Input
-                                    type="number"
-                                    step="0.1"
-                                    min="0.1"
-                                    max="1000"
-                                    placeholder="1.0"
-                                    {...field}
-                                  />
-                                </FormControl>
-                                {product && item?.quantity && parseFloat(item.quantity) > 0 && (
-                                  <p className="text-xs font-semibold text-primary">
-                                    €{itemTotal}
-                                  </p>
-                                )}
-                                <FormMessage />
-                              </FormItem>
-                            );
-                          }}
-                        />
+                          {/* Row 2: Quantity and Unit side-by-side with delete button */}
+                          <div className="flex gap-3 items-end">
+                            <FormField
+                              control={form.control}
+                              name={`orderItems.${index}.quantity`}
+                              render={({ field }) => {
+                                const item = orderItems[index];
+                                const product = products.find(p => p.key === item?.product);
+                                const itemTotal = product && item?.quantity 
+                                  ? (product.price * parseFloat(item.quantity || '0')).toFixed(2)
+                                  : '0.00';
+                                
+                                return (
+                                  <FormItem className="flex-1">
+                                    <FormLabel>{t('order.form.quantity')}</FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        type="number"
+                                        step="0.1"
+                                        min="0.1"
+                                        max="1000"
+                                        placeholder="1.0"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                    {product && item?.quantity && parseFloat(item.quantity) > 0 && (
+                                      <p className="text-xs font-semibold text-primary">
+                                        €{itemTotal}
+                                      </p>
+                                    )}
+                                    <FormMessage />
+                                  </FormItem>
+                                );
+                              }}
+                            />
 
-                        <FormField
-                          control={form.control}
-                          name={`orderItems.${index}.unit`}
-                          render={({ field }) => (
-                            <FormItem className="w-24">
-                              <FormLabel>{t('order.form.unit')}</FormLabel>
-                              <Select onValueChange={field.onChange} value={field.value}>
-                                <FormControl>
-                                  <SelectTrigger>
-                                    <SelectValue />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  <SelectItem value="kg">kg</SelectItem>
-                                  <SelectItem value="stuks">stuks</SelectItem>
-                                  <SelectItem value="stuk">stuk</SelectItem>
-                                </SelectContent>
-                              </Select>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                            <FormField
+                              control={form.control}
+                              name={`orderItems.${index}.unit`}
+                              render={({ field }) => (
+                                <FormItem className="flex-1">
+                                  <FormLabel>{t('order.form.unit')}</FormLabel>
+                                  <Select onValueChange={field.onChange} value={field.value}>
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="kg">kg</SelectItem>
+                                      <SelectItem value="stuks">stuks</SelectItem>
+                                      <SelectItem value="stuk">stuk</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
 
-                        {orderItems.length > 1 && (
-                          <Button
-                            type="button"
-                            variant="destructive"
-                            size="icon"
-                            onClick={() => removeOrderItem(index)}
-                            className="mb-2"
-                          >
-                            ×
-                          </Button>
-                        )}
-                      </div>
-                    );
-                  })}
+                            {orderItems.length > 1 && (
+                              <Button
+                                type="button"
+                                variant="destructive"
+                                size="icon"
+                                onClick={() => removeOrderItem(index)}
+                                className="mb-2"
+                              >
+                                ×
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
 
-                    <div className="space-y-3">
+                    <div className="space-y-3 mt-8">
                       <Button
                         type="button"
                         variant="outline"
@@ -671,7 +673,7 @@ const Order = () => {
                       )}
                     </div>
 
-                    <Button type="button" onClick={nextStep} className="w-full" size="lg">
+                    <Button type="button" onClick={nextStep} className="w-full mt-6" size="lg">
                       {t('order.form.continue')}
                     </Button>
                   </CardContent>
