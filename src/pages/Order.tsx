@@ -101,9 +101,44 @@ const createOrderSchemas = (t: (key: string) => string) => {
     customerEmail: z.string()
       .email(t('order.validation.emailInvalid'))
       .max(255, t('order.validation.emailMax') || 'Email must be less than 255 characters'),
+    street: z.string().optional(),
+    houseNumber: z.string().optional(),
+    zipCode: z.string().optional(),
+    city: z.string().optional(),
     notes: z.string()
       .max(1000, t('order.validation.notesMax') || 'Notes must be less than 1000 characters')
       .optional(),
+  }).superRefine((data, ctx) => {
+    if (data.deliveryMethod === 'delivery') {
+      if (!data.street || data.street.length < 2) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: t('order.validation.street') || 'Street is required',
+          path: ['street'],
+        });
+      }
+      if (!data.houseNumber) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: t('order.validation.houseNumber') || 'Number is required',
+          path: ['houseNumber'],
+        });
+      }
+      if (!data.zipCode || data.zipCode.length < 4) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: t('order.validation.zipCode') || 'Zip code is required',
+          path: ['zipCode'],
+        });
+      }
+      if (!data.city || data.city.length < 2) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: t('order.validation.city') || 'City is required',
+          path: ['city'],
+        });
+      }
+    }
   });
 
   return { orderItemSchema, orderFormSchema };
@@ -168,11 +203,16 @@ const Order = () => {
       customerName: "",
       customerPhone: "",
       customerEmail: "",
+      street: "",
+      houseNumber: "",
+      zipCode: "",
+      city: "",
       notes: "",
     },
   });
 
   const orderItems = form.watch("orderItems");
+  const deliveryMethod = form.watch("deliveryMethod");
 
   // Calculate order total for all products
   const calculateTotal = () => {
@@ -252,6 +292,17 @@ const Order = () => {
       // Use this fresh ID - if user is logged in, use their ID; otherwise null for guest orders
       const userIdToSave = currentUser?.id || null;
       
+      // Combine address into notes for persistence if DB schema doesn't have address columns
+      let finalNotes = data.notes || "";
+      if (data.deliveryMethod === 'delivery') {
+        const addressBlock = `
+--- LEVERING ADRES ---
+${data.street} ${data.houseNumber}
+${data.zipCode} ${data.city}
+----------------------`;
+        finalNotes = finalNotes ? `${addressBlock}\n\n${finalNotes}` : addressBlock;
+      }
+      
       const { error } = await supabase.from("orders").insert({
         id: orderId,
         customer_name: data.customerName,
@@ -260,7 +311,7 @@ const Order = () => {
         order_items: orderItemsWithoutPrices, // No prices - database trigger will add them
         pickup_date: format(data.pickupDate, "yyyy-MM-dd"),
         pickup_time: data.pickupTime,
-        notes: data.notes || null,
+        notes: finalNotes,
         status: "pending",
         user_id: userIdToSave,
         language: language,
@@ -282,6 +333,13 @@ const Order = () => {
             pickupDate: format(data.pickupDate, "dd-MM-yyyy"),
             pickupTime: data.pickupTime,
             language: language,
+            deliveryMethod: data.deliveryMethod,
+            deliveryAddress: data.deliveryMethod === 'delivery' ? {
+              street: data.street,
+              houseNumber: data.houseNumber,
+              zipCode: data.zipCode,
+              city: data.city
+            } : undefined
           }
         });
       } catch (emailError) {
@@ -685,7 +743,9 @@ const Order = () => {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <CalendarIcon className="h-5 w-5" />
-                      {t('order.steps.pickup')}
+                      {deliveryMethod === 'delivery' 
+                        ? t('order.steps.deliveryDate') || 'Leveringsmoment'
+                        : t('order.steps.pickup')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
@@ -694,7 +754,11 @@ const Order = () => {
                       name="pickupDate"
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
-                          <FormLabel>{t('order.form.pickupDate')}</FormLabel>
+                          <FormLabel>
+                            {deliveryMethod === 'delivery' 
+                              ? t('order.form.deliveryDate') || 'Leveringsdatum'
+                              : t('order.form.pickupDate')}
+                          </FormLabel>
                           <Popover>
                             <PopoverTrigger asChild>
                               <FormControl>
@@ -739,7 +803,11 @@ const Order = () => {
 
                         return (
                           <FormItem>
-                            <FormLabel>{t('order.form.pickupTime')}</FormLabel>
+                            <FormLabel>
+                              {deliveryMethod === 'delivery' 
+                                ? t('order.form.deliveryTime') || 'Leveringstijd'
+                                : t('order.form.pickupTime')}
+                            </FormLabel>
                             <Select onValueChange={field.onChange} value={field.value}>
                               <FormControl>
                                 <SelectTrigger>
@@ -779,6 +847,70 @@ const Order = () => {
                     <CardTitle>{t('order.steps.contact')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
+                    {deliveryMethod === 'delivery' && (
+                      <div className="bg-muted/30 p-4 rounded-lg border border-border/50 mb-6 space-y-4">
+                         <h3 className="font-semibold flex items-center gap-2">
+                           <span>🏠</span> {t('order.form.addressTitle') || 'Leveringsadres'}
+                         </h3>
+                         <div className="grid grid-cols-3 gap-4">
+                           <FormField
+                             control={form.control}
+                             name="street"
+                             render={({ field }) => (
+                               <FormItem className="col-span-2">
+                                 <FormLabel>{t('order.form.street') || 'Straat'}</FormLabel>
+                                 <FormControl>
+                                   <Input placeholder="Kerkstraat" {...field} />
+                                 </FormControl>
+                                 <FormMessage />
+                               </FormItem>
+                             )}
+                           />
+                           <FormField
+                             control={form.control}
+                             name="houseNumber"
+                             render={({ field }) => (
+                               <FormItem>
+                                 <FormLabel>{t('order.form.number') || 'Nr'}</FormLabel>
+                                 <FormControl>
+                                   <Input placeholder="10A" {...field} />
+                                 </FormControl>
+                                 <FormMessage />
+                               </FormItem>
+                             )}
+                           />
+                         </div>
+                         <div className="grid grid-cols-3 gap-4">
+                           <FormField
+                             control={form.control}
+                             name="zipCode"
+                             render={({ field }) => (
+                               <FormItem>
+                                 <FormLabel>{t('order.form.zip') || 'Postcode'}</FormLabel>
+                                 <FormControl>
+                                   <Input placeholder="8750" {...field} />
+                                 </FormControl>
+                                 <FormMessage />
+                               </FormItem>
+                             )}
+                           />
+                           <FormField
+                             control={form.control}
+                             name="city"
+                             render={({ field }) => (
+                               <FormItem className="col-span-2">
+                                 <FormLabel>{t('order.form.city') || 'Gemeente'}</FormLabel>
+                                 <FormControl>
+                                   <Input placeholder="Zwevezele" {...field} />
+                                 </FormControl>
+                                 <FormMessage />
+                               </FormItem>
+                             )}
+                           />
+                         </div>
+                      </div>
+                    )}
+
                     <FormField
                       control={form.control}
                       name="customerName"

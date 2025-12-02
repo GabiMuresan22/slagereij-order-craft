@@ -30,6 +30,13 @@ const orderItemSchema = z.object({
   unit: z.string().optional(),
 });
 
+const deliveryAddressSchema = z.object({
+  street: z.string().min(1),
+  houseNumber: z.string().min(1),
+  zipCode: z.string().min(1),
+  city: z.string().min(1),
+}).optional();
+
 const orderStatusEmailSchema = z.object({
   customerName: z.string().min(1).max(100),
   customerEmail: z.string().email().max(255),
@@ -39,12 +46,14 @@ const orderStatusEmailSchema = z.object({
   pickupDate: z.string().min(1),
   pickupTime: z.string().min(1).max(50),
   language: z.enum(['nl', 'ro']).optional(),
+  deliveryMethod: z.enum(['pickup', 'delivery']).optional(),
+  deliveryAddress: deliveryAddressSchema,
 });
 
 type OrderStatusEmailRequest = z.infer<typeof orderStatusEmailSchema>;
 
 const getEmailContent = async (data: OrderStatusEmailRequest) => {
-  const { customerName, orderId, status, orderItems, pickupDate, pickupTime, language = DEFAULT_LANGUAGE } = data;
+  const { customerName, orderId, status, orderItems, pickupDate, pickupTime, language = DEFAULT_LANGUAGE, deliveryMethod, deliveryAddress } = data;
   
   // Create Supabase client to fetch official prices
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -124,8 +133,10 @@ const getEmailContent = async (data: OrderStatusEmailRequest) => {
       orderId: "Bestelling ID",
       status: "Status",
       pickup: "Afhalen",
+      delivery: "Levering",
       at: "om",
       items: "Artikelen",
+      address: "Adres",
       total: "Totaal",
       questions: "Als u vragen heeft, aarzel dan niet om contact met ons op te nemen.",
       footer: "Bedankt dat u voor onze slagerij kiest!",
@@ -162,8 +173,10 @@ const getEmailContent = async (data: OrderStatusEmailRequest) => {
       orderId: "ID comandă",
       status: "Stare",
       pickup: "Ridicare",
+      delivery: "Livrare",
       at: "ora",
       items: "Articole",
+      address: "Adresă",
       total: "Total",
       questions: "Dacă aveți întrebări, nu ezitați să ne contactați.",
       footer: "Vă mulțumim că ați ales măcelăria noastră!",
@@ -228,8 +241,13 @@ const getEmailContent = async (data: OrderStatusEmailRequest) => {
                           <strong>${t.status}:</strong> <span style="color: #8B0000; text-transform: capitalize;">${statusLabel}</span>
                         </p>
                         <p style="color: #666666; margin: 5px 0;">
-                          <strong>${t.pickup}:</strong> ${pickupDate}, ${t.at} ${pickupTime}
+                          <strong>${deliveryMethod === 'delivery' ? t.delivery : t.pickup}:</strong> ${pickupDate}, ${t.at} ${pickupTime}
                         </p>
+                        ${deliveryMethod === 'delivery' && deliveryAddress ? `
+                        <p style="color: #666666; margin: 5px 0;">
+                          <strong>${t.address}:</strong> ${deliveryAddress.street} ${deliveryAddress.houseNumber}, ${deliveryAddress.zipCode} ${deliveryAddress.city}
+                        </p>
+                        ` : ''}
                         
                         <h3 style="color: #333333; font-size: 16px; margin-top: 20px; margin-bottom: 10px;">${t.items}:</h3>
                         <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">

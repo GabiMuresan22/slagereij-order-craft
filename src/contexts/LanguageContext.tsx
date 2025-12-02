@@ -602,6 +602,7 @@ const translations = {
     // Order - Steps
     'order.steps.products': 'Producten',
     'order.steps.pickup': 'Afhalen',
+    'order.steps.deliveryDate': 'Leveringsmoment',
     'order.steps.contact': 'Contactgegevens',
     'order.steps.confirm': 'Bevestiging',
     
@@ -616,9 +617,16 @@ const translations = {
     'order.form.submit': 'Bestelling Plaatsen',
     'order.form.submitting': 'Bezig met versturen...',
     'order.form.pickupDate': 'Afhaaldatum',
+    'order.form.deliveryDate': 'Leveringsdatum',
     'order.form.selectDate': 'Selecteer datum',
     'order.form.pickupTime': 'Afhaaltijd',
+    'order.form.deliveryTime': 'Leveringstijd',
     'order.form.selectTime': 'Selecteer tijd',
+    'order.form.addressTitle': 'Leveringsadres',
+    'order.form.street': 'Straat',
+    'order.form.number': 'Nr',
+    'order.form.zip': 'Postcode',
+    'order.form.city': 'Gemeente',
     'order.form.name': 'Naam',
     'order.form.namePlaceholder': 'Uw naam',
     'order.form.phone': 'Telefoonnummer',
@@ -663,6 +671,10 @@ const translations = {
     'order.validation.emailMax': 'E-mailadres mag maximaal 255 karakters zijn',
     'order.validation.notesMax': 'Opmerkingen mogen maximaal 1000 karakters zijn',
     'order.validation.quantityInvalid': 'Aantal moet tussen 0.1 en 1000 zijn',
+    'order.validation.street': 'Straat is verplicht',
+    'order.validation.houseNumber': 'Huisnummer is verplicht',
+    'order.validation.zipCode': 'Postcode is verplicht',
+    'order.validation.city': 'Gemeente is verplicht',
     
     // Packages Page
     'packages.title': 'Onze Colli\'s',
@@ -1376,6 +1388,7 @@ const translations = {
     // Order - Steps
     'order.steps.products': 'Produse',
     'order.steps.pickup': 'Ridicare',
+    'order.steps.deliveryDate': 'Momentul livrării',
     'order.steps.contact': 'Contact',
     'order.steps.confirm': 'Confirmare',
     
@@ -1390,9 +1403,16 @@ const translations = {
     'order.form.submit': 'Trimite Comanda',
     'order.form.submitting': 'Se trimite...',
     'order.form.pickupDate': 'Data ridicării',
+    'order.form.deliveryDate': 'Data livrării',
     'order.form.selectDate': 'Selectează data',
     'order.form.pickupTime': 'Ora ridicării',
+    'order.form.deliveryTime': 'Ora livrării',
     'order.form.selectTime': 'Selectează ora',
+    'order.form.addressTitle': 'Adresa de livrare',
+    'order.form.street': 'Stradă',
+    'order.form.number': 'Nr',
+    'order.form.zip': 'Cod poștal',
+    'order.form.city': 'Oraș',
     'order.form.name': 'Nume',
     'order.form.namePlaceholder': 'Numele dumneavoastră',
     'order.form.phone': 'Telefon',
@@ -1437,6 +1457,10 @@ const translations = {
     'order.validation.emailMax': 'Adresa de email poate avea maxim 255 de caractere',
     'order.validation.notesMax': 'Observațiile pot avea maxim 1000 de caractere',
     'order.validation.quantityInvalid': 'Cantitatea trebuie să fie între 0.1 și 1000',
+    'order.validation.street': 'Strada este obligatorie',
+    'order.validation.houseNumber': 'Numărul este obligatoriu',
+    'order.validation.zipCode': 'Codul poștal este obligatoriu',
+    'order.validation.city': 'Orașul este obligatoriu',
     
     // Packages Page
     'packages.title': 'Pachetele Noastre',
