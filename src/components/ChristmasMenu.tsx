@@ -495,7 +495,7 @@ const ChristmasMenu = () => {
                 </CardTitle>
                 <div className="mt-4">
                   <span className="inline-block px-4 py-2 bg-neutral-900 rounded-full text-xs font-semibold text-neutral-300 border border-neutral-700">
-                    {t(menu.descriptionKey)}
+                    {menu.id === 9 ? t('christmasMenu.gourmet.badge') : t(menu.descriptionKey)}
                   </span>
                 </div>
               </CardHeader>
