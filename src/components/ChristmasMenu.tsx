@@ -11,6 +11,10 @@ import { useToast } from "@/hooks/use-toast";
 import christmasMenu1 from "@/assets/christmas-menu-1.webp";
 import christmasMenu2 from "@/assets/christmas-menu-2.webp";
 import christmasMenu3 from "@/assets/christmas-menu-3.webp";
+import fondueImage from "@/assets/fondue-bourguignonne-meat-platter-beef-chicken.webp";
+import gourmetImage from "@/assets/luxe-gourmet-schotel-10-soorten-vlees.webp";
+import tapasImage from "@/assets/tapas-john-family-platter.webp";
+import dessertImage from "@/assets/kids-tapas-finger-food.webp";
 
 interface PriceOption {
   persons: number;
@@ -23,6 +27,7 @@ interface MenuItem {
   prices?: PriceOption[];
   descriptionKey: string;
   ingredientKeys: string[];
+  image?: string;
 }
 
 interface PricedItem {
@@ -184,6 +189,7 @@ const additionalMenuItems: MenuItem[] = [
     id: 5,
     titleKey: "christmasMenu.dessert.title",
     descriptionKey: "christmasMenu.dessert.description",
+    image: dessertImage,
     ingredientKeys: [
       "christmasMenu.dessert.item1",
       "christmasMenu.dessert.item2",
@@ -209,6 +215,7 @@ const additionalMenuItems: MenuItem[] = [
     id: 7,
     titleKey: "christmasMenu.tapas.title",
     descriptionKey: "christmasMenu.tapas.description",
+    image: tapasImage,
     ingredientKeys: [
       "christmasMenu.tapas.item1",
       "christmasMenu.tapas.item2",
@@ -222,6 +229,7 @@ const additionalMenuItems: MenuItem[] = [
     id: 8,
     titleKey: "christmasMenu.fondue.title",
     descriptionKey: "christmasMenu.fondue.description",
+    image: fondueImage,
     ingredientKeys: [
       "christmasMenu.fondue.item1"
     ]
@@ -230,6 +238,7 @@ const additionalMenuItems: MenuItem[] = [
     id: 9,
     titleKey: "christmasMenu.gourmet.title",
     descriptionKey: "christmasMenu.gourmet.description",
+    image: gourmetImage,
     ingredientKeys: [
       "christmasMenu.gourmet.item1",
       "christmasMenu.gourmet.item2",
@@ -468,6 +477,17 @@ const ChristmasMenu = () => {
               key={menu.id} 
               className="bg-neutral-800 border-primary transition-all duration-300 flex flex-col overflow-hidden group"
             >
+              {/* Image Section */}
+              {menu.image && (
+                <div className="h-48 w-full overflow-hidden">
+                  <img 
+                    src={menu.image} 
+                    alt={t(menu.titleKey)} 
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
+              )}
+
               {/* Card Header */}
               <CardHeader className="text-center pb-2 relative">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
