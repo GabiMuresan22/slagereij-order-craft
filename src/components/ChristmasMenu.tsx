@@ -189,7 +189,6 @@ const additionalMenuItems: MenuItem[] = [
     id: 5,
     titleKey: "christmasMenu.dessert.title",
     descriptionKey: "christmasMenu.dessert.description",
-    image: dessertImage,
     ingredientKeys: [
       "christmasMenu.dessert.item1",
       "christmasMenu.dessert.item2",
