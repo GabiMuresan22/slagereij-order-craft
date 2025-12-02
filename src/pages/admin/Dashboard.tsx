@@ -12,7 +12,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, PackageCheck, Clock, CheckCircle2, XCircle, Phone, Mail, Calendar, StickyNote, MessageCircle, Settings, Printer } from 'lucide-react';
+import { Loader2, PackageCheck, Clock, CheckCircle2, XCircle, Phone, Mail, Calendar, StickyNote, MessageCircle, Settings, Printer, ChevronDown, Filter } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import {
@@ -101,6 +102,8 @@ export default function AdminDashboard() {
     order: null,
     message: ''
   });
+  const [expandedOrders, setExpandedOrders] = useState<Set<string>>(new Set());
+  const [showFilter, setShowFilter] = useState(false);
 
   // Fetch templates
   const fetchTemplates = async () => {
@@ -459,6 +462,38 @@ export default function AdminDashboard() {
     ? orders 
     : orders.filter(order => order.status === statusFilter);
 
+  // Toggle order expansion
+  const toggleOrderExpansion = (orderId: string) => {
+    setExpandedOrders(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(orderId)) {
+        newSet.delete(orderId);
+      } else {
+        newSet.add(orderId);
+      }
+      return newSet;
+    });
+  };
+
+  // Format items for display (badges)
+  const formatOrderItems = (items: OrderItem[], maxDisplay: number = 2) => {
+    if (items.length <= maxDisplay) {
+      return items;
+    }
+    return items.slice(0, maxDisplay);
+  };
+
+  // Swipe handler for mobile
+  const handleSwipe = (order: Order, direction: 'left' | 'right') => {
+    if (direction === 'right') {
+      // Swipe right to call
+      window.location.href = `tel:${order.customer_phone}`;
+    } else if (direction === 'left') {
+      // Swipe left to open details
+      setSelectedOrder(order);
+    }
+  };
+
   const orderStats = {
     total: orders.length,
     pending: orders.filter(o => o.status === 'pending').length,
@@ -541,149 +576,331 @@ export default function AdminDashboard() {
           </Card>
         </div>
 
-        {/* Orders Table */}
+        {/* Orders - Mobile Cards / Desktop Table */}
         <Card>
           <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle>{t('admin.orders.title')}</CardTitle>
-                <CardDescription>{t('admin.orders.description')}</CardDescription>
+            {/* Mobile Header - Compact */}
+            <div className="flex items-center justify-between md:block">
+              <div className="flex items-center justify-between w-full md:w-auto">
+                <div>
+                  <CardTitle className="text-xl md:text-2xl">{t('admin.orders.title')}</CardTitle>
+                  <CardDescription className="hidden md:block">{t('admin.orders.description')}</CardDescription>
+                </div>
+                {/* Mobile Filter Button */}
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="md:hidden"
+                  onClick={() => setShowFilter(!showFilter)}
+                >
+                  <Filter className="h-4 w-4" />
+                </Button>
               </div>
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder={t('admin.orders.filterPlaceholder')} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">{t('admin.orders.all')}</SelectItem>
-                  <SelectItem value="pending">{t('admin.orders.pending')}</SelectItem>
-                  <SelectItem value="confirmed">{t('admin.orders.confirmed')}</SelectItem>
-                  <SelectItem value="ready">{t('admin.orders.ready')}</SelectItem>
-                  <SelectItem value="completed">{t('admin.orders.completed')}</SelectItem>
-                  <SelectItem value="cancelled">{t('admin.orders.cancelled')}</SelectItem>
-                </SelectContent>
-              </Select>
+              {/* Desktop Filter */}
+              <div className="hidden md:block mt-4">
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder={t('admin.orders.filterPlaceholder')} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">{t('admin.orders.all')}</SelectItem>
+                    <SelectItem value="pending">{t('admin.orders.pending')}</SelectItem>
+                    <SelectItem value="confirmed">{t('admin.orders.confirmed')}</SelectItem>
+                    <SelectItem value="ready">{t('admin.orders.ready')}</SelectItem>
+                    <SelectItem value="completed">{t('admin.orders.completed')}</SelectItem>
+                    <SelectItem value="cancelled">{t('admin.orders.cancelled')}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
+            {/* Mobile Filter Dropdown */}
+            {showFilter && (
+              <div className="md:hidden mt-4">
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder={t('admin.orders.filterPlaceholder')} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">{t('admin.orders.all')}</SelectItem>
+                    <SelectItem value="pending">{t('admin.orders.pending')}</SelectItem>
+                    <SelectItem value="confirmed">{t('admin.orders.confirmed')}</SelectItem>
+                    <SelectItem value="ready">{t('admin.orders.ready')}</SelectItem>
+                    <SelectItem value="completed">{t('admin.orders.completed')}</SelectItem>
+                    <SelectItem value="cancelled">{t('admin.orders.cancelled')}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
           </CardHeader>
           <CardContent>
-            <div className="rounded-md border">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>{t('admin.table.customer')}</TableHead>
-                    <TableHead>{t('admin.table.items')}</TableHead>
-                    <TableHead>{t('admin.table.total')}</TableHead>
-                    <TableHead>{t('admin.table.pickup')}</TableHead>
-                    <TableHead>{t('admin.table.status')}</TableHead>
-                    <TableHead>{t('admin.table.created')}</TableHead>
-                    <TableHead>{t('admin.table.actions')}</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredOrders.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
-                        {t('admin.orders.noOrders')}
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    filteredOrders.map((order) => {
-                      const StatusIcon = statusIcons[order.status as keyof typeof statusIcons];
-                      const orderTotal = order.order_items.reduce((sum, item) => {
-                        const price = item.price || 0;
-                        const quantity = parseFloat(item.quantity) || 0;
-                        return sum + (price * quantity);
-                      }, 0);
-                      
-                      return (
-                        <TableRow key={order.id}>
-                          <TableCell>
-                            <div className="font-medium">{order.customer_name}</div>
-                            <div className="text-sm text-muted-foreground">{order.customer_phone}</div>
-                          </TableCell>
-                          <TableCell>
-                            <div className="text-sm">
-                              {order.order_items.slice(0, 2).map((item, idx) => (
-                                <div key={idx}>
-                                  {item.quantity} {item.unit} {item.product}
-                                  {item.price && (
-                                    <span className="text-muted-foreground ml-1">
-                                      (€{(parseFloat(item.quantity) * item.price).toFixed(2)})
-                                    </span>
-                                  )}
-                                </div>
-                              ))}
-                              {order.order_items.length > 2 && (
-                                <div className="text-muted-foreground">
-                                  +{order.order_items.length - 2} {t('admin.orders.more')}
-                                </div>
-                              )}
+            {filteredOrders.length === 0 ? (
+              <div className="text-center py-12 text-muted-foreground">
+                {t('admin.orders.noOrders')}
+              </div>
+            ) : (
+              <>
+                {/* Mobile Card View */}
+                <div className="space-y-4 md:hidden">
+                  {filteredOrders.map((order) => {
+                    const StatusIcon = statusIcons[order.status as keyof typeof statusIcons];
+                    const orderTotal = order.order_items.reduce((sum, item) => {
+                      const price = item.price || 0;
+                      const quantity = parseFloat(item.quantity) || 0;
+                      return sum + (price * quantity);
+                    }, 0);
+                    const isExpanded = expandedOrders.has(order.id);
+                    const displayedItems = formatOrderItems(order.order_items, 2);
+                    
+                    return (
+                      <Card 
+                        key={order.id}
+                        className="border-2 transition-all hover:shadow-md"
+                        onClick={() => toggleOrderExpansion(order.id)}
+                      >
+                        <CardContent className="p-4">
+                          {/* Card Header */}
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-1">
+                                <h3 className="font-bold text-lg">{order.customer_name}</h3>
+                                <Badge className={statusColors[order.status as keyof typeof statusColors]}>
+                                  <StatusIcon className="h-3 w-3 mr-1" />
+                                  {t(getStatusTranslationKey(order.status))}
+                                </Badge>
+                              </div>
+                              <div className="text-2xl font-bold text-primary mt-2">
+                                €{orderTotal.toFixed(2)}
+                              </div>
                             </div>
-                          </TableCell>
-                          <TableCell>
-                            <div className="font-semibold text-primary">
-                              €{orderTotal.toFixed(2)}
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <div className="text-sm">
-                              {format(new Date(order.pickup_date), 'dd/MM/yyyy')}
-                            </div>
-                            <div className="text-xs text-muted-foreground">{order.pickup_time}</div>
-                          </TableCell>
-                          <TableCell>
-                            <Badge className={statusColors[order.status as keyof typeof statusColors]}>
-                              <StatusIcon className="h-3 w-3 mr-1" />
-                              {t(getStatusTranslationKey(order.status))}
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="text-sm text-muted-foreground">
-                            {format(new Date(order.created_at), 'dd/MM/yyyy HH:mm')}
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex gap-2 items-center">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => setSelectedOrder(order)}
-                              >
-                                {t('admin.orders.view')}
-                              </Button>
-                              
-                              {/* WhatsApp Button */}
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="text-green-600 hover:text-green-700 hover:bg-green-50"
-                                title="Stuur WhatsApp update"
-                                onClick={() => openWhatsAppDialog(order)}
-                              >
-                                <MessageCircle className="h-4 w-4" />
-                              </Button>
+                            <ChevronDown 
+                              className={`h-5 w-5 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                            />
+                          </div>
 
-                              <Select
-                                value={order.status}
-                                onValueChange={(value) => updateOrderStatus(order.id, value)}
-                              >
-                                <SelectTrigger className="w-[120px] h-9">
-                                  <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="pending">{t('admin.orders.pending')}</SelectItem>
-                                  <SelectItem value="confirmed">{t('admin.orders.confirmed')}</SelectItem>
-                                  <SelectItem value="ready">{t('admin.orders.ready')}</SelectItem>
-                                  <SelectItem value="completed">{t('admin.orders.completed')}</SelectItem>
-                                  <SelectItem value="cancelled">{t('admin.orders.cancelled')}</SelectItem>
-                                </SelectContent>
-                              </Select>
+                          {/* Items Preview - Badges */}
+                          <div className="flex flex-wrap gap-2 mb-3">
+                            {displayedItems.map((item, idx) => (
+                              <Badge key={idx} variant="outline" className="text-xs">
+                                {item.product} ×{item.quantity}
+                              </Badge>
+                            ))}
+                            {order.order_items.length > 2 && (
+                              <Badge variant="secondary" className="text-xs">
+                                +{order.order_items.length - 2} {t('admin.orders.more')}
+                              </Badge>
+                            )}
+                          </div>
+
+                          {/* Expanded Content */}
+                          {isExpanded && (
+                            <div className="space-y-3 pt-3 border-t">
+                              {/* All Items */}
+                              <div>
+                                <h4 className="text-sm font-semibold mb-2">{t('admin.table.items')}</h4>
+                                <div className="space-y-2">
+                                  {order.order_items.map((item, idx) => (
+                                    <div key={idx} className="flex justify-between items-center text-sm">
+                                      <span className="flex-1">
+                                        <span className="text-muted-foreground">{item.quantity} {item.unit}</span>{' '}
+                                        <span className="font-medium">{item.product}</span>
+                                      </span>
+                                      {item.price && (
+                                        <span className="text-muted-foreground ml-2">
+                                          €{(parseFloat(item.quantity) * item.price).toFixed(2)}
+                                        </span>
+                                      )}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* Pickup Details */}
+                              <div>
+                                <h4 className="text-sm font-semibold mb-2">{t('admin.table.pickup')}</h4>
+                                <div className="flex items-center gap-2 text-sm">
+                                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                                  <span>{format(new Date(order.pickup_date), 'dd/MM/yyyy')} {order.pickup_time}</span>
+                                </div>
+                              </div>
+
+                              {/* Contact Info */}
+                              <div>
+                                <h4 className="text-sm font-semibold mb-2">{t('admin.orderDetails.customerInfo')}</h4>
+                                <div className="space-y-2">
+                                  <a 
+                                    href={`tel:${order.customer_phone}`}
+                                    className="flex items-center gap-2 text-sm text-primary hover:underline"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    <Phone className="h-4 w-4" />
+                                    {order.customer_phone}
+                                  </a>
+                                  <a 
+                                    href={`mailto:${order.customer_email}`}
+                                    className="flex items-center gap-2 text-sm text-primary hover:underline"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    <Mail className="h-4 w-4" />
+                                    {order.customer_email}
+                                  </a>
+                                </div>
+                              </div>
+
+                              {/* Actions */}
+                              <div className="flex gap-2 pt-3 border-t" onClick={(e) => e.stopPropagation()}>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="flex-1"
+                                  onClick={() => setSelectedOrder(order)}
+                                >
+                                  {t('admin.orders.view')}
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="text-green-600 hover:text-green-700 hover:bg-green-50"
+                                  onClick={() => openWhatsAppDialog(order)}
+                                >
+                                  <MessageCircle className="h-4 w-4" />
+                                </Button>
+                                <a
+                                  href={`tel:${order.customer_phone}`}
+                                  className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 w-9"
+                                >
+                                  <Phone className="h-4 w-4" />
+                                </a>
+                                <Select
+                                  value={order.status}
+                                  onValueChange={(value) => updateOrderStatus(order.id, value)}
+                                >
+                                  <SelectTrigger className="w-[120px] h-9">
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="pending">{t('admin.orders.pending')}</SelectItem>
+                                    <SelectItem value="confirmed">{t('admin.orders.confirmed')}</SelectItem>
+                                    <SelectItem value="ready">{t('admin.orders.ready')}</SelectItem>
+                                    <SelectItem value="completed">{t('admin.orders.completed')}</SelectItem>
+                                    <SelectItem value="cancelled">{t('admin.orders.cancelled')}</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
                             </div>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })
-                  )}
-                </TableBody>
-              </Table>
-            </div>
+                          )}
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+
+                {/* Desktop Table View */}
+                <div className="hidden md:block rounded-md border">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>{t('admin.table.customer')}</TableHead>
+                        <TableHead>{t('admin.table.items')}</TableHead>
+                        <TableHead>{t('admin.table.total')}</TableHead>
+                        <TableHead>{t('admin.table.pickup')}</TableHead>
+                        <TableHead>{t('admin.table.status')}</TableHead>
+                        <TableHead>{t('admin.table.created')}</TableHead>
+                        <TableHead>{t('admin.table.actions')}</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredOrders.map((order) => {
+                        const StatusIcon = statusIcons[order.status as keyof typeof statusIcons];
+                        const orderTotal = order.order_items.reduce((sum, item) => {
+                          const price = item.price || 0;
+                          const quantity = parseFloat(item.quantity) || 0;
+                          return sum + (price * quantity);
+                        }, 0);
+                        
+                        return (
+                          <TableRow key={order.id}>
+                            <TableCell>
+                              <div className="font-medium">{order.customer_name}</div>
+                              <div className="text-sm text-muted-foreground">{order.customer_phone}</div>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex flex-wrap gap-1">
+                                {order.order_items.slice(0, 3).map((item, idx) => (
+                                  <Badge key={idx} variant="outline" className="text-xs">
+                                    {item.product} ×{item.quantity}
+                                  </Badge>
+                                ))}
+                                {order.order_items.length > 3 && (
+                                  <Badge variant="secondary" className="text-xs">
+                                    +{order.order_items.length - 3}
+                                  </Badge>
+                                )}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <div className="font-semibold text-primary">
+                                €{orderTotal.toFixed(2)}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <div className="text-sm">
+                                {format(new Date(order.pickup_date), 'dd/MM/yyyy')}
+                              </div>
+                              <div className="text-xs text-muted-foreground">{order.pickup_time}</div>
+                            </TableCell>
+                            <TableCell>
+                              <Badge className={statusColors[order.status as keyof typeof statusColors]}>
+                                <StatusIcon className="h-3 w-3 mr-1" />
+                                {t(getStatusTranslationKey(order.status))}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-sm text-muted-foreground">
+                              {format(new Date(order.created_at), 'dd/MM/yyyy HH:mm')}
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex gap-2 items-center">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => setSelectedOrder(order)}
+                                >
+                                  {t('admin.orders.view')}
+                                </Button>
+                                
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="text-green-600 hover:text-green-700 hover:bg-green-50"
+                                  onClick={() => openWhatsAppDialog(order)}
+                                >
+                                  <MessageCircle className="h-4 w-4" />
+                                </Button>
+
+                                <Select
+                                  value={order.status}
+                                  onValueChange={(value) => updateOrderStatus(order.id, value)}
+                                >
+                                  <SelectTrigger className="w-[120px] h-9">
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="pending">{t('admin.orders.pending')}</SelectItem>
+                                    <SelectItem value="confirmed">{t('admin.orders.confirmed')}</SelectItem>
+                                    <SelectItem value="ready">{t('admin.orders.ready')}</SelectItem>
+                                    <SelectItem value="completed">{t('admin.orders.completed')}</SelectItem>
+                                    <SelectItem value="cancelled">{t('admin.orders.cancelled')}</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </div>
+              </>
+            )}
           </CardContent>
         </Card>
 
