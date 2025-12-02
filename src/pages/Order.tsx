@@ -616,7 +616,7 @@ const Order = () => {
                               control={form.control}
                               name={`orderItems.${index}.unit`}
                               render={({ field }) => (
-                                <FormItem className="flex-1">
+                                <FormItem className="w-28">
                                   <FormLabel>{t('order.form.unit')}</FormLabel>
                                   <Select onValueChange={field.onChange} value={field.value}>
                                     <FormControl>
