@@ -96,7 +96,7 @@ const MyAccount = () => {
       toast.error("Failed to update profile");
       console.error("Error updating profile:", error);
     } else {
-      toast.success("Profile updated successfully");
+      toast.success(t('auth.success.profileUpdated'));
       fetchProfile();
     }
     setIsUpdating(false);

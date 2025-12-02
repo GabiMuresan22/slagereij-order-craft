@@ -180,7 +180,7 @@ export default function Auth() {
 
       if (error) throw error;
 
-      toast.success('Password updated successfully!');
+      toast.success(t('auth.success.passwordUpdated'));
       setIsPasswordRecovery(false);
       setNewPassword('');
       setConfirmNewPassword('');

@@ -231,6 +231,14 @@ const translations = {
     'contact.form.consent': 'Ik ga akkoord met de verwerking van mijn persoonsgegevens volgens het',
     'contact.form.privacyNotice': 'Uw persoonlijke gegevens worden verwerkt volgens ons',
     
+    // Auth - Success Messages
+    'auth.success.accountCreated': 'Account succesvol aangemaakt! U kunt nu inloggen.',
+    'auth.success.signedIn': 'Succesvol ingelogd!',
+    'auth.success.signedOut': 'Succesvol uitgelogd',
+    'auth.success.passwordResetSent': 'Wachtwoord reset e-mail verzonden! Controleer uw inbox.',
+    'auth.success.passwordUpdated': 'Wachtwoord succesvol bijgewerkt!',
+    'auth.success.profileUpdated': 'Profiel succesvol bijgewerkt',
+    
     // Contact - Validation
     'contact.validation.nameMin': 'Naam moet minimaal 2 karakters zijn',
     'contact.validation.nameMax': 'Naam mag maximaal 100 karakters zijn',
@@ -1016,6 +1024,14 @@ const translations = {
     'contact.form.error': 'A apărut o eroare. Vă rugăm să încercați din nou mai târziu sau să ne sunați direct.',
     'contact.form.consent': 'Sunt de acord cu procesarea datelor mele personale conform',
     'contact.form.privacyNotice': 'Datele dumneavoastră personale sunt procesate conform',
+    
+    // Auth - Success Messages
+    'auth.success.accountCreated': 'Cont creat cu succes! Acum vă puteți conecta.',
+    'auth.success.signedIn': 'Conectat cu succes!',
+    'auth.success.signedOut': 'Deconectat cu succes',
+    'auth.success.passwordResetSent': 'E-mail de resetare a parolei trimis! Verificați inbox-ul.',
+    'auth.success.passwordUpdated': 'Parolă actualizată cu succes!',
+    'auth.success.profileUpdated': 'Profil actualizat cu succes',
     
     // Contact - Validation
     'contact.validation.nameMin': 'Numele trebuie să aibă cel puțin 2 caractere',

@@ -3,6 +3,7 @@ import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { useLanguage } from './LanguageContext';
 
 interface AuthContextType {
   user: User | null;
@@ -21,6 +22,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   useEffect(() => {
     // Get initial session
@@ -56,7 +58,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (error) throw error;
       
-      toast.success('Account created successfully! You can now sign in.');
+      toast.success(t('auth.success.accountCreated'));
     } catch (error: any) {
       toast.error(error.message || 'Failed to create account');
       throw error;
@@ -72,7 +74,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (error) throw error;
       
-      toast.success('Signed in successfully!');
+      toast.success(t('auth.success.signedIn'));
       navigate('/');
     } catch (error: any) {
       toast.error(error.message || 'Failed to sign in');
@@ -85,7 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       
-      toast.success('Signed out successfully');
+      toast.success(t('auth.success.signedOut'));
       navigate('/');
     } catch (error: any) {
       toast.error(error.message || 'Failed to sign out');
@@ -100,7 +102,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (error) throw error;
       
-      toast.success('Password reset email sent! Check your inbox.');
+      toast.success(t('auth.success.passwordResetSent'));
     } catch (error: any) {
       toast.error(error.message || 'Failed to send reset email');
       throw error;
