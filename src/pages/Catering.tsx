@@ -15,6 +15,9 @@ import cateringPastaBowls from "@/assets/catering-pasta-bowls.webp";
 import cateringPartyPlatter from "@/assets/catering-party-platter.webp";
 import cateringCheesePlatter from "@/assets/catering-cheese-platter.webp";
 import cateringTomatoSalad from "@/assets/catering-tomato-salad.webp";
+import romanianPlatter from "@/assets/romanian-traditional-appetizer-platter-charcuterie.webp";
+import kidsPlatter from "@/assets/kids-tapas-finger-food.webp";
+import tapasJohn from "@/assets/tapas-john-part-mix.webp";
 
 export default function Catering() {
   const { t } = useLanguage();
@@ -25,6 +28,9 @@ export default function Catering() {
   ]);
 
   const galleryImages = [
+    { src: romanianPlatter, alt: "Traditional Romanian appetizer platter with mixed charcuterie" },
+    { src: kidsPlatter, alt: "Child-friendly party platter with mini burgers and snacks" },
+    { src: tapasJohn, alt: "Tapas mix platter serving for two people" },
     { src: cateringChef, alt: "Professional chef grilling at outdoor catering event" },
     { src: cateringChefServing, alt: "Chef presenting gourmet catering dishes on serving tray" },
     { src: cateringCharcuterie, alt: "Artisanal charcuterie platter with premium meats and accompaniments" },

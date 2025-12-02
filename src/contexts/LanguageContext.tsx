@@ -511,7 +511,7 @@ const translations = {
     'christmasMenu.fondue.item1': 'Vanaf €10/pers',
     
     'christmasMenu.gourmet.title': 'Gourmet',
-    'christmasMenu.gourmet.description': 'Diverse gourmet opties',
+    'christmasMenu.gourmet.description': 'Maak het gezellig aan tafel met onze Luxe Gourmet & Steengrill Schotel. Wij selecteren enkel het malste vlees, van gemarineerde kip en mini-worstjes tot malse biefstukjes. Alles is dagvers versneden en meteen klaar voor uw gourmetstel of tafelgrill.',
     'christmasMenu.gourmet.item1': 'Gourmet (9 soorten) €10/pers',
     'christmasMenu.gourmet.item2': 'Gourmet (10 soorten) €11/pers',
     'christmasMenu.gourmet.item3': 'Gourmet Luxe (10 soorten) €15/pers',
@@ -1297,7 +1297,7 @@ const translations = {
     'christmasMenu.fondue.item1': 'De la €10/pers',
     
     'christmasMenu.gourmet.title': 'Gourmet',
-    'christmasMenu.gourmet.description': 'Diverse opțiuni gourmet',
+    'christmasMenu.gourmet.description': 'Creați o atmosferă plăcută la masă cu Platoul nostru Gourmet & Steengrill de Lux. Selectăm doar cea mai fragedă carne, de la pui marinat și mini-cârnați până la file de vită fragede. Totul este tăiat proaspăt zilnic și gata pentru grătarul dvs. de masă sau fondue.',
     'christmasMenu.gourmet.item1': 'Gourmet (9 sortimente) €10/pers',
     'christmasMenu.gourmet.item2': 'Gourmet (10 sortimente) €11/pers',
     'christmasMenu.gourmet.item3': 'Gourmet Luxe (10 sortimente) €15/pers',

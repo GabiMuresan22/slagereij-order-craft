@@ -8,6 +8,7 @@ import porkImage from "@/assets/pork-products.webp";
 import poultryImage from "@/assets/chicken.webp";
 import bbqGrillImage from "@/assets/bbq-grill-meats.webp";
 import specialtyImage from "@/assets/specialty-platter.webp";
+import gourmetImage from "@/assets/steengrill-vleesschotel-assortiment.webp";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema, getProductListSchema } from "@/lib/structuredData";
@@ -67,6 +68,18 @@ const Products = () => {
         "products.poultry.item6",
       ],
       ctaKey: "products.poultry.cta",
+    },
+    {
+      titleKey: "christmasMenu.gourmet.title",
+      subtitleKey: "christmasMenu.gourmet.description",
+      image: gourmetImage,
+      imageLabelKey: "christmasMenu.gourmet.title",
+      itemKeys: [
+        "christmasMenu.gourmet.item1",
+        "christmasMenu.gourmet.item2",
+        "christmasMenu.gourmet.item3",
+      ],
+      ctaKey: "christmasMenu.orderNow",
     },
     {
       titleKey: "products.bbq.title",
