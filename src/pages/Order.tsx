@@ -60,9 +60,15 @@ const generateTimeSlots = (startHour: number, startMin: number, endHour: number,
 };
 
 // Generate time slots for a specific day based on business hours
-const getTimeSlotsForDay = (dayOfWeek: number): string[] => {
+const getTimeSlotsForDay = (dayOfWeek: number, isDelivery: boolean = false): string[] => {
   const hours = businessHours[dayOfWeek];
   if (!hours) return [];
+  
+  // Custom logic for delivery: After 18:00
+  if (isDelivery) {
+    // Generate slots from 18:00 to 20:00
+    return generateTimeSlots(18, 0, 20, 0);
+  }
   
   const [startHour, startMin] = hours.open.split(':').map(Number);
   const [endHour, endMin] = hours.close.split(':').map(Number);
@@ -799,7 +805,9 @@ ${data.zipCode} ${data.city}
                       name="pickupTime"
                       render={({ field }) => {
                         const selectedDate = form.watch("pickupDate");
-                        const timeSlots = selectedDate ? getTimeSlotsForDay(selectedDate.getDay()) : [];
+                        const timeSlots = selectedDate 
+                          ? getTimeSlotsForDay(selectedDate.getDay(), deliveryMethod === 'delivery') 
+                          : [];
 
                         return (
                           <FormItem>
