@@ -210,22 +210,47 @@ export default function AdminDashboard() {
 
       // Send email notification
       try {
-        await supabase.functions.invoke('send-order-status-email', {
-          body: {
-            customerName: order.customer_name,
-            customerEmail: order.customer_email,
-            orderId: order.id,
-            status: newStatus,
-            orderItems: order.order_items,
-            pickupDate: new Date(order.pickup_date).toLocaleDateString(),
-            pickupTime: order.pickup_time,
-            language: order.language || DEFAULT_EMAIL_LANGUAGE,
-          },
+        // Format pickup date consistently (dd-MM-yyyy)
+        const pickupDateFormatted = format(new Date(order.pickup_date), 'dd-MM-yyyy');
+        
+        const emailPayload = {
+          customerName: order.customer_name,
+          customerEmail: order.customer_email,
+          customerPhone: order.customer_phone || '',
+          orderId: order.id,
+          status: newStatus,
+          orderItems: order.order_items,
+          pickupDate: pickupDateFormatted,
+          pickupTime: order.pickup_time,
+          language: order.language || DEFAULT_EMAIL_LANGUAGE,
+          // Try to extract delivery info from notes if available
+          deliveryMethod: order.notes?.includes('LEVERING ADRES') ? 'delivery' as const : 'pickup' as const,
+          deliveryAddress: undefined, // Address is in notes, not parsed separately
+        };
+
+        console.log('Sending status update email with payload:', emailPayload);
+        
+        const { data: emailResponse, error: emailError } = await supabase.functions.invoke('send-order-status-email', {
+          body: emailPayload,
         });
-        console.log('Status update email sent');
-      } catch (emailError) {
+
+        if (emailError) {
+          console.error('Edge Function error:', emailError);
+          throw emailError;
+        }
+
+        if (emailResponse?.error) {
+          console.error('Email service error:', emailResponse.error);
+          throw new Error(emailResponse.error);
+        }
+
+        console.log('Status update email sent successfully:', emailResponse);
+        toast.success(t('admin.toast.statusUpdated') + ' - ' + (t('admin.toast.emailSent') || 'Email sent'));
+      } catch (emailError: any) {
         console.error('Failed to send email:', emailError);
-        // Don't fail the status update if email fails
+        // Show detailed error to user but don't fail the status update
+        const errorMessage = emailError?.message || emailError?.error || 'Unknown error';
+        toast.error(t('admin.toast.statusUpdated') + ' - ' + (t('admin.toast.emailFailed') || `Email failed: ${errorMessage}`));
       }
 
       toast.success(t('admin.toast.statusUpdated'));
