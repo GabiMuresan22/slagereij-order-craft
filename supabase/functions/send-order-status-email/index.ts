@@ -3,6 +3,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const BUSINESS_EMAIL = Deno.env.get("BUSINESS_EMAIL") || "contact@slagerij-john.be";
+const BUSINESS_WHATSAPP = Deno.env.get("BUSINESS_WHATSAPP") || "+32466186457";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -40,6 +42,7 @@ const deliveryAddressSchema = z.object({
 const orderStatusEmailSchema = z.object({
   customerName: z.string().min(1).max(100),
   customerEmail: z.string().email().max(255),
+  customerPhone: z.string().optional(),
   orderId: z.string().min(1).max(100),
   status: z.enum(['pending', 'confirmed', 'ready', 'completed']),
   orderItems: z.array(orderItemSchema).min(1).max(50),
@@ -288,6 +291,195 @@ const getEmailContent = async (data: OrderStatusEmailRequest) => {
   };
 };
 
+const getBusinessEmailContent = async (data: OrderStatusEmailRequest) => {
+  const { customerName, customerEmail, customerPhone = '', orderId, orderItems, pickupDate, pickupTime, language = DEFAULT_LANGUAGE, deliveryMethod, deliveryAddress } = data;
+  
+  // Create Supabase client to fetch official prices
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  
+  // Fetch all products from database to get official prices
+  const { data: products, error: productsError } = await supabase
+    .from('products')
+    .select('key, price');
+  
+  if (productsError) {
+    console.error('Error fetching products:', productsError);
+    throw new Error('Failed to fetch product prices from database');
+  }
+  
+  // Create a map of product keys to prices for quick lookup
+  const priceMap = new Map<string, number>();
+  products?.forEach(product => {
+    priceMap.set(product.key, Number(product.price));
+  });
+  
+  // Calculate order total using official database prices
+  const orderTotal = orderItems.reduce((sum: number, item: any) => {
+    const officialPrice = priceMap.get(item.product) || 0;
+    const quantity = parseFloat(item.quantity) || 0;
+    return sum + (officialPrice * quantity);
+  }, 0).toFixed(2);
+
+  const itemsList = orderItems
+    .map((item: any) => {
+      const officialPrice = priceMap.get(item.product) || 0;
+      const quantity = parseFloat(item.quantity) || 0;
+      const itemTotal = (officialPrice * quantity).toFixed(2);
+      
+      return `
+        <tr>
+          <td style="padding: 8px 0; color: #333333; border-bottom: 1px solid #eeeeee;">
+            ${item.quantity} ${item.unit || item.weight || ''} ${item.product}
+          </td>
+          <td style="padding: 8px 0; color: #333333; text-align: right; border-bottom: 1px solid #eeeeee;">
+            €${officialPrice.toFixed(2)} × ${item.quantity} = €${itemTotal}
+          </td>
+        </tr>
+      `;
+    })
+    .join('');
+
+  // Format WhatsApp message
+  const whatsappMessage = encodeURIComponent(
+    `🛒 Nieuwe Bestelling - Slagerij John\n\n` +
+    `Bestelling ID: ${orderId.slice(0, 8)}\n` +
+    `Klant: ${customerName}\n` +
+    (customerPhone ? `Telefoon: ${customerPhone}\n` : '') +
+    `Email: ${customerEmail}\n` +
+    `${deliveryMethod === 'delivery' ? 'Levering' : 'Afhaling'}: ${pickupDate} om ${pickupTime}\n` +
+    (deliveryMethod === 'delivery' && deliveryAddress 
+      ? `Adres: ${deliveryAddress.street} ${deliveryAddress.houseNumber}, ${deliveryAddress.zipCode} ${deliveryAddress.city}\n`
+      : '') +
+    `\nTotaal: €${orderTotal}`
+  );
+  const whatsappLink = `https://wa.me/${BUSINESS_WHATSAPP.replace(/[^0-9]/g, '')}?text=${whatsappMessage}`;
+
+  return {
+    subject: `🛒 Nieuwe Bestelling #${orderId.slice(0, 8)} - ${customerName}`,
+    html: `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Nieuwe Bestelling</title>
+        </head>
+        <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f5f5f5;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; padding: 20px;">
+            <tr>
+              <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                  <!-- Header -->
+                  <tr>
+                    <td style="background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%); padding: 40px 20px; text-align: center;">
+                      <h1 style="color: #ffffff; margin: 0; font-size: 28px;">🛒 Nieuwe Bestelling</h1>
+                    </td>
+                  </tr>
+                  
+                  <!-- Content -->
+                  <tr>
+                    <td style="padding: 40px 30px;">
+                      <p style="color: #333333; font-size: 16px; line-height: 1.6; margin-top: 0;">
+                        Er is een nieuwe bestelling geplaatst via de website.
+                      </p>
+                      
+                      <!-- Order Details -->
+                      <div style="background-color: #f9f9f9; border-radius: 6px; padding: 20px; margin: 30px 0;">
+                        <h2 style="color: #8B0000; font-size: 18px; margin-top: 0;">Bestelgegevens</h2>
+                        
+                        <table width="100%" cellpadding="8" cellspacing="0" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="font-weight: bold; color: #666666; width: 150px;">Bestelling ID:</td>
+                            <td style="color: #333333; font-family: monospace;">${orderId}</td>
+                          </tr>
+                          <tr>
+                            <td style="font-weight: bold; color: #666666;">Klant:</td>
+                            <td style="color: #333333;">${customerName}</td>
+                          </tr>
+                          ${customerPhone ? `
+                          <tr>
+                            <td style="font-weight: bold; color: #666666;">Telefoon:</td>
+                            <td style="color: #333333;">
+                              <a href="tel:${customerPhone}" style="color: #8B0000; text-decoration: none;">${customerPhone}</a>
+                            </td>
+                          </tr>
+                          ` : ''}
+                          <tr>
+                            <td style="font-weight: bold; color: #666666;">Email:</td>
+                            <td style="color: #333333;">
+                              <a href="mailto:${customerEmail}" style="color: #8B0000; text-decoration: none;">${customerEmail}</a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="font-weight: bold; color: #666666;">${deliveryMethod === 'delivery' ? 'Levering' : 'Afhaling'}:</td>
+                            <td style="color: #333333;">${pickupDate} om ${pickupTime}</td>
+                          </tr>
+                          ${deliveryMethod === 'delivery' && deliveryAddress ? `
+                          <tr>
+                            <td style="font-weight: bold; color: #666666;">Adres:</td>
+                            <td style="color: #333333;">
+                              ${deliveryAddress.street} ${deliveryAddress.houseNumber}<br>
+                              ${deliveryAddress.zipCode} ${deliveryAddress.city}
+                            </td>
+                          </tr>
+                          ` : ''}
+                        </table>
+                        
+                        <h3 style="color: #333333; font-size: 16px; margin-top: 20px; margin-bottom: 10px;">Artikelen:</h3>
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+                          <thead>
+                            <tr style="background-color: #f0f0f0;">
+                              <th style="padding: 10px; text-align: left; color: #666666; font-size: 14px;">Product</th>
+                              <th style="padding: 10px; text-align: right; color: #666666; font-size: 14px;">Prijs</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            ${itemsList}
+                          </tbody>
+                        </table>
+                        
+                        <div style="border-top: 2px solid #8B0000; padding-top: 15px; margin-top: 15px;">
+                          <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #333333; font-size: 18px; font-weight: bold;">Totaal:</span>
+                            <span style="color: #8B0000; font-size: 24px; font-weight: bold;">€${orderTotal}</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- WhatsApp Button -->
+                      <div style="text-align: center; margin: 30px 0;">
+                        <a href="${whatsappLink}" 
+                           style="display: inline-block; background-color: #25D366; color: #ffffff; padding: 15px 30px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px;">
+                          📱 Open in WhatsApp
+                        </a>
+                      </div>
+                      
+                      <p style="color: #666666; font-size: 14px; line-height: 1.6; margin-bottom: 0;">
+                        Deze e-mail is automatisch gegenereerd wanneer een klant een bestelling plaatst via de website.
+                      </p>
+                    </td>
+                  </tr>
+                  
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background-color: #f9f9f9; padding: 20px 30px; text-align: center; border-top: 1px solid #eeeeee;">
+                      <p style="color: #999999; font-size: 12px; margin: 0;">
+                        Slagerij John - Bestelbeheer
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+      </html>
+    `,
+  };
+};
+
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -317,11 +509,11 @@ const handler = async (req: Request): Promise<Response> => {
     const data = validationResult.data;
     console.log("Sending order status email:", data);
 
-    const { customerEmail } = data;
+    const { customerEmail, customerName, customerPhone } = data;
     const emailContent = await getEmailContent(data);
 
-    // Use direct fetch to Resend API instead of SDK
-    const emailResponse = await fetch("https://api.resend.com/emails", {
+    // Send email to customer
+    const customerEmailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${RESEND_API_KEY}`,
@@ -335,14 +527,45 @@ const handler = async (req: Request): Promise<Response> => {
       }),
     });
 
-    if (!emailResponse.ok) {
-      const errorText = await emailResponse.text();
-      console.error("Resend API error:", errorText);
-      throw new Error(`Failed to send email: ${errorText}`);
+    if (!customerEmailResponse.ok) {
+      const errorText = await customerEmailResponse.text();
+      console.error("Resend API error (customer email):", errorText);
+      throw new Error(`Failed to send customer email: ${errorText}`);
     }
 
-    const emailData = await emailResponse.json();
-    console.log("Email sent successfully:", emailData);
+    const customerEmailData = await customerEmailResponse.json();
+    console.log("Customer email sent successfully:", customerEmailData);
+
+    // Send notification email to business owner (only for new orders)
+    if (data.status === 'pending') {
+      const businessEmailContent = await getBusinessEmailContent(data);
+      
+      const businessEmailResponse = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "Slagerij John <noreply@slagerij-john.be>",
+          to: [BUSINESS_EMAIL],
+          subject: businessEmailContent.subject,
+          html: businessEmailContent.html,
+          reply_to: customerEmail,
+        }),
+      });
+
+      if (!businessEmailResponse.ok) {
+        const errorText = await businessEmailResponse.text();
+        console.error("Resend API error (business email):", errorText);
+        // Don't throw - business email failure shouldn't fail the whole request
+      } else {
+        const businessEmailData = await businessEmailResponse.json();
+        console.log("Business notification email sent successfully:", businessEmailData);
+      }
+    }
+
+    const emailData = customerEmailData;
 
     return new Response(JSON.stringify(emailData), {
       status: 200,

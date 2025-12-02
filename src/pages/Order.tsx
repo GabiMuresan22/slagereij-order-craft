@@ -333,6 +333,7 @@ ${data.zipCode} ${data.city}
           body: {
             customerName: data.customerName,
             customerEmail: data.customerEmail,
+            customerPhone: data.customerPhone,
             orderId: orderId,
             status: "pending",
             orderItems: orderItemsWithoutPrices, // Edge Function will fetch prices
