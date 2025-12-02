@@ -494,7 +494,7 @@ const ChristmasMenu = () => {
                   {t(menu.titleKey)}
                 </CardTitle>
                 <div className="mt-4">
-                  <span className="inline-block px-3 py-1 bg-neutral-900 rounded-full text-xs font-semibold text-neutral-300 border border-neutral-700">
+                  <span className="inline-block px-4 py-2 bg-neutral-900 rounded-full text-xs font-semibold text-neutral-300 border border-neutral-700">
                     {t(menu.descriptionKey)}
                   </span>
                 </div>
