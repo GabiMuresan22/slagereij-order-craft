@@ -1438,7 +1438,7 @@ const translations = {
     'order.form.price': 'Preț',
     'order.form.customProductToggle': 'Nu e în listă?',
     'order.form.backToMenu': 'Înapoi la listă',
-    'order.form.customProductPlaceholder': 'Descrieți ce doriți să comandați...',
+    'order.form.customProductPlaceholder': 'Descrieți produsul, cantitatea...',
     'order.form.consent': 'Sunt de acord cu procesarea datelor mele personale conform',
     'order.form.privacyNotice': 'Datele dumneavoastră personale sunt procesate conform politicii noastre de confidențialitate. Aveți dreptul de acces, corectare sau ștergere a datelor.',
     
