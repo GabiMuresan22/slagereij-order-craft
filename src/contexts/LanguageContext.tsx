@@ -644,7 +644,7 @@ const translations = {
     'order.form.price': 'Prijs',
     'order.form.customProductToggle': 'Niet in de lijst?',
     'order.form.backToMenu': 'Terug naar lijst',
-    'order.form.customProductPlaceholder': 'Beschrijf wat u wilt bestellen...',
+    'order.form.customProductPlaceholder': 'Beschrijf het product, de hoeveelheid...',
     'order.form.consent': 'Ik ga akkoord met de verwerking van mijn persoonsgegevens volgens het',
     'order.form.privacyNotice': 'Uw persoonlijke gegevens worden verwerkt volgens ons privacybeleid. U heeft recht op toegang, correctie of verwijdering van uw gegevens.',
     
