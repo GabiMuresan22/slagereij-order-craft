@@ -28,8 +28,9 @@ const orderItemSchema = z.object({
     },
     { message: 'Quantity must be between 0 and 1000' }
   ),
-  weight: z.string().nullish(), // Accepts string, null, or undefined
-  unit: z.string().nullish(), // Accepts string, null, or undefined
+  weight: z.union([z.string(), z.null()]).optional(),
+  unit: z.union([z.string(), z.null()]).optional(),
+  price: z.union([z.number(), z.null()]).optional(),
 });
 
 const deliveryAddressSchema = z.object({
