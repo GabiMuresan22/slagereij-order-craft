@@ -1,37 +1,53 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { X, AlertTriangle } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const PremiumAlert = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
+  const dismissTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Show alert on mount with slide-in animation
+  const handleClose = () => {
+    setIsVisible(false);
+    // Clear any existing dismiss timer
+    if (dismissTimerRef.current) {
+      clearTimeout(dismissTimerRef.current);
+      dismissTimerRef.current = null;
+    }
+    // Wait for animation to complete before removing from DOM
+    setTimeout(() => {
+      setIsDismissed(true);
+    }, 500);
+  };
+
+  // Show alert on mount and when language changes
   useEffect(() => {
+    // Reset dismissed state when language changes to show alert again
+    setIsDismissed(false);
+    setIsVisible(false);
+
     // Small delay to allow CSS transition to work
     const showTimer = setTimeout(() => {
       setIsVisible(true);
     }, 100);
 
     // Auto-dismiss after 30 seconds
-    const dismissTimer = setTimeout(() => {
-      handleClose();
+    dismissTimerRef.current = setTimeout(() => {
+      setIsVisible(false);
+      setTimeout(() => {
+        setIsDismissed(true);
+      }, 500);
     }, 30000);
 
     return () => {
       clearTimeout(showTimer);
-      clearTimeout(dismissTimer);
+      if (dismissTimerRef.current) {
+        clearTimeout(dismissTimerRef.current);
+        dismissTimerRef.current = null;
+      }
     };
-  }, []);
-
-  const handleClose = () => {
-    setIsVisible(false);
-    // Wait for animation to complete before removing from DOM
-    setTimeout(() => {
-      setIsDismissed(true);
-    }, 500);
-  };
+  }, [language]); // Re-run when language changes
 
   if (isDismissed) {
     return null;
