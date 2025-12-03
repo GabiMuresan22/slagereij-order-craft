@@ -65,21 +65,21 @@ const PremiumAlert = () => {
       role="alert"
       aria-live="polite"
     >
-      <div className="flex justify-between items-center max-w-[1200px] mx-auto px-5 py-3">
-        <div className="flex items-center gap-4">
-          <AlertTriangle className="h-5 w-5 text-primary flex-shrink-0" aria-hidden="true" />
-          <div className="flex flex-col md:flex-row md:items-center md:gap-3">
-            <strong className="text-primary uppercase text-xs md:text-sm tracking-wider mb-0.5 md:mb-0">
+      <div className="flex justify-between items-start max-w-[1200px] mx-auto px-5 py-3 gap-4">
+        <div className="flex items-start gap-4 flex-1 min-w-0">
+          <AlertTriangle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" aria-hidden="true" />
+          <div className="flex flex-col gap-2 flex-1 min-w-0">
+            <strong className="text-primary uppercase text-xs md:text-sm tracking-wider">
               {t('home.alert.title')}
             </strong>
-            <span className="text-[13px] md:text-sm text-neutral-100">
+            <span className="text-[13px] md:text-sm text-neutral-100 leading-relaxed">
               {t('home.alert.description')}
             </span>
           </div>
         </div>
         <button
           onClick={handleClose}
-          className="bg-transparent border-none text-primary text-[28px] leading-none cursor-pointer px-2.5 ml-2.5 transition-colors duration-300 hover:text-white"
+          className="bg-transparent border-none text-primary text-[28px] leading-none cursor-pointer px-2.5 flex-shrink-0 transition-colors duration-300 hover:text-white"
           aria-label="Close alert"
         >
           <X className="h-7 w-7" />

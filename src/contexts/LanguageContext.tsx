@@ -25,8 +25,8 @@ const translations = {
     'nav.admin': 'Admin',
     
     // Home Page
-    'home.alert.title': 'Sinterklaas',
-    'home.alert.description': '🎅 Op 6 december komt Sinterklaas! Tussen 16:00 en 18:00',
+    'home.alert.title': 'Op 6 december komt Sinterklaas!',
+    'home.alert.description': 'We verwelkomen de kinderen in de winkel tussen 16:00 en 18:00 voor een magische ontmoeting met Sinterklaas! 🎨 Tekenwedstrijd – Sinterklaas: Tot 6 december kunnen de tekeningen van de kinderen in de winkel worden ingeleverd. Op 7.12.2025 worden alle tekeningen op Facebook geplaatst. 👍 Ouders en vrienden kunnen tot 10 december likes geven. De 3 tekeningen met de meeste likes winnen: 🥇 20 € cadeaubon 🥈 15 € cadeaubon 🥉 10 € cadeaubon',
     'home.hero.title': 'Uw Kwaliteitsslager in Zwevezele',
     'home.hero.subtitle': 'Traditioneel ambacht\nmet moderne service',
     'home.hero.cta': 'Bestel Nu Online',
@@ -820,8 +820,8 @@ const translations = {
     'nav.admin': 'Admin',
     
     // Home Page
-    'home.alert.title': 'Moș Nicolae',
-    'home.alert.description': '🎅 Pe 6 decembrie vine Moș Nicolae! Între orele 16:00 și 18:00',
+    'home.alert.title': 'Pe 6 decembrie vine Moș Nicolae!',
+    'home.alert.description': 'Bun venit copiilor în magazin între orele 16:00 și 18:00 pentru o întâlnire magică cu Moș Nicolae! 🎨 Concurs de Desen – Moș Nicolae: Până pe 6 decembrie, desenele copiilor pot fi depuse în magazin. Pe 7.12.2025, toate desenele vor fi publicate pe Facebook. 👍 Părinții și prietenii pot da like până pe 10 decembrie. Cele 3 desene cu cele mai multe like-uri câștigă: 🥇 Voucher de 20 € 🥈 Voucher de 15 € 🥉 Voucher de 10 €',
     'home.hero.title': 'Măcelarul Dvs. de Calitate în Zwevezele',
     'home.hero.subtitle': 'Meșteșug tradițional\ncu servicii moderne',
     'home.hero.cta': 'Comandă Acum Online',
