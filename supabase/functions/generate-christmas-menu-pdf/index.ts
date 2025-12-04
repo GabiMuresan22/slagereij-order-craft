@@ -1,8 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { PDFDocument } from "https://esm.sh/pdf-lib@1.17.1";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
-import { decode as decodeWebP } from "https://esm.sh/@jsquash/webp@1.4.0";
-import { encode as encodeJpeg } from "https://esm.sh/@jsquash/jpeg@1.4.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -187,29 +185,8 @@ serve(async (req) => {
     // Create a new PDF document
     const pdfDoc = await PDFDocument.create();
 
-    // Helper function to embed image based on format
-    // Handles PNG, JPEG, and WebP (converts WebP to JPEG first)
-    const embedImage = async (imageBytes: Uint8Array, url: string): Promise<any> => {
-      // Check if it's a WebP image (by magic bytes or URL extension)
-      const isWebP = url.toLowerCase().endsWith('.webp') || 
-        (imageBytes[0] === 0x52 && imageBytes[1] === 0x49 && imageBytes[2] === 0x46 && imageBytes[3] === 0x46);
-      
-      if (isWebP) {
-        console.log(`Converting WebP image to JPEG: ${url}`);
-        try {
-          // Decode WebP to raw ImageData
-          const arrayBuffer = imageBytes.buffer.slice(imageBytes.byteOffset, imageBytes.byteOffset + imageBytes.byteLength) as ArrayBuffer;
-          const imageData = await decodeWebP(arrayBuffer);
-          // Encode to JPEG
-          const jpegBuffer = await encodeJpeg(imageData, { quality: 90 });
-          const jpegBytes = new Uint8Array(jpegBuffer);
-          return await pdfDoc.embedJpg(jpegBytes);
-        } catch (webpError) {
-          console.error('WebP conversion failed:', webpError);
-          throw new Error(`Failed to convert WebP image: ${webpError instanceof Error ? webpError.message : 'Unknown error'}`);
-        }
-      }
-      
+    // Helper function to embed image (PNG or JPEG)
+    const embedImage = async (imageBytes: Uint8Array): Promise<any> => {
       try {
         // Try PNG first
         return await pdfDoc.embedPng(imageBytes);
@@ -223,10 +200,10 @@ serve(async (req) => {
       }
     };
 
-    // Embed the images with format detection
-    const image1 = await embedImage(image1Bytes, image1Url);
-    const image2 = await embedImage(image2Bytes, image2Url);
-    const image3 = await embedImage(image3Bytes, image3Url);
+    // Embed the images
+    const image1 = await embedImage(image1Bytes);
+    const image2 = await embedImage(image2Bytes);
+    const image3 = await embedImage(image3Bytes);
 
     // Get image dimensions
     const image1Dims = image1.scale(1);
