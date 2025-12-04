@@ -185,8 +185,7 @@ serve(async (req) => {
     // Create a new PDF document
     const pdfDoc = await PDFDocument.create();
 
-    // Helper function to embed image based on format
-    // Try PNG first, then JPEG (WEBP will fail and we'll catch it)
+    // Helper function to embed image (PNG or JPEG)
     const embedImage = async (imageBytes: Uint8Array): Promise<any> => {
       try {
         // Try PNG first
@@ -201,7 +200,7 @@ serve(async (req) => {
       }
     };
 
-    // Embed the images with format detection
+    // Embed the images
     const image1 = await embedImage(image1Bytes);
     const image2 = await embedImage(image2Bytes);
     const image3 = await embedImage(image3Bytes);
