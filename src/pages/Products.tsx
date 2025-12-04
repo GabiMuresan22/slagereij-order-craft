@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Flame, ChefHat, ArrowRight } from "lucide-react";
-import displayCaseImage from "@/assets/display-case.webp";
+import displayCaseImage from "@/assets/products-gero-new.webp";
 import tomatoImage from "@/assets/tomahawk-steaks.webp";
 import porkImage from "@/assets/pork-products.webp";
 import poultryImage from "@/assets/chicken.webp";
