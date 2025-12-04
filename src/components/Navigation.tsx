@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, User, LogOut, Shield, UserCircle } from "lucide-react";
 import { useState, useEffect } from "react";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.svg";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";

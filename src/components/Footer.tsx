@@ -1,7 +1,7 @@
 import { MapPin, Phone, Clock, Facebook, Clapperboard, MapPinned } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.svg";
 import { useBusinessHours } from "@/hooks/useBusinessHours";
 
 const Footer = () => {
