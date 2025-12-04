@@ -4,10 +4,10 @@ export const getLocalBusinessSchema = () => ({
   "@context": "https://schema.org",
   "@type": "Butcher",
   "name": "Slagerij John",
-  "image": "https://slagerijjohn.be/og-image.jpg",
-  "url": "https://slagerijjohn.be",
+  "image": "https://slagerij-john.be/og-image.jpg",
+  "url": "https://slagerij-john.be",
   "telephone": "+32466186457",
-  "email": "info@slagerijjohn.be",
+  "email": "info@slagerij-john.be",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Bruggestraat 146A",
@@ -133,7 +133,7 @@ export const getBreadcrumbSchema = (items: Array<{ name: string; url: string }>)
     "@type": "ListItem",
     "position": index + 1,
     "name": item.name,
-    "item": `https://slagerijjohn.be${item.url}`
+    "item": `https://slagerij-john.be${item.url}`
   }))
 });
 
@@ -142,7 +142,7 @@ export const getProductSchema = (name: string, description: string, price?: stri
   "@type": "Product",
   "name": name,
   "description": description,
-  "image": "https://slagerijjohn.be/og-image.jpg",
+  "image": "https://slagerij-john.be/og-image.jpg",
   "brand": {
     "@type": "Brand",
     "name": "Slagerij John"
@@ -176,7 +176,7 @@ export const getProductListSchema = () => ({
         "@type": "Brand",
         "name": "Slagerij John"
       },
-      "image": "https://slagerijjohn.be/og-image.jpg",
+      "image": "https://slagerij-john.be/og-image.jpg",
       "offers": {
         "@type": "AggregateOffer",
         "priceCurrency": "EUR",
@@ -192,7 +192,7 @@ export const getProductListSchema = () => ({
         "@type": "Brand",
         "name": "Slagerij John"
       },
-      "image": "https://slagerijjohn.be/og-image.jpg",
+      "image": "https://slagerij-john.be/og-image.jpg",
       "offers": {
         "@type": "AggregateOffer",
         "priceCurrency": "EUR",
@@ -208,7 +208,7 @@ export const getProductListSchema = () => ({
         "@type": "Brand",
         "name": "Slagerij John"
       },
-      "image": "https://slagerijjohn.be/og-image.jpg",
+      "image": "https://slagerij-john.be/og-image.jpg",
       "offers": {
         "@type": "AggregateOffer",
         "priceCurrency": "EUR",
@@ -224,7 +224,7 @@ export const getProductListSchema = () => ({
         "@type": "Brand",
         "name": "Slagerij John"
       },
-      "image": "https://slagerijjohn.be/og-image.jpg",
+      "image": "https://slagerij-john.be/og-image.jpg",
       "offers": {
         "@type": "AggregateOffer",
         "priceCurrency": "EUR",

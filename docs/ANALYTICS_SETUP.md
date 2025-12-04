@@ -56,7 +56,7 @@ The following custom events are tracked:
 
 1. In the GA4 property, go to **Admin** > **Data Streams**
 2. Click **Add stream** > **Web**
-3. Enter website URL: `https://slagerijjohn.be`
+3. Enter website URL: `https://slagerij-john.be`
 4. Enter stream name: `Slagerij John Website`
 5. Click **Create stream**
 6. Copy your **Measurement ID** (format: `G-XXXXXXXXXX`)
@@ -95,7 +95,7 @@ The implementation includes the following privacy features:
 2. **Update Privacy Policy**
    - Disclose use of Google Analytics
    - Explain what data is collected
-   - Link to: https://slagerijjohn.be/privacy-policy
+   - Link to: https://slagerij-john.be/privacy-policy
 
 3. **Data Retention Settings**
    - In GA4, go to **Admin** > **Data Settings** > **Data Retention**

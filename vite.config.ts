@@ -18,4 +18,22 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    // Optimize CSS delivery
+    cssCodeSplit: true,
+    // Enable minification
+    minify: 'esbuild',
+    // Optimize chunk splitting
+    rollupOptions: {
+      output: {
+        // Separate vendor chunks for better caching
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-select'],
+        },
+      },
+    },
+    // Increase chunk size warning limit (for better code splitting)
+    chunkSizeWarningLimit: 1000,
+  },
 }));

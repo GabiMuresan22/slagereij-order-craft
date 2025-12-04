@@ -22,7 +22,7 @@ const SEO = ({
   children
 }: SEOProps) => {
   const location = useLocation();
-  const baseUrl = 'https://slagerijjohn.be';
+  const baseUrl = 'https://slagerij-john.be';
   // Normalize URL: remove trailing slash for consistency
   const normalizedPath = location.pathname.endsWith('/') && location.pathname !== '/' 
     ? location.pathname.slice(0, -1) 

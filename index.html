@@ -35,7 +35,7 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://slageri-jjohn.be/" />
+    <meta name="twitter:url" content="https://slagerij-john.be/" />
     <meta
       name="twitter:title"
       content="Slagerij John | Ambachtelijke Slagerij & Traiteur"
@@ -46,7 +46,7 @@
     />
     <meta
       name="twitter:image"
-      content="https://slageri-jjohn.be/og-image.jpg"
+      content="https://slagerij-john.be/og-image.jpg"
     />
 
     <!-- Favicons -->
@@ -57,31 +57,117 @@
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#ffffff" />
 
-    <!-- Fonts -->
+    <!-- Resource Hints for Performance -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
+    <!-- Fonts - Optimized for non-blocking load -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-G5QGY974Y7"
-    ></script>
+    <!-- Google tag (gtag.js) - Deferred for non-blocking load -->
     <script>
+      // Load Google Analytics asynchronously after page load
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
-      gtag("js", new Date());
-      gtag("config", "G-G5QGY974Y7");
+      // Defer GA loading
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", function () {
+          loadGoogleAnalytics();
+        });
+      } else {
+        loadGoogleAnalytics();
+      }
+      function loadGoogleAnalytics() {
+        var script = document.createElement("script");
+        script.async = true;
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-G5QGY974Y7";
+        document.head.appendChild(script);
+        gtag("js", new Date());
+        gtag("config", "G-G5QGY974Y7");
+      }
     </script>
   </head>
 
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- Fallback script loader for fonts if JavaScript is disabled -->
+    <script>
+      /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+      (function (w) {
+        "use strict";
+        if (!w.loadCSS) {
+          w.loadCSS = function () {};
+        }
+        var loadCSS = function (href, before, media) {
+          var doc = w.document;
+          var ss = doc.createElement("link");
+          var ref;
+          if (before) {
+            ref = before;
+          } else {
+            var refs = (doc.body || doc.getElementsByTagName("head")[0])
+              .childNodes;
+            ref = refs[refs.length - 1];
+          }
+          var sheets = doc.styleSheets;
+          ss.rel = "stylesheet";
+          ss.href = href;
+          ss.media = "only x";
+          function ready(cb) {
+            if (doc.body) {
+              return cb();
+            }
+            setTimeout(function () {
+              ready(cb);
+            });
+          }
+          ready(function () {
+            ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+          });
+          var onloadcssdefined = function (cb) {
+            var resolvedHref = ss.href;
+            var i = sheets.length;
+            while (i--) {
+              if (sheets[i].href === resolvedHref) {
+                return cb();
+              }
+            }
+            setTimeout(function () {
+              onloadcssdefined(cb);
+            });
+          };
+          function loadCB() {
+            if (ss.addEventListener) {
+              ss.removeEventListener("load", loadCB);
+            }
+            ss.media = media || "all";
+          }
+          if (ss.addEventListener) {
+            ss.addEventListener("load", loadCB);
+          }
+          ss.onloadcssdefined = onloadcssdefined;
+          onloadcssdefined(loadCB);
+          return ss;
+        };
+        w.loadCSS = loadCSS;
+      })(typeof global !== "undefined" ? global : this);
+    </script>
   </body>
 </html>

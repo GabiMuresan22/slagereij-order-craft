@@ -18,7 +18,7 @@ Disallow: /admin/
 Disallow: /private/
 
 # Sitemap location
-Sitemap: https://slagerijjohn.be/sitemap.xml
+Sitemap: https://slagerij-john.be/sitemap.xml
 
 # Crawl-delay (optional, can help with server load)
 Crawl-delay: 1
