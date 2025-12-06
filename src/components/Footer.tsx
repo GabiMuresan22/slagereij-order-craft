@@ -29,7 +29,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 flex-shrink-0 text-primary" />
-                <a href="tel:+32466186457" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                <a href="tel:+32466186457" className="text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
                   +32 466 18 64 57
                 </a>
               </div>
@@ -39,23 +39,23 @@ const Footer = () => {
           {/* Quick Links */}
           <div>
             <h3 className="text-xl font-serif font-semibold mb-6">{t('footer.quickLinks')}</h3>
-            <nav className="space-y-3">
-              <Link to="/" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+            <nav className="space-y-2">
+              <Link to="/" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('nav.home')}
               </Link>
-              <Link to="/about" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/about" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('nav.about')}
               </Link>
-              <Link to="/products" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/products" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('nav.products')}
               </Link>
-              <Link to="/catering" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/catering" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('nav.catering')}
               </Link>
-              <Link to="/order" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/order" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('nav.order')}
               </Link>
-              <Link to="/contact" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/contact" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('nav.contact')}
               </Link>
             </nav>
@@ -108,7 +108,7 @@ const Footer = () => {
                   href="https://www.facebook.com/profile.php?id=61560710702910" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
+                  className="min-w-[48px] min-h-[48px] rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
                   aria-label="Facebook"
                 >
                   <Facebook className="w-5 h-5" />
@@ -117,7 +117,7 @@ const Footer = () => {
                   href="https://www.tiktok.com/@traiteur.john" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
+                  className="min-w-[48px] min-h-[48px] rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
                   aria-label="TikTok"
                 >
                   <Clapperboard className="w-5 h-5" />
@@ -126,7 +126,7 @@ const Footer = () => {
                   href="https://www.google.com/maps/place/Bruggestraat+146A,+8750+Zwevezele"
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
+                  className="min-w-[48px] min-h-[48px] rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
                   aria-label="Google Maps"
                 >
                   <MapPinned className="w-5 h-5" />
@@ -150,16 +150,16 @@ const Footer = () => {
               </a>
             </div>
             <div className="flex gap-4">
-              <Link to="/privacy" className="hover:text-primary transition-colors">
+              <Link to="/privacy" className="hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('footer.privacy')}
               </Link>
-              <Link to="/terms" className="hover:text-primary transition-colors">
+              <Link to="/terms" className="hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('footer.terms')}
               </Link>
               <button 
                 type="button"
                 data-cc="c-settings"
-                className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center"
                 aria-label={t('footer.cookies')}
               >
                 {t('footer.cookies')}

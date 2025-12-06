@@ -135,7 +135,7 @@ const Contact = () => {
                     <Phone className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                     <div>
                       <h3 className="font-semibold text-lg mb-2">{t("contact.phone.title")}</h3>
-                      <a href="tel:+32466186457" className="text-muted-foreground hover:text-primary transition-colors text-lg">
+                      <a href="tel:+32466186457" className="text-muted-foreground hover:text-primary transition-colors text-lg min-h-[48px] inline-flex items-center">
                         +32 466 18 64 57
                       </a>
                     </div>
@@ -149,7 +149,7 @@ const Contact = () => {
                       <h3 className="font-semibold text-lg mb-2">{t("contact.email.title")}</h3>
                       <a
                         href="mailto:contact@slagerij-john.be"
-                        className="text-muted-foreground hover:text-primary transition-colors"
+                        className="text-muted-foreground hover:text-primary transition-colors min-h-[48px] inline-flex items-center"
                       >
                         contact@slagerij-john.be
                       </a>
@@ -339,7 +339,7 @@ const Contact = () => {
           <CardContent className="p-8 md:p-12 text-center">
             <h2 className="text-3xl font-serif font-semibold mb-4">{t("contact.cta.title")}</h2>
             <p className="text-lg opacity-90 mb-6">{t("contact.cta.desc")}</p>
-            <a href="tel:+32466186457">
+            <a href="tel:+32466186457" className="min-h-[48px] inline-flex items-center">
               <span className="inline-flex items-center text-xl font-semibold hover:underline">
                 <Phone className="w-5 h-5 mr-2" />
                 +32 466 18 64 57

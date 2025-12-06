@@ -97,7 +97,7 @@ const Navigation = () => {
                     key={item.path}
                     asChild
                     size="sm"
-                    className="bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-6"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 px-6"
                   >
                     <Link to={item.path}>
                       {item.label}
@@ -107,10 +107,10 @@ const Navigation = () => {
               }
               
               return (
-                <Link
+                  <Link
                   key={item.path}
                   to={item.path}
-                  className={`text-base font-medium transition-colors hover:text-primary ${
+                  className={`text-base font-medium transition-colors hover:text-primary min-h-[48px] flex items-center ${
                     location.pathname === item.path
                       ? "text-primary font-semibold"
                       : "text-foreground"
@@ -200,7 +200,7 @@ const Navigation = () => {
             </Button>
             
             <button
-              className="text-foreground p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="text-foreground p-2 min-h-[48px] min-w-[48px] flex items-center justify-center"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
@@ -222,7 +222,7 @@ const Navigation = () => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`block py-3 text-base font-medium transition-colors hover:text-primary min-h-[44px] flex items-center ${
+                  className={`block py-3 text-base font-medium transition-colors hover:text-primary min-h-[48px] flex items-center ${
                     location.pathname === item.path
                       ? "text-primary font-semibold"
                       : "text-foreground"
@@ -240,7 +240,7 @@ const Navigation = () => {
                 toggleLanguage();
                 setMobileMenuOpen(false);
               }}
-              className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[44px] w-full"
+              className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[48px] w-full"
             >
               <span className="text-lg">{currentLangConfig.flag}</span>
               {currentLangConfig.nativeName}
@@ -253,7 +253,7 @@ const Navigation = () => {
                   <>
                     <Link
                       to="/my-account"
-                      className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[44px]"
+                      className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[48px]"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <UserCircle className="h-4 w-4" />
@@ -262,7 +262,7 @@ const Navigation = () => {
                     {isAdmin && (
                       <Link
                         to="/admin"
-                        className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[44px]"
+                        className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[48px]"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <Shield className="h-4 w-4" />
@@ -274,7 +274,7 @@ const Navigation = () => {
                         signOut();
                         setMobileMenuOpen(false);
                       }}
-                      className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[44px] w-full text-left"
+                      className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[48px] w-full text-left"
                     >
                       <LogOut className="h-4 w-4" />
                       {t('auth.logout')}
@@ -283,7 +283,7 @@ const Navigation = () => {
                 ) : (
                   <Link
                     to="/auth"
-                    className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[44px]"
+                    className="flex items-center gap-2 py-3 text-base font-medium text-foreground hover:text-primary min-h-[48px]"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <User className="h-4 w-4" />

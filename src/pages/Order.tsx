@@ -469,7 +469,7 @@ ${data.zipCode} ${data.city}
                           </li>
                           <li className="flex items-start gap-2 pt-2">
                             <span className="text-primary">📞</span>
-                            <a href="tel:+32466186457" className="hover:text-primary transition-colors">+32 466 18 64 57</a>
+                            <a href="tel:+32466186457" className="hover:text-primary transition-colors min-h-[48px] inline-flex items-center">+32 466 18 64 57</a>
                           </li>
                         </ul>
                       </div>
