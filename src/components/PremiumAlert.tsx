@@ -56,11 +56,11 @@ const PremiumAlert = () => {
   return (
     <div
       className={`
-        fixed left-0 w-full z-[99999]
+        fixed left-0 top-0 w-full z-[99999]
         bg-neutral-900 border-b-2 border-primary
         text-white shadow-[0_4px_15px_rgba(0,0,0,0.6)]
-        font-sans transition-[top] duration-500 ease-in-out
-        ${isVisible ? 'top-0' : '-top-[100px]'}
+        font-sans transition-transform duration-500 ease-in-out
+        ${isVisible ? 'translate-y-0' : '-translate-y-full'}
       `}
       role="alert"
       aria-live="polite"
@@ -72,7 +72,7 @@ const PremiumAlert = () => {
             <strong className="text-primary uppercase text-xs md:text-sm tracking-wider">
               {t('home.alert.title')}
             </strong>
-            <span className="text-[13px] md:text-sm text-neutral-100 leading-relaxed">
+            <span className="text-[13px] md:text-sm text-neutral-100 leading-relaxed whitespace-pre-line">
               {t('home.alert.description')}
             </span>
           </div>

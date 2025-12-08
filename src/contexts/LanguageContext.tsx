@@ -25,8 +25,8 @@ const translations = {
     'nav.admin': 'Admin',
     
     // Home Page
-    'home.alert.title': 'Op 6 december komt Sinterklaas!',
-    'home.alert.description': 'We verwelkomen de kinderen in de winkel tussen 16:00 en 18:00 voor een magische ontmoeting met Sinterklaas! 🎨 Tekenwedstrijd – Sinterklaas: Tot 6 december kunnen de tekeningen van de kinderen in de winkel worden ingeleverd. Op 7.12.2025 worden alle tekeningen op Facebook geplaatst. 👍 Ouders en vrienden kunnen tot 10 december likes geven. De 3 tekeningen met de meeste likes winnen: 🥇 20 € cadeaubon 🥈 15 € cadeaubon 🥉 10 € cadeaubon',
+    'home.alert.title': '📅 Kerst- en Nieuwjaar Openingstijden',
+    'home.alert.description': '22-24 dec: 08:00 – 18:00\n25 dec: 08:00 – 10:00 (Enkel afhalen)\n26-27 dec: 08:00 – 13:00\n28 dec: Gesloten\n29-31 dec: 08:00 – 18:00\n1 jan: 08:00 – 10:00 (Enkel afhalen)\n2-4 jan: 08:00 – 13:00\n5 jan: 13:00 – 18:00 (Normaal uurrooster)',
     'home.hero.title': 'Uw Kwaliteitsslager in Zwevezele',
     'home.hero.subtitle': 'Traditioneel ambacht\nmet moderne service',
     'home.hero.cta': 'Bestel Nu Online',
@@ -825,8 +825,8 @@ const translations = {
     'nav.admin': 'Admin',
     
     // Home Page
-    'home.alert.title': 'Pe 6 decembrie vine Moș Nicolae!',
-    'home.alert.description': 'Bun venit copiilor în magazin între orele 16:00 și 18:00 pentru o întâlnire magică cu Moș Nicolae! 🎨 Concurs de Desen – Moș Nicolae: Până pe 6 decembrie, desenele copiilor pot fi depuse în magazin. Pe 7.12.2025, toate desenele vor fi publicate pe Facebook. 👍 Părinții și prietenii pot da like până pe 10 decembrie. Cele 3 desene cu cele mai multe like-uri câștigă: 🥇 Voucher de 20 € 🥈 Voucher de 15 € 🥉 Voucher de 10 €',
+    'home.alert.title': '📅 Program Crăciun și Anul Nou',
+    'home.alert.description': '22-24 Dec: 08:00 – 18:00\n25 Dec: 08:00 – 10:00 (Doar ridicare)\n26-27 Dec: 08:00 – 13:00\n28 Dec: Închis\n29-31 Dec: 08:00 – 18:00\n1 Ian: 08:00 – 10:00 (Doar ridicare)\n2-4 Ian: 08:00 – 13:00\n5 Ian: 13:00 – 18:00 (Program normal)',
     'home.hero.title': 'Măcelarul Dvs. de Calitate în Zwevezele',
     'home.hero.subtitle': 'Meșteșug tradițional\ncu servicii moderne',
     'home.hero.cta': 'Comandă Acum Online',
