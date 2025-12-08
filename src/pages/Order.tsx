@@ -26,6 +26,23 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { businessHours } from "@/hooks/useBusinessHours";
 
+// Product images mapping for Colli packages
+import porkProducts from "@/assets/pork-products.webp";
+import chicken from "@/assets/chicken.webp";
+import specialtyPlatter from "@/assets/specialty-platter.webp";
+import bbqGrillMeats from "@/assets/bbq-grill-meats.webp";
+import luxeGourmetSchotel from "@/assets/luxe-gourmet-schotel-10-soorten-vlees.webp";
+import fondueVlees from "@/assets/fondue-bourguignonne-meat-platter-beef-chicken.webp";
+
+const productImages: Record<string, string> = {
+  colliPork1: porkProducts,
+  colliPork2: porkProducts,
+  colliChicken: chicken,
+  colliMixed: specialtyPlatter,
+  colliBBQ: bbqGrillMeats,
+  colliJohn: luxeGourmetSchotel,
+};
+
 interface OrderItem {
   product: string;
   quantity: string;
@@ -192,12 +209,13 @@ const Order = () => {
   const { orderFormSchema } = createOrderSchemas(t);
   type OrderFormValues = z.infer<typeof orderFormSchema>;
 
-  // Get product options with prices
+  // Get product options with prices and images
   const productOptions = products.map(p => ({
     key: p.key,
     label: language === 'nl' ? p.name_nl : p.name_ro,
     price: p.price,
-    unit: p.unit
+    unit: p.unit,
+    image: productImages[p.key] || null,
   }));
 
   const form = useForm<OrderFormValues>({
@@ -600,20 +618,42 @@ ${data.zipCode} ${data.city}
                                       <div className="space-y-1 fade-in">
                                         <Select onValueChange={handleProductChange} value={field.value}>
                                           <FormControl>
-                                            <SelectTrigger>
-                                              <SelectValue placeholder={t('order.form.selectProduct')} />
+                                            <SelectTrigger className="h-auto py-2">
+                                              <SelectValue placeholder={t('order.form.selectProduct')}>
+                                                {selectedProduct && (
+                                                  <div className="flex items-center gap-3">
+                                                    {selectedProduct.image && (
+                                                      <img 
+                                                        src={selectedProduct.image} 
+                                                        alt={selectedProduct.label}
+                                                        className="w-10 h-10 rounded-md object-cover flex-shrink-0"
+                                                      />
+                                                    )}
+                                                    <span className="font-medium">{selectedProduct.label}</span>
+                                                  </div>
+                                                )}
+                                              </SelectValue>
                                             </SelectTrigger>
                                           </FormControl>
                                           <SelectContent>
                                             {productOptions.map((option) => (
-                                              <SelectItem key={option.key} value={option.key}>
-                                                <div className="flex justify-between items-center gap-4 w-full">
-                                                  <span className="font-medium">{option.label}</span>
-                                                  {option.price && (
-                                                    <span className="text-sm font-semibold text-primary whitespace-nowrap">
-                                                      €{option.price.toFixed(2)}/{option.unit}
-                                                    </span>
+                                              <SelectItem key={option.key} value={option.key} className="py-2">
+                                                <div className="flex items-center gap-3 w-full">
+                                                  {option.image && (
+                                                    <img 
+                                                      src={option.image} 
+                                                      alt={option.label}
+                                                      className="w-12 h-12 rounded-md object-cover flex-shrink-0"
+                                                    />
                                                   )}
+                                                  <div className="flex flex-col gap-0.5">
+                                                    <span className="font-medium">{option.label}</span>
+                                                    {option.price && (
+                                                      <span className="text-sm font-semibold text-primary">
+                                                        €{option.price.toFixed(2)}/{option.unit}
+                                                      </span>
+                                                    )}
+                                                  </div>
                                                 </div>
                                               </SelectItem>
                                             ))}
