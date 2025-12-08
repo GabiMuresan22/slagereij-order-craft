@@ -17,8 +17,8 @@ const Products = () => {
   const { t } = useLanguage();
 
   const breadcrumbData = getBreadcrumbSchema([
-    { name: "Home", url: "/" },
-    { name: "Producten", url: "/products" },
+    { name: t('nav.home'), url: "/" },
+    { name: t('products.breadcrumb'), url: "/products" },
   ]);
 
   const productListData = getProductListSchema();
@@ -101,9 +101,9 @@ const Products = () => {
   return (
     <div className="min-h-screen">
       <SEO
-        title="Ons Assortiment"
-        description="Ontdek ons uitgebreide assortiment: premium rundvlees, verse varkensvlees, gevogelte en huisgemaakte specialiteiten. Kwaliteitsvlees voor elke gelegenheid."
-        keywords="rundvlees, varkensvlees, gevogelte, huisgemaakte worst, BBQ vlees, biefstuk, gehakt"
+        title={t('products.seo.title')}
+        description={t('products.seo.description')}
+        keywords={t('products.seo.keywords')}
         structuredData={[breadcrumbData, productListData]}
       />
 

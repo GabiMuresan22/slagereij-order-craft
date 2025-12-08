@@ -85,6 +85,10 @@ const translations = {
     'products.title': 'Ons Assortiment',
     'products.hero.title': 'Ons Assortiment',
     'products.hero.subtitle': 'Ontdek ons uitgebreide en ambachtelijke assortiment van topkwaliteit vlees, dagelijks vers voor u bereid.',
+    'products.seo.title': 'Ons Assortiment',
+    'products.seo.description': 'Ontdek ons uitgebreide assortiment: premium rundvlees, verse varkensvlees, gevogelte en huisgemaakte specialiteiten. Kwaliteitsvlees voor elke gelegenheid.',
+    'products.seo.keywords': 'rundvlees, varkensvlees, gevogelte, huisgemaakte worst, BBQ vlees, biefstuk, gehakt',
+    'products.breadcrumb': 'Producten',
     'products.beef.title': 'Rundvlees: Passie voor Kwaliteit',
     'products.beef.subtitle': 'Ontdek ons zorgvuldig geselecteerde rundvlees, bekend om zijn malsheid en rijke smaak. Perfect voor elke gelegenheid, van een snelle maaltijd tot een feestelijk diner.',
     'products.beef.item1': 'Biefstukken: Sappig en mals, van klassieke Hollandse biefstuk tot premium ribeye',
@@ -230,6 +234,7 @@ const translations = {
     'contact.form.error': 'Er is een fout opgetreden. Probeer het later opnieuw of bel ons direct.',
     'contact.form.consent': 'Ik ga akkoord met de verwerking van mijn persoonsgegevens volgens het',
     'contact.form.privacyNotice': 'Uw persoonlijke gegevens worden verwerkt volgens ons',
+    'contact.map.open': 'Open in Google Maps',
     
     // Auth - Success Messages
     'auth.success.accountCreated': 'Account succesvol aangemaakt! U kunt nu inloggen.',
@@ -880,6 +885,10 @@ const translations = {
     'products.title': 'Produsele Noastre',
     'products.hero.title': 'Produsele Noastre',
     'products.hero.subtitle': 'Descoperiți sortimentul nostru extins și artizanal de carne de cea mai înaltă calitate, pregătită proaspăt zilnic pentru dvs.',
+    'products.seo.title': 'Produsele Noastre',
+    'products.seo.description': 'Descoperiți sortimentul nostru extins: carne de vită premium, carne de porc proaspătă, pasăre și specialități făcute în casă. Carne de calitate pentru orice ocazie.',
+    'products.seo.keywords': 'carne de vită, carne de porc, pasăre, cârnați făcuți în casă, carne pentru grătar, friptură, carne tocată',
+    'products.breadcrumb': 'Produse',
     'products.beef.title': 'Carne de Vită: Pasiune pentru Calitate',
     'products.beef.subtitle': 'Descoperiți carnea noastră de vită atent selectată, cunoscută pentru frageditatea și gustul său bogat. Perfectă pentru orice ocazie, de la o masă rapidă la o cină festivă.',
     'products.beef.item1': 'Friptură: Suculentă și fragedă, de la friptură olandeză clasică la ribeye premium',
@@ -1025,6 +1034,7 @@ const translations = {
     'contact.form.error': 'A apărut o eroare. Vă rugăm să încercați din nou mai târziu sau să ne sunați direct.',
     'contact.form.consent': 'Sunt de acord cu procesarea datelor mele personale conform',
     'contact.form.privacyNotice': 'Datele dumneavoastră personale sunt procesate conform',
+    'contact.map.open': 'Deschide în Google Maps',
     
     // Auth - Success Messages
     'auth.success.accountCreated': 'Cont creat cu succes! Acum vă puteți conecta.',

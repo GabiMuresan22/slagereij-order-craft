@@ -329,7 +329,7 @@ const Contact = () => {
               className="absolute bottom-4 right-4 bg-primary text-primary-foreground px-6 py-3 rounded-lg shadow-lg hover:bg-primary/90 transition-colors flex items-center space-x-2"
             >
               <MapPin className="w-5 h-5" />
-              <span className="font-semibold">Open in Google Maps</span>
+              <span className="font-semibold">{t('contact.map.open')}</span>
             </a>
           </CardContent>
         </Card>
