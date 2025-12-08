@@ -65,9 +65,9 @@ const PremiumAlert = () => {
       role="alert"
       aria-live="polite"
     >
-      <div className="flex justify-between items-start max-w-[1200px] mx-auto px-5 py-3 gap-4">
-        <div className="flex items-start gap-4 flex-1 min-w-0">
-          <AlertTriangle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" aria-hidden="true" />
+      <div className="flex justify-between items-center max-w-[1200px] mx-auto px-5 py-3 gap-4">
+        <div className="flex items-center gap-4 flex-1 min-w-0">
+          <AlertTriangle className="h-5 w-5 text-primary flex-shrink-0" aria-hidden="true" />
           <div className="flex flex-col gap-2 flex-1 min-w-0">
             <strong className="text-primary uppercase text-xs md:text-sm tracking-wider">
               {t('home.alert.title')}
