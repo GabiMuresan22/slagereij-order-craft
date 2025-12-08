@@ -65,8 +65,8 @@ const PremiumAlert = () => {
       role="alert"
       aria-live="polite"
     >
-      <div className="flex justify-center items-center max-w-[1200px] mx-auto px-5 py-3 gap-4">
-        <div className="flex items-center gap-4">
+      <div className="relative max-w-[1200px] mx-auto px-5 py-3">
+        <div className="flex justify-center items-center gap-4">
           <AlertTriangle className="h-5 w-5 text-primary flex-shrink-0" aria-hidden="true" />
           <div className="flex flex-col gap-2 text-center">
             <strong className="text-primary uppercase text-xs md:text-sm tracking-wider">
@@ -79,7 +79,7 @@ const PremiumAlert = () => {
         </div>
         <button
           onClick={handleClose}
-          className="bg-transparent border-none text-primary text-[28px] leading-none cursor-pointer px-2.5 flex-shrink-0 transition-colors duration-300 hover:text-white"
+          className="absolute right-5 top-1/2 -translate-y-1/2 bg-transparent border-none text-primary text-[28px] leading-none cursor-pointer px-2.5 transition-colors duration-300 hover:text-white"
           aria-label="Close alert"
         >
           <X className="h-7 w-7" />
