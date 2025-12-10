@@ -1,6 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema } from "@/lib/structuredData";
+import LazyImage from "@/components/LazyImage";
 import cateringChef from "@/assets/catering-chef-grilling.webp";
 import cateringChefServing from "@/assets/catering-chef-serving.webp";
 import cateringSalads from "@/assets/catering-salads.webp";
@@ -102,13 +103,13 @@ export default function Catering() {
                   key={index} 
                   className="relative overflow-hidden rounded-lg aspect-[3/4] group hover:shadow-xl transition-shadow duration-300"
                 >
-                  <img
+                  <LazyImage
                     src={image.src}
                     alt={image.alt}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
                     width="400"
                     height="533"
+                    rootMargin="100px"
                   />
                 </div>
               ))}
