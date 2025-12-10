@@ -4,16 +4,12 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Helmet } from 'react-helmet-async';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, PackageCheck, Clock, CheckCircle2, XCircle, Phone, Mail, Calendar, StickyNote, MessageCircle, Settings, Printer, ChevronDown, Filter } from 'lucide-react';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Loader2, PackageCheck, Clock, CheckCircle2, XCircle, Phone, Mail, Calendar, StickyNote, Printer, ChevronDown, Filter } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import {
@@ -23,16 +19,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 
 // Default language for email notifications
 const DEFAULT_EMAIL_LANGUAGE = 'nl' as const;
@@ -96,33 +82,8 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [templates, setTemplates] = useState<Record<string, string>>({});
-  const [whatsappDialog, setWhatsappDialog] = useState<{ open: boolean; order: Order | null; message: string }>({
-    open: false,
-    order: null,
-    message: ''
-  });
   const [expandedOrders, setExpandedOrders] = useState<Set<string>>(new Set());
   const [showFilter, setShowFilter] = useState(false);
-
-  // Fetch templates
-  const fetchTemplates = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('whatsapp_templates')
-        .select('*');
-
-      if (error) throw error;
-
-      const templatesMap: Record<string, string> = {};
-      data?.forEach((template: any) => {
-        templatesMap[template.status] = template.message_template;
-      });
-      setTemplates(templatesMap);
-    } catch (error: any) {
-      console.error('Error fetching templates:', error);
-    }
-  };
 
   // Fetch orders
   useEffect(() => {
@@ -150,7 +111,6 @@ export default function AdminDashboard() {
     };
 
     fetchOrders();
-    fetchTemplates();
   }, [user]);
 
   // Set up real-time updates
@@ -225,7 +185,7 @@ export default function AdminDashboard() {
           language: order.language || DEFAULT_EMAIL_LANGUAGE,
           // Try to extract delivery info from notes if available
           deliveryMethod: order.notes?.includes('LEVERING ADRES') ? 'delivery' as const : 'pickup' as const,
-          deliveryAddress: undefined, // Address is in notes, not parsed separately
+          deliveryAddress: undefined,
         };
 
         console.log('Sending status update email with payload:', emailPayload);
@@ -248,7 +208,6 @@ export default function AdminDashboard() {
         toast.success(t('admin.toast.statusUpdated') + ' - ' + (t('admin.toast.emailSent') || 'Email sent'));
       } catch (emailError: any) {
         console.error('Failed to send email:', emailError);
-        // Show detailed error to user but don't fail the status update
         const errorMessage = emailError?.message || emailError?.error || 'Unknown error';
         toast.error(t('admin.toast.statusUpdated') + ' - ' + (t('admin.toast.emailFailed') || `Email failed: ${errorMessage}`));
       }
@@ -257,64 +216,6 @@ export default function AdminDashboard() {
     } catch (error: any) {
       toast.error(error.message || t('admin.toast.statusUpdateFailed'));
       console.error('Error updating order:', error);
-    }
-  };
-
-  // Open WhatsApp dialog with pre-filled message
-  const openWhatsAppDialog = (order: Order) => {
-    // Get template or use fallback
-    const template = templates[order.status] || templates['default'] || 'Hallo {customer_name}, een update over uw bestelling bij Slagerij John.';
-    
-    // Replace placeholders
-    const message = template
-      .replace(/{customer_name}/g, order.customer_name)
-      .replace(/{pickup_date}/g, format(new Date(order.pickup_date), 'dd/MM/yyyy'))
-      .replace(/{pickup_time}/g, order.pickup_time);
-    
-    setWhatsappDialog({
-      open: true,
-      order,
-      message
-    });
-  };
-
-  // Send WhatsApp message with custom text
-  const sendWhatsAppMessage = () => {
-    if (!whatsappDialog.order) return;
-    
-    // Strip non-numeric characters
-    let cleanPhone = whatsappDialog.order.customer_phone.replace(/[^0-9]/g, '');
-    
-    // Handle Belgian phone number formatting
-    if (cleanPhone.startsWith('00')) {
-      cleanPhone = cleanPhone.substring(2);
-    } else if (cleanPhone.startsWith('0')) {
-      cleanPhone = '32' + cleanPhone.substring(1);
-    } else if (!cleanPhone.startsWith('32')) {
-      cleanPhone = '32' + cleanPhone;
-    }
-    
-    const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(whatsappDialog.message)}`;
-    window.open(url, '_blank');
-    
-    // Close dialog
-    setWhatsappDialog({ open: false, order: null, message: '' });
-  };
-
-  const updateTemplate = async (status: string, messageTemplate: string) => {
-    try {
-      const { error } = await supabase
-        .from('whatsapp_templates')
-        .update({ message_template: messageTemplate })
-        .eq('status', status);
-
-      if (error) throw error;
-
-      toast.success(t('admin.toast.templateUpdated'));
-      setTemplates(prev => ({ ...prev, [status]: messageTemplate }));
-    } catch (error: any) {
-      toast.error(error.message || t('admin.toast.templateFailed'));
-      console.error('Error updating template:', error);
     }
   };
 
@@ -508,17 +409,6 @@ export default function AdminDashboard() {
     return items.slice(0, maxDisplay);
   };
 
-  // Swipe handler for mobile
-  const handleSwipe = (order: Order, direction: 'left' | 'right') => {
-    if (direction === 'right') {
-      // Swipe right to call
-      window.location.href = `tel:${order.customer_phone}`;
-    } else if (direction === 'left') {
-      // Swipe left to open details
-      setSelectedOrder(order);
-    }
-  };
-
   const orderStats = {
     total: orders.length,
     pending: orders.filter(o => o.status === 'pending').length,
@@ -547,16 +437,6 @@ export default function AdminDashboard() {
           <p className="text-muted-foreground">{t('admin.subtitle')}</p>
         </div>
 
-        <Tabs defaultValue="orders" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="orders">{t('admin.tabs.orders')}</TabsTrigger>
-            <TabsTrigger value="settings">
-              <Settings className="h-4 w-4 mr-2" />
-              {t('admin.tabs.settings')}
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="orders" className="space-y-6">
         {/* Stats Cards */}
         <div className="grid gap-4 md:grid-cols-5 mb-8">
           <Card>
@@ -781,14 +661,6 @@ export default function AdminDashboard() {
                                 >
                                   {t('admin.orders.view')}
                                 </Button>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="text-green-600 hover:text-green-700 hover:bg-green-50"
-                                  onClick={() => openWhatsAppDialog(order)}
-                                >
-                                  <MessageCircle className="h-4 w-4" />
-                                </Button>
                                 <a
                                   href={`tel:${order.customer_phone}`}
                                   className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground min-h-[48px] min-w-[48px]"
@@ -890,15 +762,6 @@ export default function AdminDashboard() {
                                   onClick={() => setSelectedOrder(order)}
                                 >
                                   {t('admin.orders.view')}
-                                </Button>
-                                
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="text-green-600 hover:text-green-700 hover:bg-green-50"
-                                  onClick={() => openWhatsAppDialog(order)}
-                                >
-                                  <MessageCircle className="h-4 w-4" />
                                 </Button>
 
                                 <Select
@@ -1023,18 +886,7 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="pt-4 border-t space-y-2">
-                  <Button
-                    onClick={() => {
-                      openWhatsAppDialog(selectedOrder);
-                      setSelectedOrder(null);
-                    }}
-                    className="w-full bg-green-600 hover:bg-green-700"
-                  >
-                    <MessageCircle className="h-4 w-4 mr-2" />
-                    {t('admin.orderDetails.sendWhatsApp')}
-                  </Button>
-                  
+                <div className="pt-4 border-t">
                   <Button
                     onClick={() => printOrder(selectedOrder)}
                     variant="outline"
@@ -1048,64 +900,7 @@ export default function AdminDashboard() {
             )}
           </DialogContent>
         </Dialog>
-          </TabsContent>
-
-          <TabsContent value="settings" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t('admin.settings.templatesTitle')}</CardTitle>
-                <CardDescription>
-                  {t('admin.settings.templatesDescription')}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {['ready', 'confirmed', 'cancelled', 'default'].map((status) => (
-                  <div key={status} className="space-y-2">
-                    <Label className="text-base capitalize">{status} {t('admin.settings.statusLabel')}</Label>
-                    <Textarea
-                      value={templates[status] || ''}
-                      onChange={(e) => setTemplates(prev => ({ ...prev, [status]: e.target.value }))}
-                      rows={3}
-                      className="font-mono text-sm"
-                    />
-                    <Button
-                      size="sm"
-                      onClick={() => updateTemplate(status, templates[status])}
-                    >
-                      {t('admin.settings.saveTemplate')}
-                    </Button>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
       </div>
-
-      {/* WhatsApp Message Customization Dialog */}
-      <AlertDialog open={whatsappDialog.open} onOpenChange={(open) => setWhatsappDialog({ ...whatsappDialog, open })}>
-        <AlertDialogContent className="max-w-lg">
-          <AlertDialogHeader>
-            <AlertDialogTitle>{t('admin.whatsapp.title')}</AlertDialogTitle>
-            <AlertDialogDescription>
-              {t('admin.whatsapp.customizeMessage')} {whatsappDialog.order?.customer_name}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <Textarea
-            value={whatsappDialog.message}
-            onChange={(e) => setWhatsappDialog({ ...whatsappDialog, message: e.target.value })}
-            rows={6}
-            className="my-4"
-          />
-          <AlertDialogFooter>
-            <AlertDialogCancel>{t('admin.whatsapp.cancel')}</AlertDialogCancel>
-            <AlertDialogAction onClick={sendWhatsAppMessage} className="bg-green-600 hover:bg-green-700">
-              <MessageCircle className="h-4 w-4 mr-2" />
-              {t('admin.whatsapp.send')}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   );
 }
