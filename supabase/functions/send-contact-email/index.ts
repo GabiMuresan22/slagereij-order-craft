@@ -17,6 +17,57 @@ interface ContactEmailRequest {
   consent_timestamp?: string;
 }
 
+// Rate limiting configuration
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 3; // 3 requests per minute per IP
+
+// In-memory rate limit store
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+
+// Get client IP from request headers
+const getClientIP = (req: Request): string => {
+  const forwardedFor = req.headers.get("x-forwarded-for");
+  if (forwardedFor) {
+    return forwardedFor.split(",")[0].trim();
+  }
+  const realIP = req.headers.get("x-real-ip");
+  if (realIP) {
+    return realIP;
+  }
+  return "unknown";
+};
+
+// Clean up expired rate limit entries
+const cleanupExpiredEntries = (): void => {
+  const now = Date.now();
+  for (const [ip, data] of rateLimitMap.entries()) {
+    if (now > data.resetTime) {
+      rateLimitMap.delete(ip);
+    }
+  }
+};
+
+// Check rate limit for IP
+const checkRateLimit = (ip: string): { allowed: boolean; retryAfter?: number } => {
+  cleanupExpiredEntries();
+  
+  const now = Date.now();
+  const existing = rateLimitMap.get(ip);
+  
+  if (!existing || now > existing.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
+    return { allowed: true };
+  }
+  
+  if (existing.count >= MAX_REQUESTS_PER_WINDOW) {
+    const retryAfter = Math.ceil((existing.resetTime - now) / 1000);
+    return { allowed: false, retryAfter };
+  }
+  
+  existing.count++;
+  return { allowed: true };
+};
+
 // Validation functions
 const isValidEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -44,6 +95,25 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Rate limiting check
+    const clientIP = getClientIP(req);
+    const rateLimitResult = checkRateLimit(clientIP);
+    
+    if (!rateLimitResult.allowed) {
+      console.warn(`Rate limit exceeded for IP: ${clientIP}`);
+      return new Response(
+        JSON.stringify({ error: "Too many requests. Please try again later." }),
+        {
+          status: 429,
+          headers: {
+            "Content-Type": "application/json",
+            "Retry-After": String(rateLimitResult.retryAfter),
+            ...corsHeaders,
+          },
+        }
+      );
+    }
+
     // Validate API key is present
     if (!RESEND_API_KEY) {
       console.error("Missing RESEND_API_KEY environment variable");
@@ -58,7 +128,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const requestData = await req.json();
     
-    console.log("Received contact form submission");
+    console.log(`Contact form submission from IP: ${clientIP}`);
 
     // Validate input data
     if (!validateContactData(requestData)) {
