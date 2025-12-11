@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
-import { Helmet } from 'react-helmet-async';
+import SEO from '@/components/SEO';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -427,9 +427,11 @@ export default function AdminDashboard() {
 
   return (
     <>
-      <Helmet>
-        <title>Admin Dashboard - Slagerij John</title>
-      </Helmet>
+      <SEO 
+        title="Admin Dashboard" 
+        description="Admin dashboard"
+        noIndex={true} 
+      />
 
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
