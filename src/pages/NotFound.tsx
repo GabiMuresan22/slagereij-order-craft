@@ -14,9 +14,8 @@ const NotFound = () => {
       <SEO 
         title="Page Not Found" 
         description="The page you are looking for does not exist."
-      >
-        <meta name="robots" content="noindex, nofollow" />
-      </SEO>
+        noIndex={true}
+      />
       <div className="text-center">
         <h1 className="mb-4 text-4xl font-bold">404</h1>
         <p className="mb-4 text-xl text-gray-600">Oops! Page not found</p>
