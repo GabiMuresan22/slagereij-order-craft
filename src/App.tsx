@@ -13,7 +13,6 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import AdminRoute from "./components/AdminRoute";
-import StickyOrderButton from "./components/StickyOrderButton";
 
 // 1. Import lazy and Suspense from React
 import { lazy, Suspense } from "react";
@@ -59,7 +58,7 @@ const App = () => (
               <div className="flex flex-col min-h-screen">
                 {/* Navigation stays statically imported so it appears instantly */}
                 <Navigation />
-                <main className="flex-grow lg:pb-0 pb-24">
+                <main className="flex-grow">
                   {/* 3. Wrap your Routes in Suspense */}
                   <Suspense fallback={<PageLoader />}>
                     <Routes>
@@ -80,8 +79,6 @@ const App = () => (
                   </Suspense>
                 </main>
                 <Footer />
-                {/* Sticky order button for mobile - appears at bottom of screen */}
-                <StickyOrderButton />
               </div>
             </AuthProvider>
           </LanguageProvider>
