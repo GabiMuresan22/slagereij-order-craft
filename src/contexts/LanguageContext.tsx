@@ -408,6 +408,7 @@ const translations = {
     'terms.withdrawal.item4': 'Neem contact met ons op als u vragen heeft over uw specifieke situatie',
     'terms.liability.title': 'Aansprakelijkheid',
     'terms.liability.desc': 'Slagerij John is niet aansprakelijk voor schade die voortvloeit uit onjuist gebruik of bewaring van producten na afhaling. Volg altijd de bewaarinstructies en consumeer producten vóór de vermelde houdbaarheidsdatum.',
+    'terms.liability.allergens': 'Hoewel we alle voorzorgsmaatregelen nemen om kruisbesmetting te voorkomen, worden in onze werkplaats gluten, noten en zuivel verwerkt. Klanten met ernstige allergieën moeten het personeel telefonisch informeren voordat ze online bestellen.',
     'terms.contact.title': 'Contact',
     'terms.contact.desc': 'Voor vragen over deze algemene voorwaarden, neem contact met ons op:',
     
@@ -1246,6 +1247,7 @@ const translations = {
     'terms.withdrawal.item4': 'Contactați-ne dacă aveți întrebări despre situația dvs. specifică',
     'terms.liability.title': 'Răspundere',
     'terms.liability.desc': 'Măcelăria John nu este responsabilă pentru daunele rezultate din utilizarea sau depozitarea incorectă a produselor după ridicare. Urmați întotdeauna instrucțiunile de depozitare și consumați produsele înainte de data de expirare indicată.',
+    'terms.liability.allergens': 'Deși luăm toate măsurile de precauție pentru a preveni contaminarea încrucișată, atelierul nostru prelucrează gluten, nuci și lactate. Clienții cu alergii severe trebuie să informeze personalul telefonic înainte de a plasa o comandă online.',
     'terms.contact.title': 'Contact',
     'terms.contact.desc': 'Pentru întrebări despre acești termeni și condiții, contactați-ne:',
     

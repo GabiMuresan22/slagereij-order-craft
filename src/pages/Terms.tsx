@@ -151,9 +151,15 @@ const Terms = () => {
             <h2 className="text-2xl font-serif font-semibold mb-4">
               {t('terms.liability.title')}
             </h2>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed mb-4">
               {t('terms.liability.desc')}
             </p>
+            {/* Added Allergen Disclaimer */}
+            <div className="bg-amber-50 dark:bg-amber-950/20 p-4 rounded-lg border border-amber-100 dark:border-amber-900">
+              <p className="text-amber-800 dark:text-amber-200 text-sm font-medium leading-relaxed">
+                ⚠️ {t('terms.liability.allergens')}
+              </p>
+            </div>
           </section>
 
           {/* Contact */}
