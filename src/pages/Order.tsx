@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
@@ -12,7 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { CalendarIcon, ShoppingCart, Loader2, CheckCircle2 } from "lucide-react";
+import { CalendarIcon, ShoppingCart, Loader2, CheckCircle2, Info } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -776,6 +776,20 @@ ${data.zipCode} ${data.city}
                           </div>
                         </div>
                       )}
+                    </div>
+
+                    {/* Allergen Information Warning - EU Regulation 1169/2011 Compliance */}
+                    <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 rounded-lg p-4 mb-6 flex gap-3 text-sm text-amber-900 dark:text-amber-100">
+                      <Info className="h-5 w-5 flex-shrink-0 text-amber-600" />
+                      <div>
+                        <p className="font-medium mb-1">{t('allergens.disclaimer.title')}</p>
+                        <p>
+                          {t('allergens.risk.warning')}{" "}
+                          <a href="/allergens" target="_blank" rel="noopener noreferrer" className="underline font-semibold hover:text-amber-700">
+                            {t('footer.allergens')}
+                          </a>
+                        </p>
+                      </div>
                     </div>
 
                     <Button type="button" onClick={nextStep} className="w-full mt-6" size="lg">
