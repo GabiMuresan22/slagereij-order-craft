@@ -156,6 +156,9 @@ const Footer = () => {
               <Link to="/terms" className="hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('footer.terms')}
               </Link>
+              <Link to="/allergens" className="hover:text-primary transition-colors min-h-[48px] flex items-center">
+                {t('footer.allergens')}
+              </Link>
               <button 
                 type="button"
                 data-cc="c-settings"
