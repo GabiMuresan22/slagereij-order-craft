@@ -785,9 +785,12 @@ ${data.zipCode} ${data.city}
                         <p className="font-medium mb-1">{t('allergens.disclaimer.title')}</p>
                         <p>
                           {t('allergens.risk.warning')}{" "}
-                          <a href="/allergens" target="_blank" rel="noopener noreferrer" className="underline font-semibold hover:text-amber-700">
+                          <Link 
+                            to="/allergens" 
+                            className="underline font-semibold hover:text-amber-700"
+                          >
                             {t('footer.allergens')}
-                          </a>
+                          </Link>
                         </p>
                       </div>
                     </div>
