@@ -12,6 +12,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { z } from 'zod';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { isPasswordLeaked } from '@/lib/security';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address').max(255),
@@ -130,6 +131,16 @@ export default function Auth() {
 
     try {
       signupSchema.parse(data);
+
+      const leaked = await isPasswordLeaked(data.password);
+      if (leaked) {
+        setErrors({
+          password:
+            'This password has been found in a data breach. Please choose a more secure password.',
+        });
+        return;
+      }
+
       await signUp(data.email, data.password, data.name);
       // After successful signup, switch to login tab
       const loginTab = document.querySelector('[value="login"]') as HTMLElement;
@@ -164,6 +175,14 @@ export default function Auth() {
       if (newPassword !== confirmNewPassword) {
         setErrors({ confirmPassword: "Passwords don't match" });
         setLoading(false);
+        return;
+      }
+
+      const leaked = await isPasswordLeaked(newPassword);
+      if (leaked) {
+        setErrors({
+          password: 'This new password is insecure (leaked). Please try another.',
+        });
         return;
       }
 
