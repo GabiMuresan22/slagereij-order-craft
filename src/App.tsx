@@ -7,7 +7,6 @@ import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { Analytics } from "./components/Analytics";
-import { HtmlLangUpdater } from "./components/HtmlLangUpdater";
 import CookieConsentBanner from "./components/CookieConsent";
 import PremiumAlert from "./components/PremiumAlert";
 import Navigation from "./components/Navigation";
@@ -44,6 +43,44 @@ const PageLoader = () => (
   </div>
 );
 
+// Shared routes configuration
+const AppRoutes = () => (
+  <Routes>
+    {/* Dutch routes (default, no prefix) */}
+    <Route path="/" element={<Home />} />
+    <Route path="/about" element={<About />} />
+    <Route path="/products" element={<Products />} />
+    <Route path="/packages" element={<Packages />} />
+    <Route path="/catering" element={<Catering />} />
+    <Route path="/order" element={<Order />} />
+    <Route path="/contact" element={<Contact />} />
+    <Route path="/auth" element={<Auth />} />
+    <Route path="/my-account" element={<MyAccount />} />
+    <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+    <Route path="/privacy" element={<Privacy />} />
+    <Route path="/terms" element={<Terms />} />
+    <Route path="/allergens" element={<Allergens />} />
+    
+    {/* Romanian routes (with /ro prefix) */}
+    <Route path="/ro" element={<Home />} />
+    <Route path="/ro/about" element={<About />} />
+    <Route path="/ro/products" element={<Products />} />
+    <Route path="/ro/packages" element={<Packages />} />
+    <Route path="/ro/catering" element={<Catering />} />
+    <Route path="/ro/order" element={<Order />} />
+    <Route path="/ro/contact" element={<Contact />} />
+    <Route path="/ro/auth" element={<Auth />} />
+    <Route path="/ro/my-account" element={<MyAccount />} />
+    <Route path="/ro/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+    <Route path="/ro/privacy" element={<Privacy />} />
+    <Route path="/ro/terms" element={<Terms />} />
+    <Route path="/ro/allergens" element={<Allergens />} />
+    
+    {/* 404 fallback */}
+    <Route path="*" element={<NotFound />} />
+  </Routes>
+);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <HelmetProvider>
@@ -52,7 +89,6 @@ const App = () => (
           <ScrollToTop />
           <LanguageProvider>
             <AuthProvider>
-              <HtmlLangUpdater />
               <PremiumAlert />
               <CookieConsentBanner />
               <Analytics />
@@ -64,22 +100,7 @@ const App = () => (
                 <main className="flex-grow">
                   {/* 3. Wrap your Routes in Suspense */}
                   <Suspense fallback={<PageLoader />}>
-                    <Routes>
-                      <Route path="/" element={<Home />} />
-                      <Route path="/about" element={<About />} />
-                      <Route path="/products" element={<Products />} />
-                      <Route path="/packages" element={<Packages />} />
-                      <Route path="/catering" element={<Catering />} />
-                      <Route path="/order" element={<Order />} />
-                      <Route path="/contact" element={<Contact />} />
-                      <Route path="/auth" element={<Auth />} />
-                      <Route path="/my-account" element={<MyAccount />} />
-                      <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
-                      <Route path="/privacy" element={<Privacy />} />
-                      <Route path="/terms" element={<Terms />} />
-                      <Route path="/allergens" element={<Allergens />} />
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
+                    <AppRoutes />
                   </Suspense>
                 </main>
                 <Footer />

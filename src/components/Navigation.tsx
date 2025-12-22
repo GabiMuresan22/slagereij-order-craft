@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Menu, User, LogOut, Shield, UserCircle, Home, ShoppingBag, Info, Package, UtensilsCrossed, ShoppingCart, Phone } from "lucide-react";
 import { useState, useEffect } from "react";
 import logo from "@/assets/logo.svg";
@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import LocalizedLink from "@/components/LocalizedLink";
+import { useLocalizedNavigation } from "@/hooks/useLocalizedNavigation";
 
 // Language configuration with flags and native names
 const languageConfig = {
@@ -30,6 +32,7 @@ const Navigation = () => {
   const { language, setLanguage, t } = useLanguage();
   const { user, signOut, loading } = useAuth();
   const [isAdmin, setIsAdmin] = useState(false);
+  const { currentPath } = useLocalizedNavigation();
 
   // Check if user is admin
   useEffect(() => {
@@ -82,12 +85,20 @@ const Navigation = () => {
     }
   };
 
+  // Check if a path is active (compare without language prefix)
+  const isActivePath = (path: string) => {
+    if (path === '/') {
+      return currentPath === '/';
+    }
+    return currentPath === path || currentPath.startsWith(path + '/');
+  };
+
   return (
     <nav className="bg-background border-b border-border sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
+          <LocalizedLink to="/" className="flex items-center">
             <img 
               src={logo} 
               alt="Slagerij John Logo" 
@@ -99,7 +110,7 @@ const Navigation = () => {
                 borderRadius: '50%',
               }}
             />
-          </Link>
+          </LocalizedLink>
 
           {/* Desktop Navigation - Hidden below 950px */}
           <div className="hidden lg:flex items-center space-x-8">
@@ -113,25 +124,25 @@ const Navigation = () => {
                     size="sm"
                     className="bg-primary text-primary-foreground hover:bg-primary/90 px-6"
                   >
-                    <Link to={item.path}>
+                    <LocalizedLink to={item.path}>
                       {item.label}
-                    </Link>
+                    </LocalizedLink>
                   </Button>
                 );
               }
               
               return (
-                  <Link
+                <LocalizedLink
                   key={item.path}
                   to={item.path}
                   className={`text-base font-medium transition-colors hover:text-primary min-h-[48px] flex items-center ${
-                    location.pathname === item.path
+                    isActivePath(item.path)
                       ? "text-primary font-semibold"
                       : "text-foreground"
                   }`}
                 >
                   {item.label}
-                </Link>
+                </LocalizedLink>
               );
             })}
             <Button
@@ -155,10 +166,10 @@ const Navigation = () => {
                       asChild
                       className="flex items-center gap-2"
                     >
-                      <Link to="/my-account">
+                      <LocalizedLink to="/my-account">
                         <UserCircle className="h-4 w-4" />
                         <span>{t('nav.myAccount')}</span>
-                      </Link>
+                      </LocalizedLink>
                     </Button>
                     {isAdmin && (
                       <Button
@@ -167,10 +178,10 @@ const Navigation = () => {
                         asChild
                         className="flex items-center gap-2"
                       >
-                        <Link to="/admin">
+                        <LocalizedLink to="/admin">
                           <Shield className="h-4 w-4" />
                           <span>{t('nav.admin')}</span>
-                        </Link>
+                        </LocalizedLink>
                       </Button>
                     )}
                     <Button
@@ -190,10 +201,10 @@ const Navigation = () => {
                     asChild
                     className="flex items-center gap-2"
                   >
-                    <Link to="/auth">
+                    <LocalizedLink to="/auth">
                       <User className="h-4 w-4" />
                       <span>{t('auth.login')}</span>
-                    </Link>
+                    </LocalizedLink>
                   </Button>
                 )}
               </>
@@ -208,19 +219,19 @@ const Navigation = () => {
               size="sm"
               className="bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-4 text-sm"
             >
-              <Link to="/order">
+              <LocalizedLink to="/order">
                 {t('nav.order')}
-              </Link>
+              </LocalizedLink>
             </Button>
             
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
-            <button
-              className="text-foreground p-2 min-h-[48px] min-w-[48px] flex items-center justify-center"
-              aria-label="Toggle menu"
-            >
+                <button
+                  className="text-foreground p-2 min-h-[48px] min-w-[48px] flex items-center justify-center"
+                  aria-label="Toggle menu"
+                >
                   <Menu size={28} />
-            </button>
+                </button>
               </SheetTrigger>
               <SheetContent side="left" className="w-[85vw] sm:w-[400px] p-0 flex flex-col">
                 {/* Sheet Header with Branding */}
@@ -233,31 +244,31 @@ const Navigation = () => {
                 {/* Scrollable Menu Links */}
                 <ScrollArea className="flex-1 px-4">
                   <div className="py-4 space-y-1">
-            {navItems.map((item) => {
-              // Skip Order button since it's visible in header
-              if (item.path === "/order") {
-                return null;
-              }
+                    {navItems.map((item) => {
+                      // Skip Order button since it's visible in header
+                      if (item.path === "/order") {
+                        return null;
+                      }
                       
                       const Icon = item.icon;
-                      const isActive = location.pathname === item.path;
-              
-              return (
-                <Link
-                  key={item.path}
-                  to={item.path}
+                      const isActive = isActivePath(item.path);
+                      
+                      return (
+                        <LocalizedLink
+                          key={item.path}
+                          to={item.path}
                           className={`flex items-center gap-3 p-3 rounded-lg text-base font-medium transition-colors min-h-[48px] ${
                             isActive
                               ? "text-primary font-semibold bg-primary/10"
                               : "text-foreground hover:bg-muted"
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
+                          }`}
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
                           <Icon className="h-5 w-5 flex-shrink-0" />
                           <span>{item.label}</span>
-                </Link>
-              );
-            })}
+                        </LocalizedLink>
+                      );
+                    })}
                   </div>
                 </ScrollArea>
 
@@ -268,69 +279,69 @@ const Navigation = () => {
                   {/* Language Toggle */}
                   <Button
                     variant="outline"
-              onClick={() => {
-                toggleLanguage();
-              }}
+                    onClick={() => {
+                      toggleLanguage();
+                    }}
                     className="w-full justify-start min-h-[48px]"
-            >
+                  >
                     <span className="text-lg mr-3">{currentLangConfig.flag}</span>
                     <span>{currentLangConfig.nativeName}</span>
                   </Button>
             
                   {/* Auth Button */}
-            {!loading && (
-              <>
-                {user ? (
-                  <>
+                  {!loading && (
+                    <>
+                      {user ? (
+                        <>
                           <Button
                             variant="outline"
                             asChild
                             className="w-full justify-start min-h-[48px]"
                           >
-                            <Link to="/my-account" onClick={() => setMobileMenuOpen(false)}>
+                            <LocalizedLink to="/my-account" onClick={() => setMobileMenuOpen(false)}>
                               <UserCircle className="h-4 w-4 mr-3" />
-                      {t('nav.myAccount')}
-                    </Link>
+                              {t('nav.myAccount')}
+                            </LocalizedLink>
                           </Button>
-                    {isAdmin && (
+                          {isAdmin && (
                             <Button
                               variant="outline"
                               asChild
                               className="w-full justify-start min-h-[48px]"
                             >
-                              <Link to="/admin" onClick={() => setMobileMenuOpen(false)}>
+                              <LocalizedLink to="/admin" onClick={() => setMobileMenuOpen(false)}>
                                 <Shield className="h-4 w-4 mr-3" />
-                        {t('nav.admin')}
-                      </Link>
+                                {t('nav.admin')}
+                              </LocalizedLink>
                             </Button>
-                    )}
+                          )}
                           <Button
                             variant="outline"
-                      onClick={() => {
-                        signOut();
-                        setMobileMenuOpen(false);
-                      }}
+                            onClick={() => {
+                              signOut();
+                              setMobileMenuOpen(false);
+                            }}
                             className="w-full justify-start min-h-[48px]"
-                    >
+                          >
                             <LogOut className="h-4 w-4 mr-3" />
-                      {t('auth.logout')}
+                            {t('auth.logout')}
                           </Button>
-                  </>
-                ) : (
+                        </>
+                      ) : (
                         <Button
                           variant="outline"
                           asChild
                           className="w-full justify-start min-h-[48px]"
                         >
-                          <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
+                          <LocalizedLink to="/auth" onClick={() => setMobileMenuOpen(false)}>
                             <User className="h-4 w-4 mr-3" />
-                    {t('auth.login')}
-                  </Link>
+                            {t('auth.login')}
+                          </LocalizedLink>
                         </Button>
-                )}
-              </>
-            )}
-          </div>
+                      )}
+                    </>
+                  )}
+                </div>
               </SheetContent>
             </Sheet>
           </div>
