@@ -7,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { Analytics } from "./components/Analytics";
+import { HtmlLangUpdater } from "./components/HtmlLangUpdater";
 import CookieConsentBanner from "./components/CookieConsent";
 import PremiumAlert from "./components/PremiumAlert";
 import Navigation from "./components/Navigation";
@@ -51,6 +52,7 @@ const App = () => (
           <ScrollToTop />
           <LanguageProvider>
             <AuthProvider>
+              <HtmlLangUpdater />
               <PremiumAlert />
               <CookieConsentBanner />
               <Analytics />
