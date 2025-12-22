@@ -28,13 +28,23 @@ const SEO = ({
   const location = useLocation();
   const baseUrl = 'https://slagerij-john.be';
   
-  // Normalize URL: remove trailing slash for consistency
+  // Normalize URL: remove trailing slash for consistency (except root)
   const normalizedPath = location.pathname.endsWith('/') && location.pathname !== '/' 
     ? location.pathname.slice(0, -1) 
     : location.pathname;
-    
-  // Determine the canonical URL
-  const calculatedUrl = `${baseUrl}${normalizedPath}`;
+  
+  // Normalize search params: remove empty or undefined values
+  const searchParams = new URLSearchParams(location.search);
+  const normalizedSearch = searchParams.toString();
+  
+  // Construct canonical URL: baseUrl + path + search (if any)
+  // Ensure no double slashes and proper formatting
+  const pathWithSearch = normalizedSearch 
+    ? `${normalizedPath}?${normalizedSearch}` 
+    : normalizedPath;
+  const calculatedUrl = `${baseUrl}${pathWithSearch}`;
+  
+  // Use provided canonicalUrl or calculated one, ensuring it's a valid absolute URL
   const finalCanonicalUrl = canonicalUrl || calculatedUrl;
 
   const fullTitle = `${title} | Slagerij John`;
@@ -46,10 +56,9 @@ const SEO = ({
       <meta name="description" content={description} />
       {keywords && <meta name="keywords" content={keywords} />}
       
-      {/* Logic: Only render canonical if the page is indexable OR if a manual canonical is provided */}
-      {!noIndex && (
-        <link rel="canonical" href={finalCanonicalUrl} />
-      )}
+      {/* Canonical URL: Always render for proper SEO, even for noIndex pages */}
+      {/* This ensures Google knows the preferred URL version */}
+      <link rel="canonical" href={finalCanonicalUrl} />
 
       {/* Logic: Handle Robots tag */}
       {noIndex ? (
