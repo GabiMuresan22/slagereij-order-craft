@@ -1,7 +1,9 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { trackLanguageChange } from '@/components/Analytics';
+import { parseLocalizedPath, buildLocalizedPath, Language, DEFAULT_LANGUAGE } from '@/hooks/useLocalizedNavigation';
 
-type Language = 'nl' | 'ro';
+export type { Language };
 
 interface LanguageContextType {
   language: Language;
@@ -1693,15 +1695,39 @@ const translations = {
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>('nl');
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  // Parse language from URL
+  const { lang: urlLang, path: currentPath } = parseLocalizedPath(location.pathname);
+  const [language, setLanguageState] = useState<Language>(urlLang);
 
-  const handleSetLanguage = (lang: Language) => {
-    setLanguage(lang);
+  // Sync language state with URL when location changes
+  useEffect(() => {
+    const { lang } = parseLocalizedPath(location.pathname);
+    if (lang !== language) {
+      setLanguageState(lang);
+    }
+  }, [location.pathname, language]);
+
+  // Update HTML lang attribute when language changes
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
+  const handleSetLanguage = useCallback((lang: Language) => {
+    if (lang === language) return;
+    
+    setLanguageState(lang);
     trackLanguageChange(lang);
-  };
+    
+    // Navigate to the same path but with the new language prefix
+    const newPath = buildLocalizedPath(currentPath, lang);
+    navigate(newPath, { replace: true });
+  }, [language, currentPath, navigate]);
 
   const t = (key: string): string => {
-    return translations[language][key] || key;
+    return translations[language][key as keyof typeof translations['nl']] || key;
   };
 
   return (

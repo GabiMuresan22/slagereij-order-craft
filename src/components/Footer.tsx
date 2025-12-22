@@ -1,6 +1,6 @@
 import { MapPin, Phone, Clock, Facebook, Clapperboard, MapPinned } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Link } from "react-router-dom";
+import LocalizedLink from "@/components/LocalizedLink";
 import logo from "@/assets/logo.svg";
 import { useBusinessHours } from "@/hooks/useBusinessHours";
 
@@ -40,24 +40,24 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-serif font-semibold mb-6">{t('footer.quickLinks')}</h3>
             <nav className="space-y-2">
-              <Link to="/" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
+              <LocalizedLink to="/" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('nav.home')}
-              </Link>
-              <Link to="/about" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
+              </LocalizedLink>
+              <LocalizedLink to="/about" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('nav.about')}
-              </Link>
-              <Link to="/products" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
+              </LocalizedLink>
+              <LocalizedLink to="/products" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('nav.products')}
-              </Link>
-              <Link to="/catering" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
+              </LocalizedLink>
+              <LocalizedLink to="/catering" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('nav.catering')}
-              </Link>
-              <Link to="/order" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
+              </LocalizedLink>
+              <LocalizedLink to="/order" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('nav.order')}
-              </Link>
-              <Link to="/contact" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
+              </LocalizedLink>
+              <LocalizedLink to="/contact" className="block text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('nav.contact')}
-              </Link>
+              </LocalizedLink>
             </nav>
           </div>
 
@@ -150,15 +150,15 @@ const Footer = () => {
               </a>
             </div>
             <div className="flex gap-4">
-              <Link to="/privacy" className="hover:text-primary transition-colors min-h-[48px] flex items-center">
+              <LocalizedLink to="/privacy" className="hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('footer.privacy')}
-              </Link>
-              <Link to="/terms" className="hover:text-primary transition-colors min-h-[48px] flex items-center">
+              </LocalizedLink>
+              <LocalizedLink to="/terms" className="hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('footer.terms')}
-              </Link>
-              <Link to="/allergens" className="hover:text-primary transition-colors min-h-[48px] flex items-center">
+              </LocalizedLink>
+              <LocalizedLink to="/allergens" className="hover:text-primary transition-colors min-h-[48px] flex items-center">
                 {t('footer.allergens')}
-              </Link>
+              </LocalizedLink>
               <button 
                 type="button"
                 data-cc="c-settings"
