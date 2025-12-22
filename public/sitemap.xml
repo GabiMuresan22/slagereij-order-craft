@@ -1,63 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Dutch (Default) URLs -->
   <url>
     <loc>https://slagerij-john.be/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro" />
     <lastmod>2025-12-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://slagerij-john.be/about</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/about" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/about" />
     <lastmod>2025-12-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://slagerij-john.be/products</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/products" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/products" />
     <lastmod>2025-12-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://slagerij-john.be/packages</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/packages" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/packages" />
     <lastmod>2025-12-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://slagerij-john.be/catering</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/catering" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/catering" />
     <lastmod>2025-12-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://slagerij-john.be/order</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/order" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/order" />
     <lastmod>2025-12-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://slagerij-john.be/contact</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/contact" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/contact" />
     <lastmod>2025-12-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://slagerij-john.be/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/privacy" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/privacy" />
     <lastmod>2025-12-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://slagerij-john.be/terms</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/terms" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/terms" />
     <lastmod>2025-12-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://slagerij-john.be/allergens</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/allergens" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/allergens" />
     <lastmod>2025-12-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+
+  <!-- Romanian URLs -->
+  <url>
+    <loc>https://slagerij-john.be/ro</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro" />
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://slagerij-john.be/ro/about</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/about" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/about" />
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://slagerij-john.be/ro/products</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/products" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/products" />
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://slagerij-john.be/ro/packages</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/packages" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/packages" />
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://slagerij-john.be/ro/catering</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/catering" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/catering" />
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://slagerij-john.be/ro/order</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/order" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/order" />
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://slagerij-john.be/ro/contact</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/contact" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/contact" />
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://slagerij-john.be/ro/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/privacy" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/privacy" />
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://slagerij-john.be/ro/terms</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/terms" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/terms" />
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://slagerij-john.be/ro/allergens</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/allergens" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/allergens" />
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
   </url>
 </urlset>
