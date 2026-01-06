@@ -4,28 +4,28 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const reviews = [
   {
-    name: "Mariana Micu",
+    name: "Andrei Grigoras",
     rating: 5,
-    text: "Fresh meat, delicious traditional dishes, and friendly owners. We'll definitely be back. Until next time!",
-    date: "Recent"
-  },
-  {
-    name: "Nicolescu Daniel",
-    rating: 5,
-    text: "A great experience at Butcher John! We bought mici, chicken skewers with vegetables, beef burgers and chicken burgers - every product was fresh, tasty and top quality. The service was professional, friendly and efficient.",
-    date: "4 months ago"
-  },
-  {
-    name: "CezarCDA",
-    rating: 5,
-    text: "Good food and always fresh!",
+    text: "Produse de nota 10! Toate produsele sunt proaspete, gustoase și de o calitate impecabilă. Personalul este foarte amabil, oferă mereu recomandări utile și se vede că își respectă clienții. De fiecare dată când cumpăr de aici, mă întorc acasă mulțumit. Recomand cu toată încrederea!",
     date: "1 month ago"
   },
   {
-    name: "Marius - Silviu Plesa",
+    name: "Ana Maria Airinei",
     rating: 5,
-    text: "Good prices, the products are always fresh and of quality. Even though the store seems small and you don't see a pile of products in the window, it's because they always keep the products fresh together with their wife.",
-    date: "3 months ago"
+    text: "Recomandăm cu drag și încredere! Produse excelente și super proaspete!",
+    date: "1 month ago"
+  },
+  {
+    name: "Lieselotte Valcke",
+    rating: 5,
+    text: "Super vriendelijk en lekker vers vlees. Proef zeker ook hun roemeense ambachtelijke specialiteiten.",
+    date: "1 month ago"
+  },
+  {
+    name: "Mariana Micu",
+    rating: 5,
+    text: "Fresh meat, delicious traditional dishes, and friendly owners. We'll definitely be back. Until next time!",
+    date: "2 months ago"
   }
 ];
 
