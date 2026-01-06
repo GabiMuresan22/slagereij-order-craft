@@ -123,7 +123,7 @@ const Footer = () => {
                   <Clapperboard className="w-5 h-5" />
                 </a>
                 <a 
-                  href="https://www.google.com/maps/place/Butcher+John/@51.0590,3.2770,17z"
+                  href="https://www.google.com/maps/search/?api=1&query=Bruggestraat+146A,+8750+Zwevezele,+Belgium"
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="min-w-[48px] min-h-[48px] rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
