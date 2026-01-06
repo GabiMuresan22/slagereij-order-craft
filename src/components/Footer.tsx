@@ -20,13 +20,18 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-serif font-semibold mb-6">{t('footer.contact')}</h3>
             <div className="space-y-4">
-              <div className="flex items-start space-x-3">
+              <a 
+                href="https://www.google.com/maps/dir/?api=1&destination=Bruggestraat+146A,+8750+Zwevezele,+Belgium"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start space-x-3 hover:text-primary transition-colors group"
+              >
                 <MapPin className="w-5 h-5 flex-shrink-0 text-primary" />
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground group-hover:text-primary">
                   {t('contact.address.street')}<br />
                   {t('contact.address.city')}, {t('contact.address.country')}
                 </p>
-              </div>
+              </a>
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 flex-shrink-0 text-primary" />
                 <a href="tel:+32466186457" className="text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center">
@@ -123,7 +128,7 @@ const Footer = () => {
                   <Clapperboard className="w-5 h-5" />
                 </a>
                 <a 
-                  href="https://www.google.com/maps/search/?api=1&query=Bruggestraat+146A,+8750+Zwevezele,+Belgium"
+                  href="https://www.google.com/maps/dir/?api=1&destination=Bruggestraat+146A,+8750+Zwevezele,+Belgium"
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="min-w-[48px] min-h-[48px] rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
