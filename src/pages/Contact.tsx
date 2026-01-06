@@ -323,7 +323,7 @@ const Contact = () => {
               aria-label="Google Maps showing Slagerij John location at Bruggestraat 146A, 8750 Zwevezele, Belgium"
             />
             <a
-              href="https://www.google.com/maps/place/Bruggestraat+146A,+8750+Zwevezele"
+              href="https://www.google.com/maps/place/Butcher+John/@51.0590,3.2770,17z"
               target="_blank"
               rel="noopener noreferrer"
               className="absolute bottom-4 right-4 bg-primary text-primary-foreground px-6 py-3 rounded-lg shadow-lg hover:bg-primary/90 transition-colors flex items-center space-x-2"
