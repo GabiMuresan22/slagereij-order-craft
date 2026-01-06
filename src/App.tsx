@@ -8,7 +8,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { Analytics } from "./components/Analytics";
 import CookieConsentBanner from "./components/CookieConsent";
-import PremiumAlert from "./components/PremiumAlert";
+
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
@@ -89,7 +89,7 @@ const App = () => (
           <ScrollToTop />
           <LanguageProvider>
             <AuthProvider>
-              <PremiumAlert />
+              
               <CookieConsentBanner />
               <Analytics />
               <Toaster />
