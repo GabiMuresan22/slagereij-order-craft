@@ -312,7 +312,7 @@ const Contact = () => {
         <Card className="border-border overflow-hidden max-w-6xl mx-auto mb-12">
           <CardContent className="p-0 h-[500px] relative">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2507.8!2d3.2770!3d51.0590!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c351c5c5c5c5c5%3A0x1234567890abcdef!2sButcher%20John!5e0!3m2!1sen!2sbe!4v1704067200000"
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=Bruggestraat+146A,+8750+Zwevezele,+Belgium&zoom=17"
               width="100%"
               height="100%"
               style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg)' }}
@@ -323,7 +323,7 @@ const Contact = () => {
               aria-label="Google Maps showing Slagerij John location at Bruggestraat 146A, 8750 Zwevezele, Belgium"
             />
             <a
-              href="https://www.google.com/maps/place/Butcher+John/@51.0590,3.2770,17z"
+              href="https://www.google.com/maps/search/?api=1&query=Bruggestraat+146A,+8750+Zwevezele,+Belgium"
               target="_blank"
               rel="noopener noreferrer"
               className="absolute bottom-4 right-4 bg-primary text-primary-foreground px-6 py-3 rounded-lg shadow-lg hover:bg-primary/90 transition-colors flex items-center space-x-2"
