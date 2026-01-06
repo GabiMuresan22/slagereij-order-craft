@@ -21,7 +21,7 @@ const Footer = () => {
             <h3 className="text-xl font-serif font-semibold mb-6">{t('footer.contact')}</h3>
             <div className="space-y-4">
               <a 
-                href="https://www.google.com/maps/dir/?api=1&destination=Bruggestraat+146A,+8750+Zwevezele,+Belgium"
+                href="https://www.google.be/maps/dir/?api=1&destination=Bruggestraat+146A,+8750+Zwevezele,+Belgium"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-start space-x-3 hover:text-primary transition-colors group"
@@ -128,7 +128,7 @@ const Footer = () => {
                   <Clapperboard className="w-5 h-5" />
                 </a>
                 <a 
-                  href="https://www.google.com/maps/dir/?api=1&destination=Bruggestraat+146A,+8750+Zwevezele,+Belgium"
+                  href="https://www.google.be/maps/dir/?api=1&destination=Bruggestraat+146A,+8750+Zwevezele,+Belgium"
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="min-w-[48px] min-h-[48px] rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
