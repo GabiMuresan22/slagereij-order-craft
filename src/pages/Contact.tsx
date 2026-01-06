@@ -312,7 +312,7 @@ const Contact = () => {
         <Card className="border-border overflow-hidden max-w-6xl mx-auto mb-12">
           <CardContent className="p-0 h-[500px] relative">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2507.8!2d3.277!3d51.059!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c34b4c0b5e5e5f%3A0x5e5e5e5e5e5e5e!2sBruggestraat%20146A%2C%208750%20Zwevezele%2C%20Belgium!5e0!3m2!1sen!2sbe!4v1234567890"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2507.8!2d3.2770!3d51.0590!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c351c5c5c5c5c5%3A0x1234567890abcdef!2sButcher%20John!5e0!3m2!1sen!2sbe!4v1704067200000"
               width="100%"
               height="100%"
               style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg)' }}
