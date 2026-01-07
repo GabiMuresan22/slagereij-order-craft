@@ -8,7 +8,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema, getLocalBusinessSchema } from "@/lib/structuredData";
-import { getGoogleMapsDirectionsUrl, getGoogleMapsEmbedUrl } from "@/lib/maps";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -313,7 +312,7 @@ const Contact = () => {
         <Card className="border-border overflow-hidden max-w-6xl mx-auto mb-12">
           <CardContent className="p-0 h-[500px] relative">
             <iframe
-              src={getGoogleMapsEmbedUrl()}
+              src="https://www.google.com/maps?q=Bruggestraat+146A,+8750+Zwevezele,+Belgium&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg)' }}
@@ -324,7 +323,7 @@ const Contact = () => {
               aria-label="Google Maps showing Slagerij John location at Bruggestraat 146A, 8750 Zwevezele, Belgium"
             />
             <a
-              href={getGoogleMapsDirectionsUrl()}
+              href="https://www.google.com/maps/dir/?api=1&destination=Bruggestraat+146A,+8750+Zwevezele,+Belgium"
               target="_blank"
               rel="noopener noreferrer"
               className="absolute bottom-4 right-4 bg-primary text-primary-foreground px-6 py-3 rounded-lg shadow-lg hover:bg-primary/90 transition-colors flex items-center space-x-2"
