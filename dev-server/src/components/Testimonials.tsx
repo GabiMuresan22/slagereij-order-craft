@@ -1,7 +1,6 @@
 import { Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { getGoogleMapsDirectionsUrl } from "@/lib/maps";
 
 const reviews = [
   {
@@ -71,7 +70,7 @@ export default function Testimonials() {
 
         <div className="text-center mt-8">
           <a
-            href={getGoogleMapsDirectionsUrl()}
+            href="https://www.google.com/maps/dir/?api=1&destination=Bruggestraat+146A,+8750+Zwevezele,+Belgium"
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:text-primary/80 font-semibold inline-flex items-center gap-2"
