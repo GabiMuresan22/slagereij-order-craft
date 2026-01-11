@@ -219,6 +219,17 @@ export default function AdminDashboard() {
     }
   };
 
+  // HTML escape function to prevent XSS attacks when printing orders
+  const escapeHtml = (unsafe: string | null | undefined): string => {
+    if (!unsafe) return '';
+    return unsafe
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  };
+
   const printOrder = (order: Order) => {
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
@@ -320,15 +331,15 @@ export default function AdminDashboard() {
             <h2>${t('admin.print.customerInfo')}</h2>
             <div class="info-row">
               <span class="info-label">${t('admin.print.name')}</span>
-              <span>${order.customer_name}</span>
+              <span>${escapeHtml(order.customer_name)}</span>
             </div>
             <div class="info-row">
               <span class="info-label">${t('admin.print.phone')}</span>
-              <span>${order.customer_phone}</span>
+              <span>${escapeHtml(order.customer_phone)}</span>
             </div>
             <div class="info-row">
               <span class="info-label">${t('admin.print.email')}</span>
-              <span>${order.customer_email}</span>
+              <span>${escapeHtml(order.customer_email)}</span>
             </div>
           </div>
 
@@ -344,8 +355,8 @@ export default function AdminDashboard() {
               <tbody>
                 ${order.order_items.map(item => `
                   <tr>
-                    <td>${item.product}</td>
-                    <td>${item.quantity} ${item.unit}</td>
+                    <td>${escapeHtml(item.product)}</td>
+                    <td>${escapeHtml(String(item.quantity))} ${escapeHtml(item.unit)}</td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -367,7 +378,7 @@ export default function AdminDashboard() {
           ${order.notes ? `
             <div class="section">
               <h2>${t('admin.print.notes')}</h2>
-              <p>${order.notes}</p>
+              <p>${escapeHtml(order.notes)}</p>
             </div>
           ` : ''}
 
