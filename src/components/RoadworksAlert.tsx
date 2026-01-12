@@ -2,23 +2,17 @@ import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const STORAGE_KEY = "roadworks-alert-dismissed";
-
 const RoadworksAlert = () => {
   const { language } = useLanguage();
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
+  // Reset visibility when language changes
   useEffect(() => {
-    // Check if the alert was already dismissed
-    const dismissed = sessionStorage.getItem(STORAGE_KEY);
-    if (!dismissed) {
-      setIsVisible(true);
-    }
-  }, []);
+    setIsVisible(true);
+  }, [language]);
 
   const handleDismiss = () => {
     setIsVisible(false);
-    sessionStorage.setItem(STORAGE_KEY, "true");
   };
 
   if (!isVisible) return null;
