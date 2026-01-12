@@ -80,16 +80,8 @@ const Contact = () => {
       toast.success(t('contact.form.success'));
       form.reset();
     } catch (error) {
-      // Proper error handling with type checking
-      if (error instanceof Error) {
-        console.error("Error sending contact form:", error.message, error);
-      } else if (typeof error === 'object' && error !== null) {
-        // Handle Supabase errors or other structured errors
-        const errorObj = error as { message?: string; error?: string };
-        console.error("Error sending contact form:", errorObj.message || errorObj.error || error);
-      } else {
-        console.error("Error sending contact form:", String(error));
-      }
+      // Log error without exposing form data
+      console.error("Contact form submission failed");
       toast.error(t('contact.form.error'));
     } finally {
       setIsSubmitting(false);
