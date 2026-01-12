@@ -13,6 +13,7 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import AdminRoute from "./components/AdminRoute";
+import RoadworksAlert from "./components/RoadworksAlert";
 
 // 1. Import lazy and Suspense from React
 import { lazy, Suspense } from "react";
@@ -95,6 +96,7 @@ const App = () => (
               <Toaster />
               <Sonner />
               <div className="flex flex-col min-h-screen">
+                <RoadworksAlert />
                 {/* Navigation stays statically imported so it appears instantly */}
                 <Navigation />
                 <main className="flex-grow">
