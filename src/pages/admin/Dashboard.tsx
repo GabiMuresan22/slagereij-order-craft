@@ -188,7 +188,7 @@ export default function AdminDashboard() {
           deliveryAddress: undefined,
         };
 
-        console.log('Sending status update email with payload:', emailPayload);
+        console.log('Sending status update email for order:', order.id.slice(0, 8), 'status:', newStatus);
         
         const { data: emailResponse, error: emailError } = await supabase.functions.invoke('send-order-status-email', {
           body: emailPayload,
@@ -204,7 +204,7 @@ export default function AdminDashboard() {
           throw new Error(emailResponse.error);
         }
 
-        console.log('Status update email sent successfully:', emailResponse);
+        console.log('Status update email sent successfully for order:', order.id.slice(0, 8));
         toast.success(t('admin.toast.statusUpdated') + ' - ' + (t('admin.toast.emailSent') || 'Email sent'));
       } catch (emailError: any) {
         console.error('Failed to send email:', emailError);

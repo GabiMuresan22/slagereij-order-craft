@@ -508,7 +508,8 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const data = validationResult.data;
-    console.log("Sending order status email:", data);
+    // Log without PII - only order ID and status
+    console.log("Sending order status email:", { orderId: data.orderId, status: data.status, itemCount: data.orderItems.length });
 
     const { customerEmail, customerName, customerPhone } = data;
     const emailContent = await getEmailContent(data);
@@ -535,7 +536,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const customerEmailData = await customerEmailResponse.json();
-    console.log("Customer email sent successfully:", customerEmailData);
+    console.log("Customer email sent successfully for order:", data.orderId);
 
     // Send notification email to business owner (only for new orders)
     if (data.status === 'pending') {
@@ -561,8 +562,7 @@ const handler = async (req: Request): Promise<Response> => {
         console.error("Resend API error (business email):", errorText);
         // Don't throw - business email failure shouldn't fail the whole request
       } else {
-        const businessEmailData = await businessEmailResponse.json();
-        console.log("Business notification email sent successfully:", businessEmailData);
+        console.log("Business notification email sent for order:", data.orderId);
       }
     }
 
