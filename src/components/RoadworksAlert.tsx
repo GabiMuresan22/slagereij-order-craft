@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, AlertTriangle } from "lucide-react";
+import { X } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const STORAGE_KEY = "roadworks-alert-dismissed";
@@ -47,28 +47,25 @@ const RoadworksAlert = () => {
   const currentContent = language === "ro" ? content.ro : content.nl;
 
   return (
-    <div className="bg-amber-50 dark:bg-amber-950/50 border-b-2 border-amber-400 dark:border-amber-600 relative">
+    <div className="bg-primary text-primary-foreground relative">
       <div className="container mx-auto px-4 py-4">
         <button
           onClick={handleDismiss}
-          className="absolute top-3 right-3 p-1.5 rounded-full hover:bg-amber-200 dark:hover:bg-amber-800 transition-colors"
+          className="absolute top-3 right-3 p-1.5 rounded-full hover:bg-primary-foreground/20 transition-colors"
           aria-label="Sluiten / Închide"
         >
-          <X className="w-5 h-5 text-amber-700 dark:text-amber-300" />
+          <X className="w-5 h-5 text-primary-foreground" />
         </button>
         
-        <div className="flex items-start gap-3 pr-8">
-          <AlertTriangle className="w-6 h-6 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-          <div className="space-y-2">
-            <p className="font-semibold text-amber-800 dark:text-amber-200">
-              {currentContent.title}
+        <div className="text-center pr-8 pl-8 space-y-2">
+          <p className="font-serif font-semibold text-lg">
+            {currentContent.title}
+          </p>
+          {currentContent.lines.map((line, index) => (
+            <p key={index} className="text-sm leading-relaxed opacity-90">
+              {line}
             </p>
-            {currentContent.lines.map((line, index) => (
-              <p key={index} className="text-amber-700 dark:text-amber-300 text-sm leading-relaxed">
-                {line}
-              </p>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </div>
