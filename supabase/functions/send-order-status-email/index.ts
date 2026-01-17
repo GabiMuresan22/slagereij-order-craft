@@ -12,6 +12,56 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
+// Rate limiting configuration
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 10;
+
+// In-memory store for rate limiting
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+
+// Get client IP from request headers
+const getClientIP = (req: Request): string => {
+  const forwardedFor = req.headers.get('x-forwarded-for');
+  if (forwardedFor) {
+    return forwardedFor.split(',')[0].trim();
+  }
+  const realIP = req.headers.get('x-real-ip');
+  if (realIP) {
+    return realIP;
+  }
+  return 'unknown';
+};
+
+// Clean up expired rate limit entries
+const cleanupExpiredEntries = () => {
+  const now = Date.now();
+  for (const [ip, data] of rateLimitMap.entries()) {
+    if (now > data.resetTime) {
+      rateLimitMap.delete(ip);
+    }
+  }
+};
+
+// Check rate limit for an IP
+const checkRateLimit = (ip: string): { allowed: boolean; retryAfter: number } => {
+  cleanupExpiredEntries();
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+
+  if (!entry || now > entry.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
+    return { allowed: true, retryAfter: 0 };
+  }
+
+  if (entry.count >= MAX_REQUESTS_PER_WINDOW) {
+    const retryAfter = Math.ceil((entry.resetTime - now) / 1000);
+    return { allowed: false, retryAfter };
+  }
+
+  entry.count++;
+  return { allowed: true, retryAfter: 0 };
+};
+
 // Type definitions
 type SupportedLanguage = 'nl' | 'ro';
 type OrderStatus = 'pending' | 'confirmed' | 'ready' | 'completed';
@@ -484,6 +534,25 @@ const getBusinessEmailContent = async (data: OrderStatusEmailRequest) => {
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Check rate limit
+  const clientIP = getClientIP(req);
+  const { allowed, retryAfter } = checkRateLimit(clientIP);
+  
+  if (!allowed) {
+    console.log(`Rate limit exceeded for IP: ${clientIP.substring(0, 8)}...`);
+    return new Response(
+      JSON.stringify({ error: "Too many requests. Please try again later." }),
+      {
+        status: 429,
+        headers: {
+          "Content-Type": "application/json",
+          "Retry-After": retryAfter.toString(),
+          ...corsHeaders,
+        },
+      }
+    );
   }
 
   try {
