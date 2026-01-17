@@ -197,7 +197,7 @@ const Order = () => {
   // Show error toast if products fetch fails (only once)
   useEffect(() => {
     if (productsError) {
-      console.error('Error fetching products:', productsError);
+      if (import.meta.env.DEV) console.error('Error fetching products:', productsError);
       toast({
         title: "Error",
         description: "Failed to load products. Please refresh the page.",
@@ -368,7 +368,7 @@ ${data.zipCode} ${data.city}
           }
         });
       } catch (emailError) {
-        console.error("Error sending confirmation email:", emailError);
+        if (import.meta.env.DEV) console.error("Error sending confirmation email:", emailError);
         emailFailed = true;
       }
 
@@ -392,7 +392,7 @@ ${data.zipCode} ${data.city}
 
       setStep(4);
     } catch (error) {
-      console.error("Error submitting order:", error);
+      if (import.meta.env.DEV) console.error("Error submitting order:", error);
       toast({
         title: t('order.error.title'),
         description: t('order.error.description'),

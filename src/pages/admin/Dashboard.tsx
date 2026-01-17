@@ -98,7 +98,7 @@ export default function AdminDashboard() {
 
       if (error) {
         toast.error(t('admin.toast.loadFailed'));
-        console.error('Error fetching orders:', error);
+        if (import.meta.env.DEV) console.error('Error fetching orders:', error);
       } else {
         // Cast order_items from Json to our OrderItem[] type
         const typedOrders = (data || []).map(order => ({
@@ -188,26 +188,26 @@ export default function AdminDashboard() {
           deliveryAddress: undefined,
         };
 
-        console.log('Sending status update email for order:', order.id.slice(0, 8), 'status:', newStatus);
+        if (import.meta.env.DEV) console.log('Sending status update email for order:', order.id.slice(0, 8), 'status:', newStatus);
         
         const { data: emailResponse, error: emailError } = await supabase.functions.invoke('send-order-status-email', {
           body: emailPayload,
         });
 
         if (emailError) {
-          console.error('Edge Function error:', emailError);
+          if (import.meta.env.DEV) console.error('Edge Function error:', emailError);
           throw emailError;
         }
 
         if (emailResponse?.error) {
-          console.error('Email service error:', emailResponse.error);
+          if (import.meta.env.DEV) console.error('Email service error:', emailResponse.error);
           throw new Error(emailResponse.error);
         }
 
-        console.log('Status update email sent successfully for order:', order.id.slice(0, 8));
+        if (import.meta.env.DEV) console.log('Status update email sent successfully for order:', order.id.slice(0, 8));
         toast.success(t('admin.toast.statusUpdated') + ' - ' + (t('admin.toast.emailSent') || 'Email sent'));
       } catch (emailError: any) {
-        console.error('Failed to send email:', emailError);
+        if (import.meta.env.DEV) console.error('Failed to send email:', emailError);
         const errorMessage = emailError?.message || emailError?.error || 'Unknown error';
         toast.error(t('admin.toast.statusUpdated') + ' - ' + (t('admin.toast.emailFailed') || `Email failed: ${errorMessage}`));
       }
@@ -215,7 +215,7 @@ export default function AdminDashboard() {
       toast.success(t('admin.toast.statusUpdated'));
     } catch (error: any) {
       toast.error(error.message || t('admin.toast.statusUpdateFailed'));
-      console.error('Error updating order:', error);
+      if (import.meta.env.DEV) console.error('Error updating order:', error);
     }
   };
 

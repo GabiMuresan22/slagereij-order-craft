@@ -26,13 +26,13 @@ export default function AdminRoute({ children }: AdminRouteProps) {
           .rpc('has_role', { _user_id: user.id, _role: 'admin' });
 
         if (error) {
-          console.error('Error checking admin status:', error);
+          if (import.meta.env.DEV) console.error('Error checking admin status:', error);
           setIsAdmin(false);
         } else {
           setIsAdmin(data === true);
         }
       } catch (error) {
-        console.error('Error checking admin status:', error);
+        if (import.meta.env.DEV) console.error('Error checking admin status:', error);
         setIsAdmin(false);
       } finally {
         setChecking(false);

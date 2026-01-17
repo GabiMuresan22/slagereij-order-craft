@@ -8,6 +8,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { Analytics } from "./components/Analytics";
 import CookieConsentBanner from "./components/CookieConsent";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
@@ -86,30 +87,32 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <HelmetProvider>
       <TooltipProvider>
-        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-          <ScrollToTop />
-          <LanguageProvider>
-            <AuthProvider>
-              
-              <CookieConsentBanner />
-              <Analytics />
-              <Toaster />
-              <Sonner />
-              <div className="flex flex-col min-h-screen">
-                <RoadworksAlert />
-                {/* Navigation stays statically imported so it appears instantly */}
-                <Navigation />
-                <main className="flex-grow">
-                  {/* 3. Wrap your Routes in Suspense */}
-                  <Suspense fallback={<PageLoader />}>
-                    <AppRoutes />
-                  </Suspense>
-                </main>
-                <Footer />
-              </div>
-            </AuthProvider>
-          </LanguageProvider>
-        </BrowserRouter>
+        <ErrorBoundary>
+          <BrowserRouter>
+            <ScrollToTop />
+            <LanguageProvider>
+              <AuthProvider>
+                
+                <CookieConsentBanner />
+                <Analytics />
+                <Toaster />
+                <Sonner />
+                <div className="flex flex-col min-h-screen">
+                  <RoadworksAlert />
+                  {/* Navigation stays statically imported so it appears instantly */}
+                  <Navigation />
+                  <main className="flex-grow">
+                    {/* 3. Wrap your Routes in Suspense */}
+                    <Suspense fallback={<PageLoader />}>
+                      <AppRoutes />
+                    </Suspense>
+                  </main>
+                  <Footer />
+                </div>
+              </AuthProvider>
+            </LanguageProvider>
+          </BrowserRouter>
+        </ErrorBoundary>
       </TooltipProvider>
     </HelmetProvider>
   </QueryClientProvider>

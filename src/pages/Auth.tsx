@@ -50,7 +50,7 @@ export default function Auth() {
       // Exchange the recovery token for a session
       supabase.auth.getSession().then(({ data: { session }, error }) => {
         if (error) {
-          console.error('Error getting session:', error);
+          if (import.meta.env.DEV) console.error('Error getting session:', error);
           toast.error('Invalid or expired reset link. Please request a new one.');
           return;
         }
@@ -205,7 +205,7 @@ export default function Auth() {
       setConfirmNewPassword('');
       navigate('/');
     } catch (error: any) {
-      console.error('Error updating password:', error);
+      if (import.meta.env.DEV) console.error('Error updating password:', error);
       toast.error(error.message || 'Failed to update password');
       setErrors({ general: error.message || 'Failed to update password' });
       
