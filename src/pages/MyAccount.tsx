@@ -56,7 +56,7 @@ const MyAccount = () => {
     const { data, error } = (await supabase.from("profiles").select("*").eq("id", user.id).single()) as any;
 
     if (error) {
-      console.error("Error fetching profile:", error);
+      if (import.meta.env.DEV) console.error("Error fetching profile:", error);
       return;
     }
 
@@ -75,7 +75,7 @@ const MyAccount = () => {
       .order("created_at", { ascending: false });
 
     if (error) {
-      console.error("Error fetching orders:", error);
+      if (import.meta.env.DEV) console.error("Error fetching orders:", error);
       toast.error("Failed to load orders");
     } else {
       setOrders(data || []);
@@ -94,7 +94,7 @@ const MyAccount = () => {
 
     if (error) {
       toast.error("Failed to update profile");
-      console.error("Error updating profile:", error);
+      if (import.meta.env.DEV) console.error("Error updating profile:", error);
     } else {
       toast.success(t('auth.success.profileUpdated'));
       fetchProfile();
