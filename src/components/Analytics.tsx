@@ -26,7 +26,7 @@ export const Analytics = () => {
           });
         }
       } catch (error) {
-        console.warn('Cookie consent not available:', error);
+        if (import.meta.env.DEV) console.warn('Cookie consent not available:', error);
       }
     };
 
@@ -55,7 +55,7 @@ export const trackEvent = async (
       window.gtag('event', eventName, eventParams);
     }
   } catch (error) {
-    console.warn('Cookie consent not available:', error);
+    if (import.meta.env.DEV) console.warn('Cookie consent not available:', error);
   }
 };
 

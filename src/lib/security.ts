@@ -15,7 +15,7 @@ export async function isPasswordLeaked(
 
   const cryptoObj = globalThis.crypto;
   if (!cryptoObj?.subtle) {
-    console.warn("[security] crypto.subtle unavailable; skipping HIBP leak check");
+    if (import.meta.env.DEV) console.warn("[security] crypto.subtle unavailable; skipping HIBP leak check");
     return false;
   }
 
@@ -41,7 +41,7 @@ export async function isPasswordLeaked(
     });
 
     if (!response.ok) {
-      console.warn("[security] HIBP range request failed:", response.status, response.statusText);
+      if (import.meta.env.DEV) console.warn("[security] HIBP range request failed:", response.status, response.statusText);
       return false;
     }
 
@@ -54,7 +54,7 @@ export async function isPasswordLeaked(
 
     return false;
   } catch (error) {
-    console.error("[security] HIBP API error:", error);
+    if (import.meta.env.DEV) console.error("[security] HIBP API error:", error);
     return false;
   } finally {
     clearTimeout(timeout);

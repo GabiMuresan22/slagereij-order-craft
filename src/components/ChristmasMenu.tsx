@@ -303,7 +303,7 @@ const ChristmasMenu = () => {
       // Track the download
       trackMenuDownload();
     } catch (error) {
-      console.error('Error downloading PDF:', error);
+      if (import.meta.env.DEV) console.error('Error downloading PDF:', error);
       toast({
         title: "Download failed",
         description: "Could not download the menu. Please try again later.",
