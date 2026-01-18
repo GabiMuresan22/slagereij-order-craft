@@ -429,29 +429,41 @@ ${data.zipCode} ${data.city}
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl font-bold mb-8 text-center">{t('order.title')}</h1>
 
-          {/* Progress Steps */}
-          <div className="flex justify-between mb-8">
-            {[1, 2, 3, 4].map((s) => (
-              <div key={s} className="flex flex-col items-center flex-1">
-                <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                    step >= s ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
-                  }`}
-                >
-                  {s === 4 && step === 4 ? <CheckCircle2 className="h-6 w-6" /> : s}
-                </div>
-                <span className="text-sm mt-2">
-                  {s === 1 && t('order.steps.products')}
-                  {s === 2 && t('order.steps.pickup')}
-                  {s === 3 && t('order.steps.contact')}
-                  {s === 4 && t('order.steps.confirm')}
-                </span>
-              </div>
-            ))}
-          </div>
+          {/* Progress Steps - Accessible */}
+          <nav aria-label={t('accessibility.orderProgress') || 'Order progress'} className="mb-8">
+            <ol className="flex justify-between" role="list">
+              {[1, 2, 3, 4].map((s) => {
+                const stepLabels = {
+                  1: t('order.steps.products'),
+                  2: t('order.steps.pickup'),
+                  3: t('order.steps.contact'),
+                  4: t('order.steps.confirm')
+                };
+                const isCompleted = step > s;
+                const isCurrent = step === s;
+                
+                return (
+                  <li key={s} className="flex flex-col items-center flex-1" role="listitem">
+                    <div
+                      className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                        step >= s ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
+                      }`}
+                      aria-current={isCurrent ? 'step' : undefined}
+                      aria-label={`${stepLabels[s as keyof typeof stepLabels]} - ${isCompleted ? (t('accessibility.completed') || 'Completed') : isCurrent ? (t('accessibility.current') || 'Current step') : (t('accessibility.upcoming') || 'Upcoming')}`}
+                    >
+                      {s === 4 && step === 4 ? <CheckCircle2 className="h-6 w-6" aria-hidden="true" /> : <span aria-hidden="true">{s}</span>}
+                    </div>
+                    <span className="text-sm mt-2" aria-hidden="true">
+                      {stepLabels[s as keyof typeof stepLabels]}
+                    </span>
+                  </li>
+                );
+              })}
+            </ol>
+          </nav>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8" aria-label={t('accessibility.orderForm') || 'Order form'}>
               {/* Step 1: Product Selection */}
               {step === 1 && (
                 <>

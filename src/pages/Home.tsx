@@ -26,23 +26,27 @@ const Home = () => {
         <link rel="preload" as="image" href={heroImageMobile} media="(max-width: 767px)" />
       </SEO>
       {/* Hero Section */}
-      <section className="relative h-[550px] md:h-[650px] flex items-start justify-center overflow-hidden">
+      <section 
+        className="relative h-[550px] md:h-[650px] flex items-start justify-center overflow-hidden"
+        aria-label={t("accessibility.heroSection") || "Welcome section"}
+      >
         {/* Hero Image - Optimized for LCP with responsive images */}
         <picture>
           <source media="(min-width: 768px)" srcSet={heroImageDesktop} />
           <source media="(max-width: 767px)" srcSet={heroImageMobile} />
           <img
             src={heroImageDesktop}
-            alt="Slagerij John - Ambachtelijke slagerij"
+            alt=""
+            aria-hidden="true"
             className="absolute inset-0 w-full h-full object-cover object-center"
             fetchPriority="high" /* TELLS BROWSER: LOAD THIS FIRST */
           />
         </picture>
 
         {/* 2. Dark Overlay (Keep this separate) */}
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-black/50" aria-hidden="true" />
         {/* Enhanced gradient overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-transparent" aria-hidden="true" />
 
         <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto mt-20 md:mt-28">
           <h1
@@ -60,7 +64,7 @@ const Home = () => {
           <Link to="/order">
             <Button
               size="lg"
-              className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-all min-h-[48px] shadow-lg border-2 border-primary-foreground/20"
+              className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-all min-h-[48px] shadow-lg border-2 border-primary-foreground/20 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
             >
               {t("home.hero.cta")}
             </Button>
@@ -72,10 +76,11 @@ const Home = () => {
       <ChristmasMenu />
 
       {/* Features */}
-      <section className="py-16 bg-background">
+      <section className="py-16 bg-background" aria-labelledby="features-heading">
+        <h2 id="features-heading" className="sr-only">{t("accessibility.ourFeatures") || "Our Features"}</h2>
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="text-center border-border hover:shadow-lg transition-shadow">
+            <Card className="text-center border-border hover:shadow-lg transition-shadow focus-within:ring-2 focus-within:ring-primary">
               <CardContent className="pt-8 pb-6">
                 <ShoppingBag className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden="true" />
                 <h3 className="text-xl font-serif font-semibold mb-3">{t("home.features.online.title")}</h3>
@@ -83,7 +88,7 @@ const Home = () => {
               </CardContent>
             </Card>
 
-            <Card className="text-center border-border hover:shadow-lg transition-shadow">
+            <Card className="text-center border-border hover:shadow-lg transition-shadow focus-within:ring-2 focus-within:ring-primary">
               <CardContent className="pt-8 pb-6">
                 <Award className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden="true" />
                 <h3 className="text-xl font-serif font-semibold mb-3">{t("home.features.quality.title")}</h3>
@@ -91,7 +96,7 @@ const Home = () => {
               </CardContent>
             </Card>
 
-            <Card className="text-center border-border hover:shadow-lg transition-shadow">
+            <Card className="text-center border-border hover:shadow-lg transition-shadow focus-within:ring-2 focus-within:ring-primary">
               <CardContent className="pt-8 pb-6">
                 <Clock className="w-12 h-12 mx-auto mb-4 text-primary" aria-hidden="true" />
                 <h3 className="text-xl font-serif font-semibold mb-3">{t("home.features.fresh.title")}</h3>
@@ -136,13 +141,17 @@ const Home = () => {
       <Testimonials />
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
+      <section className="py-20 bg-primary text-primary-foreground" aria-labelledby="cta-heading">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">{t("home.cta.title")}</h2>
+          <h2 id="cta-heading" className="text-4xl md:text-5xl font-serif font-bold mb-6">{t("home.cta.title")}</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">{t("home.cta.subtitle")}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/order">
-              <Button size="lg" variant="secondary" className="text-lg px-8 py-6">
+              <Button 
+                size="lg" 
+                variant="secondary" 
+                className="text-lg px-8 py-6 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              >
                 {t("home.cta.orderBtn")}
               </Button>
             </Link>
@@ -150,7 +159,7 @@ const Home = () => {
               <Button
                 size="lg"
                 variant="outline"
-                className="text-lg px-8 py-6 bg-transparent text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-primary"
+                className="text-lg px-8 py-6 bg-transparent text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-primary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
               >
                 {t("home.cta.productsBtn")}
               </Button>
