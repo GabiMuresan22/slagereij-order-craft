@@ -17,8 +17,8 @@ Allow: /
 Disallow: /admin/
 Disallow: /private/
 
-# Sitemap location
-Sitemap: https://slagerij-john.be/sitemap.xml
+# Dynamic sitemap with auto-updated lastmod dates
+Sitemap: https://xqmfdoayucknepabazpp.supabase.co/functions/v1/generate-sitemap
 
 # Crawl-delay (optional, can help with server load)
 Crawl-delay: 1
