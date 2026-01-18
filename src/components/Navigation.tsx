@@ -94,14 +94,23 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="bg-background border-b border-border sticky top-0 z-50 shadow-sm">
+    <nav 
+      className="bg-background border-b border-border sticky top-0 z-50 shadow-sm"
+      role="navigation"
+      aria-label={t('accessibility.mainNavigation') || 'Main navigation'}
+    >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <LocalizedLink to="/" className="flex items-center">
+          <LocalizedLink 
+            to="/" 
+            className="flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-full"
+            aria-label={t('accessibility.goToHome') || 'Go to home page - Slagerij John'}
+          >
             <img 
               src={logo} 
-              alt="Slagerij John Logo" 
+              alt="" 
+              aria-hidden="true"
               className="h-12 lg:h-16 w-auto object-contain"
               style={{
                 filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
@@ -135,11 +144,12 @@ const Navigation = () => {
                 <LocalizedLink
                   key={item.path}
                   to={item.path}
-                  className={`text-base font-medium transition-colors hover:text-primary min-h-[48px] flex items-center ${
+                  className={`text-base font-medium transition-colors hover:text-primary min-h-[48px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 ${
                     isActivePath(item.path)
                       ? "text-primary font-semibold"
                       : "text-foreground"
                   }`}
+                  aria-current={isActivePath(item.path) ? "page" : undefined}
                 >
                   {item.label}
                 </LocalizedLink>
@@ -150,8 +160,9 @@ const Navigation = () => {
               size="sm"
               onClick={toggleLanguage}
               className="flex items-center gap-2"
+              aria-label={`${t('accessibility.changeLanguage') || 'Change language'}: ${currentLangConfig.nativeName}`}
             >
-              <span className="text-lg">{currentLangConfig.flag}</span>
+              <span className="text-lg" aria-hidden="true">{currentLangConfig.flag}</span>
               <span className="hidden sm:inline">{currentLangConfig.nativeName}</span>
             </Button>
             
@@ -227,13 +238,20 @@ const Navigation = () => {
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
                 <button
-                  className="text-foreground p-2 min-h-[48px] min-w-[48px] flex items-center justify-center"
-                  aria-label="Toggle menu"
+                  className="text-foreground p-2 min-h-[48px] min-w-[48px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md"
+                  aria-label={mobileMenuOpen ? (t('accessibility.closeMenu') || 'Close menu') : (t('accessibility.openMenu') || 'Open menu')}
+                  aria-expanded={mobileMenuOpen}
+                  aria-controls="mobile-nav-menu"
                 >
-                  <Menu size={28} />
+                  <Menu size={28} aria-hidden="true" />
                 </button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-[85vw] sm:w-[400px] p-0 flex flex-col">
+              <SheetContent 
+                side="left" 
+                className="w-[85vw] sm:w-[400px] p-0 flex flex-col"
+                id="mobile-nav-menu"
+                aria-label={t('accessibility.mobileNavigation') || 'Mobile navigation menu'}
+              >
                 {/* Sheet Header with Branding */}
                 <SheetHeader className="px-6 pt-6 pb-4 border-b">
                   <SheetTitle className="text-left text-xl font-serif font-bold">
@@ -243,7 +261,7 @@ const Navigation = () => {
 
                 {/* Scrollable Menu Links */}
                 <ScrollArea className="flex-1 px-4">
-                  <div className="py-4 space-y-1">
+                  <nav className="py-4 space-y-1" role="menu" aria-label={t('accessibility.siteNavigation') || 'Site navigation'}>
                     {navItems.map((item) => {
                       // Skip Order button since it's visible in header
                       if (item.path === "/order") {
@@ -257,19 +275,21 @@ const Navigation = () => {
                         <LocalizedLink
                           key={item.path}
                           to={item.path}
-                          className={`flex items-center gap-3 p-3 rounded-lg text-base font-medium transition-colors min-h-[48px] ${
+                          className={`flex items-center gap-3 p-3 rounded-lg text-base font-medium transition-colors min-h-[48px] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
                             isActive
                               ? "text-primary font-semibold bg-primary/10"
                               : "text-foreground hover:bg-muted"
                           }`}
                           onClick={() => setMobileMenuOpen(false)}
+                          role="menuitem"
+                          aria-current={isActive ? "page" : undefined}
                         >
-                          <Icon className="h-5 w-5 flex-shrink-0" />
+                          <Icon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
                           <span>{item.label}</span>
                         </LocalizedLink>
                       );
                     })}
-                  </div>
+                  </nav>
                 </ScrollArea>
 
                 {/* Sticky Footer with Language and Auth */}

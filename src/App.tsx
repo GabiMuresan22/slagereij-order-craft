@@ -9,6 +9,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { Analytics } from "./components/Analytics";
 import CookieConsentBanner from "./components/CookieConsent";
 import ErrorBoundary from "./components/ErrorBoundary";
+import SkipLink from "./components/SkipLink";
 
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
@@ -98,10 +99,11 @@ const App = () => (
                 <Toaster />
                 <Sonner />
                 <div className="flex flex-col min-h-screen">
+                  <SkipLink />
                   <RoadworksAlert />
                   {/* Navigation stays statically imported so it appears instantly */}
                   <Navigation />
-                  <main className="flex-grow">
+                  <main id="main-content" className="flex-grow" role="main" tabIndex={-1}>
                     {/* 3. Wrap your Routes in Suspense */}
                     <Suspense fallback={<PageLoader />}>
                       <AppRoutes />

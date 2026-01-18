@@ -66,15 +66,23 @@ export default function LazyImage({
   };
 
   return (
-    <div ref={containerRef} className="relative w-full h-full">
+    <div ref={containerRef} className="relative w-full h-full" role="img" aria-label={alt}>
       {/* Loading skeleton placeholder */}
       {!isLoaded && !hasError && (
-        <div className="absolute inset-0 bg-muted animate-pulse" />
+        <div 
+          className="absolute inset-0 bg-muted animate-pulse" 
+          aria-hidden="true"
+          role="presentation"
+        />
       )}
 
       {/* Error placeholder */}
       {hasError && (
-        <div className="absolute inset-0 bg-muted flex items-center justify-center">
+        <div 
+          className="absolute inset-0 bg-muted flex items-center justify-center"
+          role="alert"
+          aria-live="polite"
+        >
           <span className="text-muted-foreground text-sm">Failed to load image</span>
         </div>
       )}
