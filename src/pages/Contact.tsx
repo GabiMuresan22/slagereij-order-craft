@@ -80,8 +80,10 @@ const Contact = () => {
       toast.success(t('contact.form.success'));
       form.reset();
     } catch (error) {
-      // Log error without exposing form data
-      console.error("Contact form submission failed");
+      // Log error without exposing form data (development only)
+      if (import.meta.env.DEV) {
+        console.error("Contact form submission failed:", error);
+      }
       toast.error(t('contact.form.error'));
     } finally {
       setIsSubmitting(false);
