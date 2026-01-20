@@ -17,9 +17,9 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       <SEO
-        title="Ambachtelijke Slagerij & Traiteur in Zwevezele"
-        description="Welkom bij Slagerij John in Zwevezele. Ontdek ons assortiment vers vlees, huisbereide charcuterie en BBQ-pakketten. Bestel eenvoudig online of bezoek onze winkel."
-        keywords="slagerij, kwaliteitsvlees, Zwevezele, online bestellen, huisgemaakte worst, BBQ vlees, verse vleeswaren"
+        title="Slagerij John - Kwaliteitsslagerij & Traiteur | Zwevezele & regio Wingene"
+        description="Op zoek naar vers vlees of een traiteur in Zwevezele of Wingene? Slagerij John biedt huisbereide gerechten en kwaliteitsservice. Bestel nu of bezoek ons!"
+        keywords="slagerij, traiteur, kwaliteitsvlees, Zwevezele, Wingene, catering, huisbereide gerechten, online bestellen, huisgemaakte worst, BBQ vlees, verse vleeswaren"
         structuredData={structuredData}
       >
         <link rel="preload" as="image" href={heroImageDesktop} media="(min-width: 768px)" />
