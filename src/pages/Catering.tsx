@@ -6,13 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import LocalizedLink from "@/components/LocalizedLink";
 
-// Hero & Action images
-import cateringChef from "@/assets/catering-chef-grilling.webp";
+// Hero & Action images - Night atmosphere shots
+import cateringBbqNight from "@/assets/catering-bbq-night.webp";
+import cateringBbqSmoky from "@/assets/catering-bbq-smoky.webp";
 import cateringChefServing from "@/assets/catering-chef-serving.webp";
-import cateringPorkChops from "@/assets/catering-pork-chops.webp";
-
-// BBQ & Hot images
-import cateringSausages from "@/assets/catering-sausages.webp";
 
 // Freshness & Diversity images
 import cateringSalads from "@/assets/catering-salads.webp";
@@ -64,8 +61,8 @@ export default function Catering() {
         <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
           <div className="absolute inset-0">
             <LazyImage
-              src={cateringPorkChops}
-              alt="Juicy grilled pork chops on professional BBQ with flames"
+              src={cateringBbqNight}
+              alt="Professional chef grilling at night with atmospheric smoke and flames"
               className="w-full h-full object-cover"
               width="1920"
               height="1080"
@@ -100,8 +97,8 @@ export default function Catering() {
               <div className="order-1 md:order-2 relative">
                 <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
                   <LazyImage
-                    src={cateringChef}
-                    alt="Professional chef grilling at outdoor catering event"
+                    src={cateringBbqSmoky}
+                    alt="Chef grilling sausages with smoke at outdoor catering event"
                     className="w-full h-full object-cover"
                     width="600"
                     height="450"
@@ -119,8 +116,8 @@ export default function Catering() {
               <div className="relative">
                 <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
                   <LazyImage
-                    src={cateringSausages}
-                    alt="Fresh homemade sausages grilling to perfection"
+                    src={cateringBbqSmoky}
+                    alt="Professional BBQ grill full of sausages with smoke"
                     className="w-full h-full object-cover"
                     width="600"
                     height="450"
