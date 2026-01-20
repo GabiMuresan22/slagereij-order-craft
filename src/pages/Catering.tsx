@@ -62,7 +62,7 @@ export default function Catering() {
           <div className="absolute inset-0">
             <LazyImage
               src={cateringBbqNight}
-              alt="Professional chef grilling at night with atmospheric smoke and flames"
+              alt="Traiteur chef aan het werk op grote barbecue tijdens avondfeest"
               className="w-full h-full object-cover object-center md:object-[center_30%]"
               width="1920"
               height="1080"
@@ -74,7 +74,7 @@ export default function Catering() {
               {language === 'nl' ? 'Traiteur & Feestmenu\'s' : t('catering.title')}
             </h1>
             <p className="text-xl md:text-2xl text-white/90 font-medium max-w-2xl drop-shadow-md">
-              {t('catering.subtitle')}
+              {language === 'nl' ? 'Sfeervolle avondcatering – Onze chef zorgt voor spektakel op uw feest.' : t('catering.subtitle')}
             </p>
           </div>
         </section>
@@ -95,15 +95,20 @@ export default function Catering() {
                 </p>
               </div>
               <div className="order-1 md:order-2 relative">
-                <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
-                  <LazyImage
-                    src={cateringBbqSmoky}
-                    alt="Chef grilling sausages with smoke at outdoor catering event"
-                    className="w-full h-full object-cover"
-                    width="600"
-                    height="450"
-                  />
-                </div>
+                <figure>
+                  <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
+                    <LazyImage
+                      src={cateringBbqSmoky}
+                      alt="Full barbecue met worsten en mici voor evenement catering"
+                      className="w-full h-full object-cover"
+                      width="600"
+                      height="450"
+                    />
+                  </div>
+                  <figcaption className="mt-3 text-sm text-muted-foreground italic text-center">
+                    Grote capaciteit – Wij verzorgen vlot de catering voor grote groepen.
+                  </figcaption>
+                </figure>
               </div>
             </div>
           </div>
@@ -114,15 +119,20 @@ export default function Catering() {
           <div className="container mx-auto px-4">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="relative">
-                <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
-                  <LazyImage
-                    src={cateringBbqSmoky}
-                    alt="Professional BBQ grill full of sausages with smoke"
-                    className="w-full h-full object-cover"
-                    width="600"
-                    height="450"
-                  />
-                </div>
+                <figure>
+                  <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
+                    <LazyImage
+                      src={cateringBbqSmoky}
+                      alt="Full barbecue met worsten en mici voor evenement catering"
+                      className="w-full h-full object-cover"
+                      width="600"
+                      height="450"
+                    />
+                  </div>
+                  <figcaption className="mt-3 text-sm text-muted-foreground italic text-center">
+                    Grote capaciteit – Wij verzorgen vlot de catering voor grote groepen.
+                  </figcaption>
+                </figure>
               </div>
               <div>
                 <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-6">
