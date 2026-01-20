@@ -9,6 +9,7 @@ import LocalizedLink from "@/components/LocalizedLink";
 // Hero & Action images - Night atmosphere shots
 import cateringBbqNight from "@/assets/catering-bbq-night.webp";
 import cateringBbqSmoky from "@/assets/catering-bbq-smoky.webp";
+import cateringMiciGrill from "@/assets/catering-mici-grill.webp";
 import cateringChefServing from "@/assets/catering-chef-serving.webp";
 
 // Freshness & Diversity images
@@ -122,7 +123,7 @@ export default function Catering() {
                 <figure>
                   <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
                     <LazyImage
-                      src={cateringBbqSmoky}
+                      src={cateringMiciGrill}
                       alt="Full barbecue met worsten en mici voor evenement catering"
                       className="w-full h-full object-cover"
                       width="600"
