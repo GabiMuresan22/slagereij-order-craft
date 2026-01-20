@@ -21,7 +21,7 @@ import kidsPlatter from "@/assets/kids-tapas-finger-food.webp";
 import tapasJohn from "@/assets/tapas-john-part-mix.webp";
 
 export default function Catering() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   const breadcrumbSchema = getBreadcrumbSchema([
     { name: t('nav.home'), url: '/' },
@@ -62,7 +62,7 @@ export default function Catering() {
         <section className="bg-gradient-to-br from-primary/5 via-background to-muted/20 py-16 md:py-20">
           <div className="container mx-auto px-4">
             <h1 className="font-serif text-4xl md:text-6xl font-bold text-foreground mb-4 text-center">
-              {t('language') === 'nl' ? 'Traiteur & Feestmenu\'s - Regio Zwevezele & Wingene' : t('catering.title')}
+              {language === 'nl' ? 'Traiteur & Feestmenu\'s - Regio Zwevezele & Wingene' : t('catering.title')}
             </h1>
             <p className="text-xl md:text-2xl text-primary font-semibold text-center max-w-3xl mx-auto">
               {t('catering.subtitle')}
@@ -75,7 +75,7 @@ export default function Catering() {
           <div className="container mx-auto px-4 max-w-4xl">
             <div className="prose prose-lg max-w-none">
               {/* SEO-optimized introductory paragraph for Dutch */}
-              {t('language') === 'nl' && (
+              {language === 'nl' && (
                 <p className="text-lg text-foreground leading-relaxed mb-6 font-medium">
                   Bij Slagerij John zorgen wij ervoor dat uw feesten tot in de puntjes verzorgd zijn. Of u nu een feest organiseert in Zwevezele, Wingene of Lichtervelde, onze traiteur diensten staan garant voor kwaliteit en versheid. Ontdek hieronder onze formules voor koude buffetten en barbecue.
                 </p>
