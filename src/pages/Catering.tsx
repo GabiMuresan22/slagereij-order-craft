@@ -58,16 +58,16 @@ export default function Catering() {
       
       <div className="min-h-screen">
         {/* Hero Section with Fire/Grill Image */}
-        <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
+        <section className="relative h-[70vh] md:h-[80vh] lg:h-[85vh] overflow-hidden">
           <div className="absolute inset-0">
             <LazyImage
               src={cateringBbqNight}
               alt="Professional chef grilling at night with atmospheric smoke and flames"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-center md:object-[center_30%]"
               width="1920"
               height="1080"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
           </div>
           <div className="relative container mx-auto px-4 h-full flex flex-col justify-end pb-12 md:pb-16">
             <h1 className="font-serif text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
