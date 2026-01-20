@@ -34,18 +34,45 @@ export default function Catering() {
     { name: t('nav.catering'), url: '/catering' }
   ]);
 
-  // Gallery images (professional, no kids/raw meat)
+  // Gallery images with SEO-optimized captions and alt text
   const galleryImages = [
-    { src: cateringChefServing, alt: "Chef presenting gourmet catering dishes on serving tray" },
-    { src: cateringPartySpread, alt: "Complete party catering spread with tacos and sides" },
-    { src: cateringGrainBowls, alt: "Gourmet grain bowls with salmon and vegetables" },
-    { src: cateringCharcuterie, alt: "Artisanal charcuterie platter with premium meats" },
-    { src: cateringTacos, alt: "Artfully arranged taco platter with fresh toppings" },
-    { src: cateringBeefSteak, alt: "Premium beef steak with rosemary and peppercorns" },
-    { src: cateringPastaBowls, alt: "Gourmet pasta bowls with fresh vegetables" },
-    { src: cateringPartyPlatter, alt: "Premium party platter with cold cuts and cheese" },
-    { src: cateringCheesePlatter, alt: "Artisanal cheese platter with grapes and walnuts" },
-    { src: cateringTomatoSalad, alt: "Fresh tomato salad with red onions and parsley" },
+    // 1. Waitress photo (Full Service) - cateringChefServing
+    { 
+      src: cateringChefServing, 
+      alt: "Catering and appetizers for receptions in West Flanders",
+      caption: language === 'nl' ? "Carefree service – From appetizers to table service." : "Carefree service – From appetizers to table service."
+    },
+    // 2. Meat on the Fire/Rotisserie (Food Porn) - cateringBeefSteak
+    { 
+      src: cateringBeefSteak, 
+      alt: "Freshly grilled meat and warm delicatessen dishes from Slagerij John",
+      caption: language === 'nl' ? "Artisanal grilled meat – Succulent meat, perfectly prepared over the fire." : "Artisanal grilled meat – Succulent meat, perfectly prepared over the fire."
+    },
+    // 3. Salad Bowls (Freshness) - cateringSalads
+    { 
+      src: cateringSalads, 
+      alt: "Fresh salads and cold vegetables for barbecue buffets and parties",
+      caption: language === 'nl' ? "Colorful & Fresh – A wide range of homemade salads and side dishes." : "Colorful & Fresh – A wide range of homemade salads and side dishes."
+    },
+    // 4. Individual bowls/Tacos (Refinement) - cateringTacos
+    { 
+      src: cateringTacos, 
+      alt: "Luxe aperitifhapjes en buffet traiteur Slagerij John",
+      caption: language === 'nl' ? "Modern buffets – Surprising appetizers and world flavors." : "Modern Buffets – Surprising Appetizers and International Flavors."
+    },
+    // 5. Charcuterie Platter (Classic) - cateringCharcuterie
+    { 
+      src: cateringCharcuterie, 
+      alt: "Koude schotel met charcuterie en kaas regio Wingene Zwevezele",
+      caption: language === 'nl' ? "Klassieke Vleesschotels – De fijnste charcuterie, vers van het mes." : "Classic meat platters – The finest charcuterie, freshly cut."
+    },
+    // Additional gallery images
+    { src: cateringPartySpread, alt: "Complete party catering spread with tacos and sides", caption: "" },
+    { src: cateringGrainBowls, alt: "Gourmet grain bowls with salmon and vegetables", caption: "" },
+    { src: cateringPastaBowls, alt: "Gourmet pasta bowls with fresh vegetables", caption: "" },
+    { src: cateringPartyPlatter, alt: "Premium party platter with cold cuts and cheese", caption: "" },
+    { src: cateringCheesePlatter, alt: "Artisanal cheese platter with grapes and walnuts", caption: "" },
+    { src: cateringTomatoSalad, alt: "Fresh tomato salad with red onions and parsley", caption: "" },
   ];
 
   return (
@@ -63,7 +90,7 @@ export default function Catering() {
           <div className="absolute inset-0">
             <LazyImage
               src={cateringBbqNight}
-              alt="Traiteur chef aan het werk op grote barbecue tijdens avondfeest"
+              alt="Traiteur barbecue op locatie in regio Zwevezele en Wingene door Slagerij John"
               className="w-full h-full object-cover object-center md:object-[center_30%]"
               width="1920"
               height="1080"
@@ -100,14 +127,14 @@ export default function Catering() {
                   <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
                     <LazyImage
                       src={cateringBbqSmoky}
-                      alt="Full barbecue met worsten en mici voor evenement catering"
+                      alt="Traiteur barbecue op locatie in regio Zwevezele en Wingene door Slagerij John"
                       className="w-full h-full object-cover"
                       width="600"
                       height="450"
                     />
                   </div>
                   <figcaption className="mt-3 text-sm text-muted-foreground italic text-center">
-                    Grote capaciteit – Wij verzorgen vlot de catering voor grote groepen.
+                    {language === 'nl' ? "Live cooking op uw feest – Wij bakken, u geniet van uw gasten." : "Live cooking at your party – We cook, you enjoy your guests."}
                   </figcaption>
                 </figure>
               </div>
@@ -124,14 +151,14 @@ export default function Catering() {
                   <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
                     <LazyImage
                       src={cateringMiciGrill}
-                      alt="Full barbecue met worsten en mici voor evenement catering"
+                      alt="Barbecue sausage and meat assortment for parties and events"
                       className="w-full h-full object-cover"
                       width="600"
                       height="450"
                     />
                   </div>
                   <figcaption className="mt-3 text-sm text-muted-foreground italic text-center">
-                    Grote capaciteit – Wij verzorgen vlot de catering voor grote groepen.
+                    {language === 'nl' ? "Voor elk wat wils – Kwaliteitsvlees uit eigen atelier voor grote en kleine groepen." : "Something for everyone – Quality meat from our own workshop for large and small groups."}
                   </figcaption>
                 </figure>
               </div>
@@ -173,7 +200,7 @@ export default function Catering() {
                 <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
                   <LazyImage
                     src={cateringSalads}
-                    alt="Fresh colorful salad bowls with vegetables"
+                    alt="Fresh salads and cold vegetables for barbecue buffets and parties"
                     className="w-full h-full object-cover"
                     width="600"
                     height="450"
@@ -217,16 +244,23 @@ export default function Catering() {
               {galleryImages.map((image, index) => (
                 <div 
                   key={index} 
-                  className="relative overflow-hidden rounded-lg aspect-square group hover:shadow-xl transition-shadow duration-300"
+                  className="flex flex-col"
                 >
-                  <LazyImage
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    width="300"
-                    height="300"
-                    rootMargin="100px"
-                  />
+                  <div className="relative overflow-hidden rounded-lg aspect-square group hover:shadow-xl transition-shadow duration-300 mb-2">
+                    <LazyImage
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      width="300"
+                      height="300"
+                      rootMargin="100px"
+                    />
+                  </div>
+                  {image.caption && (
+                    <p className="text-xs sm:text-sm text-muted-foreground text-center leading-relaxed px-1">
+                      {image.caption}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>
