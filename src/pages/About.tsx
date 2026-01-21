@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Award, Globe, Heart } from "lucide-react";
+import { Award, Globe, Heart, Leaf } from "lucide-react";
+import tooGoodToGoLogo from "@/assets/too-good-to-go-logo.jpg";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema } from "@/lib/structuredData";
@@ -214,6 +215,47 @@ const About = () => {
             <CarouselPrevious className="left-4" />
             <CarouselNext className="right-4" />
           </Carousel>
+        </div>
+
+        {/* Sustainability Section - Too Good To Go */}
+        <div className="max-w-4xl mx-auto mb-16">
+          <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
+            <CardContent className="p-8 md:p-12">
+              <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+                <a 
+                  href="https://www.toogoodtogo.com/nl-be/find/wingene/slagerijjohn/meal/verassingspakket-114243663079363392"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-shrink-0"
+                >
+                  <img 
+                    src={tooGoodToGoLogo} 
+                    alt="Too Good To Go logo" 
+                    className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover shadow-lg hover:scale-105 transition-transform"
+                  />
+                </a>
+                <div className="text-center md:text-left">
+                  <div className="flex items-center justify-center md:justify-start gap-2 mb-3">
+                    <Leaf className="w-6 h-6 text-green-600" />
+                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-green-700 dark:text-green-400">
+                      {t("about.sustainability.title")}
+                    </h3>
+                  </div>
+                  <p className="text-lg text-foreground/90 leading-relaxed mb-4">
+                    {t("about.sustainability.desc")}
+                  </p>
+                  <a 
+                    href="https://www.toogoodtogo.com/nl-be/find/wingene/slagerijjohn/meal/verassingspakket-114243663079363392"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 font-semibold transition-colors"
+                  >
+                    {t("about.sustainability.cta")} →
+                  </a>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Team Section */}

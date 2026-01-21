@@ -73,7 +73,10 @@ const translations = {
     'about.team.role': 'Eigenaars',
     'about.team.desc': 'Ion (John) en Georgiana staan klaar om u te helpen met advies, speciale wensen of simpelweg een praatje. Met hun passie voor kwaliteitsvlees en persoonlijke service delen ze graag hun kennis over de beste bereidingswijzen en recepten. Kom gerust langs en maak kennis!',
     'about.gallery.title': 'Onze Slagerij',
-    
+    'about.sustainability.title': 'Geen kruimel gaat verloren',
+    'about.sustainability.desc': 'Bij Slagerij John dragen we zorg voor onze producten. Daarom werken we samen met Too Good To Go om voedselverspilling tegen te gaan. Download de app en red heerlijke pakketten aan een zacht prijsje.',
+    'about.sustainability.cta': 'Bekijk onze pakketten op Too Good To Go',
+
     // Catering Page
     'catering.title': 'Traiteur',
     'catering.subtitle': 'De Authentieke Barbecue-ervaring, direct op jouw evenement',
@@ -913,7 +916,10 @@ const translations = {
     'about.team.role': 'Proprietari',
     'about.team.desc': 'Ion (John) și Georgiana sunt gata să vă ajute cu sfaturi, cerințe speciale sau pur și simplu o discuție. Cu pasiunea lor pentru carne de calitate și servicii personalizate, împart cu plăcere cunoștințele despre cele mai bune metode de preparare și rețete. Vino să ne cunoști!',
     'about.gallery.title': 'Măcelăria Noastră',
-    
+    'about.sustainability.title': 'Nicio fărâmă nu se pierde',
+    'about.sustainability.desc': 'La Măcelăria John avem grijă de produsele noastre. De aceea, colaborăm cu Too Good To Go pentru a combate risipa alimentară. Descarcă aplicația și salvează pachete delicioase la un preț redus.',
+    'about.sustainability.cta': 'Vezi pachetele noastre pe Too Good To Go',
+
     // Catering Page
     'catering.title': 'Catering',
     'catering.subtitle': 'Experiența Autentică a Grătarului, direct la evenimentul tău',
