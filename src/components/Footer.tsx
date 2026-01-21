@@ -174,7 +174,7 @@ const Footer = () => {
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <span className="text-sm text-muted-foreground group-hover:text-primary transition-colors">
-                  Wij strijden tegen verspilling met Too Good To Go
+                  {t('footer.tooGoodToGo')}
                 </span>
               </a>
             </div>
