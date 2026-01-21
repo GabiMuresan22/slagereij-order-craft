@@ -100,7 +100,7 @@ const Navigation = () => {
       aria-label={t('accessibility.mainNavigation') || 'Main navigation'}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 xl:h-20">
+        <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo - Always visible */}
           <LocalizedLink 
             to="/" 
@@ -111,7 +111,7 @@ const Navigation = () => {
               src={logo} 
               alt="" 
               aria-hidden="true"
-              className="h-10 sm:h-12 xl:h-16 w-auto object-contain"
+              className="h-10 lg:h-12 xl:h-16 w-auto object-contain"
               style={{
                 filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
                 padding: '4px',
@@ -121,8 +121,8 @@ const Navigation = () => {
             />
           </LocalizedLink>
 
-          {/* Desktop Navigation - Hidden below 1280px (xl) to prevent cramped layout */}
-          <div className="hidden xl:flex items-center space-x-6">
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center space-x-2 xl:space-x-6">
             {navItems.map((item) => {
               // Make "Order Online" a primary button
               if (item.path === "/order") {
@@ -144,7 +144,7 @@ const Navigation = () => {
                 <LocalizedLink
                   key={item.path}
                   to={item.path}
-                  className={`text-base font-medium transition-colors hover:text-primary min-h-[48px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 ${
+                  className={`text-sm xl:text-base font-medium transition-colors hover:text-primary min-h-[48px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-1 xl:px-2 whitespace-nowrap ${
                     isActivePath(item.path)
                       ? "text-primary font-semibold"
                       : "text-foreground"
@@ -222,8 +222,8 @@ const Navigation = () => {
             )}
           </div>
 
-          {/* Tablet/Mobile Navigation (below 1280px) - Keep "Bestel Online" visible */}
-          <div className="xl:hidden flex items-center gap-2">
+          {/* Tablet/Mobile Navigation */}
+          <div className="lg:hidden flex items-center gap-2">
             {/* Always show Order button as primary CTA */}
             <Button
               asChild
