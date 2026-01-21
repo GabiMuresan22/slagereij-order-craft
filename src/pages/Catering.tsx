@@ -107,6 +107,17 @@ export default function Catering() {
           </div>
         </section>
 
+        {/* Intro Text Block */}
+        <section className="py-10 md:py-14">
+          <div className="container mx-auto px-4">
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-4xl mx-auto text-center">
+              {language === 'nl' 
+                ? 'Bij Slagerij John verzorgen wij uw feesten tot in de puntjes. Of u nu een feest organiseert in Zwevezele, Wingene of Lichtervelde, onze traiteur diensten staan garant voor kwaliteit en versheid. Ontdek hieronder onze formules voor koude buffetten en barbecue.'
+                : 'At Slagerij John, we take care of your parties down to the last detail. Whether you\'re organizing an event in Zwevezele, Wingene or Lichtervelde, our catering services guarantee quality and freshness. Discover our cold buffet and barbecue options below.'}
+            </p>
+          </div>
+        </section>
+
         {/* Trust Section - Action Photos */}
         <section className="py-12 md:py-16 bg-muted/30">
           <div className="container mx-auto px-4">
