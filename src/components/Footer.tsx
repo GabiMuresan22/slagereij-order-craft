@@ -162,8 +162,8 @@ const Footer = () => {
             {/* Too Good To Go */}
             <div className="mt-6">
               <a 
-                href="https://www.toogoodtogo.com" 
-                target="_blank" 
+                href="https://www.toogoodtogo.com/nl-be/find/wingene/slagerijjohn/meal/verassingspakket-114243663079363392" 
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md"
                 aria-label="Too Good To Go - Opens in new tab"
