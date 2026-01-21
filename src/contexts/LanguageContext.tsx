@@ -286,6 +286,7 @@ const translations = {
     'footer.status.open': 'Nu Open',
     'footer.status.closed': 'Gesloten',
     'footer.allergens': 'Allergeneninfo',
+    'footer.tooGoodToGo': 'Wij strijden tegen verspilling met Too Good To Go',
     
     // Allergens Page
     'allergens.title': 'Allergenen & Voedselinformatie',
@@ -1125,6 +1126,7 @@ const translations = {
     'footer.status.open': 'Deschis Acum',
     'footer.status.closed': 'Închis',
     'footer.allergens': 'Informații Alergeni',
+    'footer.tooGoodToGo': 'Luptăm împotriva risipei alimentare cu Too Good To Go',
     
     // Allergens Page
     'allergens.title': 'Informații Alergeni',
