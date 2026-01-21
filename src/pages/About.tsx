@@ -226,12 +226,16 @@ const About = () => {
                   href="https://www.toogoodtogo.com/nl-be/find/wingene/slagerijjohn/meal/verassingspakket-114243663079363392"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-shrink-0"
+                  className="flex-shrink-0 cursor-pointer z-10"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open("https://www.toogoodtogo.com/nl-be/find/wingene/slagerijjohn/meal/verassingspakket-114243663079363392", "_blank", "noopener,noreferrer");
+                  }}
                 >
                   <img 
                     src={tooGoodToGoLogo} 
                     alt="Too Good To Go logo" 
-                    className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover shadow-lg hover:scale-105 transition-transform"
+                    className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover shadow-lg hover:scale-105 transition-transform cursor-pointer"
                   />
                 </a>
                 <div className="text-center md:text-left">
@@ -248,7 +252,11 @@ const About = () => {
                     href="https://www.toogoodtogo.com/nl-be/find/wingene/slagerijjohn/meal/verassingspakket-114243663079363392"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 font-semibold transition-colors"
+                    className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 font-semibold transition-colors cursor-pointer z-10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open("https://www.toogoodtogo.com/nl-be/find/wingene/slagerijjohn/meal/verassingspakket-114243663079363392", "_blank", "noopener,noreferrer");
+                    }}
                   >
                     {t("about.sustainability.cta")} →
                   </a>
