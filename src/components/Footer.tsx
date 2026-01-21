@@ -2,6 +2,7 @@ import { MapPin, Phone, Clock, Facebook, Clapperboard, MapPinned } from "lucide-
 import { useLanguage } from "@/contexts/LanguageContext";
 import LocalizedLink from "@/components/LocalizedLink";
 import logo from "@/assets/logo.svg";
+import tooGoodToGoLogo from "@/assets/too-good-to-go-logo.jpg";
 import { useBusinessHours } from "@/hooks/useBusinessHours";
 
 const Footer = () => {
@@ -156,6 +157,26 @@ const Footer = () => {
                   <MapPinned className="w-5 h-5" aria-hidden="true" />
                 </a>
               </div>
+            </div>
+            
+            {/* Too Good To Go */}
+            <div className="mt-6">
+              <a 
+                href="https://www.toogoodtogo.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md"
+                aria-label="Too Good To Go - Opens in new tab"
+              >
+                <img 
+                  src={tooGoodToGoLogo} 
+                  alt="Too Good To Go logo" 
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <span className="text-sm text-muted-foreground group-hover:text-primary transition-colors">
+                  Wij strijden tegen verspilling met Too Good To Go
+                </span>
+              </a>
             </div>
           </div>
         </div>
