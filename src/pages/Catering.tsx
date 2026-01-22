@@ -99,11 +99,29 @@ export default function Catering() {
           </div>
           <div className="relative container mx-auto px-4 h-full flex flex-col justify-end pb-12 md:pb-16">
             <h1 className="font-serif text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
-              {language === 'nl' ? 'Traiteur & Feestmenu\'s' : t('catering.title')}
+              {language === 'nl' 
+                ? 'Ambachtelijke slagerij & traiteur in Zwevezele.' 
+                : 'Gustul de acasă, aici în Belgia.'}
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 font-medium max-w-2xl drop-shadow-md">
-              {language === 'nl' ? 'Sfeervolle avondcatering – Onze chef zorgt voor spektakel op uw feest.' : t('catering.subtitle')}
+            <p className="text-xl md:text-2xl text-white/90 font-medium max-w-2xl drop-shadow-md mb-8">
+              {language === 'nl' 
+                ? 'Dagvers vlees, huisbereide gerechten en feestelijke schotels. Bestel online en haal af wanneer het u past.' 
+                : 'Mici, cârnați proaspeți și preparate tradiționale românești, realizate cu carne de cea mai bună calitate.'}
             </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <LocalizedLink to="/order">
+                <Button size="lg" className="text-lg px-8 bg-primary hover:bg-primary/90">
+                  {language === 'nl' ? 'Bekijk onze webshop' : 'Vezi produsele românești'}
+                </Button>
+              </LocalizedLink>
+              {language === 'nl' && (
+                <LocalizedLink to="/catering">
+                  <Button size="lg" variant="outline" className="text-lg px-8 border-white text-white hover:bg-white/10">
+                    Onze promoties
+                  </Button>
+                </LocalizedLink>
+              )}
+            </div>
           </div>
         </section>
 
