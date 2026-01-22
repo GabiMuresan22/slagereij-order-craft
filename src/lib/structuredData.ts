@@ -2,12 +2,13 @@
 
 export const getLocalBusinessSchema = () => ({
   "@context": "https://schema.org",
-  "@type": "Butcher",
+  "@type": "ButcherShop",
   "name": "Slagerij John",
+  "@id": "https://slagerij-john.be",
   "image": "https://slagerij-john.be/og-image.jpg",
   "url": "https://slagerij-john.be",
   "telephone": "+32466186457",
-  "email": "info@slagerij-john.be",
+  "email": "contact@slagerij-john.be",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Bruggestraat 146A",

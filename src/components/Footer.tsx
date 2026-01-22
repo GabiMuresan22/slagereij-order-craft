@@ -182,6 +182,11 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-border mt-12 pt-10">
+          {/* Local SEO Text */}
+          <p className="text-xs text-muted-foreground/70 text-center mb-6">
+            {t('footer.localSeo')}
+          </p>
+          
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-muted-foreground">
             <div className="flex flex-col items-center md:items-start gap-2">
               <p>&copy; {new Date().getFullYear()} {t('footer.about.title')}. {t('footer.rights')}</p>
@@ -216,6 +221,9 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      
+      {/* Spacer for mobile sticky CTA */}
+      <div className="h-[60px] lg:hidden" aria-hidden="true" />
     </footer>
   );
 };

@@ -15,23 +15,40 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 const translations = {
   nl: {
-    // Navigation
+    // Navigation - Simplified menu
     'nav.home': 'Home',
     'nav.about': 'Over Ons',
     'nav.products': 'Producten',
     'nav.catering': 'Traiteur',
+    'nav.cateringFolder': 'Catering & Folder',
     'nav.packages': 'Colli\'s Menu',
     'nav.order': 'Bestel Online',
+    'nav.webshop': 'Webshop',
     'nav.contact': 'Contact',
     'nav.myAccount': 'Mijn Account',
     'nav.admin': 'Admin',
     
-    // Home Page
+    // Home Page - Updated for new structure
     'home.alert.title': '📅 Kerst- en Nieuwjaar Openingstijden',
     'home.alert.description': '22-24 dec: 08:00 – 18:00\n25 dec: 08:00 – 10:00 (Enkel afhalen)\n26-27 dec: 08:00 – 13:00\n28 dec: Gesloten\n29-31 dec: 08:00 – 18:00\n1 jan: 08:00 – 10:00 (Enkel afhalen)\n2-4 jan: 08:00 – 13:00\n5 jan: 13:00 – 18:00 (Normaal uurrooster)',
-    'home.hero.title': 'Uw Kwaliteitsslager in Zwevezele',
-    'home.hero.subtitle': 'Traditioneel ambacht\nmet moderne service',
+    'home.hero.title': 'Ambachtelijke slagerij & traiteur in Zwevezele',
+    'home.hero.subtitle': 'Dagvers vlees, huisbereide gerechten en feestelijke schotels. Bestel online en haal af wanneer het u past.',
     'home.hero.cta': 'Bestel Nu Online',
+    'home.hero.ctaPrimary': 'Naar de Webshop',
+    'home.hero.ctaSecondary': 'Bekijk Folder',
+    
+    // Trust Bar
+    'home.trust.local.title': 'Lokaal & Vers',
+    'home.trust.local.desc': 'Vlees van vertrouwde leveranciers',
+    'home.trust.homemade.title': 'Huisbereid',
+    'home.trust.homemade.desc': 'Dagelijks vers gemaakt',
+    'home.trust.clickCollect.title': 'Click & Collect',
+    'home.trust.clickCollect.desc': 'Bestel online, haal op',
+    
+    // Category Grid
+    'home.categories.title': 'Ontdek Ons Aanbod',
+    
+    // Features (legacy)
     'home.features.online.title': 'Online Bestellen',
     'home.features.online.desc': 'Bestel gemakkelijk online en haal op wanneer het u uitkomt',
     'home.features.quality.title': 'Premium Kwaliteit',
@@ -290,6 +307,11 @@ const translations = {
     'footer.status.closed': 'Gesloten',
     'footer.allergens': 'Allergeneninfo',
     'footer.tooGoodToGo': 'Wij strijden tegen verspilling met Too Good To Go',
+    'footer.localSeo': 'Uw slagerij voor de regio: Zwevezele, Wingene, Lichtervelde, Ruddervoorde, Tielt & Roeselare.',
+    
+    // Order - Privacy Consent
+    'order.privacyConsent': 'Ik ga akkoord met de privacyverklaring',
+    'order.privacyConsent.error': 'U moet akkoord gaan met de privacyverklaring om te bestellen',
     
     // Allergens Page
     'allergens.title': 'Allergenen & Voedselinformatie',
@@ -858,23 +880,40 @@ const translations = {
     'admin.print.notes': 'Notities',
   },
   ro: {
-    // Navigation
+    // Navigation - Simplified menu
     'nav.home': 'Acasă',
     'nav.about': 'Despre Noi',
     'nav.products': 'Produse',
     'nav.catering': 'Catering',
+    'nav.cateringFolder': 'Catering & Folder',
     'nav.packages': 'Meniu Colli',
     'nav.order': 'Comandă Online',
+    'nav.webshop': 'Magazin',
     'nav.contact': 'Contact',
     'nav.myAccount': 'Contul Meu',
     'nav.admin': 'Admin',
     
-    // Home Page
+    // Home Page - Updated for new structure
     'home.alert.title': '📅 Program Crăciun și Anul Nou',
     'home.alert.description': '22-24 Dec: 08:00 – 18:00\n25 Dec: 08:00 – 10:00 (Doar ridicare)\n26-27 Dec: 08:00 – 13:00\n28 Dec: Închis\n29-31 Dec: 08:00 – 18:00\n1 Ian: 08:00 – 10:00 (Doar ridicare)\n2-4 Ian: 08:00 – 13:00\n5 Ian: 13:00 – 18:00 (Program normal)',
-    'home.hero.title': 'Măcelarul Dvs. de Calitate în Zwevezele',
-    'home.hero.subtitle': 'Meșteșug tradițional\ncu servicii moderne',
+    'home.hero.title': 'Măcelărie & Traiteur Artizanală în Zwevezele',
+    'home.hero.subtitle': 'Carne proaspătă, preparate de casă și platouri festive. Comandă online și ridică când îți convine.',
     'home.hero.cta': 'Comandă Acum Online',
+    'home.hero.ctaPrimary': 'Către Magazin',
+    'home.hero.ctaSecondary': 'Vezi Folder',
+    
+    // Trust Bar
+    'home.trust.local.title': 'Local & Proaspăt',
+    'home.trust.local.desc': 'Carne de la furnizori de încredere',
+    'home.trust.homemade.title': 'Făcut în Casă',
+    'home.trust.homemade.desc': 'Pregătit zilnic proaspăt',
+    'home.trust.clickCollect.title': 'Click & Collect',
+    'home.trust.clickCollect.desc': 'Comandă online, ridici la magazin',
+    
+    // Category Grid
+    'home.categories.title': 'Descoperă Produsele Noastre',
+    
+    // Features (legacy)
     'home.features.online.title': 'Comandă Online',
     'home.features.online.desc': 'Comandă ușor online și ridică când îți convine',
     'home.features.quality.title': 'Calitate Premium',
@@ -1133,6 +1172,11 @@ const translations = {
     'footer.status.closed': 'Închis',
     'footer.allergens': 'Informații Alergeni',
     'footer.tooGoodToGo': 'Luptăm împotriva risipei alimentare cu Too Good To Go',
+    'footer.localSeo': 'Măcelăria dumneavoastră pentru regiunea: Zwevezele, Wingene, Lichtervelde, Ruddervoorde, Tielt & Roeselare.',
+    
+    // Order - Privacy Consent
+    'order.privacyConsent': 'Sunt de acord cu politica de confidențialitate',
+    'order.privacyConsent.error': 'Trebuie să fiți de acord cu politica de confidențialitate pentru a comanda',
     
     // Allergens Page
     'allergens.title': 'Informații Alergeni',
@@ -1702,13 +1746,56 @@ const translations = {
   },
 };
 
+// Cookie helper functions for language preference
+const LANGUAGE_COOKIE_NAME = 'slagerij_john_lang';
+const COOKIE_MAX_AGE = 365 * 24 * 60 * 60; // 1 year in seconds
+
+const getLanguageCookie = (): Language | null => {
+  const match = document.cookie.match(new RegExp(`(^| )${LANGUAGE_COOKIE_NAME}=([^;]+)`));
+  if (match && (match[2] === 'nl' || match[2] === 'ro')) {
+    return match[2] as Language;
+  }
+  return null;
+};
+
+const setLanguageCookie = (lang: Language) => {
+  document.cookie = `${LANGUAGE_COOKIE_NAME}=${lang}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax`;
+};
+
+// Check browser language preference
+const getBrowserLanguage = (): Language => {
+  const browserLang = navigator.language.toLowerCase();
+  if (browserLang.startsWith('ro')) {
+    return 'ro';
+  }
+  return 'nl'; // Default to Dutch for all other languages
+};
+
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   
   // Parse language from URL
   const { lang: urlLang, path: currentPath } = parseLocalizedPath(location.pathname);
-  const [language, setLanguageState] = useState<Language>(urlLang);
+  
+  // Determine initial language: URL > Cookie > Browser preference > Default (NL)
+  const getInitialLanguage = (): Language => {
+    // If URL has explicit language prefix (/ro/...), use that
+    if (location.pathname.startsWith('/ro')) {
+      return 'ro';
+    }
+    
+    // Check for saved cookie preference
+    const savedLang = getLanguageCookie();
+    if (savedLang) {
+      return savedLang;
+    }
+    
+    // Check browser language (only Romanian gets RO, everything else gets NL)
+    return getBrowserLanguage();
+  };
+  
+  const [language, setLanguageState] = useState<Language>(getInitialLanguage);
 
   // Sync language state with URL when location changes
   useEffect(() => {
@@ -1727,6 +1814,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (lang === language) return;
     
     setLanguageState(lang);
+    setLanguageCookie(lang); // Save preference to cookie
     trackLanguageChange(lang);
     
     // Navigate to the same path but with the new language prefix
