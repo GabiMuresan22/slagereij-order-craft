@@ -70,7 +70,7 @@ const Navigation = () => {
   const navItems = [
     { path: "/", label: t('nav.home'), icon: iconMap["/"] },
     { path: "/order", label: t('nav.webshop'), icon: iconMap["/order"] },
-    { path: "/catering", label: t('nav.cateringFolder'), icon: iconMap["/catering"] },
+    { path: "/catering", label: t('nav.catering'), icon: iconMap["/catering"] },
     { path: "/about", label: t('nav.about'), icon: iconMap["/about"] },
     { path: "/contact", label: t('nav.contact'), icon: iconMap["/contact"] },
   ];
