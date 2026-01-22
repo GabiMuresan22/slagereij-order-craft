@@ -75,12 +75,25 @@ export default function Catering() {
     { src: cateringTomatoSalad, alt: "Fresh tomato salad with red onions and parsley", caption: "" },
   ];
 
+  // SEO meta tags optimized for Belgian market
+  const seoTitle = language === 'nl'
+    ? 'Traiteur & Catering Zwevezele | BBQ, Buffetten & Feesten'
+    : 'Catering & Evenimente | BBQ, Bufete & Preparate Românești';
+  
+  const seoDescription = language === 'nl'
+    ? 'Traiteur nodig in Zwevezele, Wingene of Lichtervelde? Slagerij John verzorgt uw feest met koude schotels, warme buffetten en live BBQ. Vraag een offerte aan!'
+    : 'Cauți catering pentru evenimente? Slagerij John oferă bufete reci, preparate calde și grătar live. Mici, cârnați și specialități tradiționale pentru sărbătorile tale.';
+
+  const seoKeywords = language === 'nl'
+    ? 'traiteur Zwevezele, catering Wingene, buffetten Lichtervelde, koude schotels, warme buffetten, BBQ catering, feesten, party service, slagerij traiteur'
+    : 'catering evenimente, bufet rece, preparate românești, grătar, mici, cârnați, catering Belgia';
+
   return (
     <>
       <SEO
-        title="Caterer Slagerij John | Buffetten in Zwevezele & Wingene"
-        description="Op zoek naar een caterer in Zwevezele of Wingene? Slagerij John verzorgt uw feesten met koude schotels, warme buffetten en barbecue. Bekijk onze folder!"
-        keywords="caterer, traiteur, catering, buffetten, feesten, Zwevezele, Wingene, Lichtervelde, koude schotels, warme buffetten, barbecue, party service"
+        title={seoTitle}
+        description={seoDescription}
+        keywords={seoKeywords}
         structuredData={breadcrumbSchema}
       />
       
