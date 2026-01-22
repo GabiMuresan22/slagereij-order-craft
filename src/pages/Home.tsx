@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { MapPin, ChefHat, Clock, PartyPopper, Heart, FileText, MessageSquare } from "lucide-react";
+import { motion } from "framer-motion";
 import heroImageDesktop from "@/assets/hero-steak.webp";
 import heroImageMobile from "@/assets/hero-steak-mobile.webp";
 import Testimonials from "@/components/Testimonials";
@@ -183,38 +184,62 @@ const Home = () => {
       {/* C. VISUAL CATEGORY GRID - Product Navigation */}
       <section className="py-12 md:py-16 bg-background" aria-labelledby="categories-heading">
         <div className="container mx-auto px-4">
-          <h2 id="categories-heading" className="text-3xl md:text-4xl font-serif font-bold text-center mb-8 md:mb-12">
+          <motion.h2 
+            id="categories-heading" 
+            className="text-3xl md:text-4xl font-serif font-bold text-center mb-8 md:mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
             {t("home.categories.title")}
-          </h2>
+          </motion.h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((category, index) => (
-              <LocalizedLink
+              <motion.div
                 key={index}
-                to={category.link}
-                className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 aspect-[4/5]"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <img
-                  src={category.image}
-                  alt={category.alt}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                <div className="absolute inset-0 flex flex-col items-center justify-end p-6 text-center">
-                  <h3 
-                    className="text-white text-xl md:text-2xl font-serif font-bold mb-2" 
-                    style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
+                <LocalizedLink
+                  to={category.link}
+                  className="group relative overflow-hidden rounded-xl shadow-lg block aspect-[4/5] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                >
+                  <motion.div
+                    className="absolute inset-0"
+                    whileHover={{ scale: 1.08 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
                   >
-                    {category.title}
-                  </h3>
-                  <p 
-                    className="text-white/90 text-sm md:text-base" 
-                    style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}
+                    <img
+                      src={category.image}
+                      alt={category.alt}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </motion.div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent transition-opacity duration-300 group-hover:from-black/90" />
+                  <motion.div 
+                    className="absolute inset-0 flex flex-col items-center justify-end p-6 text-center"
+                    whileHover={{ y: -5 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    {category.description}
-                  </p>
-                </div>
-              </LocalizedLink>
+                    <h3 
+                      className="text-white text-xl md:text-2xl font-serif font-bold mb-2" 
+                      style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
+                    >
+                      {category.title}
+                    </h3>
+                    <p 
+                      className="text-white/90 text-sm md:text-base opacity-90 group-hover:opacity-100 transition-opacity" 
+                      style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}
+                    >
+                      {category.description}
+                    </p>
+                  </motion.div>
+                </LocalizedLink>
+              </motion.div>
             ))}
           </div>
         </div>
