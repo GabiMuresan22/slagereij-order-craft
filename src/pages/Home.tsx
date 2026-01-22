@@ -350,11 +350,11 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
+              <div className="rounded-xl overflow-hidden shadow-xl">
                 <img
                   src={teamPortrait}
                   alt={language === 'nl' ? 'Het team van Slagerij John' : 'Echipa Măcelăriei John'}
-                  className="w-full h-full object-cover"
+                  className="w-full h-auto"
                   loading="lazy"
                 />
               </div>

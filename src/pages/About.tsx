@@ -158,11 +158,11 @@ const About = () => {
               </LocalizedLink>
             </div>
             
-            <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl order-first md:order-last">
+            <div className="rounded-xl overflow-hidden shadow-xl order-first md:order-last">
               <img 
                 src={teamPortrait} 
                 alt="John en Georgiana in de slagerij"
-                className="w-full h-full object-cover"
+                className="w-full h-auto"
                 loading="lazy"
                 width="800"
                 height="600"
