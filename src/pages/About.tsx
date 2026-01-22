@@ -19,11 +19,15 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background pb-[60px] lg:pb-0">
       <SEO
-        title={language === 'nl' ? "Over Ons - Slagerij John Zwevezele" : "Despre Noi - Măcelăria John Zwevezele"}
+        title={language === 'nl' 
+          ? "Over Ons | Familieslagerij met Belgische & Roemeense Specialiteiten" 
+          : "Despre Noi | Măcelărie Artizanală cu Specialități Românești"}
         description={language === 'nl' 
-          ? "Ontdek het verhaal achter Slagerij John. Een unieke mix van Belgische en Roemeense specialiteiten, gedreven door passie voor kwaliteitsvlees en persoonlijke service in Zwevezele."
-          : "Descoperă povestea Măcelăriei John. O combinație unică de specialități belgiene și românești, condusă de pasiunea pentru carne de calitate."}
-        keywords="over ons, slagerij geschiedenis, Belgisch-Roemeens, kwaliteit vlees, ambachtelijk, Zwevezele"
+          ? "Maak kennis met Ion (John) en Georgiana, uw ambachtelijke slagers in Zwevezele. Belgische kwaliteit gecombineerd met Roemeense tradities. Mici, stoofvlees en meer!"
+          : "Cunoașteți-i pe Ion (John) și Georgiana, măcelarii voștri artizanali din Zwevezele. Calitate belgiană combinată cu tradiții românești. Mici, cârnați și multe altele!"}
+        keywords={language === 'nl'
+          ? "over ons, slagerij Zwevezele, familieslagerij, ambachtelijk vlees, Roemeense specialiteiten, Mici, Ion John, kwaliteitsslager"
+          : "despre noi, măcelărie Zwevezele, măcelărie de familie, carne artizanală, specialități românești, Mici, Ion John"}
         structuredData={breadcrumbData}
       />
 
