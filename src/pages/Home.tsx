@@ -141,7 +141,7 @@ const Home = () => {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-white/10 backdrop-blur-sm text-white border-2 border-white hover:bg-white hover:text-foreground hover:shadow-xl transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full sm:w-auto uppercase tracking-wide"
+                    className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-white/20 backdrop-blur-sm text-white border-2 border-white hover:bg-white/30 hover:border-white hover:text-white hover:shadow-xl transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full sm:w-auto uppercase tracking-wide"
                   >
                     BEKIJK FOLDER
                   </Button>
