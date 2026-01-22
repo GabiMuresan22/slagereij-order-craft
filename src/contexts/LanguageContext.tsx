@@ -31,11 +31,11 @@ const translations = {
     // Home Page - Updated for new structure
     'home.alert.title': '📅 Kerst- en Nieuwjaar Openingstijden',
     'home.alert.description': '22-24 dec: 08:00 – 18:00\n25 dec: 08:00 – 10:00 (Enkel afhalen)\n26-27 dec: 08:00 – 13:00\n28 dec: Gesloten\n29-31 dec: 08:00 – 18:00\n1 jan: 08:00 – 10:00 (Enkel afhalen)\n2-4 jan: 08:00 – 13:00\n5 jan: 13:00 – 18:00 (Normaal uurrooster)',
-    'home.hero.title': 'Ambachtelijke kwaliteit, vers op uw tafel.',
-    'home.hero.subtitle': 'Uw slagerij in Zwevezele voor dagvers vlees, fijne vleeswaren en verzorgde catering. Bestel eenvoudig online.',
+    'home.hero.title': 'Ambachtelijke slagerij & traiteur in Zwevezele',
+    'home.hero.subtitle': 'Dagvers vlees, huisbereide gerechten en feestelijke schotels. Bestel online en haal af wanneer het u past.',
     'home.hero.cta': 'Bestel Nu Online',
-    'home.hero.ctaPrimary': 'Bekijk onze webshop',
-    'home.hero.ctaSecondary': 'Onze promoties',
+    'home.hero.ctaPrimary': 'NAAR DE WEBSHOP',
+    'home.hero.ctaSecondary': 'BEKIJK FOLDER',
     
     // Introduction Section - Trust & Quality
     'home.intro.text': 'Bij Slagerij John combineren we traditioneel vakmanschap met modern gemak. Of u nu op zoek bent naar het perfecte stukje vlees voor uw zondagse biefstuk, of een uitgebreide gourmetschotel voor een feestje: kwaliteit staat bij ons altijd voorop. Wij selecteren ons vlees met zorg, zodat u zorgeloos kunt genieten.',
@@ -60,11 +60,11 @@ const translations = {
     
     // Value Proposition Section (Why Us)
     'home.whyUs.title': 'Waarom kiezen voor Slagerij John?',
-    'home.whyUs.local.title': 'Lokale Kwaliteit',
+    'home.whyUs.local.title': 'Lokaal & Vers',
     'home.whyUs.local.desc': 'Wij werken uitsluitend samen met lokale boeren. Eerlijk vlees met een volle smaak.',
     'home.whyUs.homemade.title': 'Huisbereid',
     'home.whyUs.homemade.desc': 'Van onze preparé tot de goulash: alles wordt in eigen atelier bereid.',
-    'home.whyUs.convenience.title': 'Gemak',
+    'home.whyUs.convenience.title': 'Click & Collect',
     'home.whyUs.convenience.desc': 'Geen wachtrijen. Bestel via de webshop en uw pakket staat klaar.',
     
     // Trust Bar (legacy - keep for compatibility)
