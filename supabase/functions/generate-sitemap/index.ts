@@ -23,6 +23,7 @@ const routes: RouteConfig[] = [
   { path: "products", changefreq: "weekly", priority: 0.9, roPriorityModifier: -0.1 },
   { path: "packages", changefreq: "weekly", priority: 0.8, roPriorityModifier: -0.1 },
   { path: "catering", changefreq: "monthly", priority: 0.8, roPriorityModifier: -0.1 },
+  { path: "traiteur-catering", changefreq: "monthly", priority: 0.85, roPriorityModifier: -0.1 },
   { path: "order", changefreq: "weekly", priority: 0.9, roPriorityModifier: -0.1 },
   { path: "contact", changefreq: "monthly", priority: 0.7, roPriorityModifier: -0.1 },
   { path: "privacy", changefreq: "yearly", priority: 0.3, roPriorityModifier: -0.1 },
