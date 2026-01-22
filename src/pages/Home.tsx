@@ -118,22 +118,34 @@ const Home = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <LocalizedLink to="/order">
-              <Button
-                size="lg"
-                className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-bold bg-primary text-primary-foreground hover:bg-primary/90 transition-all min-h-[48px] shadow-lg border-2 border-primary-foreground/20 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full sm:w-auto uppercase tracking-wide"
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                {language === 'nl' ? 'NAAR DE WEBSHOP' : 'VEZI PRODUSELE'}
-              </Button>
+                <Button
+                  size="lg"
+                  className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-bold bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-xl transition-all min-h-[48px] shadow-lg border-2 border-primary-foreground/20 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full sm:w-auto uppercase tracking-wide"
+                >
+                  {language === 'nl' ? 'NAAR DE WEBSHOP' : 'VEZI PRODUSELE'}
+                </Button>
+              </motion.div>
             </LocalizedLink>
             {language === 'nl' && (
               <LocalizedLink to="/traiteur-catering">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-transparent text-white border-2 border-white hover:bg-white hover:text-foreground transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full sm:w-auto uppercase tracking-wide"
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  BEKIJK FOLDER
-                </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-white/10 backdrop-blur-sm text-white border-2 border-white hover:bg-white hover:text-foreground hover:shadow-xl transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full sm:w-auto uppercase tracking-wide"
+                  >
+                    BEKIJK FOLDER
+                  </Button>
+                </motion.div>
               </LocalizedLink>
             )}
           </div>
@@ -146,37 +158,67 @@ const Home = () => {
           <h2 id="trust-bar-heading" className="sr-only">Waarom Slagerij John</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {/* Lokaal & Vers */}
-            <div className="flex items-center gap-4 p-4 md:justify-center">
-              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+            <motion.div 
+              className="flex items-center gap-4 p-4 md:justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0 }}
+            >
+              <motion.div 
+                className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"
+                whileHover={{ scale: 1.1, backgroundColor: "hsl(var(--primary) / 0.2)" }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
                 <MapPin className="w-7 h-7 text-primary" aria-hidden="true" />
-              </div>
+              </motion.div>
               <div>
                 <h3 className="font-serif font-semibold text-lg">{t("home.whyUs.local.title")}</h3>
                 <p className="text-sm text-muted-foreground">{language === 'nl' ? 'Vlees van lokale boeren' : 'Carne de la fermieri locali'}</p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Huisbereid */}
-            <div className="flex items-center gap-4 p-4 md:justify-center">
-              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+            <motion.div 
+              className="flex items-center gap-4 p-4 md:justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <motion.div 
+                className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"
+                whileHover={{ scale: 1.1, backgroundColor: "hsl(var(--primary) / 0.2)" }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
                 <ChefHat className="w-7 h-7 text-primary" aria-hidden="true" />
-              </div>
+              </motion.div>
               <div>
                 <h3 className="font-serif font-semibold text-lg">{t("home.whyUs.homemade.title")}</h3>
                 <p className="text-sm text-muted-foreground">{language === 'nl' ? 'Dagelijks vers bereid' : 'Preparat proaspăt zilnic'}</p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Click & Collect */}
-            <div className="flex items-center gap-4 p-4 md:justify-center">
-              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+            <motion.div 
+              className="flex items-center gap-4 p-4 md:justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <motion.div 
+                className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"
+                whileHover={{ scale: 1.1, backgroundColor: "hsl(var(--primary) / 0.2)" }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
                 <Clock className="w-7 h-7 text-primary" aria-hidden="true" />
-              </div>
+              </motion.div>
               <div>
                 <h3 className="font-serif font-semibold text-lg">{t("home.whyUs.convenience.title")}</h3>
                 <p className="text-sm text-muted-foreground">{language === 'nl' ? 'Bestel online, haal op' : 'Comandă online, ridică'}</p>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -262,16 +304,28 @@ const Home = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <LocalizedLink to="/traiteur-catering">
-                  <Button size="lg" className="w-full sm:w-auto">
-                    <FileText className="mr-2 h-5 w-5" />
-                    {t("home.catering.ctaFolder")}
-                  </Button>
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    <Button size="lg" className="w-full sm:w-auto hover:shadow-lg transition-shadow">
+                      <FileText className="mr-2 h-5 w-5" />
+                      {t("home.catering.ctaFolder")}
+                    </Button>
+                  </motion.div>
                 </LocalizedLink>
                 <LocalizedLink to="/contact">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                    <MessageSquare className="mr-2 h-5 w-5" />
-                    {t("home.catering.ctaQuote")}
-                  </Button>
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    <Button size="lg" variant="outline" className="w-full sm:w-auto hover:shadow-lg transition-shadow">
+                      <MessageSquare className="mr-2 h-5 w-5" />
+                      {t("home.catering.ctaQuote")}
+                    </Button>
+                  </motion.div>
                 </LocalizedLink>
               </div>
             </div>
@@ -326,9 +380,15 @@ const Home = () => {
                 {t("home.about.p2")}
               </p>
               <LocalizedLink to="/about">
-                <Button size="lg" variant="outline">
-                  {t("home.about.cta")}
-                </Button>
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  <Button size="lg" variant="outline" className="hover:shadow-lg transition-shadow">
+                    {t("home.about.cta")}
+                  </Button>
+                </motion.div>
               </LocalizedLink>
             </div>
           </div>
@@ -342,22 +402,34 @@ const Home = () => {
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">{t("home.cta.subtitle")}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <LocalizedLink to="/order">
-              <Button 
-                size="lg" 
-                variant="secondary" 
-                className="text-lg px-10 font-semibold min-h-[48px] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                {t("home.cta.button")}
-              </Button>
+                <Button 
+                  size="lg" 
+                  variant="secondary" 
+                  className="text-lg px-10 font-semibold min-h-[48px] hover:shadow-xl transition-shadow focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                >
+                  {t("home.cta.button")}
+                </Button>
+              </motion.div>
             </LocalizedLink>
             <LocalizedLink to="/contact">
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="text-lg px-10 font-semibold min-h-[48px] border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                {t("nav.contact")}
-              </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  className="text-lg px-10 font-semibold min-h-[48px] border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary hover:shadow-xl transition-shadow focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                >
+                  {t("nav.contact")}
+                </Button>
+              </motion.div>
             </LocalizedLink>
           </div>
         </div>
