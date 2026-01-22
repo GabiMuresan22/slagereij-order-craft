@@ -281,7 +281,7 @@ const Home = () => {
                 {t("home.catering.body")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <LocalizedLink to="/catering">
+                <LocalizedLink to="/traiteur-catering">
                   <Button size="lg" className="w-full sm:w-auto">
                     <FileText className="mr-2 h-5 w-5" />
                     {t("home.catering.ctaFolder")}
