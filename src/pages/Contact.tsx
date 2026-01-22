@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Skeleton } from "@/components/ui/skeleton";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
@@ -42,6 +43,7 @@ type ContactFormValues = z.infer<ReturnType<typeof createContactFormSchema>>;
 const Contact = () => {
   const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState(false);
   
   const contactFormSchema = createContactFormSchema(t);
 
@@ -305,6 +307,17 @@ const Contact = () => {
         {/* Full-width Map with Dark Mode */}
         <Card className="border-border overflow-hidden max-w-6xl mx-auto mb-12">
           <CardContent className="p-0 h-[500px] relative">
+            {/* Map Skeleton */}
+            {!mapLoaded && (
+              <div className="absolute inset-0 z-10">
+                <Skeleton className="w-full h-full" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+                  <MapPin className="w-12 h-12 text-muted-foreground/50 animate-pulse" />
+                  <Skeleton className="h-4 w-48" />
+                  <Skeleton className="h-4 w-32" />
+                </div>
+              </div>
+            )}
             <iframe
               src="https://www.google.be/maps?q=Bruggestraat+146A,+8750+Zwevezele,+Belgium&output=embed"
               width="100%"
@@ -315,6 +328,8 @@ const Contact = () => {
               referrerPolicy="no-referrer-when-downgrade"
               title="Slagerij John Location - Bruggestraat 146A, 8750 Zwevezele, Belgium"
               aria-label="Google Maps showing Slagerij John location at Bruggestraat 146A, 8750 Zwevezele, Belgium"
+              onLoad={() => setMapLoaded(true)}
+              className={`transition-opacity duration-500 ${mapLoaded ? 'opacity-100' : 'opacity-0'}`}
             />
             <a
               href="https://www.google.be/maps/dir/?api=1&destination=Bruggestraat+146A,+8750+Zwevezele,+Belgium"
