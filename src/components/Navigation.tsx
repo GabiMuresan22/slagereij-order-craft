@@ -12,16 +12,16 @@ import { Separator } from "@/components/ui/separator";
 import LocalizedLink from "@/components/LocalizedLink";
 import { useLocalizedNavigation } from "@/hooks/useLocalizedNavigation";
 
-// Language configuration with flags and native names
+// Language configuration with flags (Belgian flag for Dutch)
 const languageConfig = {
   nl: { 
     name: "Dutch", 
-    nativeName: "Nederlands", 
-    flag: "🇳🇱" 
+    nativeName: "NL", 
+    flag: "🇧🇪" 
   },
   ro: { 
     name: "Romanian", 
-    nativeName: "Română", 
+    nativeName: "RO", 
     flag: "🇷🇴" 
   }
 };
@@ -65,13 +65,13 @@ const Navigation = () => {
     "/contact": Phone,
   };
 
+  // Simplified navigation - 5 essential items only
+  // Product categories accessible from Webshop/Order page
   const navItems = [
     { path: "/", label: t('nav.home'), icon: iconMap["/"] },
-    { path: "/packages", label: t('nav.packages'), icon: iconMap["/packages"] },
+    { path: "/order", label: t('nav.webshop'), icon: iconMap["/order"] },
+    { path: "/catering", label: t('nav.cateringFolder'), icon: iconMap["/catering"] },
     { path: "/about", label: t('nav.about'), icon: iconMap["/about"] },
-    { path: "/products", label: t('nav.products'), icon: iconMap["/products"] },
-    { path: "/catering", label: t('nav.catering'), icon: iconMap["/catering"] },
-    { path: "/order", label: t('nav.order'), icon: iconMap["/order"] },
     { path: "/contact", label: t('nav.contact'), icon: iconMap["/contact"] },
   ];
 
@@ -155,15 +155,16 @@ const Navigation = () => {
                 </LocalizedLink>
               );
             })}
+            {/* Language Selector - Prominent position */}
             <Button
               variant="outline"
               size="sm"
               onClick={toggleLanguage}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 border-2 hover:border-primary"
               aria-label={`${t('accessibility.changeLanguage') || 'Change language'}: ${currentLangConfig.nativeName}`}
             >
               <span className="text-lg" aria-hidden="true">{currentLangConfig.flag}</span>
-              <span className="hidden sm:inline">{currentLangConfig.nativeName}</span>
+              <span className="font-semibold">{currentLangConfig.nativeName}</span>
             </Button>
             
             {/* Auth Button */}

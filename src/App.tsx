@@ -16,6 +16,7 @@ import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import AdminRoute from "./components/AdminRoute";
 import RoadworksAlert from "./components/RoadworksAlert";
+import MobileStickyOrderCTA from "./components/MobileStickyOrderCTA";
 
 // 1. Import lazy and Suspense from React
 import { lazy, Suspense } from "react";
@@ -110,6 +111,7 @@ const App = () => (
                     </Suspense>
                   </main>
                   <Footer />
+                  <MobileStickyOrderCTA />
                 </div>
               </AuthProvider>
             </LanguageProvider>

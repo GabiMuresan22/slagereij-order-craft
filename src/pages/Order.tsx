@@ -131,6 +131,9 @@ const createOrderSchemas = (t: (key: string) => string) => {
     notes: z.string()
       .max(1000, t('order.validation.notesMax') || 'Notes must be less than 1000 characters')
       .optional(),
+    privacyConsent: z.boolean().refine((val) => val === true, {
+      message: t('order.privacyConsent.error') || 'You must agree to the privacy policy',
+    }),
   }).superRefine((data, ctx) => {
     if (data.deliveryMethod === 'delivery') {
       if (!data.street || data.street.length < 2) {
@@ -232,6 +235,7 @@ const Order = () => {
       zipCode: "",
       city: "",
       notes: "",
+      privacyConsent: false,
     },
   });
 
@@ -1047,6 +1051,33 @@ ${data.zipCode} ${data.city}
                             />
                           </FormControl>
                           <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {/* GDPR Privacy Consent Checkbox - Required for Belgian compliance */}
+                    <FormField
+                      control={form.control}
+                      name="privacyConsent"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 bg-muted/30">
+                          <FormControl>
+                            <input
+                              type="checkbox"
+                              checked={field.value}
+                              onChange={field.onChange}
+                              className="h-5 w-5 mt-0.5 accent-primary cursor-pointer"
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel className="cursor-pointer">
+                              {t('order.privacyConsent')}{' '}
+                              <Link to="/privacy" className="text-primary underline hover:text-primary/80">
+                                {t('footer.privacy')}
+                              </Link>
+                            </FormLabel>
+                            <FormMessage />
+                          </div>
                         </FormItem>
                       )}
                     />
