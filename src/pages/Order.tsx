@@ -258,6 +258,48 @@ const Order = () => {
 
   const orderTotal = calculateTotal();
 
+  // GA4 E-commerce tracking helpers
+  const trackViewItem = (productKey: string) => {
+    const product = productOptions.find(p => p.key === productKey);
+    if (!product) return;
+    
+    // @ts-ignore
+    if (typeof window !== 'undefined' && window.gtag) {
+      // @ts-ignore
+      window.gtag('event', 'view_item', {
+        currency: 'EUR',
+        value: product.price || 0,
+        items: [{
+          item_id: product.key,
+          item_name: product.label,
+          price: product.price || 0,
+        }]
+      });
+    }
+  };
+
+  const trackAddToCart = (productKey: string, quantity: string) => {
+    const product = productOptions.find(p => p.key === productKey);
+    if (!product || !quantity) return;
+    
+    const qty = parseFloat(quantity) || 1;
+    
+    // @ts-ignore
+    if (typeof window !== 'undefined' && window.gtag) {
+      // @ts-ignore
+      window.gtag('event', 'add_to_cart', {
+        currency: 'EUR',
+        value: (product.price || 0) * qty,
+        items: [{
+          item_id: product.key,
+          item_name: product.label,
+          price: product.price || 0,
+          quantity: qty,
+        }]
+      });
+    }
+  };
+
   const addOrderItem = () => {
     const currentItems = form.getValues("orderItems");
     form.setValue("orderItems", [...currentItems, { product: "", quantity: "", unit: "kg" }]);
@@ -632,6 +674,14 @@ ${data.zipCode} ${data.city}
                               
                               const handleProductChange = (value: string) => {
                                 field.onChange(value);
+                                // Track view_item when product is selected
+                                trackViewItem(value);
+                                
+                                // Track add_to_cart if quantity is already set
+                                const currentQuantity = form.getValues(`orderItems.${index}.quantity`);
+                                if (currentQuantity) {
+                                  trackAddToCart(value, currentQuantity);
+                                }
                               };
                               
                               return (
@@ -740,7 +790,17 @@ ${data.zipCode} ${data.city}
                                         min="0.1"
                                         max="1000"
                                         placeholder="1.0"
-                                        {...field}
+                                        value={field.value}
+                                        onChange={(e) => {
+                                          field.onChange(e);
+                                          // Track add_to_cart when quantity changes and product is selected
+                                          const productKey = form.getValues(`orderItems.${index}.product`);
+                                          if (productKey && e.target.value) {
+                                            trackAddToCart(productKey, e.target.value);
+                                          }
+                                        }}
+                                        onBlur={field.onBlur}
+                                        name={field.name}
                                       />
                                     </FormControl>
                                     {product && item?.quantity && parseFloat(item.quantity) > 0 && (
