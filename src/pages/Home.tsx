@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, ChefHat, ShoppingBag, PartyPopper, Heart, FileText, MessageSquare } from "lucide-react";
+import { MapPin, ChefHat, ShoppingBag, PartyPopper, Heart, FileText, MessageSquare, Package, Clock, Home as HomeIcon } from "lucide-react";
 import heroImageDesktop from "@/assets/hero-steak.webp";
 import heroImageMobile from "@/assets/hero-steak-mobile.webp";
 import Testimonials from "@/components/Testimonials";
@@ -11,9 +11,8 @@ import { getLocalBusinessSchema, getReviewsSchema } from "@/lib/structuredData";
 import LocalizedLink from "@/components/LocalizedLink";
 
 // Category images
-import bbqGrillMeats from "@/assets/bbq-grill-meats.webp";
-import cateringChefServing from "@/assets/catering-chef-serving.webp";
 import porkProducts from "@/assets/pork-products.webp";
+import cateringChefServing from "@/assets/catering-chef-serving.webp";
 import romanianPlatter from "@/assets/romanian-traditional-appetizer-platter-charcuterie.webp";
 import teamPortrait from "@/assets/team-portrait.webp";
 import cateringPartySpread from "@/assets/catering-party-spread.webp";
@@ -31,35 +30,28 @@ const Home = () => {
     ? 'Bestel online bij Slagerij John. Uw slager in Zwevezele voor dagvers vlees, BBQ, gourmet en Roemeense specialiteiten. Vers bereid, makkelijk afgehaald.'
     : 'Gustul de acasă în Belgia. Comandă mici, cârnați și preparate tradiționale românești de la Slagerij John. Ridicare din Zwevezele.';
 
-  // Category grid data with SEO keywords
-  const categories = [
+  // Featured Products - 3 cards with appetizing photos
+  const featuredProducts = [
     {
-      title: t('home.categories.freshMeat.title'),
-      description: t('home.categories.freshMeat.desc'),
+      title: t('home.featured.freshMeat.title'),
+      description: t('home.featured.freshMeat.desc'),
       image: porkProducts,
       link: '/products',
-      alt: language === 'nl' ? 'biefstuk kopen, varkenshaasje' : 'carne proaspătă de vită și porc'
+      alt: language === 'nl' ? 'biefstuk kopen, varkenshaasje, dagvers vlees' : 'carne proaspătă de vită și porc'
     },
     {
-      title: t('home.categories.bbq.title'),
-      description: t('home.categories.bbq.desc'),
-      image: bbqGrillMeats,
-      link: '/packages',
-      alt: language === 'nl' ? 'bbq pakket bestellen, gourmet schotel' : 'pachete BBQ și gourmet'
-    },
-    {
-      title: t('home.categories.prepared.title'),
-      description: t('home.categories.prepared.desc'),
+      title: t('home.featured.catering.title'),
+      description: t('home.featured.catering.desc'),
       image: cateringChefServing,
       link: '/catering',
-      alt: language === 'nl' ? 'traiteur gerechten, spaghetti saus' : 'preparate traiteur'
+      alt: language === 'nl' ? 'gourmet schotel, traiteur, steengrill' : 'catering și platouri gourmet'
     },
     {
-      title: t('home.categories.romanian.title'),
-      description: t('home.categories.romanian.desc'),
+      title: t('home.featured.specialties.title'),
+      description: t('home.featured.specialties.desc'),
       image: romanianPlatter,
       link: '/products',
-      alt: language === 'nl' ? 'Roemeense specialiteiten, mici, gerookte worst' : 'specialități românești, mici, cârnați afumați'
+      alt: language === 'nl' ? 'huisgemaakte specialiteiten, Roemeense mici' : 'specialități românești, mici, cârnați'
     }
   ];
 
@@ -136,7 +128,107 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 2. VALUE PROPOSITION SECTION - Why Us? */}
+      {/* 2. INTRODUCTION SECTION - Trust & Quality */}
+      <section className="py-12 md:py-16 bg-background" aria-labelledby="intro-heading">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              {t("home.intro.text")}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. FEATURED PRODUCTS - 3 Cards */}
+      <section className="py-12 md:py-16 bg-muted/30" aria-labelledby="featured-heading">
+        <div className="container mx-auto px-4">
+          <h2 id="featured-heading" className="text-3xl md:text-4xl font-serif font-bold text-center mb-8 md:mb-12">
+            {t("home.featured.title")}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {featuredProducts.map((product, index) => (
+              <LocalizedLink
+                key={index}
+                to={product.link}
+                className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              >
+                <div className="aspect-[4/3]">
+                  <img
+                    src={product.image}
+                    alt={product.alt}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                </div>
+                <div className="absolute inset-0 flex flex-col items-start justify-end p-6">
+                  <h3 className="text-white text-2xl font-serif font-bold mb-2" style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}>
+                    {product.title}
+                  </h3>
+                  <p className="text-white/90 text-base" style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>
+                    {product.description}
+                  </p>
+                </div>
+              </LocalizedLink>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. HOW IT WORKS - Simple Steps */}
+      <section className="py-12 md:py-16 bg-background" aria-labelledby="how-it-works-heading">
+        <div className="container mx-auto px-4">
+          <h2 id="how-it-works-heading" className="text-2xl md:text-3xl font-serif font-bold text-center mb-10">
+            {t("home.howItWorks.title")}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            {/* Step 1 */}
+            <div className="flex flex-col items-center text-center">
+              <div className="w-16 h-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center mb-4 text-2xl font-bold">
+                1
+              </div>
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+                <Package className="w-6 h-6 text-primary" aria-hidden="true" />
+              </div>
+              <h3 className="text-lg font-serif font-semibold mb-2">{t("home.howItWorks.step1.title")}</h3>
+              <p className="text-sm text-muted-foreground">{t("home.howItWorks.step1.desc")}</p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="flex flex-col items-center text-center">
+              <div className="w-16 h-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center mb-4 text-2xl font-bold">
+                2
+              </div>
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+                <Clock className="w-6 h-6 text-primary" aria-hidden="true" />
+              </div>
+              <h3 className="text-lg font-serif font-semibold mb-2">{t("home.howItWorks.step2.title")}</h3>
+              <p className="text-sm text-muted-foreground">{t("home.howItWorks.step2.desc")}</p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="flex flex-col items-center text-center">
+              <div className="w-16 h-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center mb-4 text-2xl font-bold">
+                3
+              </div>
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+                <HomeIcon className="w-6 h-6 text-primary" aria-hidden="true" />
+              </div>
+              <h3 className="text-lg font-serif font-semibold mb-2">{t("home.howItWorks.step3.title")}</h3>
+              <p className="text-sm text-muted-foreground">{t("home.howItWorks.step3.desc")}</p>
+            </div>
+          </div>
+          
+          <div className="text-center mt-10">
+            <LocalizedLink to="/order">
+              <Button size="lg" className="px-8">
+                {t("home.hero.ctaPrimary")}
+              </Button>
+            </LocalizedLink>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. VALUE PROPOSITION SECTION - Why Us? */}
       <section className="py-12 md:py-16 bg-muted/50 border-y border-border" aria-labelledby="why-us-heading">
         <div className="container mx-auto px-4">
           <h2 id="why-us-heading" className="text-2xl md:text-3xl font-serif font-bold text-center mb-10">
@@ -169,41 +261,6 @@ const Home = () => {
               <h3 className="text-lg font-serif font-semibold mb-2">{t("home.whyUs.convenience.title")}</h3>
               <p className="text-sm text-muted-foreground">{t("home.whyUs.convenience.desc")}</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. PRODUCT CATEGORIES - Visual Navigation */}
-      <section className="py-12 md:py-16 bg-background" aria-labelledby="categories-heading">
-        <div className="container mx-auto px-4">
-          <h2 id="categories-heading" className="text-3xl md:text-4xl font-serif font-bold text-center mb-8 md:mb-12">
-            {t("home.categories.title")}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((category, index) => (
-              <LocalizedLink
-                key={index}
-                to={category.link}
-                className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              >
-                <div className="aspect-[4/3]">
-                  <img
-                    src={category.image}
-                    alt={category.alt}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                </div>
-                <div className="absolute inset-0 flex flex-col items-start justify-end p-5">
-                  <h3 className="text-white text-xl font-serif font-bold mb-1" style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}>
-                    {category.title}
-                  </h3>
-                  <p className="text-white/90 text-sm" style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>
-                    {category.description}
-                  </p>
-                </div>
-              </LocalizedLink>
-            ))}
           </div>
         </div>
       </section>

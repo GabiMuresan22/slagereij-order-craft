@@ -31,13 +31,34 @@ const translations = {
     // Home Page - Updated for new structure
     'home.alert.title': '📅 Kerst- en Nieuwjaar Openingstijden',
     'home.alert.description': '22-24 dec: 08:00 – 18:00\n25 dec: 08:00 – 10:00 (Enkel afhalen)\n26-27 dec: 08:00 – 13:00\n28 dec: Gesloten\n29-31 dec: 08:00 – 18:00\n1 jan: 08:00 – 10:00 (Enkel afhalen)\n2-4 jan: 08:00 – 13:00\n5 jan: 13:00 – 18:00 (Normaal uurrooster)',
-    'home.hero.title': 'Ambachtelijke slagerij & traiteur in Zwevezele.',
-    'home.hero.subtitle': 'Dagvers vlees, huisbereide gerechten en feestelijke schotels. Bestel online en haal af wanneer het u past.',
+    'home.hero.title': 'Ambachtelijke kwaliteit, vers op uw tafel.',
+    'home.hero.subtitle': 'Uw slagerij in Zwevezele voor dagvers vlees, fijne vleeswaren en verzorgde catering. Bestel eenvoudig online.',
     'home.hero.cta': 'Bestel Nu Online',
     'home.hero.ctaPrimary': 'Bekijk onze webshop',
     'home.hero.ctaSecondary': 'Onze promoties',
     
-    // Value Proposition Section
+    // Introduction Section - Trust & Quality
+    'home.intro.text': 'Bij Slagerij John combineren we traditioneel vakmanschap met modern gemak. Of u nu op zoek bent naar het perfecte stukje vlees voor uw zondagse biefstuk, of een uitgebreide gourmetschotel voor een feestje: kwaliteit staat bij ons altijd voorop. Wij selecteren ons vlees met zorg, zodat u zorgeloos kunt genieten.',
+    
+    // Featured Products Section
+    'home.featured.title': 'Onze Specialiteiten',
+    'home.featured.freshMeat.title': 'Vers Vlees',
+    'home.featured.freshMeat.desc': 'Van biefstuk tot gehakt, dagelijks vers versneden.',
+    'home.featured.catering.title': 'Traiteur & Catering',
+    'home.featured.catering.desc': 'Gourmet, steengrill en koude schotels voor elk feest.',
+    'home.featured.specialties.title': 'Specialiteiten',
+    'home.featured.specialties.desc': 'Huisgemaakte bereidingen en unieke Roemeense specialiteiten.',
+    
+    // How It Works Section
+    'home.howItWorks.title': 'Eenvoudig online bestellen',
+    'home.howItWorks.step1.title': 'Kies uw producten',
+    'home.howItWorks.step1.desc': 'Een ruim assortiment aan kwaliteitsvlees.',
+    'home.howItWorks.step2.title': 'Kies uw afhaalmoment',
+    'home.howItWorks.step2.desc': 'Uw bestelling staat klaar wanneer u aankomt.',
+    'home.howItWorks.step3.title': 'Geniet thuis',
+    'home.howItWorks.step3.desc': 'Geen wachtrijen, geen stress.',
+    
+    // Value Proposition Section (Why Us)
     'home.whyUs.title': 'Waarom kiezen voor Slagerij John?',
     'home.whyUs.local.title': 'Lokale Kwaliteit',
     'home.whyUs.local.desc': 'Wij werken uitsluitend samen met lokale boeren. Eerlijk vlees met een volle smaak.',
@@ -1015,13 +1036,34 @@ const translations = {
     // Home Page - Updated for new structure
     'home.alert.title': '📅 Program Crăciun și Anul Nou',
     'home.alert.description': '22-24 Dec: 08:00 – 18:00\n25 Dec: 08:00 – 10:00 (Doar ridicare)\n26-27 Dec: 08:00 – 13:00\n28 Dec: Închis\n29-31 Dec: 08:00 – 18:00\n1 Ian: 08:00 – 10:00 (Doar ridicare)\n2-4 Ian: 08:00 – 13:00\n5 Ian: 13:00 – 18:00 (Program normal)',
-    'home.hero.title': 'Gustul de acasă, aici în Belgia.',
-    'home.hero.subtitle': 'Mici, cârnați proaspeți și preparate tradiționale românești, realizate cu carne de cea mai bună calitate.',
+    'home.hero.title': 'Gustul de acasă și calitatea belgiană.',
+    'home.hero.subtitle': 'Măcelărie tradițională și preparate românești autentice, gătite cu pasiune în inima Flandrei.',
     'home.hero.cta': 'Comandă Acum Online',
     'home.hero.ctaPrimary': 'Vezi produsele românești',
     'home.hero.ctaSecondary': 'Vezi Folder',
     
-    // Value Proposition Section
+    // Introduction Section - Trust & Quality
+    'home.intro.text': 'Știm cât de mult contează o masă bogată. La Slagerij John, îți aducem atât specialitățile belgiene de top, cât și gustul autentic al preparatelor românești (mici, cârnați, afumături), pregătite chiar aici, proaspăt, pentru tine.',
+    
+    // Featured Products Section
+    'home.featured.title': 'Specialitățile Noastre',
+    'home.featured.freshMeat.title': 'Carne Proaspătă',
+    'home.featured.freshMeat.desc': 'De la friptură la carne tocată, tăiată proaspăt zilnic.',
+    'home.featured.catering.title': 'Catering & Traiteur',
+    'home.featured.catering.desc': 'Gourmet, steengrill și platouri reci pentru orice petrecere.',
+    'home.featured.specialties.title': 'Specialități',
+    'home.featured.specialties.desc': 'Preparate de casă și specialități românești unice.',
+    
+    // How It Works Section
+    'home.howItWorks.title': 'Comandă simplu online',
+    'home.howItWorks.step1.title': 'Alege produsele',
+    'home.howItWorks.step1.desc': 'Un sortiment larg de carne de calitate.',
+    'home.howItWorks.step2.title': 'Alege ora de ridicare',
+    'home.howItWorks.step2.desc': 'Comanda ta e gata când ajungi.',
+    'home.howItWorks.step3.title': 'Savurează acasă',
+    'home.howItWorks.step3.desc': 'Fără cozi, fără stres.',
+    
+    // Value Proposition Section (Why Us)
     'home.whyUs.title': 'De ce să alegeți Măcelăria John?',
     'home.whyUs.local.title': 'Calitate Locală',
     'home.whyUs.local.desc': 'Lucrăm direct cu fermieri locali. Carne onestă, cu gust plin.',
