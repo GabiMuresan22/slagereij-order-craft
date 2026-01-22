@@ -26,62 +26,62 @@ const MenuSection = () => {
   // À La Carte menu categories
   const aLaCarteCategories: MenuCategory[] = [
     {
-      title: language === 'nl' ? 'Hapjes' : 'Aperitive',
-      badge: language === 'nl' ? 'Prijs/pers' : 'Preț/pers',
+      title: t('menu.hapjes.title'),
+      badge: t('menu.pricePerPerson'),
       items: [
-        { name: 'Scampi (2st)', price: '€4' },
-        { name: 'Lepeltje scampi', price: '€2' },
-        { name: 'Lepeltje meloen & serrano', price: '€2' },
-        { name: 'Lepeltje paté', price: '€1,50' },
-        { name: 'Lepeltje geitenkaas', price: '€2' },
-        { name: 'Lepeltje zalm', price: '€2' },
-        { name: 'Taco gehakt', price: '€2,50' },
-        { name: 'Taco kip', price: '€2,50' },
-        { name: 'Blini\'s met gerookte zalm', price: '€2,50' },
-        { name: 'Bruschetta geitenkaas', price: '€2' },
-        { name: 'Bruschetta zalm', price: '€1,50' },
-        { name: 'Bruschetta tomaat', price: '€1' },
-        { name: 'Wraps zalm', price: '€2' },
-        { name: 'Wraps hesp', price: '€2' },
-        { name: 'Wraps kip', price: '€2' },
-        { name: 'Bulgur feta', price: '€3' },
-        { name: 'Bulgur feta & meloen', price: '€3' },
-        { name: 'Bulgur zalm', price: '€3' },
-        { name: 'Bulgur garnaal', price: '€3,50' },
-        { name: 'Hawaii salade', price: '€3' },
+        { name: t('menu.hapjes.scampi'), price: '€4' },
+        { name: t('menu.hapjes.lepeltjeScampi'), price: '€2' },
+        { name: t('menu.hapjes.lepeltjeMeloen'), price: '€2' },
+        { name: t('menu.hapjes.lepeltjePate'), price: '€1,50' },
+        { name: t('menu.hapjes.lepeltjeGeitenkaas'), price: '€2' },
+        { name: t('menu.hapjes.lepeltjeZalm'), price: '€2' },
+        { name: t('menu.hapjes.tacoGehakt'), price: '€2,50' },
+        { name: t('menu.hapjes.tacoKip'), price: '€2,50' },
+        { name: t('menu.hapjes.blinis'), price: '€2,50' },
+        { name: t('menu.hapjes.bruschettaGeitenkaas'), price: '€2' },
+        { name: t('menu.hapjes.bruschettaZalm'), price: '€1,50' },
+        { name: t('menu.hapjes.bruschettaTomaat'), price: '€1' },
+        { name: t('menu.hapjes.wrapsZalm'), price: '€2' },
+        { name: t('menu.hapjes.wrapsHesp'), price: '€2' },
+        { name: t('menu.hapjes.wrapsKip'), price: '€2' },
+        { name: t('menu.hapjes.bulgurFeta'), price: '€3' },
+        { name: t('menu.hapjes.bulgurFetaMeloen'), price: '€3' },
+        { name: t('menu.hapjes.bulgurZalm'), price: '€3' },
+        { name: t('menu.hapjes.bulgurGarnaal'), price: '€3,50' },
+        { name: t('menu.hapjes.hawaiiSalade'), price: '€3' },
       ],
     },
     {
-      title: language === 'nl' ? 'Vleeshoofdgerechten' : 'Feluri principale',
-      badge: language === 'nl' ? 'Prijs/pers' : 'Preț/pers',
+      title: t('menu.vlees.title'),
+      badge: t('menu.pricePerPerson'),
       items: [
-        { name: 'Ardeens gebraad in champignonsaus', price: '€6,50' },
-        { name: 'Varkenshaasje in sausje met spek', price: '€8' },
-        { name: 'Orloffgebraad in kaassaus', price: '€7' },
-        { name: 'Kalkoen in champignonsaus', price: '€8,50' },
-        { name: 'Hamrol met witloof in kaassaus', price: '€10' },
-        { name: 'Kipfilet in curry saus', price: '€8,40' },
-        { name: 'Zalm in bearnaisesaus', price: '€10' },
+        { name: t('menu.vlees.ardeens'), price: '€6,50' },
+        { name: t('menu.vlees.varkenshaas'), price: '€8' },
+        { name: t('menu.vlees.orloff'), price: '€7' },
+        { name: t('menu.vlees.kalkoen'), price: '€8,50' },
+        { name: t('menu.vlees.hamrol'), price: '€10' },
+        { name: t('menu.vlees.kipfilet'), price: '€8,40' },
+        { name: t('menu.vlees.zalm'), price: '€10' },
       ],
     },
     {
-      title: language === 'nl' ? 'Warme Groenten' : 'Legume calde',
+      title: t('menu.groenten.title'),
       badge: '€5/pers',
       items: [
-        { name: 'Bloemkool', price: '' },
-        { name: 'Boontjes', price: '' },
-        { name: 'Wortel', price: '' },
-        { name: 'Witloof met spek', price: '' },
+        { name: t('menu.groenten.bloemkool'), price: '' },
+        { name: t('menu.groenten.boontjes'), price: '' },
+        { name: t('menu.groenten.wortel'), price: '' },
+        { name: t('menu.groenten.witloof'), price: '' },
       ],
     },
     {
-      title: language === 'nl' ? 'Soep' : 'Supă',
-      badge: language === 'nl' ? 'Prijs/pers' : 'Preț/pers',
+      title: t('menu.soep.title'),
+      badge: t('menu.pricePerPerson'),
       items: [
-        { name: 'Tomatensoep', price: '€5,20/l' },
-        { name: 'Tomatensoep met balletjes', price: '€5,60/l' },
-        { name: 'Pompoensoep', price: '€6/l' },
-        { name: 'Broccolisoep', price: '€5,50/l' },
+        { name: t('menu.soep.tomaat'), price: '€5,20/l' },
+        { name: t('menu.soep.tomaatBalletjes'), price: '€5,60/l' },
+        { name: t('menu.soep.pompoen'), price: '€6/l' },
+        { name: t('menu.soep.broccoli'), price: '€5,50/l' },
       ],
     },
   ];
@@ -89,35 +89,35 @@ const MenuSection = () => {
   // Extra menu categories
   const extraMenuCategories: MenuCategory[] = [
     {
-      title: language === 'nl' ? 'Mini Belegde Broodjes' : 'Mini sandvișuri',
+      title: t('menu.broodjes.title'),
       badge: '€1,70/st',
       items: [
-        { name: 'Kipcurry / Vleessalade', price: '' },
-        { name: 'Hesp / Salami / Kaas', price: '' },
-        { name: 'Tonijn / Préparé', price: '' },
+        { name: t('menu.broodjes.kipcurry'), price: '' },
+        { name: t('menu.broodjes.hesp'), price: '' },
+        { name: t('menu.broodjes.tonijn'), price: '' },
       ],
     },
     {
-      title: language === 'nl' ? 'Dessert / Fruit' : 'Desert / Fructe',
-      badge: language === 'nl' ? 'Diverse desserts en fruit' : 'Diverse deserturi',
+      title: t('menu.dessert.title'),
+      badge: t('menu.dessert.badge'),
       items: [
-        { name: 'Dessertbuffet 1 (3 soorten)', price: '€7/pers' },
-        { name: 'Dessertbuffet 2 (5 soorten)', price: '€12/pers' },
-        { name: 'Fruit buffet (6 soorten)', price: '€4/pers' },
-        { name: 'Meloen – Druiven', price: '' },
-        { name: 'Ananas – Kiwi', price: '' },
-        { name: 'Mandarijn – Kaki', price: '' },
+        { name: t('menu.dessert.buffet1'), price: '€7/pers' },
+        { name: t('menu.dessert.buffet2'), price: '€12/pers' },
+        { name: t('menu.dessert.fruitBuffet'), price: '€4/pers' },
+        { name: t('menu.dessert.meloenDruiven'), price: '' },
+        { name: t('menu.dessert.ananasKiwi'), price: '' },
+        { name: t('menu.dessert.mandarijnKaki'), price: '' },
       ],
     },
     {
-      title: language === 'nl' ? 'Keuze Dessert' : 'Deserturi individuale',
-      badge: language === 'nl' ? 'Individuele desserts' : 'Individuale',
+      title: t('menu.keuze.title'),
+      badge: t('menu.keuze.badge'),
       items: [
-        { name: 'Vanille pudding', price: '€2' },
-        { name: 'Tiramisu', price: '€2,50' },
-        { name: 'Donut', price: '€2' },
-        { name: 'Mini donut', price: '€1' },
-        { name: 'Macarons', price: '€2' },
+        { name: t('menu.keuze.vanille'), price: '€2' },
+        { name: t('menu.keuze.tiramisu'), price: '€2,50' },
+        { name: t('menu.keuze.donut'), price: '€2' },
+        { name: t('menu.keuze.miniDonut'), price: '€1' },
+        { name: t('menu.keuze.macarons'), price: '€2' },
       ],
     },
   ];
@@ -125,34 +125,34 @@ const MenuSection = () => {
   // Image categories (Tapas, Fondue, Gourmet)
   const imageCategories: MenuCategory[] = [
     {
-      title: 'Tapas',
-      badge: language === 'nl' ? 'Diverse tapas opties' : 'Diverse opțiuni tapas',
+      title: t('menu.tapas.title'),
+      badge: t('menu.tapas.badge'),
       image: tapasJohnPlatter,
       items: [
-        { name: 'Kinder tapas', price: '€9/pers' },
-        { name: 'Tapas 2', price: '€30 (4-5 pers)' },
-        { name: 'Tapas mix', price: '€40 (5-6 pers)' },
-        { name: 'Tapas John 1', price: '€50 (5-6 pers)' },
-        { name: 'Tapas John 2', price: '€60 (7-9 pers)' },
-        { name: 'Roemeense Tapas', price: '€40 (5-6 pers)' },
+        { name: t('menu.tapas.kinder'), price: '€9/pers' },
+        { name: t('menu.tapas.tapas2'), price: '€30 (4-5 pers)' },
+        { name: t('menu.tapas.mix'), price: '€40 (5-6 pers)' },
+        { name: t('menu.tapas.john1'), price: '€50 (5-6 pers)' },
+        { name: t('menu.tapas.john2'), price: '€60 (7-9 pers)' },
+        { name: t('menu.tapas.roemeens'), price: '€40 (5-6 pers)' },
       ],
     },
     {
-      title: 'Fondue',
-      badge: '10 soorten',
+      title: t('menu.fondue.title'),
+      badge: t('menu.fondue.badge'),
       image: fondueVlees,
       items: [
-        { name: language === 'nl' ? 'Vanaf' : 'De la', price: '€10/pers' },
+        { name: t('menu.from'), price: '€10/pers' },
       ],
     },
     {
-      title: 'Gourmet',
-      badge: 'Luxe Gourmet & Steengrill Schotel',
+      title: t('menu.gourmet.title'),
+      badge: t('menu.gourmet.badge'),
       image: luxeGourmetSchotel,
       items: [
-        { name: 'Gourmet (9 soorten)', price: '€10/pers' },
-        { name: 'Gourmet (10 soorten)', price: '€11/pers' },
-        { name: 'Gourmet Luxe (10 soorten)', price: '€15/pers' },
+        { name: t('menu.gourmet.9soorten'), price: '€10/pers' },
+        { name: t('menu.gourmet.10soorten'), price: '€11/pers' },
+        { name: t('menu.gourmet.luxe'), price: '€15/pers' },
       ],
     },
   ];
@@ -165,15 +165,13 @@ const MenuSection = () => {
         {/* Section Header */}
         <div className="text-center mb-12">
           <span className="inline-block px-4 py-1 rounded-full bg-primary/20 text-primary text-sm font-medium mb-4">
-            {language === 'nl' ? 'FEESTDAGEN SEIZOEN' : 'SEZON SĂRBĂTORI'}
+            {t('menu.badge')}
           </span>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Menu's <span className="text-primary">Speciale</span>
+            {t('menu.title').split(' ')[0]} <span className="text-primary">{t('menu.title').split(' ').slice(1).join(' ')}</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            {language === 'nl' 
-              ? 'Authentieke traditionele gerechten voor uw Kerst- en Nieuwjaarsdiner.'
-              : 'Preparate tradiționale autentice pentru cina de Crăciun și Revelion.'}
+            {t('menu.subtitle')}
           </p>
         </div>
 
@@ -181,12 +179,10 @@ const MenuSection = () => {
         <div className="mb-16">
           <div className="text-center mb-8">
             <h3 className="text-2xl md:text-3xl font-bold">
-              À La Carte <span className="text-primary">{language === 'nl' ? 'Opties' : 'Opțiuni'}</span>
+              {t('menu.alacarte.title').split(' ').slice(0, -1).join(' ')} <span className="text-primary">{t('menu.alacarte.title').split(' ').slice(-1)}</span>
             </h3>
             <p className="text-muted-foreground mt-2">
-              {language === 'nl' 
-                ? 'Individuele gerechten en hapjes voor uw feestmenu.'
-                : 'Preparate individuale și aperitive pentru meniul festiv.'}
+              {t('menu.alacarte.subtitle')}
             </p>
           </div>
 
@@ -224,7 +220,7 @@ const MenuSection = () => {
                 <div className="mt-6">
                   <Link to={orderPath}>
                     <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-                      {language === 'nl' ? 'Bestel Nu' : 'Comandă Acum'}
+                      {t('menu.orderNow')}
                     </Button>
                   </Link>
                 </div>
@@ -237,12 +233,10 @@ const MenuSection = () => {
         <div className="mb-16">
           <div className="text-center mb-8">
             <h3 className="text-2xl md:text-3xl font-bold">
-              Extra <span className="text-primary">Menu {language === 'nl' ? 'Opties' : 'Opțiuni'}</span>
+              {t('menu.extra.title').split(' ')[0]} <span className="text-primary">{t('menu.extra.title').split(' ').slice(1).join(' ')}</span>
             </h3>
             <p className="text-muted-foreground mt-2">
-              {language === 'nl' 
-                ? 'Broodjes, desserts, tapas en meer voor uw feestmenu.'
-                : 'Sandvișuri, deserturi, tapas și mai mult pentru meniul festiv.'}
+              {t('menu.extra.subtitle')}
             </p>
           </div>
 
@@ -281,7 +275,7 @@ const MenuSection = () => {
                 <div className="mt-6">
                   <Link to={orderPath}>
                     <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-                      {language === 'nl' ? 'Bestel Nu' : 'Comandă Acum'}
+                      {t('menu.orderNow')}
                     </Button>
                   </Link>
                 </div>
