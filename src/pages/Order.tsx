@@ -396,6 +396,32 @@ ${data.zipCode} ${data.city}
         });
       }
 
+      // Track Purchase Event for GA4
+      const totalValue = calculateTotal();
+      
+      // @ts-ignore
+      if (typeof window !== 'undefined' && window.gtag) {
+        // @ts-ignore
+        window.gtag('event', 'purchase', {
+          transaction_id: orderId,
+          value: totalValue,
+          currency: 'EUR',
+          items: data.orderItems.map(item => ({
+            item_name: productOptions.find(p => p.key === item.product)?.label || item.product,
+            item_id: item.product,
+            price: productOptions.find(p => p.key === item.product)?.price || 0,
+            quantity: parseFloat(item.quantity)
+          }))
+        });
+        
+        // Backup event for generic lead tracking
+        // @ts-ignore
+        window.gtag('event', 'generate_lead', {
+          currency: 'EUR',
+          value: totalValue
+        });
+      }
+
       setStep(4);
     } catch (error) {
       if (import.meta.env.DEV) console.error("Error submitting order:", error);
