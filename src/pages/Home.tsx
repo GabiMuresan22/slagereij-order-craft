@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import heroImageDesktop from "@/assets/hero-steak.webp";
 import heroImageMobile from "@/assets/hero-steak-mobile.webp";
 import Testimonials from "@/components/Testimonials";
-import ChristmasMenu from "@/components/ChristmasMenu";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getLocalBusinessSchema, getReviewsSchema } from "@/lib/structuredData";
@@ -342,9 +341,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* Christmas Menu Section */}
-      <ChristmasMenu />
 
       {/* Testimonials Section */}
       <Testimonials />
