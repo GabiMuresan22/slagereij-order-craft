@@ -26,6 +26,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { businessHours } from "@/hooks/useBusinessHours";
 import MenuSection from "@/components/MenuSection";
+import OrderSkeleton from "@/components/OrderSkeleton";
 
 // Product images mapping for Colli packages
 import porkProducts from "@/assets/pork-products.webp";
@@ -409,14 +410,7 @@ ${data.zipCode} ${data.city}
   };
 
   if (loadingProducts) {
-    return (
-      <div className="container mx-auto px-4 py-16 flex justify-center items-center min-h-[400px]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading products...</p>
-        </div>
-      </div>
-    );
+    return <OrderSkeleton />;
   }
 
   return (
