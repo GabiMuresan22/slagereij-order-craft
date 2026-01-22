@@ -28,6 +28,7 @@ const About = lazy(() => import("./pages/About"));
 const Products = lazy(() => import("./pages/Products"));
 const Packages = lazy(() => import("./pages/Packages"));
 const Catering = lazy(() => import("./pages/Catering"));
+const TraiteurCatering = lazy(() => import("./pages/TraiteurCatering"));
 const Order = lazy(() => import("./pages/Order"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Auth = lazy(() => import("./pages/Auth"));
@@ -56,6 +57,7 @@ const AppRoutes = () => (
     <Route path="/products" element={<Products />} />
     <Route path="/packages" element={<Packages />} />
     <Route path="/catering" element={<Catering />} />
+    <Route path="/traiteur-catering" element={<TraiteurCatering />} />
     <Route path="/order" element={<Order />} />
     <Route path="/contact" element={<Contact />} />
     <Route path="/auth" element={<Auth />} />
@@ -71,6 +73,7 @@ const AppRoutes = () => (
     <Route path="/ro/products" element={<Products />} />
     <Route path="/ro/packages" element={<Packages />} />
     <Route path="/ro/catering" element={<Catering />} />
+    <Route path="/ro/traiteur-catering" element={<TraiteurCatering />} />
     <Route path="/ro/order" element={<Order />} />
     <Route path="/ro/contact" element={<Contact />} />
     <Route path="/ro/auth" element={<Auth />} />
