@@ -161,14 +161,26 @@ This audit evaluates the website across multiple dimensions: Accessibility, SEO,
        - Security headers (X-Content-Type-Options, X-Frame-Options, etc.)
        - Service worker cache configuration
 
-2. **⚠️ Translation Keys**: Buttons showing raw keys (e.g., `home.cta.button`)
+2. **✅ FIXED: Translation Keys**: Buttons showing raw keys (e.g., `home.cta.button`)
    - **Impact**: Poor user experience, unprofessional appearance
-   - **Action**: Fix translation key resolution
+   - **Status**: ✅ **RESOLVED** - Changed `home.cta.button` to `home.cta.orderBtn` in Home.tsx
+   - **Action**: ✅ Fixed in commit `3a65c5e`
 
 ### Medium Priority
 3. **⚠️ Sitemap Automation**: Update `lastmod` date automatically
+   - **Current**: Static date `2025-01-22` in `public/sitemap.xml`
+   - **Recommendation**: Add build script to update date during build process
+   - **Impact**: Low - sitemap content is dynamically generated, index date is less critical
+
 4. **⚠️ Bundle Analysis**: Run and optimize large dependencies
+   - **Status**: Tooling ready (`npm run build:analyze`)
+   - **Action Required**: Run analysis to identify optimization opportunities
+   - **Command**: `npm run build:analyze` (requires `rollup-plugin-visualizer` installed)
+
 5. **⚠️ Color Contrast**: Verify WCAG AA compliance
+   - **Status**: Needs manual verification
+   - **Tools**: Lighthouse, WAVE browser extension, axe DevTools
+   - **Target**: WCAG AA (4.5:1 for normal text, 3:1 for large text)
 
 ### Low Priority
 6. **✅ PWA Testing**: Test offline functionality
@@ -179,9 +191,9 @@ This audit evaluates the website across multiple dimensions: Accessibility, SEO,
 ## 8. Action Items Summary
 
 ### Immediate (This Week)
-- [ ] Fix `/order` route 404 error in production
-- [ ] Fix translation keys showing in UI
-- [ ] Run bundle analysis (`npm run build:analyze`)
+- [x] ✅ Fix `/order` route 404 error in production - **FIX CREATED** (`vercel.json` ready for deployment)
+- [x] ✅ Fix translation keys showing in UI - **FIXED** (commit `3a65c5e`)
+- [ ] Run bundle analysis (`npm run build:analyze`) - **READY** (tooling configured, just needs execution)
 - [ ] Run Lighthouse audit for performance scores
 
 ### Short Term (This Month)
