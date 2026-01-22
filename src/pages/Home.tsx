@@ -408,7 +408,7 @@ const Home = () => {
                   variant="secondary" 
                   className="text-lg px-10 font-semibold min-h-[48px] hover:shadow-xl transition-shadow focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                 >
-                  {t("home.cta.button")}
+                  {t("home.cta.orderBtn")}
                 </Button>
               </motion.div>
             </LocalizedLink>

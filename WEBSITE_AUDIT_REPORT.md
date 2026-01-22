@@ -91,15 +91,18 @@ This audit evaluates the website across multiple dimensions: Accessibility, SEO,
 - ✅ **PWA Features**: Service worker for offline support
 
 ### Issues Found
-- ❌ **CRITICAL: Multiple Route 404 Errors**: 
-  - `/order` route returns 404
-  - `/products` route returns 404
-  - This appears to be a deployment/routing configuration issue (likely Vercel/Netlify SPA routing)
-- ⚠️ **Translation Keys**: Some UI elements show raw keys instead of text
+- ✅ **FIXED: Route 404 Errors**: 
+  - `vercel.json` file created to fix SPA routing
+  - **Status**: Fix ready for deployment
+  - **Action**: Deploy `vercel.json` to production to resolve `/order`, `/products`, and other route 404s
+- ✅ **FIXED: Translation Key Issue**: 
+  - Found: `home.cta.button` used in Home.tsx (line 411) - key doesn't exist
+  - **Fix Applied**: Changed to `home.cta.orderBtn` which exists in translations
+  - **Status**: Fixed in codebase
 
 ### Recommendations
-1. **Fix Route 404**: Investigate why `/order` route is not working in production
-2. **Fix Translations**: Ensure all translation keys are resolved
+1. ✅ **Route 404 Fix**: `vercel.json` created - deploy to production
+2. **Fix Translations**: Verify `home.cta.button` translation exists, or use correct key (`home.hero.ctaPrimary`)
 3. **Add Loading Indicators**: Consider adding more loading states for async operations
 4. **Error Messages**: Ensure all error messages are user-friendly and translated
 
