@@ -25,7 +25,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { businessHours } from "@/hooks/useBusinessHours";
-import MenuSection from "@/components/MenuSection";
 import OrderSkeleton from "@/components/OrderSkeleton";
 
 // Product images mapping for Colli packages
@@ -65,7 +64,7 @@ const generateTimeSlots = (startHour: number, startMin: number, endHour: number,
   const slots: string[] = [];
   let currentHour = startHour;
   let currentMin = startMin;
-  
+
   while (currentHour < endHour || (currentHour === endHour && currentMin < endMin)) {
     slots.push(`${String(currentHour).padStart(2, '0')}:${String(currentMin).padStart(2, '0')}`);
     currentMin += 30;
@@ -74,7 +73,7 @@ const generateTimeSlots = (startHour: number, startMin: number, endHour: number,
       currentHour += 1;
     }
   }
-  
+
   return slots;
 };
 
@@ -82,23 +81,23 @@ const generateTimeSlots = (startHour: number, startMin: number, endHour: number,
 const getTimeSlotsForDay = (dayOfWeek: number, isDelivery: boolean = false): string[] => {
   const hours = businessHours[dayOfWeek];
   if (!hours) return [];
-  
+
   // Custom logic for delivery: After 18:00
   if (isDelivery) {
     // Generate slots from 18:00 to 20:00
     return generateTimeSlots(18, 0, 20, 0);
   }
-  
+
   const [startHour, startMin] = hours.open.split(':').map(Number);
   const [endHour, endMin] = hours.close.split(':').map(Number);
-  
+
   return generateTimeSlots(startHour, startMin, endHour, endMin);
 };
 
 // Create schemas dynamically with translations
 const createOrderSchemas = (t: (key: string) => string) => {
   const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/;
-  
+
   const orderItemSchema = z.object({
     product: z.string().min(1, t('order.validation.selectProduct')),
     quantity: z.string()
@@ -133,9 +132,6 @@ const createOrderSchemas = (t: (key: string) => string) => {
     notes: z.string()
       .max(1000, t('order.validation.notesMax') || 'Notes must be less than 1000 characters')
       .optional(),
-    privacyConsent: z.boolean().refine((val) => val === true, {
-      message: t('order.privacyConsent.error') || 'You must agree to the privacy policy',
-    }),
   }).superRefine((data, ctx) => {
     if (data.deliveryMethod === 'delivery') {
       if (!data.street || data.street.length < 2) {
@@ -191,7 +187,7 @@ const Order = () => {
         .select('*')
         .eq('available', true)
         .order('key');
-      
+
       if (error) throw error;
       return data || [];
     },
@@ -237,7 +233,6 @@ const Order = () => {
       zipCode: "",
       city: "",
       notes: "",
-      privacyConsent: false,
     },
   });
 
@@ -258,48 +253,6 @@ const Order = () => {
 
   const orderTotal = calculateTotal();
 
-  // GA4 E-commerce tracking helpers
-  const trackViewItem = (productKey: string) => {
-    const product = productOptions.find(p => p.key === productKey);
-    if (!product) return;
-    
-    // @ts-ignore
-    if (typeof window !== 'undefined' && window.gtag) {
-      // @ts-ignore
-      window.gtag('event', 'view_item', {
-        currency: 'EUR',
-        value: product.price || 0,
-        items: [{
-          item_id: product.key,
-          item_name: product.label,
-          price: product.price || 0,
-        }]
-      });
-    }
-  };
-
-  const trackAddToCart = (productKey: string, quantity: string) => {
-    const product = productOptions.find(p => p.key === productKey);
-    if (!product || !quantity) return;
-    
-    const qty = parseFloat(quantity) || 1;
-    
-    // @ts-ignore
-    if (typeof window !== 'undefined' && window.gtag) {
-      // @ts-ignore
-      window.gtag('event', 'add_to_cart', {
-        currency: 'EUR',
-        value: (product.price || 0) * qty,
-        items: [{
-          item_id: product.key,
-          item_name: product.label,
-          price: product.price || 0,
-          quantity: qty,
-        }]
-      });
-    }
-  };
-
   const addOrderItem = () => {
     const currentItems = form.getValues("orderItems");
     form.setValue("orderItems", [...currentItems, { product: "", quantity: "", unit: "kg" }]);
@@ -308,7 +261,7 @@ const Order = () => {
   const removeOrderItem = (index: number) => {
     const currentItems = form.getValues("orderItems");
     form.setValue("orderItems", currentItems.filter((_, i) => i !== index));
-    
+
     // Remove from custom items set and adjust indices
     setCustomItems(prev => {
       const newSet = new Set<number>();
@@ -326,13 +279,13 @@ const Order = () => {
 
   const nextStep = async () => {
     let isValid = false;
-    
+
     if (step === 1) {
       isValid = await form.trigger(["deliveryMethod", "orderItems"]);
     } else if (step === 2) {
       isValid = await form.trigger(["pickupDate", "pickupTime"]);
     }
-    
+
     if (isValid) {
       setStep(step + 1);
     }
@@ -340,7 +293,7 @@ const Order = () => {
 
   const handleSubmit = async (data: OrderFormValues) => {
     setIsSubmitting(true);
-    
+
     try {
       // SECURITY: Never trust client-side prices!
       // Send only product key, quantity, and unit - let database trigger calculate prices
@@ -356,14 +309,14 @@ const Order = () => {
       // This ensures we have an order ID even if the RLS policy prevents returning the inserted row
       // Using crypto.randomUUID() which is supported in all modern browsers (Chrome 92+, Firefox 95+, Safari 15.4+)
       const orderId = crypto.randomUUID();
-      
+
       // Get the latest user state directly from Supabase to ensure it matches the database session
       // This prevents race conditions where React state might be stale
       const { data: { user: currentUser } } = await supabase.auth.getUser();
-      
+
       // Use this fresh ID - if user is logged in, use their ID; otherwise null for guest orders
       const userIdToSave = currentUser?.id || null;
-      
+
       // Combine address into notes for persistence if DB schema doesn't have address columns
       let finalNotes = data.notes || "";
       if (data.deliveryMethod === 'delivery') {
@@ -374,7 +327,7 @@ ${data.zipCode} ${data.city}
 ----------------------`;
         finalNotes = finalNotes ? `${addressBlock}\n\n${finalNotes}` : addressBlock;
       }
-      
+
       const { error } = await supabase.from("orders").insert({
         id: orderId,
         customer_name: data.customerName,
@@ -438,32 +391,6 @@ ${data.zipCode} ${data.city}
         });
       }
 
-      // Track Purchase Event for GA4
-      const totalValue = calculateTotal();
-      
-      // @ts-ignore
-      if (typeof window !== 'undefined' && window.gtag) {
-        // @ts-ignore
-        window.gtag('event', 'purchase', {
-          transaction_id: orderId,
-          value: totalValue,
-          currency: 'EUR',
-          items: data.orderItems.map(item => ({
-            item_name: productOptions.find(p => p.key === item.product)?.label || item.product,
-            item_id: item.product,
-            price: productOptions.find(p => p.key === item.product)?.price || 0,
-            quantity: parseFloat(item.quantity)
-          }))
-        });
-        
-        // Backup event for generic lead tracking
-        // @ts-ignore
-        window.gtag('event', 'generate_lead', {
-          currency: 'EUR',
-          value: totalValue
-        });
-      }
-
       setStep(4);
     } catch (error) {
       if (import.meta.env.DEV) console.error("Error submitting order:", error);
@@ -483,7 +410,7 @@ ${data.zipCode} ${data.city}
 
   return (
     <>
-      <SEO 
+      <SEO
         title={t('order.seo.title')}
         description={t('order.seo.description')}
         keywords="online bestellen, vlees bestellen, bestelformulier, Zwevezele"
@@ -508,13 +435,12 @@ ${data.zipCode} ${data.city}
                 };
                 const isCompleted = step > s;
                 const isCurrent = step === s;
-                
+
                 return (
                   <li key={s} className="flex flex-col items-center flex-1" role="listitem">
                     <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                        step >= s ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
-                      }`}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center ${step >= s ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
+                        }`}
                       aria-current={isCurrent ? 'step' : undefined}
                       aria-label={`${stepLabels[s as keyof typeof stepLabels]} - ${isCompleted ? (t('accessibility.completed') || 'Completed') : isCurrent ? (t('accessibility.current') || 'Current step') : (t('accessibility.upcoming') || 'Upcoming')}`}
                     >
@@ -570,7 +496,7 @@ ${data.zipCode} ${data.city}
                           </li>
                         </ul>
                       </div>
-                      
+
                       {/* Address */}
                       <div className="mt-6 pt-4 border-t border-border text-center text-sm">
                         <p className="flex items-center justify-center gap-2">
@@ -643,260 +569,242 @@ ${data.zipCode} ${data.city}
                       />
 
                       {/* Product Selection */}
-                    {orderItems.map((item, index) => {
-                      const isCustomItem = customItems.has(index);
-                      
-                      return (
-                        <div key={index} className="space-y-4 pb-6 border-b last:border-0 mt-8 first:mt-0">
-                          {/* Row 1: Product dropdown (full width on mobile) */}
-                          <FormField
-                            control={form.control}
-                            name={`orderItems.${index}.product`}
-                            render={({ field }) => {
-                              const selectedProduct = productOptions.find(p => p.key === field.value);
-                              
-                              const handleToggleCustom = (e: React.MouseEvent) => {
-                                e.preventDefault();
-                                if (isCustomItem) {
-                                  // Switch back to dropdown mode and clear textarea
-                                  setCustomItems(prev => {
-                                    const newSet = new Set(prev);
-                                    newSet.delete(index);
-                                    return newSet;
-                                  });
-                                  field.onChange('');
-                                } else {
-                                  // Switch to custom textarea mode
-                                  setCustomItems(prev => new Set(prev).add(index));
-                                  field.onChange('');
-                                }
-                              };
-                              
-                              const handleProductChange = (value: string) => {
-                                field.onChange(value);
-                                // Track view_item when product is selected
-                                trackViewItem(value);
-                                
-                                // Track add_to_cart if quantity is already set
-                                const currentQuantity = form.getValues(`orderItems.${index}.quantity`);
-                                if (currentQuantity) {
-                                  trackAddToCart(value, currentQuantity);
-                                }
-                              };
-                              
-                              return (
-                                <FormItem className="w-full">
-                                  <FormLabel className="font-bold">{t('order.form.product')}</FormLabel>
-                                  <div className="relative min-h-[40px]">
-                                    {isCustomItem ? (
-                                      <FormControl>
-                                        <Textarea
-                                          placeholder={t('order.form.customProductPlaceholder')}
-                                          value={field.value}
-                                          onChange={(e) => field.onChange(e.target.value)}
-                                          rows={3}
-                                          className="border-[#FFC107] focus-visible:ring-[#FFC107] focus-visible:border-[#FFC107] transition-all duration-200 fade-in"
-                                          style={{
-                                            borderColor: '#FFC107',
-                                          }}
-                                        />
-                                      </FormControl>
-                                    ) : (
-                                      <div className="space-y-1 fade-in">
-                                        <Select onValueChange={handleProductChange} value={field.value}>
-                                          <FormControl>
-                                            <SelectTrigger className="h-auto py-2">
-                                              <SelectValue placeholder={t('order.form.selectProduct')}>
-                                                {selectedProduct && (
-                                                  <div className="flex items-center gap-3">
-                                                    {selectedProduct.image && (
-                                                      <img 
-                                                        src={selectedProduct.image} 
-                                                        alt={selectedProduct.label}
-                                                        className="w-10 h-10 rounded-md object-cover flex-shrink-0"
-                                                      />
-                                                    )}
-                                                    <span className="font-medium">{selectedProduct.label}</span>
-                                                  </div>
-                                                )}
-                                              </SelectValue>
-                                            </SelectTrigger>
-                                          </FormControl>
-                                          <SelectContent>
-                                            {productOptions.map((option) => (
-                                              <SelectItem key={option.key} value={option.key} className="py-2">
-                                                <div className="flex items-center gap-3 w-full">
-                                                  {option.image && (
-                                                    <img 
-                                                      src={option.image} 
-                                                      alt={option.label}
-                                                      className="w-12 h-12 rounded-md object-cover flex-shrink-0"
-                                                    />
-                                                  )}
-                                                  <div className="flex flex-col gap-0.5">
-                                                    <span className="font-medium">{option.label}</span>
-                                                    {option.price && (
-                                                      <span className="text-sm font-semibold text-primary">
-                                                        €{option.price.toFixed(2)}/{option.unit}
-                                                      </span>
-                                                    )}
-                                                  </div>
-                                                </div>
-                                              </SelectItem>
-                                            ))}
-                                          </SelectContent>
-                                        </Select>
-                                        {selectedProduct && selectedProduct.price && (
-                                          <p className="text-xs text-muted-foreground mt-1">
-                                            {t('order.form.price')}: €{selectedProduct.price.toFixed(2)} per {selectedProduct.unit}
-                                          </p>
-                                        )}
-                                      </div>
-                                    )}
-                                  </div>
-                                  {/* Link moved below dropdown for better mobile UX */}
-                                  <button
-                                    type="button"
-                                    onClick={handleToggleCustom}
-                                    className="text-yellow-600 dark:text-yellow-500 hover:underline transition-all cursor-pointer font-normal mt-2 text-sm"
-                                  >
-                                    {isCustomItem ? t('order.form.backToMenu') : t('order.form.customProductToggle')}
-                                  </button>
-                                  <FormMessage />
-                                </FormItem>
-                              );
-                            }}
-                          />
+                      {orderItems.map((item, index) => {
+                        const isCustomItem = customItems.has(index);
 
-                          {/* Row 2: Quantity and Unit side-by-side with delete button */}
-                          <div className="flex gap-3 items-end">
+                        return (
+                          <div key={index} className="space-y-4 pb-6 border-b last:border-0 mt-8 first:mt-0">
+                            {/* Row 1: Product dropdown (full width on mobile) */}
                             <FormField
                               control={form.control}
-                              name={`orderItems.${index}.quantity`}
+                              name={`orderItems.${index}.product`}
                               render={({ field }) => {
-                                const item = orderItems[index];
-                                const product = products.find(p => p.key === item?.product);
-                                const itemTotal = product && item?.quantity 
-                                  ? (product.price * parseFloat(item.quantity || '0')).toFixed(2)
-                                  : '0.00';
-                                
+                                const selectedProduct = productOptions.find(p => p.key === field.value);
+
+                                const handleToggleCustom = (e: React.MouseEvent) => {
+                                  e.preventDefault();
+                                  if (isCustomItem) {
+                                    // Switch back to dropdown mode and clear textarea
+                                    setCustomItems(prev => {
+                                      const newSet = new Set(prev);
+                                      newSet.delete(index);
+                                      return newSet;
+                                    });
+                                    field.onChange('');
+                                  } else {
+                                    // Switch to custom textarea mode
+                                    setCustomItems(prev => new Set(prev).add(index));
+                                    field.onChange('');
+                                  }
+                                };
+
+                                const handleProductChange = (value: string) => {
+                                  field.onChange(value);
+                                };
+
                                 return (
-                                  <FormItem className="flex-1">
-                                    <FormLabel>{t('order.form.quantity')}</FormLabel>
-                                    <FormControl>
-                                      <Input
-                                        type="number"
-                                        step="0.1"
-                                        min="0.1"
-                                        max="1000"
-                                        placeholder="1.0"
-                                        value={field.value}
-                                        onChange={(e) => {
-                                          field.onChange(e);
-                                          // Track add_to_cart when quantity changes and product is selected
-                                          const productKey = form.getValues(`orderItems.${index}.product`);
-                                          if (productKey && e.target.value) {
-                                            trackAddToCart(productKey, e.target.value);
-                                          }
-                                        }}
-                                        onBlur={field.onBlur}
-                                        name={field.name}
-                                      />
-                                    </FormControl>
-                                    {product && item?.quantity && parseFloat(item.quantity) > 0 && (
-                                      <p className="text-xs font-semibold text-primary">
-                                        €{itemTotal}
-                                      </p>
-                                    )}
+                                  <FormItem className="w-full">
+                                    <FormLabel className="font-bold">{t('order.form.product')}</FormLabel>
+                                    <div className="relative min-h-[40px]">
+                                      {isCustomItem ? (
+                                        <FormControl>
+                                          <Textarea
+                                            placeholder={t('order.form.customProductPlaceholder')}
+                                            value={field.value}
+                                            onChange={(e) => field.onChange(e.target.value)}
+                                            rows={3}
+                                            className="border-[#FFC107] focus-visible:ring-[#FFC107] focus-visible:border-[#FFC107] transition-all duration-200 fade-in"
+                                            style={{
+                                              borderColor: '#FFC107',
+                                            }}
+                                          />
+                                        </FormControl>
+                                      ) : (
+                                        <div className="space-y-1 fade-in">
+                                          <Select onValueChange={handleProductChange} value={field.value}>
+                                            <FormControl>
+                                              <SelectTrigger className="h-auto py-2">
+                                                <SelectValue placeholder={t('order.form.selectProduct')}>
+                                                  {selectedProduct && (
+                                                    <div className="flex items-center gap-3">
+                                                      {selectedProduct.image && (
+                                                        <img
+                                                          src={selectedProduct.image}
+                                                          alt={selectedProduct.label}
+                                                          className="w-10 h-10 rounded-md object-cover flex-shrink-0"
+                                                        />
+                                                      )}
+                                                      <span className="font-medium">{selectedProduct.label}</span>
+                                                    </div>
+                                                  )}
+                                                </SelectValue>
+                                              </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                              {productOptions.map((option) => (
+                                                <SelectItem key={option.key} value={option.key} className="py-2">
+                                                  <div className="flex items-center gap-3 w-full">
+                                                    {option.image && (
+                                                      <img
+                                                        src={option.image}
+                                                        alt={option.label}
+                                                        className="w-12 h-12 rounded-md object-cover flex-shrink-0"
+                                                      />
+                                                    )}
+                                                    <div className="flex flex-col gap-0.5">
+                                                      <span className="font-medium">{option.label}</span>
+                                                      {option.price && (
+                                                        <span className="text-sm font-semibold text-primary">
+                                                          €{option.price.toFixed(2)}/{option.unit}
+                                                        </span>
+                                                      )}
+                                                    </div>
+                                                  </div>
+                                                </SelectItem>
+                                              ))}
+                                            </SelectContent>
+                                          </Select>
+                                          {selectedProduct && selectedProduct.price && (
+                                            <p className="text-xs text-muted-foreground mt-1">
+                                              {t('order.form.price')}: €{selectedProduct.price.toFixed(2)} per {selectedProduct.unit}
+                                            </p>
+                                          )}
+                                        </div>
+                                      )}
+                                    </div>
+                                    {/* Link moved below dropdown for better mobile UX */}
+                                    <button
+                                      type="button"
+                                      onClick={handleToggleCustom}
+                                      className="text-yellow-600 dark:text-yellow-500 hover:underline transition-all cursor-pointer font-normal mt-2 text-sm"
+                                    >
+                                      {isCustomItem ? t('order.form.backToMenu') : t('order.form.customProductToggle')}
+                                    </button>
                                     <FormMessage />
                                   </FormItem>
                                 );
                               }}
                             />
 
-                            <FormField
-                              control={form.control}
-                              name={`orderItems.${index}.unit`}
-                              render={({ field }) => (
-                                <FormItem className="w-28">
-                                  <FormLabel>{t('order.form.unit')}</FormLabel>
-                                  <Select onValueChange={field.onChange} value={field.value}>
-                                    <FormControl>
-                                      <SelectTrigger>
-                                        <SelectValue />
-                                      </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent>
-                                      <SelectItem value="kg">kg</SelectItem>
-                                      <SelectItem value="stuks">stuks</SelectItem>
-                                      <SelectItem value="stuk">stuk</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                  <FormMessage />
-                                </FormItem>
+                            {/* Row 2: Quantity and Unit side-by-side with delete button */}
+                            <div className="flex gap-3 items-end">
+                              <FormField
+                                control={form.control}
+                                name={`orderItems.${index}.quantity`}
+                                render={({ field }) => {
+                                  const item = orderItems[index];
+                                  const product = products.find(p => p.key === item?.product);
+                                  const itemTotal = product && item?.quantity
+                                    ? (product.price * parseFloat(item.quantity || '0')).toFixed(2)
+                                    : '0.00';
+
+                                  return (
+                                    <FormItem className="flex-1">
+                                      <FormLabel>{t('order.form.quantity')}</FormLabel>
+                                      <FormControl>
+                                        <Input
+                                          type="number"
+                                          step="0.1"
+                                          min="0.1"
+                                          max="1000"
+                                          placeholder="1.0"
+                                          {...field}
+                                        />
+                                      </FormControl>
+                                      {product && item?.quantity && parseFloat(item.quantity) > 0 && (
+                                        <p className="text-xs font-semibold text-primary">
+                                          €{itemTotal}
+                                        </p>
+                                      )}
+                                      <FormMessage />
+                                    </FormItem>
+                                  );
+                                }}
+                              />
+
+                              <FormField
+                                control={form.control}
+                                name={`orderItems.${index}.unit`}
+                                render={({ field }) => (
+                                  <FormItem className="w-28">
+                                    <FormLabel>{t('order.form.unit')}</FormLabel>
+                                    <Select onValueChange={field.onChange} value={field.value}>
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="kg">kg</SelectItem>
+                                        <SelectItem value="stuks">stuks</SelectItem>
+                                        <SelectItem value="stuk">stuk</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+
+                              {orderItems.length > 1 && (
+                                <Button
+                                  type="button"
+                                  variant="destructive"
+                                  size="icon"
+                                  onClick={() => removeOrderItem(index)}
+                                  className="mb-2"
+                                >
+                                  ×
+                                </Button>
                               )}
-                            />
-
-                            {orderItems.length > 1 && (
-                              <Button
-                                type="button"
-                                variant="destructive"
-                                size="icon"
-                                onClick={() => removeOrderItem(index)}
-                                className="mb-2"
-                              >
-                                ×
-                              </Button>
-                            )}
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
 
-                    <div className="space-y-3 mt-8">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={addOrderItem}
-                        className="w-full"
-                      >
-                        {t('order.form.addItem')}
-                      </Button>
+                      <div className="space-y-3 mt-8">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={addOrderItem}
+                          className="w-full"
+                        >
+                          {t('order.form.addItem')}
+                        </Button>
 
-                      {orderTotal > 0 && (
-                        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
-                          <div className="flex justify-between items-center">
-                            <span className="text-lg font-semibold">{t('order.total') || 'Totaal'}:</span>
-                            <span className="text-2xl font-bold text-primary">
-                              €{orderTotal.toFixed(2)}
-                            </span>
+                        {orderTotal > 0 && (
+                          <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                            <div className="flex justify-between items-center">
+                              <span className="text-lg font-semibold">{t('order.total') || 'Totaal'}:</span>
+                              <span className="text-2xl font-bold text-primary">
+                                €{orderTotal.toFixed(2)}
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Allergen Information Warning - EU Regulation 1169/2011 Compliance */}
-                    <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 rounded-lg p-4 mb-6 flex gap-3 text-sm text-amber-900 dark:text-amber-100">
-                      <Info className="h-5 w-5 flex-shrink-0 text-amber-600" />
-                      <div>
-                        <p className="font-medium mb-1">{t('allergens.disclaimer.title')}</p>
-                        <p>
-                          {t('allergens.risk.warning')}{" "}
-                          <Link 
-                            to="/allergens" 
-                            className="underline font-semibold hover:text-amber-700"
-                          >
-                            {t('footer.allergens')}
-                          </Link>
-                        </p>
+                        )}
                       </div>
-                    </div>
 
-                    <Button type="button" onClick={nextStep} className="w-full mt-6" size="lg">
-                      {t('order.form.continue')}
-                    </Button>
-                  </CardContent>
-                </Card>
+                      {/* Allergen Information Warning - EU Regulation 1169/2011 Compliance */}
+                      <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 rounded-lg p-4 mb-6 flex gap-3 text-sm text-amber-900 dark:text-amber-100">
+                        <Info className="h-5 w-5 flex-shrink-0 text-amber-600" />
+                        <div>
+                          <p className="font-medium mb-1">{t('allergens.disclaimer.title')}</p>
+                          <p>
+                            {t('allergens.risk.warning')}{" "}
+                            <Link
+                              to="/allergens"
+                              className="underline font-semibold hover:text-amber-700"
+                            >
+                              {t('footer.allergens')}
+                            </Link>
+                          </p>
+                        </div>
+                      </div>
+
+                      <Button type="button" onClick={nextStep} className="w-full mt-6" size="lg">
+                        {t('order.form.continue')}
+                      </Button>
+                    </CardContent>
+                  </Card>
                 </>
               )}
 
@@ -906,7 +814,7 @@ ${data.zipCode} ${data.city}
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <CalendarIcon className="h-5 w-5" />
-                      {deliveryMethod === 'delivery' 
+                      {deliveryMethod === 'delivery'
                         ? t('order.steps.deliveryDate') || 'Leveringsmoment'
                         : t('order.steps.pickup')}
                     </CardTitle>
@@ -918,7 +826,7 @@ ${data.zipCode} ${data.city}
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
                           <FormLabel>
-                            {deliveryMethod === 'delivery' 
+                            {deliveryMethod === 'delivery'
                               ? t('order.form.deliveryDate') || 'Leveringsdatum'
                               : t('order.form.pickupDate')}
                           </FormLabel>
@@ -927,9 +835,8 @@ ${data.zipCode} ${data.city}
                               <FormControl>
                                 <Button
                                   variant="outline"
-                                  className={`w-full pl-3 text-left font-normal ${
-                                    !field.value && "text-muted-foreground"
-                                  }`}
+                                  className={`w-full pl-3 text-left font-normal ${!field.value && "text-muted-foreground"
+                                    }`}
                                 >
                                   {field.value ? (
                                     format(field.value, "PPP", { locale: nl })
@@ -962,14 +869,14 @@ ${data.zipCode} ${data.city}
                       name="pickupTime"
                       render={({ field }) => {
                         const selectedDate = form.watch("pickupDate");
-                        const timeSlots = selectedDate 
-                          ? getTimeSlotsForDay(selectedDate.getDay(), deliveryMethod === 'delivery') 
+                        const timeSlots = selectedDate
+                          ? getTimeSlotsForDay(selectedDate.getDay(), deliveryMethod === 'delivery')
                           : [];
 
                         return (
                           <FormItem>
                             <FormLabel>
-                              {deliveryMethod === 'delivery' 
+                              {deliveryMethod === 'delivery'
                                 ? t('order.form.deliveryTime') || 'Leveringstijd'
                                 : t('order.form.pickupTime')}
                             </FormLabel>
@@ -1014,65 +921,65 @@ ${data.zipCode} ${data.city}
                   <CardContent className="space-y-6">
                     {deliveryMethod === 'delivery' && (
                       <div className="bg-muted/30 p-4 rounded-lg border border-border/50 mb-6 space-y-4">
-                         <h3 className="font-semibold flex items-center gap-2">
-                           <span>🏠</span> {t('order.form.addressTitle') || 'Leveringsadres'}
-                         </h3>
-                         <div className="grid grid-cols-3 gap-4">
-                           <FormField
-                             control={form.control}
-                             name="street"
-                             render={({ field }) => (
-                               <FormItem className="col-span-2">
-                                 <FormLabel>{t('order.form.street') || 'Straat'}</FormLabel>
-                                 <FormControl>
-                                   <Input placeholder="Kerkstraat" {...field} />
-                                 </FormControl>
-                                 <FormMessage />
-                               </FormItem>
-                             )}
-                           />
-                           <FormField
-                             control={form.control}
-                             name="houseNumber"
-                             render={({ field }) => (
-                               <FormItem>
-                                 <FormLabel>{t('order.form.number') || 'Nr'}</FormLabel>
-                                 <FormControl>
-                                   <Input placeholder="10A" {...field} />
-                                 </FormControl>
-                                 <FormMessage />
-                               </FormItem>
-                             )}
-                           />
-                         </div>
-                         <div className="grid grid-cols-3 gap-4">
-                           <FormField
-                             control={form.control}
-                             name="zipCode"
-                             render={({ field }) => (
-                               <FormItem>
-                                 <FormLabel>{t('order.form.zip') || 'Postcode'}</FormLabel>
-                                 <FormControl>
-                                   <Input placeholder="8750" {...field} />
-                                 </FormControl>
-                                 <FormMessage />
-                               </FormItem>
-                             )}
-                           />
-                           <FormField
-                             control={form.control}
-                             name="city"
-                             render={({ field }) => (
-                               <FormItem className="col-span-2">
-                                 <FormLabel>{t('order.form.city') || 'Gemeente'}</FormLabel>
-                                 <FormControl>
-                                   <Input placeholder="Zwevezele" {...field} />
-                                 </FormControl>
-                                 <FormMessage />
-                               </FormItem>
-                             )}
-                           />
-                         </div>
+                        <h3 className="font-semibold flex items-center gap-2">
+                          <span>🏠</span> {t('order.form.addressTitle') || 'Leveringsadres'}
+                        </h3>
+                        <div className="grid grid-cols-3 gap-4">
+                          <FormField
+                            control={form.control}
+                            name="street"
+                            render={({ field }) => (
+                              <FormItem className="col-span-2">
+                                <FormLabel>{t('order.form.street') || 'Straat'}</FormLabel>
+                                <FormControl>
+                                  <Input placeholder="Kerkstraat" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="houseNumber"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>{t('order.form.number') || 'Nr'}</FormLabel>
+                                <FormControl>
+                                  <Input placeholder="10A" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                        <div className="grid grid-cols-3 gap-4">
+                          <FormField
+                            control={form.control}
+                            name="zipCode"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>{t('order.form.zip') || 'Postcode'}</FormLabel>
+                                <FormControl>
+                                  <Input placeholder="8750" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="city"
+                            render={({ field }) => (
+                              <FormItem className="col-span-2">
+                                <FormLabel>{t('order.form.city') || 'Gemeente'}</FormLabel>
+                                <FormControl>
+                                  <Input placeholder="Zwevezele" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
                       </div>
                     )}
 
@@ -1136,33 +1043,6 @@ ${data.zipCode} ${data.city}
                       )}
                     />
 
-                    {/* GDPR Privacy Consent Checkbox - Required for Belgian compliance */}
-                    <FormField
-                      control={form.control}
-                      name="privacyConsent"
-                      render={({ field }) => (
-                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 bg-muted/30">
-                          <FormControl>
-                            <input
-                              type="checkbox"
-                              checked={field.value}
-                              onChange={field.onChange}
-                              className="h-5 w-5 mt-0.5 accent-primary cursor-pointer"
-                            />
-                          </FormControl>
-                          <div className="space-y-1 leading-none">
-                            <FormLabel className="cursor-pointer">
-                              {t('order.privacyConsent')}{' '}
-                              <Link to="/privacy" className="text-primary underline hover:text-primary/80">
-                                {t('footer.privacy')}
-                              </Link>
-                            </FormLabel>
-                            <FormMessage />
-                          </div>
-                        </FormItem>
-                      )}
-                    />
-
                     <div className="flex gap-3">
                       <Button type="button" variant="outline" onClick={() => setStep(2)} className="flex-1">
                         {t('order.form.back')}
@@ -1197,7 +1077,7 @@ ${data.zipCode} ${data.city}
                     <p className="text-muted-foreground">
                       {t('order.success.description')}
                     </p>
-                    
+
                     {orderTotal > 0 && (
                       <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
                         <p className="text-sm font-semibold mb-2">{t('order.success.orderTotal')}:</p>
@@ -1221,9 +1101,6 @@ ${data.zipCode} ${data.city}
           </Form>
         </div>
       </div>
-      
-      {/* Menu Section */}
-      <MenuSection />
     </>
   );
 };

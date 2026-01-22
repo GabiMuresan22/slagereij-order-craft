@@ -5,6 +5,9 @@
   
   Submit this URL to Google Search Console:
   https://xqmfdoayucknepabazpp.supabase.co/functions/v1/generate-sitemap
+  
+  Note: This lastmod date is updated automatically during build.
+  The actual sitemap content is generated dynamically by the Edge Function.
 -->
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
