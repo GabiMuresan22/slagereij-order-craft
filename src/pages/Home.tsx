@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, ChefHat, Clock } from "lucide-react";
+import { MapPin, ChefHat, ShoppingBag, PartyPopper, Heart, FileText, MessageSquare } from "lucide-react";
 import heroImageDesktop from "@/assets/hero-steak.webp";
 import heroImageMobile from "@/assets/hero-steak-mobile.webp";
 import Testimonials from "@/components/Testimonials";
@@ -16,6 +15,8 @@ import bbqGrillMeats from "@/assets/bbq-grill-meats.webp";
 import cateringChefServing from "@/assets/catering-chef-serving.webp";
 import porkProducts from "@/assets/pork-products.webp";
 import romanianPlatter from "@/assets/romanian-traditional-appetizer-platter-charcuterie.webp";
+import teamPortrait from "@/assets/team-portrait.webp";
+import cateringPartySpread from "@/assets/catering-party-spread.webp";
 
 const Home = () => {
   const { t, language } = useLanguage();
@@ -30,31 +31,35 @@ const Home = () => {
     ? 'Bestel online bij Slagerij John. Uw slager in Zwevezele voor dagvers vlees, BBQ, gourmet en Roemeense specialiteiten. Vers bereid, makkelijk afgehaald.'
     : 'Gustul de acasă în Belgia. Comandă mici, cârnați și preparate tradiționale românești de la Slagerij John. Ridicare din Zwevezele.';
 
-  // Category grid data
+  // Category grid data with SEO keywords
   const categories = [
     {
-      title: language === 'nl' ? 'Vers Vlees' : 'Carne Proaspătă',
+      title: t('home.categories.freshMeat.title'),
+      description: t('home.categories.freshMeat.desc'),
       image: porkProducts,
       link: '/products',
-      alt: 'Vers vlees selectie'
+      alt: language === 'nl' ? 'biefstuk kopen, varkenshaasje' : 'carne proaspătă de vită și porc'
     },
     {
-      title: language === 'nl' ? 'BBQ & Gourmet' : 'BBQ & Gourmet',
+      title: t('home.categories.bbq.title'),
+      description: t('home.categories.bbq.desc'),
       image: bbqGrillMeats,
       link: '/packages',
-      alt: 'BBQ en gourmet vlees'
+      alt: language === 'nl' ? 'bbq pakket bestellen, gourmet schotel' : 'pachete BBQ și gourmet'
     },
     {
-      title: language === 'nl' ? 'Traiteur' : 'Traiteur',
+      title: t('home.categories.prepared.title'),
+      description: t('home.categories.prepared.desc'),
       image: cateringChefServing,
       link: '/catering',
-      alt: 'Traiteur service'
+      alt: language === 'nl' ? 'traiteur gerechten, spaghetti saus' : 'preparate traiteur'
     },
     {
-      title: language === 'nl' ? 'Specialiteiten' : 'Specialități',
+      title: t('home.categories.romanian.title'),
+      description: t('home.categories.romanian.desc'),
       image: romanianPlatter,
       link: '/products',
-      alt: 'Roemeense en Belgische specialiteiten'
+      alt: language === 'nl' ? 'Roemeense specialiteiten, mici, gerookte worst' : 'specialități românești, mici, cârnați afumați'
     }
   ];
 
@@ -70,7 +75,7 @@ const Home = () => {
         <link rel="preload" as="image" href={heroImageMobile} media="(max-width: 767px)" />
       </SEO>
 
-      {/* Hero Section - Above the Fold */}
+      {/* 1. HERO SECTION - First Impression */}
       <section 
         className="relative h-[550px] md:h-[650px] flex items-center justify-center overflow-hidden"
         aria-label={t("accessibility.heroSection") || "Welcome section"}
@@ -106,7 +111,7 @@ const Home = () => {
             {t("home.hero.subtitle")}
           </p>
           
-          {/* CTA Buttons */}
+          {/* CTA Buttons - Different for NL vs RO */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <LocalizedLink to="/order">
               <Button
@@ -116,86 +121,132 @@ const Home = () => {
                 {t("home.hero.ctaPrimary")}
               </Button>
             </LocalizedLink>
-            <LocalizedLink to="/catering">
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-transparent text-white border-2 border-white hover:bg-white hover:text-foreground transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full sm:w-auto"
-              >
-                {t("home.hero.ctaSecondary")}
-              </Button>
-            </LocalizedLink>
+            {language === 'nl' && (
+              <LocalizedLink to="/catering">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-transparent text-white border-2 border-white hover:bg-white hover:text-foreground transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full sm:w-auto"
+                >
+                  {t("home.hero.ctaSecondary")}
+                </Button>
+              </LocalizedLink>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Trust Bar - Immediately below Hero */}
-      <section className="py-8 md:py-12 bg-muted/50 border-y border-border" aria-labelledby="trust-heading">
-        <h2 id="trust-heading" className="sr-only">{t("accessibility.ourFeatures") || "Our Features"}</h2>
+      {/* 2. VALUE PROPOSITION SECTION - Why Us? */}
+      <section className="py-12 md:py-16 bg-muted/50 border-y border-border" aria-labelledby="why-us-heading">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {/* Lokaal & Vers */}
-            <div className="flex items-center justify-center gap-4 p-4">
-              <div className="flex-shrink-0 w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
-                <MapPin className="w-7 h-7 text-primary" aria-hidden="true" />
+          <h2 id="why-us-heading" className="text-2xl md:text-3xl font-serif font-bold text-center mb-10">
+            {t("home.whyUs.title")}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Local Quality */}
+            <div className="flex flex-col items-center text-center p-6 bg-background rounded-lg shadow-sm">
+              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <MapPin className="w-8 h-8 text-primary" aria-hidden="true" />
               </div>
-              <div>
-                <h3 className="text-lg font-serif font-semibold">{t("home.trust.local.title")}</h3>
-                <p className="text-sm text-muted-foreground">{t("home.trust.local.desc")}</p>
-              </div>
+              <h3 className="text-lg font-serif font-semibold mb-2">{t("home.whyUs.local.title")}</h3>
+              <p className="text-sm text-muted-foreground">{t("home.whyUs.local.desc")}</p>
             </div>
 
-            {/* Huisbereid */}
-            <div className="flex items-center justify-center gap-4 p-4">
-              <div className="flex-shrink-0 w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
-                <ChefHat className="w-7 h-7 text-primary" aria-hidden="true" />
+            {/* Homemade */}
+            <div className="flex flex-col items-center text-center p-6 bg-background rounded-lg shadow-sm">
+              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <ChefHat className="w-8 h-8 text-primary" aria-hidden="true" />
               </div>
-              <div>
-                <h3 className="text-lg font-serif font-semibold">{t("home.trust.homemade.title")}</h3>
-                <p className="text-sm text-muted-foreground">{t("home.trust.homemade.desc")}</p>
-              </div>
+              <h3 className="text-lg font-serif font-semibold mb-2">{t("home.whyUs.homemade.title")}</h3>
+              <p className="text-sm text-muted-foreground">{t("home.whyUs.homemade.desc")}</p>
             </div>
 
-            {/* Click & Collect */}
-            <div className="flex items-center justify-center gap-4 p-4">
-              <div className="flex-shrink-0 w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
-                <Clock className="w-7 h-7 text-primary" aria-hidden="true" />
+            {/* Convenience */}
+            <div className="flex flex-col items-center text-center p-6 bg-background rounded-lg shadow-sm">
+              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <ShoppingBag className="w-8 h-8 text-primary" aria-hidden="true" />
               </div>
-              <div>
-                <h3 className="text-lg font-serif font-semibold">{t("home.trust.clickCollect.title")}</h3>
-                <p className="text-sm text-muted-foreground">{t("home.trust.clickCollect.desc")}</p>
-              </div>
+              <h3 className="text-lg font-serif font-semibold mb-2">{t("home.whyUs.convenience.title")}</h3>
+              <p className="text-sm text-muted-foreground">{t("home.whyUs.convenience.desc")}</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Visual Category Grid - Product Navigation */}
+      {/* 3. PRODUCT CATEGORIES - Visual Navigation */}
       <section className="py-12 md:py-16 bg-background" aria-labelledby="categories-heading">
         <div className="container mx-auto px-4">
           <h2 id="categories-heading" className="text-3xl md:text-4xl font-serif font-bold text-center mb-8 md:mb-12">
             {t("home.categories.title")}
           </h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((category, index) => (
               <LocalizedLink
                 key={index}
                 to={category.link}
-                className="group relative aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               >
-                <img
-                  src={category.image}
-                  alt={category.alt}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-                <div className="absolute inset-0 flex items-end justify-center p-4">
-                  <h3 className="text-white text-lg md:text-xl font-serif font-bold text-center" style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}>
+                <div className="aspect-[4/3]">
+                  <img
+                    src={category.image}
+                    alt={category.alt}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                </div>
+                <div className="absolute inset-0 flex flex-col items-start justify-end p-5">
+                  <h3 className="text-white text-xl font-serif font-bold mb-1" style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}>
                     {category.title}
                   </h3>
+                  <p className="text-white/90 text-sm" style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>
+                    {category.description}
+                  </p>
                 </div>
               </LocalizedLink>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. CATERING & EVENTS SECTION - High Ticket Sales */}
+      <section className="py-12 md:py-20 bg-muted/30" aria-labelledby="catering-heading">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="order-2 md:order-1">
+              <div className="flex items-center gap-2 mb-4">
+                <PartyPopper className="w-6 h-6 text-primary" />
+                <span className="text-sm font-semibold text-primary uppercase tracking-wider">Catering & Events</span>
+              </div>
+              <h2 id="catering-heading" className="text-3xl md:text-4xl font-serif font-bold mb-6">
+                {t("home.catering.title")}
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                {t("home.catering.body")}
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <LocalizedLink to="/catering">
+                  <Button size="lg" className="w-full sm:w-auto">
+                    <FileText className="mr-2 h-5 w-5" />
+                    {t("home.catering.ctaFolder")}
+                  </Button>
+                </LocalizedLink>
+                <LocalizedLink to="/contact">
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                    <MessageSquare className="mr-2 h-5 w-5" />
+                    {t("home.catering.ctaQuote")}
+                  </Button>
+                </LocalizedLink>
+              </div>
+            </div>
+            <div className="order-1 md:order-2">
+              <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
+                <img
+                  src={cateringPartySpread}
+                  alt={language === 'nl' ? 'Complete party catering met tacos en bijgerechten' : 'Catering complet pentru petreceri'}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -205,6 +256,45 @@ const Home = () => {
 
       {/* Testimonials Section */}
       <Testimonials />
+
+      {/* 5. ABOUT US SECTION - Personal Connection */}
+      <section className="py-12 md:py-20 bg-background" aria-labelledby="about-heading">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
+                <img
+                  src={teamPortrait}
+                  alt={language === 'nl' ? 'Het team van Slagerij John' : 'Echipa Măcelăriei John'}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <Heart className="w-6 h-6 text-primary" />
+                <span className="text-sm font-semibold text-primary uppercase tracking-wider">
+                  {language === 'nl' ? 'Ons Verhaal' : 'Povestea Noastră'}
+                </span>
+              </div>
+              <h2 id="about-heading" className="text-3xl md:text-4xl font-serif font-bold mb-6">
+                {t("home.about.title")}
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+                {t("home.about.p1")}
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                {t("home.about.p2")}
+              </p>
+              <LocalizedLink to="/about">
+                <Button size="lg" variant="outline">
+                  {t("home.about.cta")}
+                </Button>
+              </LocalizedLink>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* CTA Section */}
       <section className="py-16 md:py-20 bg-primary text-primary-foreground" aria-labelledby="cta-heading">
