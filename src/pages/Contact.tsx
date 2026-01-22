@@ -41,7 +41,7 @@ const createContactFormSchema = (t: (key: string) => string) => {
 type ContactFormValues = z.infer<ReturnType<typeof createContactFormSchema>>;
 
 const Contact = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
   
@@ -95,9 +95,15 @@ const Contact = () => {
   return (
     <div className="min-h-screen py-12">
       <SEO
-        title="Contact"
-        description="Neem contact op met Slagerij John in Zwevezele. Bezoek ons in de Bruggestraat 146A, Zwevezele 8750, België of bel +32 466 18 64 57. Openingstijden en routebeschrijving."
-        keywords="contact, openingstijden, adres, telefoon, route, Zwevezele, Bruggestraat"
+        title={language === 'nl'
+          ? "Contact & Openingsuren | Slagerij Zwevezele"
+          : "Contact & Program | Măcelărie Zwevezele"}
+        description={language === 'nl'
+          ? "Bezoek Slagerij John in de Bruggestraat 146A, Zwevezele. Open ma-za. Bel +32 466 18 64 57 voor bestellingen of vragen. Routebeschrijving en contactformulier."
+          : "Vizitați Măcelăria John pe strada Bruggestraat 146A, Zwevezele. Deschis lu-sâ. Sunați +32 466 18 64 57 pentru comenzi. Indicații rutiere și formular de contact."}
+        keywords={language === 'nl'
+          ? "contact slagerij, openingsuren, adres Zwevezele, Bruggestraat 146A, telefoon slagerij, route slagerij, bestelformulier"
+          : "contact măcelărie, program, adresă Zwevezele, Bruggestraat 146A, telefon măcelărie, indicații, formular comandă"}
         structuredData={[breadcrumbData, getLocalBusinessSchema()]}
       />
       <div className="container mx-auto px-4">
