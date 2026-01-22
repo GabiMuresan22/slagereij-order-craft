@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  This is a sitemap index pointing to the dynamic sitemap generator.
-  The dynamic sitemap at the referenced URL provides current lastmod dates.
+  Sitemap index pointing to the dynamic sitemap generator.
+  The dynamic sitemap provides current lastmod dates and bilingual hreflang annotations.
   
-  For production, configure your hosting/CDN to redirect /sitemap.xml to:
+  Submit this URL to Google Search Console:
   https://xqmfdoayucknepabazpp.supabase.co/functions/v1/generate-sitemap
 -->
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>https://xqmfdoayucknepabazpp.supabase.co/functions/v1/generate-sitemap</loc>
-    <lastmod>2025-01-18</lastmod>
+    <lastmod>2025-01-22</lastmod>
   </sitemap>
 </sitemapindex>
