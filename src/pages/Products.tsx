@@ -9,12 +9,12 @@ import poultryImage from "@/assets/chicken.webp";
 import bbqGrillImage from "@/assets/bbq-grill-meats.webp";
 import specialtyImage from "@/assets/specialty-platter.webp";
 import gourmetImage from "@/assets/steengrill-vleesschotel-assortiment.webp";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, Language } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema, getProductListSchema } from "@/lib/structuredData";
 
 const Products = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const breadcrumbData = getBreadcrumbSchema([
     { name: t('nav.home'), url: "/" },
@@ -98,12 +98,25 @@ const Products = () => {
     },
   ];
 
+  // SEO meta tags optimized for Belgian market
+  const seoTitle = language === 'nl'
+    ? 'Vers Vlees Kopen | Rundvlees, Varkensvlees & BBQ Vlees'
+    : 'Carne Proaspătă | Vită, Porc & Specialități Românești';
+  
+  const seoDescription = language === 'nl'
+    ? 'Bekijk ons assortiment vers vlees: rundvlees, varkensvlees, gevogelte en BBQ specialiteiten. Ambachtelijke kwaliteit van uw slager in Zwevezele. Bestel online!'
+    : 'Descoperă selecția noastră de carne proaspătă: vită, porc, pui și specialități pentru grătar. Calitate artizanală de la măcelarul tău din Zwevezele.';
+
+  const seoKeywords = language === 'nl'
+    ? 'vers vlees kopen, rundvlees, varkensvlees, kip, BBQ vlees, gourmet vlees, slagerij Zwevezele, ambachtelijk vlees, online bestellen'
+    : 'carne proaspătă, carne de vită, carne de porc, pui, grătar, specialități românești, măcelărie Zwevezele';
+
   return (
     <div className="min-h-screen">
       <SEO
-        title={t('products.seo.title')}
-        description={t('products.seo.description')}
-        keywords={t('products.seo.keywords')}
+        title={seoTitle}
+        description={seoDescription}
+        keywords={seoKeywords}
         structuredData={[breadcrumbData, productListData]}
       />
 
