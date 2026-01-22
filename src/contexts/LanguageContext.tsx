@@ -31,13 +31,22 @@ const translations = {
     // Home Page - Updated for new structure
     'home.alert.title': '📅 Kerst- en Nieuwjaar Openingstijden',
     'home.alert.description': '22-24 dec: 08:00 – 18:00\n25 dec: 08:00 – 10:00 (Enkel afhalen)\n26-27 dec: 08:00 – 13:00\n28 dec: Gesloten\n29-31 dec: 08:00 – 18:00\n1 jan: 08:00 – 10:00 (Enkel afhalen)\n2-4 jan: 08:00 – 13:00\n5 jan: 13:00 – 18:00 (Normaal uurrooster)',
-    'home.hero.title': 'Ambachtelijke slagerij & traiteur in Zwevezele',
+    'home.hero.title': 'Ambachtelijke slagerij & traiteur in Zwevezele.',
     'home.hero.subtitle': 'Dagvers vlees, huisbereide gerechten en feestelijke schotels. Bestel online en haal af wanneer het u past.',
     'home.hero.cta': 'Bestel Nu Online',
-    'home.hero.ctaPrimary': 'Naar de Webshop',
-    'home.hero.ctaSecondary': 'Bekijk Folder',
+    'home.hero.ctaPrimary': 'Bekijk onze webshop',
+    'home.hero.ctaSecondary': 'Onze promoties',
     
-    // Trust Bar
+    // Value Proposition Section
+    'home.whyUs.title': 'Waarom kiezen voor Slagerij John?',
+    'home.whyUs.local.title': 'Lokale Kwaliteit',
+    'home.whyUs.local.desc': 'Wij werken uitsluitend samen met lokale boeren. Eerlijk vlees met een volle smaak.',
+    'home.whyUs.homemade.title': 'Huisbereid',
+    'home.whyUs.homemade.desc': 'Van onze preparé tot de goulash: alles wordt in eigen atelier bereid.',
+    'home.whyUs.convenience.title': 'Gemak',
+    'home.whyUs.convenience.desc': 'Geen wachtrijen. Bestel via de webshop en uw pakket staat klaar.',
+    
+    // Trust Bar (legacy - keep for compatibility)
     'home.trust.local.title': 'Lokaal & Vers',
     'home.trust.local.desc': 'Vlees van vertrouwde leveranciers',
     'home.trust.homemade.title': 'Huisbereid',
@@ -45,8 +54,28 @@ const translations = {
     'home.trust.clickCollect.title': 'Click & Collect',
     'home.trust.clickCollect.desc': 'Bestel online, haal op',
     
-    // Category Grid
-    'home.categories.title': 'Ontdek Ons Aanbod',
+    // Category Grid - Product Navigation
+    'home.categories.title': 'Onze Specialiteiten',
+    'home.categories.freshMeat.title': 'Vers Vlees',
+    'home.categories.freshMeat.desc': 'Rund, varken, kip en lam van topkwaliteit.',
+    'home.categories.bbq.title': 'BBQ & Gourmet',
+    'home.categories.bbq.desc': 'Alles voor een geslaagd feestje. Steengrill, fondue & teppanyaki.',
+    'home.categories.prepared.title': 'Bereide Gerechten',
+    'home.categories.prepared.desc': 'Geen tijd om te koken? Geniet van onze dagverse maaltijden.',
+    'home.categories.romanian.title': 'Roemeense Specialiteiten',
+    'home.categories.romanian.desc': 'Authentieke smaken: Mici, gerookte worst en meer.',
+    
+    // Catering & Events Section
+    'home.catering.title': 'Iets te vieren? Wij zorgen voor het eten.',
+    'home.catering.body': 'Of het nu gaat om een verjaardag, communie of bedrijfsfeest in de regio Zwevezele, Wingene of Lichtervelde: Slagerij John is uw partner. Van koude schotels (buffet) tot uitgebreide BBQ-pakketten.',
+    'home.catering.ctaFolder': 'Download onze folder',
+    'home.catering.ctaQuote': 'Vraag een offerte',
+    
+    // About Us Section
+    'home.about.title': 'Passie voor het slagersvak.',
+    'home.about.p1': 'Als familiebedrijf hechten wij enorm veel belang aan traditie. Voor ons is slager zijn meer dan alleen vlees snijden; het gaat om het selecteren van het beste vee en het verwerken ervan met respect voor het product.',
+    'home.about.p2': 'Naast de Vlaamse klassiekers brengen we ook een culinaire toets uit Oost-Europa. Zo geniet u van het beste van twee werelden.',
+    'home.about.cta': 'Meer over ons',
     
     // Features (legacy)
     'home.features.online.title': 'Online Bestellen',
@@ -986,13 +1015,22 @@ const translations = {
     // Home Page - Updated for new structure
     'home.alert.title': '📅 Program Crăciun și Anul Nou',
     'home.alert.description': '22-24 Dec: 08:00 – 18:00\n25 Dec: 08:00 – 10:00 (Doar ridicare)\n26-27 Dec: 08:00 – 13:00\n28 Dec: Închis\n29-31 Dec: 08:00 – 18:00\n1 Ian: 08:00 – 10:00 (Doar ridicare)\n2-4 Ian: 08:00 – 13:00\n5 Ian: 13:00 – 18:00 (Program normal)',
-    'home.hero.title': 'Măcelărie & Traiteur Artizanală în Zwevezele',
-    'home.hero.subtitle': 'Carne proaspătă, preparate de casă și platouri festive. Comandă online și ridică când îți convine.',
+    'home.hero.title': 'Gustul de acasă, aici în Belgia.',
+    'home.hero.subtitle': 'Mici, cârnați proaspeți și preparate tradiționale românești, realizate cu carne de cea mai bună calitate.',
     'home.hero.cta': 'Comandă Acum Online',
-    'home.hero.ctaPrimary': 'Către Magazin',
+    'home.hero.ctaPrimary': 'Vezi produsele românești',
     'home.hero.ctaSecondary': 'Vezi Folder',
     
-    // Trust Bar
+    // Value Proposition Section
+    'home.whyUs.title': 'De ce să alegeți Măcelăria John?',
+    'home.whyUs.local.title': 'Calitate Locală',
+    'home.whyUs.local.desc': 'Lucrăm direct cu fermieri locali. Carne onestă, cu gust plin.',
+    'home.whyUs.homemade.title': 'Făcut în Casă',
+    'home.whyUs.homemade.desc': 'De la pastă de mici la gulaș: totul este preparat în atelierul propriu.',
+    'home.whyUs.convenience.title': 'Comoditate',
+    'home.whyUs.convenience.desc': 'Fără cozi. Comanzi online și pachetul tău e gata de ridicare.',
+    
+    // Trust Bar (legacy - keep for compatibility)
     'home.trust.local.title': 'Local & Proaspăt',
     'home.trust.local.desc': 'Carne de la furnizori de încredere',
     'home.trust.homemade.title': 'Făcut în Casă',
@@ -1000,8 +1038,28 @@ const translations = {
     'home.trust.clickCollect.title': 'Click & Collect',
     'home.trust.clickCollect.desc': 'Comandă online, ridici la magazin',
     
-    // Category Grid
-    'home.categories.title': 'Descoperă Produsele Noastre',
+    // Category Grid - Product Navigation
+    'home.categories.title': 'Specialitățile Noastre',
+    'home.categories.freshMeat.title': 'Carne Proaspătă',
+    'home.categories.freshMeat.desc': 'Vită, porc, pui și miel de calitate superioară.',
+    'home.categories.bbq.title': 'BBQ & Gourmet',
+    'home.categories.bbq.desc': 'Tot ce aveți nevoie pentru o petrecere reușită. Steengrill, fondue & teppanyaki.',
+    'home.categories.prepared.title': 'Preparate Gata',
+    'home.categories.prepared.desc': 'Nu ai timp să gătești? Bucură-te de mâncărurile noastre proaspete zilnic.',
+    'home.categories.romanian.title': 'Specialități Românești',
+    'home.categories.romanian.desc': 'Gusturi autentice: Mici, cârnați afumați și multe altele.',
+    
+    // Catering & Events Section
+    'home.catering.title': 'Ai ceva de sărbătorit? Noi ne ocupăm de mâncare.',
+    'home.catering.body': 'Fie că este vorba de o aniversare, comuniune sau eveniment de firmă în zona Zwevezele, Wingene sau Lichtervelde: Măcelăria John este partenerul tău. De la platouri reci (bufet) la pachete BBQ complete.',
+    'home.catering.ctaFolder': 'Descarcă folderul nostru',
+    'home.catering.ctaQuote': 'Solicită o ofertă',
+    
+    // About Us Section
+    'home.about.title': 'Pasiune pentru meseria de măcelar.',
+    'home.about.p1': 'Ca afacere de familie, acordăm o importanță deosebită tradiției. Pentru noi, a fi măcelar înseamnă mai mult decât a tăia carne; este vorba despre selectarea celui mai bun vite și prelucrarea acestuia cu respect pentru produs.',
+    'home.about.p2': 'Pe lângă clasicele flamande, aducem și o notă culinară din Europa de Est. Astfel, vă bucurați de ce e mai bun din ambele lumi.',
+    'home.about.cta': 'Mai multe despre noi',
     
     // Features (legacy)
     'home.features.online.title': 'Comandă Online',
