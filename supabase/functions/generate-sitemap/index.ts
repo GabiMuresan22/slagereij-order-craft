@@ -18,17 +18,21 @@ interface RouteConfig {
 }
 
 const routes: RouteConfig[] = [
-  { path: "", changefreq: "weekly", priority: 1.0, roPriorityModifier: -0.1 },
-  { path: "about", changefreq: "monthly", priority: 0.8, roPriorityModifier: -0.1 },
-  { path: "products", changefreq: "weekly", priority: 0.9, roPriorityModifier: -0.1 },
-  { path: "packages", changefreq: "weekly", priority: 0.8, roPriorityModifier: -0.1 },
-  { path: "catering", changefreq: "monthly", priority: 0.8, roPriorityModifier: -0.1 },
-  { path: "traiteur-catering", changefreq: "monthly", priority: 0.85, roPriorityModifier: -0.1 },
-  { path: "order", changefreq: "weekly", priority: 0.9, roPriorityModifier: -0.1 },
-  { path: "contact", changefreq: "monthly", priority: 0.7, roPriorityModifier: -0.1 },
+  // Homepage - highest priority
+  { path: "", changefreq: "weekly", priority: 1.0, roPriorityModifier: -0.05 },
+  // Commercial pages - high priority (SEO-optimized)
+  { path: "order", changefreq: "weekly", priority: 0.95, roPriorityModifier: -0.05 },
+  { path: "products", changefreq: "weekly", priority: 0.9, roPriorityModifier: -0.05 },
+  { path: "catering", changefreq: "weekly", priority: 0.9, roPriorityModifier: -0.05 },
+  { path: "traiteur-catering", changefreq: "weekly", priority: 0.85, roPriorityModifier: -0.05 },
+  { path: "packages", changefreq: "weekly", priority: 0.8, roPriorityModifier: -0.05 },
+  // Brand & trust pages - medium-high priority (SEO-optimized)
+  { path: "about", changefreq: "monthly", priority: 0.75, roPriorityModifier: -0.05 },
+  { path: "contact", changefreq: "monthly", priority: 0.75, roPriorityModifier: -0.05 },
+  // Informational pages - lower priority
+  { path: "allergens", changefreq: "monthly", priority: 0.5, roPriorityModifier: -0.1 },
   { path: "privacy", changefreq: "yearly", priority: 0.3, roPriorityModifier: -0.1 },
   { path: "terms", changefreq: "yearly", priority: 0.3, roPriorityModifier: -0.1 },
-  { path: "allergens", changefreq: "monthly", priority: 0.5, roPriorityModifier: -0.1 },
 ];
 
 function generateUrlEntry(
