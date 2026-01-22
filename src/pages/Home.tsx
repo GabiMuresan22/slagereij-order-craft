@@ -23,12 +23,12 @@ const Home = () => {
 
   // SEO meta tags optimized for Belgian market
   const seoTitle = language === 'nl' 
-    ? 'Slagerij John Zwevezele | Ambachtelijk Vlees & Traiteur Online'
-    : 'Măcelăria John Zwevezele | Carne Proaspătă & Produse Românești';
+    ? 'Slagerij John Zwevezele | Bestel Vlees & Traiteur Online'
+    : 'Măcelăria John Zwevezele | Carne Proaspătă & Mici Românești';
   
   const seoDescription = language === 'nl'
-    ? 'Bestel online bij Slagerij John. Uw slager in Zwevezele voor dagvers vlees, BBQ, gourmet en Roemeense specialiteiten. Vers bereid, makkelijk afgehaald.'
-    : 'Gustul de acasă în Belgia. Comandă mici, cârnați și preparate tradiționale românești de la Slagerij John. Ridicare din Zwevezele.';
+    ? 'Ambachtelijke slagerij in Zwevezele. Bestel online: vers vlees, BBQ pakketten, gourmet en Roemeense specialiteiten. Afhalen in de winkel. Bekijk ons aanbod!'
+    : 'Cauți gustul de acasă? Slagerij John în Zwevezele îți oferă mici, cârnați afumați, carne proaspătă și preparate tradiționale. Comandă online simplu și rapid!';
 
   // Category Grid - 4 cards with SEO keywords
   const categories = [
