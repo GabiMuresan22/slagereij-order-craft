@@ -178,7 +178,7 @@ const Home = () => {
                 </Button>
               </motion.div>
             </LocalizedLink>
-            <motion.div
+            {/* <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -202,7 +202,7 @@ const Home = () => {
                   </>
                 )}
               </Button>
-            </motion.div>
+            </motion.div> */}
           </div>
         </div>
       </section>
