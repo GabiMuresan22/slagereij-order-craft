@@ -26,7 +26,6 @@ import { lazyWithRetry } from "@/lib/lazyWithRetry";
 const Home = lazyWithRetry(() => import("./pages/Home"));
 const About = lazyWithRetry(() => import("./pages/About"));
 const Products = lazyWithRetry(() => import("./pages/Products"));
-const Packages = lazyWithRetry(() => import("./pages/Packages"));
 const Catering = lazyWithRetry(() => import("./pages/Catering"));
 const TraiteurCatering = lazyWithRetry(() => import("./pages/TraiteurCatering"));
 const Order = lazyWithRetry(() => import("./pages/Order"));
@@ -55,7 +54,6 @@ const AppRoutes = () => (
     <Route path="/" element={<Home />} />
     <Route path="/about" element={<About />} />
     <Route path="/products" element={<Products />} />
-    <Route path="/packages" element={<Packages />} />
     <Route path="/catering" element={<Catering />} />
     <Route path="/traiteur-catering" element={<TraiteurCatering />} />
     <Route path="/order" element={<Order />} />
@@ -71,7 +69,6 @@ const AppRoutes = () => (
     <Route path="/ro" element={<Home />} />
     <Route path="/ro/about" element={<About />} />
     <Route path="/ro/products" element={<Products />} />
-    <Route path="/ro/packages" element={<Packages />} />
     <Route path="/ro/catering" element={<Catering />} />
     <Route path="/ro/traiteur-catering" element={<TraiteurCatering />} />
     <Route path="/ro/order" element={<Order />} />
@@ -82,6 +79,10 @@ const AppRoutes = () => (
     <Route path="/ro/privacy" element={<Privacy />} />
     <Route path="/ro/terms" element={<Terms />} />
     <Route path="/ro/allergens" element={<Allergens />} />
+    
+    {/* Legacy redirect for /packages */}
+    <Route path="/packages" element={<Products />} />
+    <Route path="/ro/packages" element={<Products />} />
     
     {/* 404 fallback */}
     <Route path="*" element={<NotFound />} />
