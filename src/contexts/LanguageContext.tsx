@@ -90,7 +90,7 @@ const translations = {
     // Catering & Events Section
     'home.catering.title': 'Iets te vieren? Wij zorgen voor het eten.',
     'home.catering.body': 'Of het nu gaat om een verjaardag, communie of bedrijfsfeest in de regio Zwevezele, Wingene of Lichtervelde: Slagerij John is uw partner. Van koude schotels (buffet) tot uitgebreide BBQ-pakketten.',
-    'home.catering.ctaFolder': 'Download onze folder',
+    'home.catering.ctaFolder': 'Download Folder',
     'home.catering.ctaQuote': 'Vraag Direct Offerte',
     
     // About Us Section
