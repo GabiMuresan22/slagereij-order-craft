@@ -3,15 +3,16 @@
  * Provides offline support and caching for better performance
  */
 
-const CACHE_NAME = 'slagerij-john-v1';
-const RUNTIME_CACHE = 'slagerij-john-runtime-v1';
+// IMPORTANT: Increment this version to force cache refresh after deployments
+const CACHE_VERSION = 'v2';
+const CACHE_NAME = `slagerij-john-${CACHE_VERSION}`;
+const RUNTIME_CACHE = `slagerij-john-runtime-${CACHE_VERSION}`;
 
-// Assets to cache on install
+// Assets to cache on install (only truly static assets)
 const PRECACHE_ASSETS = [
-  '/',
-  '/index.html',
   '/og-image.jpg',
   '/favicon.ico',
+  '/favicon.svg',
 ];
 
 // Install event - cache essential assets
@@ -26,14 +27,15 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate event - clean up old caches
+// Activate event - clean up ALL old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames
           .filter((cacheName) => {
-            return cacheName !== CACHE_NAME && cacheName !== RUNTIME_CACHE;
+            // Delete any cache that doesn't match current version
+            return !cacheName.includes(CACHE_VERSION);
           })
           .map((cacheName) => {
             console.log('[SW] Deleting old cache:', cacheName);
@@ -45,54 +47,87 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event - Network-first for HTML/JS/CSS, cache-first for images
 self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (event.request.method !== 'GET') {
     return;
   }
 
-  // Skip Supabase API calls and external resources
   const url = new URL(event.request.url);
+
+  // Skip Supabase API calls and external resources
   if (url.origin.includes('supabase.co') || 
       url.origin.includes('googleapis.com') ||
-      url.origin.includes('gstatic.com')) {
+      url.origin.includes('gstatic.com') ||
+      url.origin !== self.location.origin) {
     return; // Let these go to network
   }
 
-  event.respondWith(
-    caches.match(event.request)
-      .then((cachedResponse) => {
-        // Return cached version if available
-        if (cachedResponse) {
-          return cachedResponse;
-        }
+  // For JS, CSS, and HTML files - always try network first (prevents stale chunk issues)
+  const isCodeFile = url.pathname.endsWith('.js') || 
+                     url.pathname.endsWith('.css') || 
+                     url.pathname.endsWith('.html') ||
+                     url.pathname === '/' ||
+                     event.request.mode === 'navigate';
 
-        // Fetch from network
-        return fetch(event.request)
-          .then((response) => {
-            // Don't cache non-successful responses
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            // Clone the response for caching
+  if (isCodeFile) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          // Clone and cache the fresh response
+          if (response && response.status === 200) {
             const responseToCache = response.clone();
-
-            // Cache successful responses
-            caches.open(RUNTIME_CACHE)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
-          })
-          .catch(() => {
-            // If network fails and it's a navigation request, return offline page
+            caches.open(RUNTIME_CACHE).then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
+          }
+          return response;
+        })
+        .catch(() => {
+          // Fallback to cache only if network fails
+          return caches.match(event.request).then((cachedResponse) => {
+            if (cachedResponse) {
+              return cachedResponse;
+            }
+            // For navigation requests, return cached index.html
             if (event.request.mode === 'navigate') {
               return caches.match('/index.html');
             }
           });
+        })
+    );
+    return;
+  }
+
+  // For images and other static assets - cache-first strategy
+  event.respondWith(
+    caches.match(event.request)
+      .then((cachedResponse) => {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+
+        return fetch(event.request)
+          .then((response) => {
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+
+            const responseToCache = response.clone();
+            caches.open(RUNTIME_CACHE).then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
+
+            return response;
+          });
       })
   );
+});
+
+// Listen for skip waiting message from client
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
