@@ -121,7 +121,7 @@ export default function Catering() {
                 ? 'Dagvers vlees, huisbereide gerechten en feestelijke schotels. Bestel online en haal af wanneer het u past.' 
                 : 'Mici, cârnați proaspeți și preparate tradiționale românești, realizate cu carne de cea mai bună calitate.'}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            {/* <div className="flex flex-col sm:flex-row gap-4">
               <LocalizedLink to="/order">
                 <Button size="lg" className="text-lg px-8 bg-primary hover:bg-primary/90">
                   {language === 'nl' ? 'Bekijk onze webshop' : 'Vezi produsele românești'}
@@ -134,7 +134,7 @@ export default function Catering() {
                   </Button>
                 </LocalizedLink>
               )}
-            </div>
+            </div> */}
           </div>
         </section>
 
