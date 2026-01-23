@@ -43,7 +43,7 @@ const Home = () => {
       title: t('home.categories.bbq.title'),
       description: t('home.categories.bbq.desc'),
       image: steengrillPlatter,
-      link: '/packages',
+      link: '/products',
       alt: 'bbq pakket bestellen, gourmet schotel, steengrill Wingene'
     },
     {
@@ -131,7 +131,7 @@ const Home = () => {
               </motion.div>
             </LocalizedLink>
             {language === 'nl' && (
-              <LocalizedLink to="/traiteur-catering">
+              <LocalizedLink to="/products">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
