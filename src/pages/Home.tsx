@@ -20,33 +20,29 @@ import teamPortrait from "@/assets/team-portrait.webp";
 import cateringPartySpread from "@/assets/catering-party-spread.webp";
 import steengrillPlatter from "@/assets/steengrill-vleesschotel-assortiment.webp";
 
-// PDF menu images (PNG format required for pdf-lib)
-import christmasMenu1 from "@/assets/christmas-menu-1-pdf.png";
-import christmasMenu2 from "@/assets/christmas-menu-2-pdf.png";
-import christmasMenu3 from "@/assets/christmas-menu-3-pdf.png";
+// PDF menu images are in public folder for edge function access
+const PDF_MENU_IMAGES = {
+  image1: '/pdf-assets/christmas-menu-1.png',
+  image2: '/pdf-assets/christmas-menu-2.png',
+  image3: '/pdf-assets/christmas-menu-3.png',
+};
 
 const Home = () => {
   const { t, language } = useLanguage();
   const structuredData = [getLocalBusinessSchema(), getReviewsSchema()];
   const [isDownloading, setIsDownloading] = useState(false);
 
-  // Function to get the full URL for an imported image
-  const getFullImageUrl = (imagePath: string) => {
-    // If already absolute URL, return as-is
-    if (imagePath.startsWith('http')) return imagePath;
-    // Convert relative path to absolute URL
-    return `${window.location.origin}${imagePath}`;
-  };
-
   // Download folder PDF handler
   const handleDownloadFolder = async () => {
     setIsDownloading(true);
     try {
+      // Use absolute URLs from the public folder
+      const baseUrl = window.location.origin;
       const response = await supabase.functions.invoke('generate-christmas-menu-pdf', {
         body: {
-          image1Url: getFullImageUrl(christmasMenu1),
-          image2Url: getFullImageUrl(christmasMenu2),
-          image3Url: getFullImageUrl(christmasMenu3),
+          image1Url: `${baseUrl}${PDF_MENU_IMAGES.image1}`,
+          image2Url: `${baseUrl}${PDF_MENU_IMAGES.image2}`,
+          image3Url: `${baseUrl}${PDF_MENU_IMAGES.image3}`,
         },
       });
 
