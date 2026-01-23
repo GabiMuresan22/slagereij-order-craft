@@ -17,7 +17,6 @@ import ScrollToTop from "./components/ScrollToTop";
 import AdminRoute from "./components/AdminRoute";
 import RoadworksAlert from "./components/RoadworksAlert";
 
-
 // 1. Import Suspense from React
 import { Suspense } from "react";
 import { lazyWithRetry } from "@/lib/lazyWithRetry";
