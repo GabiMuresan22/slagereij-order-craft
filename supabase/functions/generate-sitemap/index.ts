@@ -25,7 +25,6 @@ const routes: RouteConfig[] = [
   { path: "products", changefreq: "weekly", priority: 0.9, roPriorityModifier: -0.05 },
   { path: "catering", changefreq: "weekly", priority: 0.9, roPriorityModifier: -0.05 },
   { path: "traiteur-catering", changefreq: "weekly", priority: 0.85, roPriorityModifier: -0.05 },
-  { path: "packages", changefreq: "weekly", priority: 0.8, roPriorityModifier: -0.05 },
   // Brand & trust pages - medium-high priority (SEO-optimized)
   { path: "about", changefreq: "monthly", priority: 0.75, roPriorityModifier: -0.05 },
   { path: "contact", changefreq: "monthly", priority: 0.75, roPriorityModifier: -0.05 },
