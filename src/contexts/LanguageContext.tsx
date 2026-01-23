@@ -31,11 +31,12 @@ const translations = {
     // Home Page - Updated for new structure
     'home.alert.title': '📅 Kerst- en Nieuwjaar Openingstijden',
     'home.alert.description': '22-24 dec: 08:00 – 18:00\n25 dec: 08:00 – 10:00 (Enkel afhalen)\n26-27 dec: 08:00 – 13:00\n28 dec: Gesloten\n29-31 dec: 08:00 – 18:00\n1 jan: 08:00 – 10:00 (Enkel afhalen)\n2-4 jan: 08:00 – 13:00\n5 jan: 13:00 – 18:00 (Normaal uurrooster)',
-    'home.hero.title': 'Ambachtelijke slagerij & traiteur in Zwevezele',
-    'home.hero.subtitle': 'Dagvers vlees, huisbereide gerechten en feestelijke schotels. Bestel online en haal af wanneer het u past.',
+    'home.hero.title': 'Proef de Passie op uw Bord',
+    'home.hero.subtitle': 'Ambachtelijke slagerij & traiteur in Zwevezele',
+    'home.hero.description': 'Dagvers vlees, huisbereide gerechten en feestelijke schotels. Bestel online en haal af wanneer het u past.',
     'home.hero.cta': 'Bestel Nu Online',
     'home.hero.ctaPrimary': 'NAAR DE WEBSHOP',
-    'home.hero.ctaSecondary': 'BEKIJK FOLDER',
+    'home.hero.ctaSecondary': 'Bekijk Weekpromoties',
     
     // Introduction Section - Trust & Quality
     'home.intro.text': 'Bij Slagerij John combineren we traditioneel vakmanschap met modern gemak. Of u nu op zoek bent naar het perfecte stukje vlees voor uw zondagse biefstuk, of een uitgebreide gourmetschotel voor een feestje: kwaliteit staat bij ons altijd voorop. Wij selecteren ons vlees met zorg, zodat u zorgeloos kunt genieten.',
@@ -50,13 +51,13 @@ const translations = {
     'home.featured.specialties.desc': 'Huisgemaakte bereidingen en unieke Roemeense specialiteiten.',
     
     // How It Works Section
-    'home.howItWorks.title': 'Eenvoudig online bestellen',
-    'home.howItWorks.step1.title': 'Kies uw producten',
-    'home.howItWorks.step1.desc': 'Een ruim assortiment aan kwaliteitsvlees.',
-    'home.howItWorks.step2.title': 'Kies uw afhaalmoment',
-    'home.howItWorks.step2.desc': 'Uw bestelling staat klaar wanneer u aankomt.',
-    'home.howItWorks.step3.title': 'Geniet thuis',
-    'home.howItWorks.step3.desc': 'Geen wachtrijen, geen stress.',
+    'home.howItWorks.title': 'Van onze toog naar uw tafel in 3 stappen',
+    'home.howItWorks.step1.title': 'Kies uw Favorieten',
+    'home.howItWorks.step1.desc': 'Blader rustig door ons assortiment vers vlees, huisbereide gerechten en Roemeense specialiteiten. Bestel online op uw eigen tempo.',
+    'home.howItWorks.step2.title': 'Vers Versneden',
+    'home.howItWorks.step2.desc': 'Wij gaan pas aan de slag vlak voor u komt. Uw bestelling wordt met zorg en passie versneden en verpakt.',
+    'home.howItWorks.step3.title': 'Afhalen & Genieten',
+    'home.howItWorks.step3.desc': 'Uw pakket staat klaar op het door u gekozen tijdstip. Snel afhalen zonder wachten, direct de keuken in.',
     
     // Value Proposition Section (Why Us)
     'home.whyUs.title': 'Waarom kiezen voor Slagerij John?',
@@ -90,7 +91,7 @@ const translations = {
     'home.catering.title': 'Iets te vieren? Wij zorgen voor het eten.',
     'home.catering.body': 'Of het nu gaat om een verjaardag, communie of bedrijfsfeest in de regio Zwevezele, Wingene of Lichtervelde: Slagerij John is uw partner. Van koude schotels (buffet) tot uitgebreide BBQ-pakketten.',
     'home.catering.ctaFolder': 'Download onze folder',
-    'home.catering.ctaQuote': 'Vraag een offerte',
+    'home.catering.ctaQuote': 'Vraag Direct Offerte',
     
     // About Us Section
     'home.about.title': 'Passie voor het slagersvak.',
@@ -110,8 +111,8 @@ const translations = {
     'home.specials.promo.offer1': 'Kopen van minimum €30 → Gratis 200 gr Préparé van de Chef',
     'home.specials.promo.offer2': 'Kopen van €50 → Gratis 500 gr gehakt',
     'home.specials.order': 'Bestel Nu',
-    'home.cta.title': 'Klaar om te Bestellen?',
-    'home.cta.subtitle': 'Ontdek ons volledig assortiment en bestel vandaag nog voor afhaling',
+    'home.cta.title': 'Zin gekregen?',
+    'home.cta.subtitle': 'Bestel vandaag voor 12u, morgen in huis.',
     'home.cta.orderBtn': 'Online Bestellen',
     'home.cta.productsBtn': 'Bekijk Producten',
     
@@ -1036,11 +1037,12 @@ const translations = {
     // Home Page - Updated for new structure
     'home.alert.title': '📅 Program Crăciun și Anul Nou',
     'home.alert.description': '22-24 Dec: 08:00 – 18:00\n25 Dec: 08:00 – 10:00 (Doar ridicare)\n26-27 Dec: 08:00 – 13:00\n28 Dec: Închis\n29-31 Dec: 08:00 – 18:00\n1 Ian: 08:00 – 10:00 (Doar ridicare)\n2-4 Ian: 08:00 – 13:00\n5 Ian: 13:00 – 18:00 (Program normal)',
-    'home.hero.title': 'Gustul de acasă și calitatea belgiană.',
-    'home.hero.subtitle': 'Măcelărie tradițională și preparate românești autentice, gătite cu pasiune în inima Flandrei.',
+    'home.hero.title': 'Gustă Pasiunea pe Farfuria Ta',
+    'home.hero.subtitle': 'Gustul de acasă și calitatea belgiană.',
+    'home.hero.description': 'Măcelărie tradițională și preparate românești autentice, gătite cu pasiune în inima Flandrei.',
     'home.hero.cta': 'Comandă Acum Online',
     'home.hero.ctaPrimary': 'Vezi produsele românești',
-    'home.hero.ctaSecondary': 'Vezi Folder',
+    'home.hero.ctaSecondary': 'Vezi Promoțiile Săptămânii',
     
     // Introduction Section - Trust & Quality
     'home.intro.text': 'Știm cât de mult contează o masă bogată. La Slagerij John, îți aducem atât specialitățile belgiene de top, cât și gustul autentic al preparatelor românești (mici, cârnați, afumături), pregătite chiar aici, proaspăt, pentru tine.',
@@ -1055,13 +1057,13 @@ const translations = {
     'home.featured.specialties.desc': 'Preparate de casă și specialități românești unice.',
     
     // How It Works Section
-    'home.howItWorks.title': 'Comandă simplu online',
-    'home.howItWorks.step1.title': 'Alege produsele',
-    'home.howItWorks.step1.desc': 'Un sortiment larg de carne de calitate.',
-    'home.howItWorks.step2.title': 'Alege ora de ridicare',
-    'home.howItWorks.step2.desc': 'Comanda ta e gata când ajungi.',
-    'home.howItWorks.step3.title': 'Savurează acasă',
-    'home.howItWorks.step3.desc': 'Fără cozi, fără stres.',
+    'home.howItWorks.title': 'De la tejghea noastră la masa ta în 3 pași',
+    'home.howItWorks.step1.title': 'Alege Preferințele Tale',
+    'home.howItWorks.step1.desc': 'Răsfoiește liniștit sortimentul nostru de carne proaspătă, preparate de casă și specialități românești. Comandă online în ritmul tău.',
+    'home.howItWorks.step2.title': 'Tăiat Proaspăt',
+    'home.howItWorks.step2.desc': 'Începem să lucrăm chiar înainte să vii. Comanda ta este tăiată și ambalată cu grijă și pasiune.',
+    'home.howItWorks.step3.title': 'Ridică & Savurează',
+    'home.howItWorks.step3.desc': 'Pachetul tău este gata la ora pe care ai ales-o. Ridicare rapidă fără așteptare, direct în bucătărie.',
     
     // Value Proposition Section (Why Us)
     'home.whyUs.title': 'De ce să alegeți Măcelăria John?',
@@ -1095,7 +1097,7 @@ const translations = {
     'home.catering.title': 'Ai ceva de sărbătorit? Noi ne ocupăm de mâncare.',
     'home.catering.body': 'Fie că este vorba de o aniversare, comuniune sau eveniment de firmă în zona Zwevezele, Wingene sau Lichtervelde: Măcelăria John este partenerul tău. De la platouri reci (bufet) la pachete BBQ complete.',
     'home.catering.ctaFolder': 'Descarcă folderul nostru',
-    'home.catering.ctaQuote': 'Solicită o ofertă',
+    'home.catering.ctaQuote': 'Solicită Ofertă Direct',
     
     // About Us Section
     'home.about.title': 'Pasiune pentru meseria de măcelar.',
@@ -1115,8 +1117,8 @@ const translations = {
     'home.specials.promo.offer1': 'Cumpărături de minim €30 → Primiți gratis 200 gr Préparé van de Chef',
     'home.specials.promo.offer2': 'Cumpărături de minim €50 → Primiți gratis 500 gr de carne tocată',
     'home.specials.order': 'Comandă Acum',
-    'home.cta.title': 'Gata să Comenzi?',
-    'home.cta.subtitle': 'Descoperă sortimentul nostru complet și comandă astăzi pentru ridicare',
+    'home.cta.title': 'Ai Poftă?',
+    'home.cta.subtitle': 'Comandă astăzi până la 12:00, mâine la tine acasă.',
     'home.cta.orderBtn': 'Comandă Online',
     'home.cta.productsBtn': 'Vezi Produsele',
     

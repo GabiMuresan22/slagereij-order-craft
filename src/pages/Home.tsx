@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { MapPin, ChefHat, Clock, PartyPopper, Heart, FileText, MessageSquare } from "lucide-react";
+import { MapPin, ChefHat, Clock, PartyPopper, Heart, FileText, MessageSquare, ShoppingCart, Scissors, CheckCircle2, Laptop, Beef, ShoppingBag } from "lucide-react";
 import { motion } from "framer-motion";
 import heroImageDesktop from "@/assets/hero-steak.webp";
 import heroImageMobile from "@/assets/hero-steak-mobile.webp";
@@ -37,28 +37,32 @@ const Home = () => {
       description: t('home.categories.freshMeat.desc'),
       image: porkProducts,
       link: '/products',
-      alt: 'biefstuk kopen, varkenshaasje, dagvers vlees Zwevezele'
+      alt: 'biefstuk kopen, varkenshaasje, dagvers vlees Zwevezele',
+      badge: null
     },
     {
       title: t('home.categories.bbq.title'),
       description: t('home.categories.bbq.desc'),
       image: steengrillPlatter,
       link: '/packages',
-      alt: 'bbq pakket bestellen, gourmet schotel, steengrill Wingene'
+      alt: 'bbq pakket bestellen, gourmet schotel, steengrill Wingene',
+      badge: null
     },
     {
       title: t('home.categories.prepared.title'),
       description: t('home.categories.prepared.desc'),
       image: cateringChefServing,
       link: '/traiteur-catering',
-      alt: 'traiteur gerechten, spaghetti saus, bereide maaltijden'
+      alt: 'traiteur gerechten, spaghetti saus, bereide maaltijden',
+      badge: null
     },
     {
       title: t('home.categories.romanian.title'),
       description: t('home.categories.romanian.desc'),
       image: romanianPlatter,
       link: '/products',
-      alt: 'Roemeense mici, gerookte worst, authentieke specialiteiten'
+      alt: 'Roemeense mici, gerookte worst, authentieke specialiteiten',
+      badge: language === 'nl' ? 'Exclusief' : 'Exclusiv'
     }
   ];
 
@@ -101,17 +105,19 @@ const Home = () => {
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-4 md:mb-6"
             style={{ textShadow: "2px 2px 8px rgba(0,0,0,0.9)" }}
           >
-            {language === 'nl' 
-              ? 'Ambachtelijke slagerij & traiteur in Zwevezele'
-              : 'Gustul de acasă și calitatea belgiană.'}
+            {t("home.hero.title")}
           </h1>
           <p
-            className="text-base sm:text-lg md:text-xl text-white mb-8 md:mb-10 font-medium leading-relaxed max-w-2xl mx-auto"
+            className="text-lg sm:text-xl md:text-2xl text-white/95 mb-4 md:mb-6 font-medium leading-relaxed max-w-2xl mx-auto"
             style={{ textShadow: "2px 2px 6px rgba(0,0,0,0.9)" }}
           >
-            {language === 'nl'
-              ? 'Dagvers vlees, huisbereide gerechten en feestelijke schotels. Bestel online en haal af wanneer het u past.'
-              : 'Măcelărie tradițională și preparate românești autentice, gătite cu pasiune în inima Flandrei.'}
+            {t("home.hero.subtitle")}
+          </p>
+          <p
+            className="text-base sm:text-lg md:text-xl text-white/90 mb-8 md:mb-10 font-normal leading-relaxed max-w-2xl mx-auto"
+            style={{ textShadow: "2px 2px 6px rgba(0,0,0,0.9)" }}
+          >
+            {t("home.hero.description")}
           </p>
           
           {/* CTA Buttons */}
@@ -130,23 +136,21 @@ const Home = () => {
                 </Button>
               </motion.div>
             </LocalizedLink>
-            {language === 'nl' && (
-              <LocalizedLink to="/traiteur-catering">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            <LocalizedLink to="/products">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-white/20 backdrop-blur-sm text-white border-2 border-white hover:bg-white/30 hover:border-white hover:text-white hover:shadow-xl transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full sm:w-auto uppercase tracking-wide"
                 >
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-white/20 backdrop-blur-sm text-white border-2 border-white hover:bg-white/30 hover:border-white hover:text-white hover:shadow-xl transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full sm:w-auto uppercase tracking-wide"
-                  >
-                    BEKIJK FOLDER
-                  </Button>
-                </motion.div>
-              </LocalizedLink>
-            )}
+                  {t("home.hero.ctaSecondary")}
+                </Button>
+              </motion.div>
+            </LocalizedLink>
           </div>
         </div>
       </section>
@@ -261,6 +265,13 @@ const Home = () => {
                     />
                   </motion.div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent transition-opacity duration-300 group-hover:from-black/90" />
+                  {category.badge && (
+                    <div className="absolute top-4 right-4 z-10">
+                      <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide shadow-lg">
+                        {category.badge}
+                      </span>
+                    </div>
+                  )}
                   <motion.div 
                     className="absolute inset-0 flex flex-col items-center justify-end p-6 text-center"
                     whileHover={{ y: -5 }}
@@ -286,7 +297,52 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CATERING & EVENTS SECTION - High Ticket Sales */}
+      {/* D. HOW IT WORKS SECTION - The Friction Remover */}
+      <section className="py-12 md:py-16 bg-muted/30" aria-labelledby="how-it-works-heading">
+        <div className="container mx-auto px-4">
+          <motion.h2 
+            id="how-it-works-heading"
+            className="text-3xl md:text-4xl font-serif font-bold text-center mb-8 md:mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            {t("home.howItWorks.title")}
+          </motion.h2>
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {[
+              { icon: Laptop, title: t("home.howItWorks.step1.title"), desc: t("home.howItWorks.step1.desc") },
+              { icon: Scissors, title: t("home.howItWorks.step2.title"), desc: t("home.howItWorks.step2.desc") },
+              { icon: ShoppingBag, title: t("home.howItWorks.step3.title"), desc: t("home.howItWorks.step3.desc") }
+            ].map((step, index) => (
+              <motion.div
+                key={index}
+                className="text-center"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <motion.div
+                  className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4"
+                  whileHover={{ scale: 1.1, backgroundColor: "hsl(var(--primary) / 0.2)" }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  <step.icon className="w-10 h-10 text-primary" aria-hidden="true" />
+                </motion.div>
+                <h3 className="text-xl font-serif font-bold mb-3">{step.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{step.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* E. TESTIMONIALS SECTION - The Social Proof (Moved before Catering) */}
+      <Testimonials />
+
+      {/* F. CATERING & EVENTS SECTION - High Ticket Sales */}
       <section className="py-12 md:py-20 bg-muted/30" aria-labelledby="catering-heading">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -302,27 +358,27 @@ const Home = () => {
                 {t("home.catering.body")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <LocalizedLink to="/traiteur-catering">
-                  <motion.div
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  >
-                    <Button size="lg" className="w-full sm:w-auto hover:shadow-lg transition-shadow">
-                      <FileText className="mr-2 h-5 w-5" />
-                      {t("home.catering.ctaFolder")}
-                    </Button>
-                  </motion.div>
-                </LocalizedLink>
                 <LocalizedLink to="/contact">
                   <motion.div
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.98 }}
                     transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
-                    <Button size="lg" variant="outline" className="w-full sm:w-auto hover:shadow-lg transition-shadow">
+                    <Button size="lg" className="w-full sm:w-auto hover:shadow-lg transition-shadow">
                       <MessageSquare className="mr-2 h-5 w-5" />
                       {t("home.catering.ctaQuote")}
+                    </Button>
+                  </motion.div>
+                </LocalizedLink>
+                <LocalizedLink to="/traiteur-catering">
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    <Button size="lg" variant="outline" className="w-full sm:w-auto hover:shadow-lg transition-shadow">
+                      <FileText className="mr-2 h-5 w-5" />
+                      {t("home.catering.ctaFolder")}
                     </Button>
                   </motion.div>
                 </LocalizedLink>
@@ -342,10 +398,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <Testimonials />
-
-      {/* ABOUT US SECTION - Personal Connection */}
+      {/* G. ABOUT US SECTION - Personal Connection */}
       <section className="py-12 md:py-20 bg-background" aria-labelledby="about-heading">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -391,11 +444,11 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* H. FINAL CTA SECTION - The Last Push */}
       <section className="py-16 md:py-20 bg-primary text-primary-foreground" aria-labelledby="cta-heading">
         <div className="container mx-auto px-4 text-center">
-          <h2 id="cta-heading" className="text-3xl md:text-5xl font-serif font-bold mb-6">{t("home.cta.title")}</h2>
-          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">{t("home.cta.subtitle")}</p>
+          <h2 id="cta-heading" className="text-3xl md:text-5xl font-serif font-bold mb-4">{t("home.cta.title")}</h2>
+          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90 font-semibold">{t("home.cta.subtitle")}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <LocalizedLink to="/order">
               <motion.div

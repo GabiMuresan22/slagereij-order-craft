@@ -58,7 +58,17 @@ export default function Testimonials() {
                     <Star key={i} className="w-4 h-4 fill-primary text-primary" />
                   ))}
                 </div>
-                <p className="text-foreground mb-4 min-h-[100px]">"{review.text}"</p>
+                <p className="text-foreground mb-4 min-h-[100px]">
+                  {(() => {
+                    const keywords = ['kwaliteit', 'vers', 'proaspete', 'super', 'excelente', 'fresh', 'delicious', 'friendly', 'amabil', 'recomand', 'calitate', 'gustoase'];
+                    let text = `"${review.text}"`;
+                    keywords.forEach(keyword => {
+                      const regex = new RegExp(`\\b(${keyword})\\b`, 'gi');
+                      text = text.replace(regex, '<strong class="font-bold text-primary">$1</strong>');
+                    });
+                    return <span dangerouslySetInnerHTML={{ __html: text }} />;
+                  })()}
+                </p>
                 <div className="border-t pt-4">
                   <p className="font-semibold text-foreground">{review.name}</p>
                   <p className="text-sm text-muted-foreground">{review.date}</p>
