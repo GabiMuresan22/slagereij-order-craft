@@ -163,7 +163,7 @@ const Home = () => {
           </p>
           
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          {/* <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <LocalizedLink to="/order">
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -203,7 +203,7 @@ const Home = () => {
                 )}
               </Button>
             </motion.div>
-          </div>
+          </div> */}
         </div>
       </section>
 
