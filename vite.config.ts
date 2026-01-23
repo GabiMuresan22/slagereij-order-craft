@@ -22,9 +22,18 @@ export default defineConfig(({ mode }) => ({
     }),
   ].filter(Boolean),
   resolve: {
+    // Prevent multiple React instances (common cause of "Invalid hook call" / dispatcher null)
+    dedupe: ["react", "react-dom"],
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      // Hard-pin React resolution to the root node_modules to avoid duplicates
+      react: path.resolve(__dirname, "node_modules/react"),
+      "react-dom": path.resolve(__dirname, "node_modules/react-dom"),
     },
+  },
+  // Help Vite prebundle consistently; avoids Radix pulling a different React copy in dev
+  optimizeDeps: {
+    include: ["react", "react-dom", "@radix-ui/react-tooltip"],
   },
   build: {
     // Optimize CSS delivery
