@@ -20,11 +20,12 @@ import teamPortrait from "@/assets/team-portrait.webp";
 import cateringPartySpread from "@/assets/catering-party-spread.webp";
 import steengrillPlatter from "@/assets/steengrill-vleesschotel-assortiment.webp";
 
-// PDF menu images are in public folder for edge function access
+// PDF menu images - using published URL since edge function needs external access
+const PUBLISHED_URL = 'https://slagereij-order-craft.lovable.app';
 const PDF_MENU_IMAGES = {
-  image1: '/pdf-assets/christmas-menu-1.png',
-  image2: '/pdf-assets/christmas-menu-2.png',
-  image3: '/pdf-assets/christmas-menu-3.png',
+  image1: `${PUBLISHED_URL}/pdf-assets/christmas-menu-1.png`,
+  image2: `${PUBLISHED_URL}/pdf-assets/christmas-menu-2.png`,
+  image3: `${PUBLISHED_URL}/pdf-assets/christmas-menu-3.png`,
 };
 
 const Home = () => {
@@ -36,13 +37,11 @@ const Home = () => {
   const handleDownloadFolder = async () => {
     setIsDownloading(true);
     try {
-      // Use absolute URLs from the public folder
-      const baseUrl = window.location.origin;
       const response = await supabase.functions.invoke('generate-christmas-menu-pdf', {
         body: {
-          image1Url: `${baseUrl}${PDF_MENU_IMAGES.image1}`,
-          image2Url: `${baseUrl}${PDF_MENU_IMAGES.image2}`,
-          image3Url: `${baseUrl}${PDF_MENU_IMAGES.image3}`,
+          image1Url: PDF_MENU_IMAGES.image1,
+          image2Url: PDF_MENU_IMAGES.image2,
+          image3Url: PDF_MENU_IMAGES.image3,
         },
       });
 
