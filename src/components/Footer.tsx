@@ -181,14 +181,39 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border mt-12 pt-10">
+        <div className="border-t border-border mt-12 pt-8 md:pt-10">
           {/* Local SEO Text */}
-          <p className="text-xs text-muted-foreground/70 text-center mb-6">
+          <p className="text-xs text-muted-foreground/70 text-center mb-6 px-2">
             {t('footer.localSeo')}
           </p>
           
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-muted-foreground">
-            <div className="flex flex-col items-center md:items-start gap-2">
+          <div className="flex flex-col items-center gap-6 text-sm text-muted-foreground">
+            {/* Legal Links - Mobile optimized */}
+            <nav 
+              className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs sm:text-sm" 
+              aria-label={t('accessibility.legalLinks') || 'Legal links'}
+            >
+              <LocalizedLink to="/privacy" className="hover:text-primary transition-colors min-h-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-1">
+                {t('footer.privacy')}
+              </LocalizedLink>
+              <LocalizedLink to="/terms" className="hover:text-primary transition-colors min-h-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-1">
+                {t('footer.terms')}
+              </LocalizedLink>
+              <LocalizedLink to="/allergens" className="hover:text-primary transition-colors min-h-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-1">
+                {t('footer.allergens')}
+              </LocalizedLink>
+              <button 
+                type="button"
+                data-cc="c-settings"
+                className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors min-h-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-1"
+                aria-label={t('footer.cookies')}
+              >
+                {t('footer.cookies')}
+              </button>
+            </nav>
+            
+            {/* Copyright */}
+            <div className="flex flex-col items-center gap-1 text-xs text-muted-foreground/70">
               <p>&copy; {new Date().getFullYear()} {t('footer.about.title')}. {t('footer.rights')}</p>
               <a 
                 href="https://gabimuresan.com/" 
@@ -199,25 +224,6 @@ const Footer = () => {
                 {t('footer.credit')}
               </a>
             </div>
-            <nav className="flex gap-4" aria-label={t('accessibility.legalLinks') || 'Legal links'}>
-              <LocalizedLink to="/privacy" className="hover:text-primary transition-colors min-h-[48px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md">
-                {t('footer.privacy')}
-              </LocalizedLink>
-              <LocalizedLink to="/terms" className="hover:text-primary transition-colors min-h-[48px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md">
-                {t('footer.terms')}
-              </LocalizedLink>
-              <LocalizedLink to="/allergens" className="hover:text-primary transition-colors min-h-[48px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md">
-                {t('footer.allergens')}
-              </LocalizedLink>
-              <button 
-                type="button"
-                data-cc="c-settings"
-                className="text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md"
-                aria-label={t('footer.cookies')}
-              >
-                {t('footer.cookies')}
-              </button>
-            </nav>
           </div>
         </div>
       </div>
