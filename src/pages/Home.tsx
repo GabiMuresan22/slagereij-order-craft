@@ -349,7 +349,7 @@ const Home = () => {
             <div className="order-2 md:order-1">
               <div className="flex items-center gap-2 mb-4">
                 <PartyPopper className="w-6 h-6 text-primary" />
-                <span className="text-sm font-semibold text-primary uppercase tracking-wider">Catering & Events</span>
+                <span className="text-sm font-semibold text-primary uppercase tracking-wider">Traiteur & Events</span>
               </div>
               <h2 id="catering-heading" className="text-3xl md:text-4xl font-serif font-bold mb-6">
                 {t("home.catering.title")}
