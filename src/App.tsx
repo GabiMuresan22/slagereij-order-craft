@@ -16,7 +16,7 @@ import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import AdminRoute from "./components/AdminRoute";
 import RoadworksAlert from "./components/RoadworksAlert";
-import MobileStickyOrderCTA from "./components/MobileStickyOrderCTA";
+
 
 // 1. Import Suspense from React
 import { Suspense } from "react";
@@ -115,7 +115,7 @@ const App = () => (
                     </Suspense>
                   </main>
                   <Footer />
-                  <MobileStickyOrderCTA />
+                  
                 </div>
               </AuthProvider>
             </LanguageProvider>
