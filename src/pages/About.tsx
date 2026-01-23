@@ -60,7 +60,7 @@ const About = () => {
               />
             </div>
             
-            <div>
+            <div className="text-center lg:text-left">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-6">
                 {language === 'nl' 
                   ? 'Van Roemeense roots tot Zwevezeelse trots'
@@ -91,7 +91,7 @@ const About = () => {
         {/* Value Proposition Section */}
         <section className="mb-16 md:mb-20 bg-muted/30 rounded-2xl p-8 md:p-12">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-            <div>
+            <div className="text-center lg:text-left">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-6">
                 {language === 'nl' 
                   ? 'Het Beste van Twee Werelden'
@@ -104,11 +104,11 @@ const About = () => {
               </p>
               
               <ul className="space-y-6 mb-8">
-                <li className="flex items-start gap-4">
+                <li className="flex items-start gap-4 justify-center lg:justify-start">
                   <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <Beef className="w-6 h-6 text-primary" />
                   </div>
-                  <div>
+                  <div className="flex-1 max-w-md lg:max-w-none">
                     <h3 className="font-semibold text-foreground">
                       {language === 'nl' ? 'Belgische Klassiekers' : 'Clasice Belgiene'}
                     </h3>
@@ -119,11 +119,11 @@ const About = () => {
                     </p>
                   </div>
                 </li>
-                <li className="flex items-start gap-4">
+                <li className="flex items-start gap-4 justify-center lg:justify-start">
                   <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <Flame className="w-6 h-6 text-primary" />
                   </div>
-                  <div>
+                  <div className="flex-1 max-w-md lg:max-w-none">
                     <h3 className="font-semibold text-foreground">
                       {language === 'nl' ? 'Authentieke Ontdekkingen' : 'Descoperiri Autentice'}
                     </h3>
@@ -134,11 +134,11 @@ const About = () => {
                     </p>
                   </div>
                 </li>
-                <li className="flex items-start gap-4">
+                <li className="flex items-start gap-4 justify-center lg:justify-start">
                   <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <Sparkles className="w-6 h-6 text-primary" />
                   </div>
-                  <div>
+                  <div className="flex-1 max-w-md lg:max-w-none">
                     <h3 className="font-semibold text-foreground">
                       {language === 'nl' ? 'Versheid Gegarandeerd' : 'Prospețime Garantată'}
                     </h3>
@@ -151,11 +151,13 @@ const About = () => {
                 </li>
               </ul>
 
-              <LocalizedLink to="/order">
-                <Button size="lg" className="w-full sm:w-auto">
-                  {language === 'nl' ? 'Bekijk ons Aanbod' : 'Vezi Oferta Noastră'}
-                </Button>
-              </LocalizedLink>
+              <div className="flex justify-center lg:justify-start">
+                <LocalizedLink to="/order">
+                  <Button size="lg" className="w-full sm:w-auto">
+                    {language === 'nl' ? 'Bekijk ons Aanbod' : 'Vezi Oferta Noastră'}
+                  </Button>
+                </LocalizedLink>
+              </div>
             </div>
             
             <div className="rounded-xl overflow-hidden shadow-xl order-first md:order-last">
