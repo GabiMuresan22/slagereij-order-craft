@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-<<<<<<< HEAD
-import { MapPin, ChefHat, Clock, PartyPopper, Heart, FileText, MessageSquare, ShoppingCart, Scissors, CheckCircle2, Laptop, Beef, ShoppingBag } from "lucide-react";
-=======
-import { MapPin, ChefHat, Clock, PartyPopper, Heart, FileText, MessageSquare, Download, Loader2 } from "lucide-react";
->>>>>>> a976e01f2fe0db36a15cb72be1c6334ab15f5790
+import { MapPin, ChefHat, Clock, PartyPopper, Heart, FileText, MessageSquare, Download, Loader2, Laptop, Scissors, ShoppingBag } from "lucide-react";
 import { motion } from "framer-motion";
 import heroImageDesktop from "@/assets/hero-steak.webp";
 import heroImageMobile from "@/assets/hero-steak-mobile.webp";
@@ -96,14 +92,9 @@ const Home = () => {
       title: t('home.categories.bbq.title'),
       description: t('home.categories.bbq.desc'),
       image: steengrillPlatter,
-<<<<<<< HEAD
       link: '/packages',
       alt: 'bbq pakket bestellen, gourmet schotel, steengrill Wingene',
       badge: null
-=======
-      link: '/products',
-      alt: 'bbq pakket bestellen, gourmet schotel, steengrill Wingene'
->>>>>>> a976e01f2fe0db36a15cb72be1c6334ab15f5790
     },
     {
       title: t('home.categories.prepared.title'),
@@ -193,7 +184,6 @@ const Home = () => {
                 </Button>
               </motion.div>
             </LocalizedLink>
-<<<<<<< HEAD
             <LocalizedLink to="/products">
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -209,33 +199,6 @@ const Home = () => {
                 </Button>
               </motion.div>
             </LocalizedLink>
-=======
-            {/* <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            >
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={handleDownloadFolder}
-                disabled={isDownloading}
-                className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-white/20 backdrop-blur-sm text-white border-2 border-white hover:bg-white/30 hover:border-white hover:text-white hover:shadow-xl transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full sm:w-auto uppercase tracking-wide"
-              >
-                {isDownloading ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    {language === 'nl' ? 'DOWNLOADEN...' : 'SE DESCARCĂ...'}
-                  </>
-                ) : (
-                  <>
-                    <Download className="mr-2 h-5 w-5" />
-                    {language === 'nl' ? 'DOWNLOAD FOLDER' : 'DESCARCĂ CATALOGUL'}
-                  </>
-                )}
-              </Button>
-            </motion.div> */}
->>>>>>> a976e01f2fe0db36a15cb72be1c6334ab15f5790
           </div>
         </div>
       </section>
