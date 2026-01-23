@@ -342,6 +342,9 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <Testimonials />
+
       {/* CATERING & EVENTS SECTION - High Ticket Sales */}
       <section className="py-12 md:py-20 bg-muted/30" aria-labelledby="catering-heading">
         <div className="container mx-auto px-4">
@@ -397,9 +400,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* Testimonials Section */}
-      <Testimonials />
 
       {/* ABOUT US SECTION - Personal Connection */}
       <section className="py-12 md:py-20 bg-background" aria-labelledby="about-heading">
