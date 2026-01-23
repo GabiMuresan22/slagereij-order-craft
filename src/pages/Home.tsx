@@ -130,23 +130,21 @@ const Home = () => {
                 </Button>
               </motion.div>
             </LocalizedLink>
-            {language === 'nl' && (
-              <LocalizedLink to="/products">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            <LocalizedLink to="/products">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-white/20 backdrop-blur-sm text-white border-2 border-white hover:bg-white/30 hover:border-white hover:text-white hover:shadow-xl transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full sm:w-auto uppercase tracking-wide"
                 >
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-white/20 backdrop-blur-sm text-white border-2 border-white hover:bg-white/30 hover:border-white hover:text-white hover:shadow-xl transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full sm:w-auto uppercase tracking-wide"
-                  >
-                    BEKIJK FOLDER
-                  </Button>
-                </motion.div>
-              </LocalizedLink>
-            )}
+                  {language === 'nl' ? 'BEKIJK FOLDER' : 'VEZI CATALOGUL'}
+                </Button>
+              </motion.div>
+            </LocalizedLink>
           </div>
         </div>
       </section>
