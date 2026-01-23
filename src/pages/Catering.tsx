@@ -39,40 +39,40 @@ export default function Catering() {
     // 1. Waitress photo (Full Service) - cateringChefServing
     { 
       src: cateringChefServing, 
-      alt: "Catering and appetizers for receptions in West Flanders",
-      caption: language === 'nl' ? "Carefree service – From appetizers to table service." : "Carefree service – From appetizers to table service."
+      alt: language === 'nl' ? "Catering en hapjes voor recepties in West-Vlaanderen" : "Catering și aperitive pentru recepții în Flandra de Vest",
+      caption: language === 'nl' ? "Zorgeloos genieten – Van hapjes tot tafelservice." : "Bucură-te fără griji – De la aperitive la servicii la masă."
     },
     // 2. Meat on the Fire/Rotisserie (Food Porn) - cateringBeefSteak
     { 
       src: cateringBeefSteak, 
-      alt: "Freshly grilled meat and warm delicatessen dishes from Slagerij John",
-      caption: language === 'nl' ? "Artisanal grilled meat – Succulent meat, perfectly prepared over the fire." : "Artisanal grilled meat – Succulent meat, perfectly prepared over the fire."
+      alt: language === 'nl' ? "Vers gegrild vlees en warme delicatessen van Slagerij John" : "Carne proaspăt gătită și delicatese calde de la Slagerij John",
+      caption: language === 'nl' ? "Ambachtelijk gegrild – Sappig vlees, perfect bereid op het vuur." : "Grătar artizanal – Carne suculentă, perfect preparată pe foc."
     },
     // 3. Salad Bowls (Freshness) - cateringSalads
     { 
       src: cateringSalads, 
-      alt: "Fresh salads and cold vegetables for barbecue buffets and parties",
-      caption: language === 'nl' ? "Colorful & Fresh – A wide range of homemade salads and side dishes." : "Colorful & Fresh – A wide range of homemade salads and side dishes."
+      alt: language === 'nl' ? "Verse salades en koude groenten voor barbecuebuffetten en feesten" : "Salate proaspete și legume reci pentru bufete barbecue și petreceri",
+      caption: language === 'nl' ? "Kleurrijk & Vers – Een breed assortiment huisgemaakte salades en bijgerechten." : "Colorat și proaspăt – O gamă largă de salate și garnituri făcute în casă."
     },
     // 4. Individual bowls/Tacos (Refinement) - cateringTacos
     { 
       src: cateringTacos, 
-      alt: "Luxe aperitifhapjes en buffet traiteur Slagerij John",
-      caption: language === 'nl' ? "Modern buffets – Surprising appetizers and world flavors." : "Modern Buffets – Surprising Appetizers and International Flavors."
+      alt: language === 'nl' ? "Luxe aperitifhapjes en buffet traiteur Slagerij John" : "Aperitive de lux și bufet catering Slagerij John",
+      caption: language === 'nl' ? "Moderne buffetten – Verrassende hapjes en wereldse smaken." : "Bufete moderne – Aperitive surprinzătoare și arome internaționale."
     },
     // 5. Charcuterie Platter (Classic) - cateringCharcuterie
     { 
       src: cateringCharcuterie, 
-      alt: "Koude schotel met charcuterie en kaas regio Wingene Zwevezele",
-      caption: language === 'nl' ? "Klassieke Vleesschotels – De fijnste charcuterie, vers van het mes." : "Classic meat platters – The finest charcuterie, freshly cut."
+      alt: language === 'nl' ? "Koude schotel met charcuterie en kaas regio Wingene Zwevezele" : "Platou rece cu mezeluri și brânză în zona Wingene Zwevezele",
+      caption: language === 'nl' ? "Klassieke Vleesschotels – De fijnste charcuterie, vers van het mes." : "Platouri clasice de carne – Cele mai fine mezeluri, proaspăt tăiate."
     },
     // Additional gallery images
-    { src: cateringPartySpread, alt: "Complete party catering spread with tacos and sides", caption: "" },
-    { src: cateringGrainBowls, alt: "Gourmet grain bowls with salmon and vegetables", caption: "" },
-    { src: cateringPastaBowls, alt: "Gourmet pasta bowls with fresh vegetables", caption: "" },
-    { src: cateringPartyPlatter, alt: "Premium party platter with cold cuts and cheese", caption: "" },
-    { src: cateringCheesePlatter, alt: "Artisanal cheese platter with grapes and walnuts", caption: "" },
-    { src: cateringTomatoSalad, alt: "Fresh tomato salad with red onions and parsley", caption: "" },
+    { src: cateringPartySpread, alt: language === 'nl' ? "Complete party catering met tacos en garnituren" : "Catering complet pentru petreceri cu tacos și garnituri", caption: "" },
+    { src: cateringGrainBowls, alt: language === 'nl' ? "Gourmet bowls met zalm en groenten" : "Boluri gourmet cu somon și legume", caption: "" },
+    { src: cateringPastaBowls, alt: language === 'nl' ? "Gourmet pastabowls met verse groenten" : "Boluri de paste gourmet cu legume proaspete", caption: "" },
+    { src: cateringPartyPlatter, alt: language === 'nl' ? "Premium feestschotel met vleeswaren en kaas" : "Platou premium pentru petreceri cu mezeluri și brânză", caption: "" },
+    { src: cateringCheesePlatter, alt: language === 'nl' ? "Ambachtelijke kaasschotel met druiven en walnoten" : "Platou artizanal de brânzeturi cu struguri și nuci", caption: "" },
+    { src: cateringTomatoSalad, alt: language === 'nl' ? "Verse tomatensalade met rode ui en peterselie" : "Salată proaspătă de roșii cu ceapă roșie și pătrunjel", caption: "" },
   ];
 
   // SEO meta tags optimized for Belgian market
@@ -144,7 +144,7 @@ export default function Catering() {
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-4xl mx-auto text-center">
               {language === 'nl' 
                 ? 'Bij Slagerij John verzorgen wij uw feesten tot in de puntjes. Of u nu een feest organiseert in Zwevezele, Wingene of Lichtervelde, onze traiteur diensten staan garant voor kwaliteit en versheid. Ontdek hieronder onze formules voor koude buffetten en barbecue.'
-                : 'At Slagerij John, we take care of your parties down to the last detail. Whether you\'re organizing an event in Zwevezele, Wingene or Lichtervelde, our catering services guarantee quality and freshness. Discover our cold buffet and barbecue options below.'}
+                : 'La Slagerij John, ne ocupăm de petrecerile tale până în cel mai mic detaliu. Fie că organizezi un eveniment în Zwevezele, Wingene sau Lichtervelde, serviciile noastre de catering garantează calitate și prospețime. Descoperă mai jos opțiunile noastre pentru bufete reci și grătar.'}
             </p>
           </div>
         </section>
@@ -155,7 +155,7 @@ export default function Catering() {
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="order-2 md:order-1">
                 <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-6">
-                  {language === 'nl' ? 'Wij Komen Bij U Koken' : 'We Cook at Your Place'}
+                  {language === 'nl' ? 'Wij Komen Bij U Koken' : 'Gătim la Tine Acasă'}
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-4">
                   {t('catering.p1')}
@@ -169,14 +169,14 @@ export default function Catering() {
                   <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
                     <LazyImage
                       src={cateringBbqSmoky}
-                      alt="Traiteur barbecue op locatie in regio Zwevezele en Wingene door Slagerij John"
+                      alt={language === 'nl' ? "Traiteur barbecue op locatie in regio Zwevezele en Wingene door Slagerij John" : "Catering grătar la domiciliu în zona Zwevezele și Wingene de la Slagerij John"}
                       className="w-full h-full object-cover"
                       width="600"
                       height="450"
                     />
                   </div>
                   <figcaption className="mt-3 text-sm text-muted-foreground italic text-center">
-                    {language === 'nl' ? "Live cooking op uw feest – Wij bakken, u geniet van uw gasten." : "Live cooking at your party – We cook, you enjoy your guests."}
+                    {language === 'nl' ? "Live cooking op uw feest – Wij bakken, u geniet van uw gasten." : "Gătit live la petrecerea ta – Noi gătim, tu te bucuri de invitați."}
                   </figcaption>
                 </figure>
               </div>
@@ -193,20 +193,20 @@ export default function Catering() {
                   <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
                     <LazyImage
                       src={cateringMiciGrill}
-                      alt="Barbecue sausage and meat assortment for parties and events"
+                      alt={language === 'nl' ? "Barbecue worsten en vleesassortiment voor feesten en evenementen" : "Mici și cârnați la grătar pentru petreceri și evenimente"}
                       className="w-full h-full object-cover"
                       width="600"
                       height="450"
                     />
                   </div>
                   <figcaption className="mt-3 text-sm text-muted-foreground italic text-center">
-                    {language === 'nl' ? "Voor elk wat wils – Kwaliteitsvlees uit eigen atelier voor grote en kleine groepen." : "Something for everyone – Quality meat from our own workshop for large and small groups."}
+                    {language === 'nl' ? "Voor elk wat wils – Kwaliteitsvlees uit eigen atelier voor grote en kleine groepen." : "Pentru fiecare câte ceva – Carne de calitate din atelierul propriu pentru grupuri mari și mici."}
                   </figcaption>
                 </figure>
               </div>
               <div>
                 <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-6">
-                  {language === 'nl' ? 'BBQ Formules Voor Elk Feest' : 'BBQ Packages for Every Event'}
+                  {language === 'nl' ? 'BBQ Formules Voor Elk Feest' : 'Pachete BBQ Pentru Orice Eveniment'}
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-4">
                   {t('catering.p3')}
@@ -214,7 +214,7 @@ export default function Catering() {
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   {language === 'nl' 
                     ? 'Of u nu een intiem tuinfeest plant of een groot bedrijfsevenement organiseert, wij hebben de capaciteit om iedereen te voorzien van heerlijke, vers bereide gerechten.'
-                    : 'Whether you\'re planning an intimate garden party or organizing a large corporate event, we have the capacity to provide everyone with delicious, freshly prepared dishes.'}
+                    : 'Fie că planifici o petrecere intimă în grădină sau organizezi un eveniment corporate mare, avem capacitatea de a oferi tuturor preparate delicioase, proaspăt gătite.'}
                 </p>
               </div>
             </div>
@@ -227,7 +227,7 @@ export default function Catering() {
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="order-2 md:order-1">
                 <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-6">
-                  {language === 'nl' ? 'Verse Salades & Bijgerechten' : 'Fresh Salads & Side Dishes'}
+                  {language === 'nl' ? 'Verse Salades & Bijgerechten' : 'Salate Proaspete și Garnituri'}
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-4">
                   {t('catering.p4')}
@@ -235,14 +235,14 @@ export default function Catering() {
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   {language === 'nl' 
                     ? 'Van kleurrijke seizoenssalades tot elegante graanbowls - wij zorgen voor een perfect uitgebalanceerd menu dat al uw gasten zal bekoren.'
-                    : 'From colorful seasonal salads to elegant grain bowls - we ensure a perfectly balanced menu that will delight all your guests.'}
+                    : 'De la salate colorate de sezon la boluri elegante cu cereale - asigurăm un meniu perfect echilibrat care va încânta toți invitații tăi.'}
                 </p>
               </div>
               <div className="order-1 md:order-2 relative">
                 <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
                   <LazyImage
                     src={cateringSalads}
-                    alt="Fresh salads and cold vegetables for barbecue buffets and parties"
+                    alt={language === 'nl' ? "Verse salades en koude groenten voor barbecuebuffetten en feesten" : "Salate proaspete și legume reci pentru bufete barbecue și petreceri"}
                     className="w-full h-full object-cover"
                     width="600"
                     height="450"
@@ -257,18 +257,18 @@ export default function Catering() {
         <section className="py-12 md:py-16 bg-primary/5">
           <div className="container mx-auto px-4 text-center">
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
-              {language === 'nl' ? 'Uw Feest, Onze Passie' : 'Your Party, Our Passion'}
+              {language === 'nl' ? 'Uw Feest, Onze Passie' : 'Petrecerea Ta, Pasiunea Noastră'}
             </h2>
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
               {language === 'nl' 
                 ? 'Neem contact met ons op voor een vrijblijvende offerte. Wij bespreken graag uw wensen en stellen een menu op maat samen.'
-                : 'Contact us for a no-obligation quote. We\'d love to discuss your wishes and create a custom menu.'}
+                : 'Contactează-ne pentru o ofertă fără obligații. Ne face plăcere să discutăm dorințele tale și să creăm un meniu personalizat.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <LocalizedLink to="/contact">
                 <Button size="lg" className="text-lg px-8">
                   <Phone className="mr-2 h-5 w-5" />
-                  {language === 'nl' ? 'Contacteer Ons' : 'Contact Us'}
+                  {language === 'nl' ? 'Contacteer Ons' : 'Contactează-ne'}
                 </Button>
               </LocalizedLink>
             </div>
