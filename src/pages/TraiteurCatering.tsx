@@ -222,10 +222,10 @@ export default function TraiteurCatering() {
                 : 'Contactează-ne pentru o ofertă fără obligații. Ne face plăcere să te ajutăm!'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="tel:+3251688962">
+              <a href="tel:+32466186457">
                 <Button size="lg" variant="secondary" className="text-lg px-8">
                   <Phone className="mr-2 h-5 w-5" />
-                  +32 51 68 89 62
+                  +32 466 18 64 57
                 </Button>
               </a>
               <LocalizedLink to="/contact">
