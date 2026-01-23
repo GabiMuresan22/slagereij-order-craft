@@ -92,12 +92,12 @@ export default function TraiteurCatering() {
         <section className="py-8 md:py-12 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/Folder-Slagerij-John.pdf" target="_blank" rel="noopener noreferrer">
+              {/* <a href="/Folder-Slagerij-John.pdf" target="_blank" rel="noopener noreferrer">
                 <Button size="lg" className="text-lg px-8 w-full sm:w-auto">
                   <FileText className="mr-2 h-5 w-5" />
                   {language === 'nl' ? 'Download onze folder' : 'Descarcă broșura'}
                 </Button>
-              </a>
+              </a> */}
               <LocalizedLink to="/contact">
                 <Button size="lg" variant="outline" className="text-lg px-8 w-full sm:w-auto">
                   <MessageSquare className="mr-2 h-5 w-5" />
@@ -222,10 +222,10 @@ export default function TraiteurCatering() {
                 : 'Contactează-ne pentru o ofertă fără obligații. Ne face plăcere să te ajutăm!'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="tel:+3251688962">
+              <a href="tel:+32466186457">
                 <Button size="lg" variant="secondary" className="text-lg px-8">
                   <Phone className="mr-2 h-5 w-5" />
-                  +32 51 68 89 62
+                  +32 466 18 64 57
                 </Button>
               </a>
               <LocalizedLink to="/contact">

@@ -159,15 +159,26 @@ serve(async (req) => {
     const { image1Url, image2Url, image3Url } = validationResult.data;
 
     console.log('Fetching images from URLs...');
+    console.log('Image URLs:', { image1Url, image2Url, image3Url });
 
     // Fetch images from URLs
     const fetchImage = async (url: string): Promise<Uint8Array> => {
       try {
         const response = await fetch(url);
+        const contentType = response.headers.get('content-type') || '';
+        console.log(`Fetched ${url}: status=${response.status}, content-type=${contentType}`);
+        
         if (!response.ok) {
           throw new Error(`Failed to fetch image: ${response.status} ${response.statusText}`);
         }
+        
+        // Check if we got HTML instead of an image (likely a 404 page or SPA fallback)
+        if (contentType.includes('text/html')) {
+          throw new Error(`URL returned HTML instead of image. The image may not exist at this path.`);
+        }
+        
         const arrayBuffer = await response.arrayBuffer();
+        console.log(`Image size: ${arrayBuffer.byteLength} bytes`);
         return new Uint8Array(arrayBuffer);
       } catch (error) {
         throw new Error(`Error fetching image from ${url}: ${error instanceof Error ? error.message : 'Unknown error'}`);

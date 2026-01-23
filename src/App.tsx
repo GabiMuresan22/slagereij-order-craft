@@ -18,26 +18,25 @@ import AdminRoute from "./components/AdminRoute";
 import RoadworksAlert from "./components/RoadworksAlert";
 import MobileStickyOrderCTA from "./components/MobileStickyOrderCTA";
 
-// 1. Import lazy and Suspense from React
-import { lazy, Suspense } from "react";
+// 1. Import Suspense from React
+import { Suspense } from "react";
+import { lazyWithRetry } from "@/lib/lazyWithRetry";
 
-// 2. Replace static imports with lazy imports
-// This tells Vite to split these into separate files (chunks)
-const Home = lazy(() => import("./pages/Home"));
-const About = lazy(() => import("./pages/About"));
-const Products = lazy(() => import("./pages/Products"));
-const Packages = lazy(() => import("./pages/Packages"));
-const Catering = lazy(() => import("./pages/Catering"));
-const TraiteurCatering = lazy(() => import("./pages/TraiteurCatering"));
-const Order = lazy(() => import("./pages/Order"));
-const Contact = lazy(() => import("./pages/Contact"));
-const Auth = lazy(() => import("./pages/Auth"));
-const MyAccount = lazy(() => import("./pages/MyAccount"));
-const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
-const Privacy = lazy(() => import("./pages/Privacy"));
-const Terms = lazy(() => import("./pages/Terms"));
-const Allergens = lazy(() => import("./pages/Allergens"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+// 2. Lazy imports with retry logic for chunk loading failures
+const Home = lazyWithRetry(() => import("./pages/Home"));
+const About = lazyWithRetry(() => import("./pages/About"));
+const Products = lazyWithRetry(() => import("./pages/Products"));
+const Catering = lazyWithRetry(() => import("./pages/Catering"));
+const TraiteurCatering = lazyWithRetry(() => import("./pages/TraiteurCatering"));
+const Order = lazyWithRetry(() => import("./pages/Order"));
+const Contact = lazyWithRetry(() => import("./pages/Contact"));
+const Auth = lazyWithRetry(() => import("./pages/Auth"));
+const MyAccount = lazyWithRetry(() => import("./pages/MyAccount"));
+const AdminDashboard = lazyWithRetry(() => import("./pages/admin/Dashboard"));
+const Privacy = lazyWithRetry(() => import("./pages/Privacy"));
+const Terms = lazyWithRetry(() => import("./pages/Terms"));
+const Allergens = lazyWithRetry(() => import("./pages/Allergens"));
+const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
@@ -55,7 +54,6 @@ const AppRoutes = () => (
     <Route path="/" element={<Home />} />
     <Route path="/about" element={<About />} />
     <Route path="/products" element={<Products />} />
-    <Route path="/packages" element={<Packages />} />
     <Route path="/catering" element={<Catering />} />
     <Route path="/traiteur-catering" element={<TraiteurCatering />} />
     <Route path="/order" element={<Order />} />
@@ -71,7 +69,6 @@ const AppRoutes = () => (
     <Route path="/ro" element={<Home />} />
     <Route path="/ro/about" element={<About />} />
     <Route path="/ro/products" element={<Products />} />
-    <Route path="/ro/packages" element={<Packages />} />
     <Route path="/ro/catering" element={<Catering />} />
     <Route path="/ro/traiteur-catering" element={<TraiteurCatering />} />
     <Route path="/ro/order" element={<Order />} />
@@ -82,6 +79,10 @@ const AppRoutes = () => (
     <Route path="/ro/privacy" element={<Privacy />} />
     <Route path="/ro/terms" element={<Terms />} />
     <Route path="/ro/allergens" element={<Allergens />} />
+    
+    {/* Legacy redirect for /packages */}
+    <Route path="/packages" element={<Products />} />
+    <Route path="/ro/packages" element={<Products />} />
     
     {/* 404 fallback */}
     <Route path="*" element={<NotFound />} />
