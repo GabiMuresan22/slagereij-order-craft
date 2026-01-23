@@ -65,11 +65,11 @@ const Navigation = () => {
     "/contact": Phone,
   };
 
-  // Simplified navigation - 5 essential items only
-  // Product categories accessible from Webshop/Order page
+  // Main navigation items
   const navItems = [
     { path: "/", label: t('nav.home'), icon: iconMap["/"] },
     { path: "/order", label: t('nav.webshop'), icon: iconMap["/order"] },
+    { path: "/products", label: t('nav.products'), icon: iconMap["/products"] },
     { path: "/catering", label: t('nav.catering'), icon: iconMap["/catering"] },
     { path: "/about", label: t('nav.about'), icon: iconMap["/about"] },
     { path: "/contact", label: t('nav.contact'), icon: iconMap["/contact"] },
