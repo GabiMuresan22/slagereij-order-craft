@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { MapPin, ChefHat, Clock, PartyPopper, Heart, FileText, MessageSquare } from "lucide-react";
+import { MapPin, ChefHat, Clock, PartyPopper, Heart, FileText, MessageSquare, Download, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import heroImageDesktop from "@/assets/hero-steak.webp";
 import heroImageMobile from "@/assets/hero-steak-mobile.webp";
@@ -8,6 +9,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getLocalBusinessSchema, getReviewsSchema } from "@/lib/structuredData";
 import LocalizedLink from "@/components/LocalizedLink";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 // Category images
 import porkProducts from "@/assets/pork-products.webp";
@@ -17,9 +20,59 @@ import teamPortrait from "@/assets/team-portrait.webp";
 import cateringPartySpread from "@/assets/catering-party-spread.webp";
 import steengrillPlatter from "@/assets/steengrill-vleesschotel-assortiment.webp";
 
+// PDF menu images (PNG format required for pdf-lib)
+import christmasMenu1 from "@/assets/christmas-menu-1-pdf.png";
+import christmasMenu2 from "@/assets/christmas-menu-2-pdf.png";
+import christmasMenu3 from "@/assets/christmas-menu-3-pdf.png";
+
 const Home = () => {
   const { t, language } = useLanguage();
   const structuredData = [getLocalBusinessSchema(), getReviewsSchema()];
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  // Function to get the full URL for an imported image
+  const getFullImageUrl = (imagePath: string) => {
+    // If already absolute URL, return as-is
+    if (imagePath.startsWith('http')) return imagePath;
+    // Convert relative path to absolute URL
+    return `${window.location.origin}${imagePath}`;
+  };
+
+  // Download folder PDF handler
+  const handleDownloadFolder = async () => {
+    setIsDownloading(true);
+    try {
+      const response = await supabase.functions.invoke('generate-christmas-menu-pdf', {
+        body: {
+          image1Url: getFullImageUrl(christmasMenu1),
+          image2Url: getFullImageUrl(christmasMenu2),
+          image3Url: getFullImageUrl(christmasMenu3),
+        },
+      });
+
+      if (response.error) {
+        throw new Error(response.error.message || 'Failed to generate PDF');
+      }
+
+      // The response.data is a Blob
+      const blob = response.data;
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'Menu-Slagerij-John.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+      toast.success(language === 'nl' ? 'Folder gedownload!' : 'Catalog descărcat!');
+    } catch (error) {
+      console.error('Error downloading folder:', error);
+      toast.error(language === 'nl' ? 'Fout bij downloaden. Probeer opnieuw.' : 'Eroare la descărcare. Încercați din nou.');
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   // SEO meta tags optimized for Belgian market
   const seoTitle = language === 'nl' 
@@ -130,21 +183,31 @@ const Home = () => {
                 </Button>
               </motion.div>
             </LocalizedLink>
-            <LocalizedLink to="/products">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={handleDownloadFolder}
+                disabled={isDownloading}
+                className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-white/20 backdrop-blur-sm text-white border-2 border-white hover:bg-white/30 hover:border-white hover:text-white hover:shadow-xl transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full sm:w-auto uppercase tracking-wide"
               >
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-7 font-semibold bg-white/20 backdrop-blur-sm text-white border-2 border-white hover:bg-white/30 hover:border-white hover:text-white hover:shadow-xl transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-full sm:w-auto uppercase tracking-wide"
-                >
-                  {language === 'nl' ? 'BEKIJK FOLDER' : 'VEZI CATALOGUL'}
-                </Button>
-              </motion.div>
-            </LocalizedLink>
+                {isDownloading ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    {language === 'nl' ? 'DOWNLOADEN...' : 'SE DESCARCĂ...'}
+                  </>
+                ) : (
+                  <>
+                    <Download className="mr-2 h-5 w-5" />
+                    {language === 'nl' ? 'DOWNLOAD FOLDER' : 'DESCARCĂ CATALOGUL'}
+                  </>
+                )}
+              </Button>
+            </motion.div>
           </div>
         </div>
       </section>
