@@ -5,7 +5,7 @@ import LazyImage from "@/components/LazyImage";
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import LocalizedLink from "@/components/LocalizedLink";
-import MenuSection from "@/components/MenuSection";
+
 // Hero & Action images - Night atmosphere shots
 import cateringBbqNight from "@/assets/catering-bbq-night.webp";
 import cateringBbqSmoky from "@/assets/catering-bbq-smoky.webp";
@@ -275,8 +275,6 @@ export default function Catering() {
           </div>
         </section>
 
-        {/* Menu Section - Special Menus & Packages */}
-        <MenuSection />
 
         {/* Gallery Section */}
         <section className="py-12 md:py-16">
