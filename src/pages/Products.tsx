@@ -297,15 +297,9 @@ const Products = () => {
         <div className="container mx-auto px-4">
           {/* Section Header */}
           <div className="text-center mb-12">
-            <span className="inline-block px-4 py-1 rounded-full bg-primary/20 text-primary text-sm font-medium mb-4">
-              {t('menu.badge')}
-            </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               {t('menu.title').split(' ')[0]} <span className="text-primary">{t('menu.title').split(' ').slice(1).join(' ')}</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              {t('menu.subtitle')}
-            </p>
           </div>
 
           {/* À La Carte Section */}
