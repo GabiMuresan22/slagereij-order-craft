@@ -15,7 +15,7 @@ import { toast } from "sonner";
 // Category images
 import porkProducts from "@/assets/pork-products.webp";
 import cateringChefServing from "@/assets/catering-chef-serving.webp";
-import romanianPlatter from "@/assets/romanian-traditional-appetizer-platter-charcuterie.webp";
+import cateringMiciGrill from "@/assets/catering-mici-grill.webp";
 import teamPortrait from "@/assets/team-portrait.webp";
 import cateringPartySpread from "@/assets/catering-party-spread.webp";
 import steengrillPlatter from "@/assets/steengrill-vleesschotel-assortiment.webp";
@@ -107,9 +107,9 @@ const Home = () => {
     {
       title: t('home.categories.romanian.title'),
       description: t('home.categories.romanian.desc'),
-      image: romanianPlatter,
+      image: cateringMiciGrill,
       link: '/products',
-      alt: 'Roemeense mici, gerookte worst, authentieke specialiteiten',
+      alt: 'Barbecue worsten en vleesassortiment voor feesten en evenementen',
       badge: language === 'nl' ? 'Exclusief' : 'Exclusiv'
     }
   ];
