@@ -90,7 +90,7 @@ const translations = {
     // Catering & Events Section
     'home.catering.title': 'Iets te vieren? Wij zorgen voor het eten.',
     'home.catering.body': 'Of het nu gaat om een verjaardag, communie of bedrijfsfeest in de regio Zwevezele, Wingene of Lichtervelde: Slagerij John is uw partner. Van koude schotels (buffet) tot uitgebreide BBQ-pakketten.',
-    'home.catering.ctaFolder': 'Download Folder',
+    'home.catering.ctaFolder': 'Bekijk Onze Traiteur',
     'home.catering.ctaQuote': 'Vraag Direct Offerte',
     
     // About Us Section
@@ -1096,7 +1096,7 @@ const translations = {
     // Catering & Events Section
     'home.catering.title': 'Ai ceva de sărbătorit? Noi ne ocupăm de mâncare.',
     'home.catering.body': 'Fie că este vorba de o aniversare, comuniune sau eveniment de firmă în zona Zwevezele, Wingene sau Lichtervelde: Măcelăria John este partenerul tău. De la platouri reci (bufet) la pachete BBQ complete.',
-    'home.catering.ctaFolder': 'Descarcă folderul nostru',
+    'home.catering.ctaFolder': 'Vezi Serviciile Noastre de Catering',
     'home.catering.ctaQuote': 'Solicită Ofertă Direct',
     
     // About Us Section
