@@ -36,7 +36,7 @@ const translations = {
     'home.hero.description': 'Dagvers vlees, huisbereide gerechten en feestelijke schotels. Bestel online en haal af wanneer het u past.',
     'home.hero.cta': 'Bestel Nu Online',
     'home.hero.ctaPrimary': 'NAAR DE WEBSHOP',
-    'home.hero.ctaSecondary': 'Bekijk Weekpromoties',
+    'home.hero.ctaSecondary': 'Bekijk Onze Producten',
     
     // Introduction Section - Trust & Quality
     'home.intro.text': 'Bij Slagerij John combineren we traditioneel vakmanschap met modern gemak. Of u nu op zoek bent naar het perfecte stukje vlees voor uw zondagse biefstuk, of een uitgebreide gourmetschotel voor een feestje: kwaliteit staat bij ons altijd voorop. Wij selecteren ons vlees met zorg, zodat u zorgeloos kunt genieten.',
@@ -1042,7 +1042,7 @@ const translations = {
     'home.hero.description': 'Măcelărie tradițională și preparate românești autentice, gătite cu pasiune în inima Flandrei.',
     'home.hero.cta': 'Comandă Acum Online',
     'home.hero.ctaPrimary': 'Vezi produsele românești',
-    'home.hero.ctaSecondary': 'Vezi Promoțiile Săptămânii',
+    'home.hero.ctaSecondary': 'Vezi Produsele Noastre',
     
     // Introduction Section - Trust & Quality
     'home.intro.text': 'Știm cât de mult contează o masă bogată. La Slagerij John, îți aducem atât specialitățile belgiene de top, cât și gustul autentic al preparatelor românești (mici, cârnați, afumături), pregătite chiar aici, proaspăt, pentru tine.',
