@@ -204,7 +204,7 @@ const Footer = () => {
               </LocalizedLink>
               <button 
                 type="button"
-                data-cc="c-settings"
+                data-cc="show-preferencesModal"
                 className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors min-h-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-1"
                 aria-label={t('footer.cookies')}
               >
