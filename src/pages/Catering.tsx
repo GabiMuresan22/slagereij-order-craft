@@ -227,7 +227,7 @@ export default function Catering() {
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="order-2 md:order-1">
                 <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-6">
-                  {language === 'nl' ? 'Verse Salades & Bijgerechten' : 'Salate Proaspete și Garnituri'}
+                  {language === 'nl' ? 'Verse Salades & Bijgerechten en Ontbijt' : 'Salate Proaspete, Garnituri și Mic Dejun'}
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-4">
                   {t('catering.p4')}
