@@ -35,9 +35,15 @@ const AnniversaryBanner = () => {
     nl: {
       badge: "🎉 Wij vieren feest!",
       title: "1 Jaar Slagerij John",
-      subtitle: "Een jaar geleden opende wij met volle overgave de deuren van Slagerij John. Vol passie, ambitie en liefde voor het vak.",
-      message: "Wij willen u bedanken voor het vertrouwen, de trouw en alle warme ontmoetingen aan de toonbank.",
-      invitation: "Om dit samen te vieren nodigen wij u uit op onze",
+      subtitle: "Eén jaar hard werken, passie en kwaliteit – dankzij jullie, onze klanten.",
+      paragraphs: [
+        "Op 1 februari vieren we 1 jaar sinds Slager John zijn deuren opende.",
+        "Het was een jaar vol lange werkdagen, inzet en opofferingen, maar vooral een jaar waarin we elke dag met hart en ziel hebben gewerkt om kwaliteit te bieden.",
+        "Dankzij jullie, onze klanten, had elke inspanning een betekenis.",
+        "Jullie vertrouwen, jullie keuze om telkens opnieuw voor ons te komen, is het bewijs dat wat we doen goed is en van kwaliteit.",
+        "Uit de grond van ons hart: dankjewel voor jullie steun en vertrouwen gedurende dit hele jaar.",
+      ],
+      invitation: "Graag nodigen wij jullie uit voor onze Open Deur Dag, om samen dit mooie moment te vieren, een glas te heffen en samen te genieten van enkele hapjes, in een warme en gezellige sfeer.",
       event: "Open Deur Dag",
       date: "Zondag 1 februari",
       time: "14:00 – 17:00",
@@ -47,9 +53,15 @@ const AnniversaryBanner = () => {
     ro: {
       badge: "🎉 Sărbătorim!",
       title: "1 An de Slagerij John",
-      subtitle: "Acum un an am deschis cu pasiune ușile Măcelăriei John. Cu multă dragoste și dedicare pentru meserie.",
-      message: "Vă mulțumim pentru încredere, loialitate și toate momentele frumoase la tejghea.",
-      invitation: "Pentru a sărbători împreună, vă invităm la",
+      subtitle: "Un an de muncă grea, pasiune și calitate – datorită vouă, clienții noștri.",
+      paragraphs: [
+        "Pe 1 februarie sărbătorim 1 an de când Slager John și-a deschis porțile.",
+        "A fost un an plin de zile lungi de muncă, dedicare și sacrificii, dar mai ales un an în care am lucrat în fiecare zi cu inimă și suflet pentru a oferi calitate.",
+        "Datorită vouă, clienții noștri, fiecare efort a avut un sens.",
+        "Încrederea voastră, alegerea de a reveni de fiecare dată la noi, este dovada că ceea ce facem este bun și de calitate.",
+        "Din adâncul inimii: vă mulțumim pentru sprijinul și încrederea acordate pe parcursul acestui an.",
+      ],
+      invitation: "Vă invităm cu drag la Ziua Porților Deschise, pentru a sărbători împreună acest moment frumos, a ciocni un pahar și a ne bucura de câteva gustări, într-o atmosferă caldă și primitoare.",
       event: "Ziua Porților Deschise",
       date: "Duminică, 1 februarie",
       time: "14:00 – 17:00",
@@ -104,18 +116,23 @@ const AnniversaryBanner = () => {
                 {t.title}
               </motion.h2>
 
-              {/* Subtitle & Message */}
+              {/* Subtitle & Paragraphs */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.4 }}
                 className="space-y-3 mb-6"
               >
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                <p className="text-base md:text-lg font-semibold text-foreground leading-relaxed">
                   {t.subtitle}
                 </p>
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                  {t.message}
+                {t.paragraphs.map((paragraph, index) => (
+                  <p key={index} className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))}
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed italic">
+                  {t.invitation}
                 </p>
               </motion.div>
 
