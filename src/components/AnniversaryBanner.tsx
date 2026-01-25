@@ -43,7 +43,7 @@ const AnniversaryBanner = () => {
         "Jullie vertrouwen, jullie keuze om telkens opnieuw voor ons te komen, is het bewijs dat wat we doen goed is en van kwaliteit.",
         "Uit de grond van ons hart: dankjewel voor jullie steun en vertrouwen gedurende dit hele jaar.",
       ],
-      invitation: "Graag nodigen wij jullie uit voor onze Open Deur Dag, om samen dit mooie moment te vieren, een glas te heffen en samen te genieten van enkele hapjes, in een warme en gezellige sfeer.",
+      
       event: "Open Deur Dag",
       date: "Zondag 1 februari",
       time: "14:00 – 17:00",
@@ -61,7 +61,7 @@ const AnniversaryBanner = () => {
         "Încrederea voastră, alegerea de a reveni de fiecare dată la noi, este dovada că ceea ce facem este bun și de calitate.",
         "Din adâncul inimii: vă mulțumim pentru sprijinul și încrederea acordate pe parcursul acestui an.",
       ],
-      invitation: "Vă invităm cu drag la Ziua Porților Deschise, pentru a sărbători împreună acest moment frumos, a ciocni un pahar și a ne bucura de câteva gustări, într-o atmosferă caldă și primitoare.",
+      
       event: "Ziua Porților Deschise",
       date: "Duminică, 1 februarie",
       time: "14:00 – 17:00",
@@ -131,9 +131,6 @@ const AnniversaryBanner = () => {
                     {paragraph}
                   </p>
                 ))}
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed italic">
-                  {t.invitation}
-                </p>
               </motion.div>
 
               {/* Event Invitation */}
@@ -143,7 +140,7 @@ const AnniversaryBanner = () => {
                 transition={{ duration: 0.4, delay: 0.5 }}
                 className="bg-card rounded-xl p-6 shadow-sm border border-border mb-4"
               >
-                <p className="text-muted-foreground mb-3">{t.invitation}</p>
+                
                 <h3 className="text-xl md:text-2xl font-serif font-bold text-primary mb-4">
                   {t.event}
                 </h3>
