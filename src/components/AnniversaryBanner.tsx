@@ -40,8 +40,8 @@ const AnniversaryBanner = () => {
       invitation: "Om dit samen te vieren nodigen wij u uit op onze",
       event: "Open Deur Dag",
       date: "Zondag 1 februari",
-      time: "10:00 – 18:00",
-      location: "Markt 34, Zwevezele",
+      time: "14:00 – 17:00",
+      location: "Bruggestraat 146A, 8750 Zwevezele",
       cta: "Tot dan! 🍖🎈",
     },
     ro: {
@@ -52,8 +52,8 @@ const AnniversaryBanner = () => {
       invitation: "Pentru a sărbători împreună, vă invităm la",
       event: "Ziua Porților Deschise",
       date: "Duminică, 1 februarie",
-      time: "10:00 – 18:00",
-      location: "Markt 34, Zwevezele",
+      time: "14:00 – 17:00",
+      location: "Bruggestraat 146A, 8750 Zwevezele",
       cta: "Pe curând! 🍖🎈",
     }
   };
