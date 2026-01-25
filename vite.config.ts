@@ -34,7 +34,6 @@ export default defineConfig(({ mode }) => ({
   // Help Vite prebundle consistently; avoids Radix pulling a different React copy in dev
   optimizeDeps: {
     include: ["react", "react-dom", "@radix-ui/react-tooltip", "framer-motion"],
-    force: true, // Force re-optimization to clear stale cache
   },
   build: {
     // Optimize CSS delivery
