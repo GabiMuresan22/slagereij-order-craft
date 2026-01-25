@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import heroImageDesktop from "@/assets/hero-steak.webp";
 import heroImageMobile from "@/assets/hero-steak-mobile.webp";
 import Testimonials from "@/components/Testimonials";
+import AnniversaryBanner from "@/components/AnniversaryBanner";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getLocalBusinessSchema, getReviewsSchema } from "@/lib/structuredData";
@@ -202,6 +203,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* ANNIVERSARY ANNOUNCEMENT - Temporary Event Banner */}
+      <AnniversaryBanner />
 
       {/* B. TRUST BAR - Immediately below Hero */}
       <section className="py-8 md:py-12 bg-muted/50 border-b border-border" aria-labelledby="trust-bar-heading">
