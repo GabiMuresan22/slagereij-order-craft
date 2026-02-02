@@ -26,7 +26,7 @@ const RoadworksAlert = () => {
       title: "🚧 BELANGRIJKE UPDATE: WEGENWERKEN",
       lines: [
         "Vanwege de werkzaamheden aan de straat zijn wij helaas genoodzaakt de winkel tijdelijk te sluiten.",
-        "Maar wij blijven voor u klaarstaan! 🔥 –30% KORTING op alle producten ⚠️ In het weekend werken wij uitsluitend op bestelling.",
+        "Maar wij blijven voor u klaarstaan! ⚠️ In het weekend werken wij uitsluitend op bestelling.",
         "Bestel uw vlees eenvoudig online of via WhatsApp, en wij zorgen voor de rest. Hartelijk dank voor uw steun!"
       ],
       ctaOnline: "🛒 Bestel Nu Online",
@@ -36,7 +36,7 @@ const RoadworksAlert = () => {
       title: "🚧 ANUNȚ IMPORTANT: LUCRĂRI STRADALE",
       lines: [
         "Din cauza lucrărilor la stradă, suntem nevoiți să închidem temporar magazinul fizic.",
-        "Dar rămânem la dispoziția dumneavoastră! 🔥 –30% REDUCERE la toate produsele ⚠️ În weekend lucrăm exclusiv pe bază de comandă.",
+        "Dar rămânem la dispoziția dumneavoastră! ⚠️ În weekend lucrăm exclusiv pe bază de comandă.",
         "Comandați simplu online sau pe WhatsApp, iar noi ne ocupăm de restul. Vă mulțumim pentru susținere!"
       ],
       ctaOnline: "🛒 Comandă Acum Online",
