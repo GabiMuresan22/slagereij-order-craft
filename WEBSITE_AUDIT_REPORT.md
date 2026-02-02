@@ -1,12 +1,12 @@
 # Website Audit Report - Slagerij John
-**Date:** January 22, 2025 (Updated: January 23, 2025)  
-**URL:** https://www.slagerij-john.be
+**Date:** January 22, 2025 (Updated: January 26, 2026)  
+**URL:** https://www.slagerij-john.be | https://slagerij-john.be
 
 ## Executive Summary
 
-This audit evaluates the website across multiple dimensions: Accessibility, SEO, Performance, User Experience, Code Quality, and Security. The site shows strong accessibility foundations, excellent security practices, and modern development patterns.
+This audit evaluates the website across **Security**, **SEO**, and **UI/UX**, plus Accessibility, Performance, and Code Quality. The site has strong accessibility foundations, solid security practices (HIBP, rate limiting, headers), good SEO (structured data, canonical, sitemap), and modern UX (skip link, loading states, error boundaries).
 
-**Update Status:** Multiple critical and high-priority issues have been resolved. Major homepage restructure completed with "Trust → Craving → Action" flow. Security audit shows strong practices with minor recommendations.
+**Update Status (Jan 2026):** Full refresh completed. Critical items from previous audits are resolved. This report adds a focused **"Improve This Month"** list and refreshed Security, SEO, and UI/UX findings.
 
 ---
 
@@ -295,25 +295,29 @@ This audit evaluates the website across multiple dimensions: Accessibility, SEO,
 
 ## 8. Action Items Summary
 
-### Immediate (This Week)
+### Completed (Historical)
 - [x] ✅ Fix `/order` route 404 error in production - **FIXED AND DEPLOYED** (vercel.json working)
 - [x] ✅ Fix translation keys showing in UI - **FIXED** (commit `3a65c5e`)
 - [x] ✅ Update navbar "Catering" to "Traiteur" - **FIXED** (commit `c5d49a3`)
 - [x] ✅ Fix team portrait images to display at full size - **FIXED** (commit `e961cf6`)
-- [ ] Run bundle analysis (`npm run build:analyze`) - **READY** (tooling configured, just needs execution)
-- [ ] Run Lighthouse audit for performance scores
 
-### Short Term (This Month)
-- [ ] Automate sitemap `lastmod` updates
-- [ ] Verify and optimize OG image
-- [ ] Replace remaining console.log with logger utility
-- [ ] Add more test coverage
+### This Month (January 2026) – see Section 14 for full list
+- [ ] Add Content-Security-Policy header (vercel.json)
+- [ ] (Optional) Restrict CORS in Edge Functions to production domain
+- [ ] Align canonical/OG URLs (www vs non-www)
+- [ ] Update sitemap index lastmod in build
+- [ ] Verify OG image (1200×630, size)
+- [ ] Run Lighthouse + WAVE for accessibility and contrast
+- [ ] Ensure all CTAs have loading/disabled state
+- [ ] Verify error messages translated (NL/RO)
+- [ ] Run bundle analysis (`npm run build:analyze`)
+- [ ] Run Lighthouse Performance on key pages
 
 ### Long Term (Next Quarter)
 - [ ] Comprehensive accessibility testing with screen readers
 - [ ] Performance optimization based on bundle analysis
-- [ ] Expand structured data (LocalBusiness schema)
-- [ ] Security headers implementation
+- [ ] Expand structured data if needed
+- [ ] Consider CSP reporting (report-uri)
 
 ---
 
@@ -374,13 +378,15 @@ The website has a **strong foundation** with excellent accessibility features, g
 - ⚠️ Color contrast verification (needs Lighthouse/WAVE)
 - ⚠️ Sitemap automation (low priority)
 
-Overall, the site is well-built and **all critical issues have been resolved**. The website is now fully functional with improved UX and proper translations.
+Overall, the site is well-built and **all critical issues have been resolved**. The website is fully functional with improved UX and proper translations.
+
+**January 2026 refresh:** Security, SEO, and UI/UX have been re-audited. Use **Section 14 – Improve This Month** for the prioritized action list.
 
 ---
 
 **Report Generated:** January 22, 2025  
-**Last Updated:** January 23, 2025  
-**Next Audit Recommended:** After implementing CSP headers and CORS restrictions
+**Last Updated:** January 26, 2026  
+**Next Audit Recommended:** After implementing CSP and CORS improvements; quarterly for SEO/Performance
 
 ---
 
@@ -411,3 +417,83 @@ Overall, the site is well-built and **all critical issues have been resolved**. 
 - Strong security practices implemented
 - Minor improvements recommended (CSP, CORS restrictions)
 - No critical vulnerabilities found
+
+---
+
+## 13. Full Audit Refresh – Security, SEO, UI/UX (January 2026)
+
+### 13.1 Security Audit
+
+| Area | Status | Notes |
+|------|--------|------|
+| **Headers** | ✅ | X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy in vercel.json |
+| **Content-Security-Policy** | ⚠️ | Not set; recommend adding CSP in vercel.json |
+| **HTTPS** | ✅ | Assumed in production |
+| **Env / secrets** | ✅ | Only VITE_* and Supabase anon key in client; RESEND_API_KEY server-side only |
+| **Password security** | ✅ | HIBP leak check used in Auth (sign-up + reset) |
+| **Rate limiting** | ✅ | Edge functions (e.g. send-contact-email) use in-memory rate limit (e.g. 3 req/min per IP) |
+| **CORS** | ⚠️ | Edge functions use `Access-Control-Allow-Origin: *`; consider restricting to production domain |
+| **Input validation** | ✅ | Zod schemas on Contact and forms; limits on length |
+| **XSS** | ⚠️ Low | `dangerouslySetInnerHTML` in Testimonials (hardcoded reviews + keyword highlighting only); acceptable but document; avoid if reviews become user-generated |
+| **Dependencies** | ✅ | `npm audit` reports 0 vulnerabilities |
+
+**Security – Improve this month:** Add CSP header; optionally restrict CORS to `https://slagerij-john.be` (and www if used).
+
+---
+
+### 13.2 SEO Audit
+
+| Area | Status | Notes |
+|------|--------|------|
+| **Title / meta** | ✅ | SEO component with title, description, keywords; used on pages |
+| **Canonical** | ✅ | Per-page canonical in SEO.tsx; baseUrl `https://slagerij-john.be` |
+| **Open Graph / Twitter** | ✅ | OG and Twitter cards in index.html and SEO component; og-image referenced |
+| **Structured data** | ✅ | LocalBusiness (ButcherShop), Reviews, Breadcrumb, Product/ItemList in structuredData.ts |
+| **Sitemap** | ✅ | robots.txt points to Supabase dynamic sitemap; public sitemap index has lastmod 2025-01-22 |
+| **Robots** | ✅ | Allow / ; Disallow /admin/, /private/; Crawl-delay: 1 (Bing; Google ignores) |
+| **Hreflang** | ✅ | Handled via dynamic sitemap (bilingual) |
+| **index.html** | ⚠️ | OG URL uses slagerij-john.be; confirm www vs non-www consistency with canonical |
+
+**SEO – Improve this month:** Align canonical and OG URLs (www vs non-www); optionally update sitemap index lastmod in build; verify OG image size (e.g. 1200×630) and weight.
+
+---
+
+### 13.3 UI/UX Audit
+
+| Area | Status | Notes |
+|------|--------|------|
+| **Skip link** | ✅ | SkipLink to #main-content; visible on focus |
+| **Focus** | ✅ | Skip link has focus ring; 108 aria/role usages across 19 files |
+| **Loading states** | ✅ | Order/Products skeletons; isSubmitting on Contact; loading in Auth |
+| **Error handling** | ✅ | ErrorBoundary with fallback; toasts for form/API errors |
+| **Forms** | ✅ | React Hook Form + Zod; translated validation messages |
+| **Responsive** | ✅ | Tailwind; mobile-first patterns |
+| **Navigation** | ✅ | LocalizedLink; main nav and routes consistent |
+| **Contrast** | ⚠️ | Not re-tested; recommend Lighthouse/WAVE for WCAG AA |
+| **Motion** | ✅ | Framer Motion used; no mandatory motion that can’t be disabled |
+
+**UI/UX – Improve this month:** Run Lighthouse + WAVE for contrast and a11y; add loading/disabled state on primary CTAs where async (if any still missing); ensure all error messages are translated (NL/RO).
+
+---
+
+## 14. Improve This Month (January 2026 – Action List)
+
+Prioritized list of improvements you can do this month:
+
+### Security
+1. **Add Content-Security-Policy** – Add CSP header in vercel.json (e.g. default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co https://api.pwnedpasswords.com).
+2. **Restrict CORS (optional)** – In Supabase Edge Functions, set `Access-Control-Allow-Origin` to `https://slagerij-john.be` (and www if used) instead of `*`.
+
+### SEO
+3. **Canonical / OG URL consistency** – Decide www vs non-www; use same base in index.html, SEO.tsx, and sitemap.
+4. **Sitemap index lastmod** – Update `public/sitemap.xml` (or sitemap index) lastmod during build so it reflects current date.
+5. **OG image** – Confirm og-image.jpg is 1200×630 (or 1.91:1) and under ~200KB for best sharing.
+
+### UI/UX
+6. **Accessibility check** – Run Lighthouse (Accessibility) and WAVE; fix contrast and focus issues to meet WCAG AA.
+7. **Loading on CTAs** – Ensure every primary button that triggers async work shows loading/disabled state and clear feedback.
+8. **Error copy** – Review Contact, Order, Auth; ensure all error messages exist in NL and RO and are user-friendly.
+
+### General
+9. **Bundle analysis** – Run `npm run build:analyze` and trim large dependencies if needed.
+10. **Lighthouse Performance** – Run on Home and Order; aim for 90+ where feasible; optimize LCP/CLS if needed.
