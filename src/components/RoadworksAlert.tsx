@@ -23,21 +23,28 @@ const RoadworksAlert = () => {
 
   const content = {
     nl: {
-      title: "🚧 BELANGRIJKE UPDATE: WEGENWERKEN",
+      title: "📢 🇧🇪GOED NIEUWS! 🌟",
       lines: [
-        "Vanwege de werkzaamheden aan de straat zijn wij helaas genoodzaakt de winkel tijdelijk te sluiten.",
-        "Maar wij blijven voor u klaarstaan! ⚠️ In het weekend werken wij uitsluitend op bestelling.",
-        "Bestel uw vlees eenvoudig online of via WhatsApp, en wij zorgen voor de rest. Hartelijk dank voor uw steun!"
+        "Vanaf vrijdag is onze winkel opnieuw geopend met normale openingsuren. ‼️",
+        "De wegenwerken worden vanaf vrijdag onderbroken voor het carnaval.",
+        "Na het carnaval worden de werken opnieuw hervat, maar we houden u hierover zeker op de hoogte.",
+        "🥩🧀 Verse producten, authentieke smaak en topkwaliteit",
+        "📞 Bestellingen: +32 466 18 64 57",
+        "https://www.slagerij-john.be",
+        "📍 Adres: Bruggestraat 146A, 8750 Zwevezele"
       ],
       ctaOnline: "🛒 Bestel Nu Online",
       ctaWhatsApp: "📞 Via WhatsApp Bestellen"
     },
     ro: {
-      title: "🚧 ANUNȚ IMPORTANT: LUCRĂRI STRADALE",
+      title: "📢🇷🇴 VEȘTI EXCELENTE! 🌟",
       lines: [
-        "Din cauza lucrărilor la stradă, suntem nevoiți să închidem temporar magazinul fizic.",
-        "Dar rămânem la dispoziția dumneavoastră! ⚠️ În weekend lucrăm exclusiv pe bază de comandă.",
-        "Comandați simplu online sau pe WhatsApp, iar noi ne ocupăm de restul. Vă mulțumim pentru susținere!"
+        "Începând de vineri, magazinul nostru este din nou deschis cu program normal! ‼️",
+        "Lucrările la stradă se opresc pentru carnaval, iar după aceea vor fi reluate, însă vă vom ține la curent cu toate noutățile.",
+        "🥩🧀 Produse proaspete, gust autentic și calitate în care aveți încredere",
+        "📞 Comenzi: +32 466 18 64 57",
+        "https://www.slagerij-john.be",
+        "📍 Bruggestraat 146A, Zwevezele 8750"
       ],
       ctaOnline: "🛒 Comandă Acum Online",
       ctaWhatsApp: "📞 Comandă pe WhatsApp"
