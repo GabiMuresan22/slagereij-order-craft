@@ -529,7 +529,12 @@ const Home = () => {
       <section className="py-16 md:py-20 bg-primary text-primary-foreground" aria-labelledby="cta-heading">
         <div className="container mx-auto px-4 text-center">
           <h2 id="cta-heading" className="text-3xl md:text-5xl font-serif font-bold mb-4">{t("home.cta.title")}</h2>
-          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90 font-semibold">{t("home.cta.subtitle")}</p>
+          <p className="text-lg md:text-xl mb-4 max-w-2xl mx-auto opacity-90 font-semibold">{t("home.cta.subtitle")}</p>
+          <p className="text-base md:text-lg mb-8 max-w-xl mx-auto opacity-95 font-medium">
+            {language === "nl"
+              ? "❤️ Profiteer nog van 2+1 gratis burgers aan de toonbank, van 9 tot en met 15 februari."
+              : "❤️ Profită de oferta 2+1 gratuit la burgeri în vitrină, 9–15 februarie."}
+          </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <LocalizedLink to="/order">
               <motion.div
