@@ -203,37 +203,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* PROMOTION - Love month / 2+1 burgers */}
-      <section
-        className="relative py-6 md:py-8 bg-gradient-to-r from-primary/15 via-primary/10 to-primary/15 border-y border-primary/20"
-        aria-labelledby="promo-heading"
-      >
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="max-w-3xl mx-auto text-center"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-          >
-            <h2 id="promo-heading" className="sr-only">
-              {language === "nl" ? "Actie: 2+1 gratis burgers" : "Oferta: 2+1 gratuit la burgeri"}
-            </h2>
-            <p className="text-primary text-lg md:text-xl font-semibold mb-2 flex items-center justify-center gap-2 flex-wrap">
-              <Heart className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0" aria-hidden="true" />
-              {language === "nl"
-                ? "Omdat het de maand van de liefde is ❤️"
-                : "Pentru că este luna iubirii ❤️"}
-            </p>
-            <p className="text-foreground text-base md:text-lg leading-relaxed font-medium">
-              {language === "nl"
-                ? "Geniet van 2 + 1 GRATIS op alle burgers aan de toonbank, de hele week, van 9 tot en met 15 februari."
-                : "Avem 2 + 1 gratuit la toți burgerii disponibili în vitrină, toată săptămâna, în perioada 9–15 februarie."}
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
       {/* B. TRUST BAR - Immediately below Hero */}
       <section className="py-8 md:py-12 bg-muted/50 border-b border-border" aria-labelledby="trust-bar-heading">
         <div className="container mx-auto px-4">
@@ -529,12 +498,7 @@ const Home = () => {
       <section className="py-16 md:py-20 bg-primary text-primary-foreground" aria-labelledby="cta-heading">
         <div className="container mx-auto px-4 text-center">
           <h2 id="cta-heading" className="text-3xl md:text-5xl font-serif font-bold mb-4">{t("home.cta.title")}</h2>
-          <p className="text-lg md:text-xl mb-4 max-w-2xl mx-auto opacity-90 font-semibold">{t("home.cta.subtitle")}</p>
-          <p className="text-base md:text-lg mb-8 max-w-xl mx-auto opacity-95 font-medium">
-            {language === "nl"
-              ? "❤️ Profiteer nog van 2+1 gratis burgers aan de toonbank, van 9 tot en met 15 februari."
-              : "❤️ Profită de oferta 2+1 gratuit la burgeri în vitrină, 9–15 februarie."}
-          </p>
+          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90 font-semibold">{t("home.cta.subtitle")}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <LocalizedLink to="/order">
               <motion.div
