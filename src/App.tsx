@@ -35,6 +35,7 @@ const AdminDashboard = lazyWithRetry(() => import("./pages/admin/Dashboard"));
 const Privacy = lazyWithRetry(() => import("./pages/Privacy"));
 const Terms = lazyWithRetry(() => import("./pages/Terms"));
 const Allergens = lazyWithRetry(() => import("./pages/Allergens"));
+const Accessibility = lazyWithRetry(() => import("./pages/Accessibility"));
 const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -63,6 +64,7 @@ const AppRoutes = () => (
     <Route path="/privacy" element={<Privacy />} />
     <Route path="/terms" element={<Terms />} />
     <Route path="/allergens" element={<Allergens />} />
+    <Route path="/accessibility" element={<Accessibility />} />
     
     {/* Romanian routes (with /ro prefix) */}
     <Route path="/ro" element={<Home />} />
@@ -78,6 +80,7 @@ const AppRoutes = () => (
     <Route path="/ro/privacy" element={<Privacy />} />
     <Route path="/ro/terms" element={<Terms />} />
     <Route path="/ro/allergens" element={<Allergens />} />
+    <Route path="/ro/accessibility" element={<Accessibility />} />
     
     {/* Legacy redirect for /packages */}
     <Route path="/packages" element={<Products />} />
