@@ -202,6 +202,9 @@ const Footer = () => {
               <LocalizedLink to="/allergens" className="hover:text-primary transition-colors min-h-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-1">
                 {t('footer.allergens')}
               </LocalizedLink>
+              <LocalizedLink to="/accessibility" className="hover:text-primary transition-colors min-h-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-1">
+                {t('footer.accessibility') || 'Toegankelijkheid'}
+              </LocalizedLink>
               <button 
                 type="button"
                 data-cc="show-preferencesModal"

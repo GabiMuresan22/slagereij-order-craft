@@ -1,0 +1,16 @@
+# Our security address
+Contact: mailto:security@slagerij-john.be
+
+# Our security policy
+Preferred-Languages: nl, en, ro
+
+# Our OpenPGP key (if available, update with actual key)
+# Encryption: https://slagerij-john.be/.well-known/pgp-key.txt
+
+# Acknowledgments
+Acknowledgments: https://slagerij-john.be/security-acknowledgments
+
+Expires: 2027-12-31T23:59:59.000Z
+
+# Canonical URL for this file
+Canonical: https://slagerij-john.be/.well-known/security.txt
