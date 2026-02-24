@@ -23,28 +23,27 @@ const RoadworksAlert = () => {
 
   const content = {
     nl: {
-      title: "📢 🇧🇪GOED NIEUWS! 🌟",
+      title: "🚨 BELANGRIJKE UPDATE: WIJ ZIJN OPEN! 🥩",
       lines: [
-        "Vanaf vrijdag is onze winkel opnieuw geopend met normale openingsuren. ‼️",
-        "De wegenwerken worden vanaf vrijdag onderbroken voor het carnaval.",
-        "Na het carnaval worden de werken opnieuw hervat, maar we houden u hierover zeker op de hoogte.",
-        "🥩🧀 Verse producten, authentieke smaak en topkwaliteit",
-        "📞 Bestellingen: +32 466 18 64 57",
-        "https://www.slagerij-john.be",
-        "📍 Adres: Bruggestraat 146A, 8750 Zwevezele"
+        "Het carnaval is voorbij en de wegenwerken zijn helaas weer hervat. Maar laat dat de pret niet drukken: Slagerij John blijft volledig toegankelijk tijdens de normale openingsuren! 🚧",
+        "Geen zin om in de file te staan? Bestel vooraf via onze webshop of WhatsApp, dan zetten wij alles voor je klaar voor een snelle afhaling.",
+        "📲 Bestel hier: www.slagerij-john.be",
+        "📞 WhatsApp: +32 466 18 64 57",
+        "📍 Bruggestraat 146A, 8750 Zwevezele",
+        "Bedankt voor jullie steun tijdens de werken! 🙌✨"
       ],
       ctaOnline: "🛒 Bestel Nu Online",
       ctaWhatsApp: "📞 Via WhatsApp Bestellen"
     },
     ro: {
-      title: "📢🇷🇴 VEȘTI EXCELENTE! 🌟",
+      title: "📢 ANUNȚ IMPORTANT: SUNTEM DESCHIȘI! 🥩",
       lines: [
-        "Începând de vineri, magazinul nostru este din nou deschis cu program normal! ‼️",
-        "Lucrările la stradă se opresc pentru carnaval, iar după aceea vor fi reluate, însă vă vom ține la curent cu toate noutățile.",
-        "🥩🧀 Produse proaspete, gust autentic și calitate în care aveți încredere",
-        "📞 Comenzi: +32 466 18 64 57",
-        "https://www.slagerij-john.be",
-        "📍 Bruggestraat 146A, Zwevezele 8750"
+        "Carnavalul s-a încheiat, iar lucrările la drum au fost reluate. Vrem să vă informăm că Slagerij John rămâne complet accesibil și funcționează după programul normal! 🚧",
+        "Vreți să evitați aglomerația? Comandați în avans prin magazinul nostru online sau prin WhatsApp, iar noi vă pregătim comanda pentru o ridicare rapidă.",
+        "📲 Comandă aici: www.slagerij-john.be",
+        "📞 WhatsApp: +32 466 18 64 57",
+        "📍 Bruggestraat 146A, 8750 Zwevezele",
+        "Vă mulțumim pentru susținere și vă așteptăm cu drag! 🙌✨"
       ],
       ctaOnline: "🛒 Comandă Acum Online",
       ctaWhatsApp: "📞 Comandă pe WhatsApp"
