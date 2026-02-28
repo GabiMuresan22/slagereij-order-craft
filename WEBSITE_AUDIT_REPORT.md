@@ -1,12 +1,12 @@
 # Website Audit Report - Slagerij John
-**Date:** January 22, 2025 (Updated: January 26, 2026)  
+**Date:** January 22, 2025 (Updated: January 26, 2026 – Comprehensive Audit)  
 **URL:** https://www.slagerij-john.be | https://slagerij-john.be
 
 ## Executive Summary
 
-This audit evaluates the website across **Security**, **SEO**, and **UI/UX**, plus Accessibility, Performance, and Code Quality. The site has strong accessibility foundations, solid security practices (HIBP, rate limiting, headers), good SEO (structured data, canonical, sitemap), and modern UX (skip link, loading states, error boundaries).
+This audit evaluates the website across **eight areas**: **Security**, **SEO**, **Google Visibility**, **Design/UX**, **Performance**, **Content Quality**, **Conversion Optimization**, and **Legal Compliance**. The site has strong accessibility foundations, solid security practices (HIBP, rate limiting, headers), good SEO and structured data, consent-based analytics, clear legal pages, and a conversion-oriented homepage (Trust → Craving → Action).
 
-**Update Status (Jan 2026):** Full refresh completed. Critical items from previous audits are resolved. This report adds a focused **"Improve This Month"** list and refreshed Security, SEO, and UI/UX findings.
+**Update Status (Jan 2026):** Comprehensive audit completed. All eight frameworks reviewed; previous “Improve This Month” list retained and refreshed. **Note:** `npm audit` currently reports 4 vulnerabilities in dev dependencies; run `npm audit fix` and re-test.
 
 ---
 
@@ -219,7 +219,7 @@ This audit evaluates the website across **Security**, **SEO**, and **UI/UX**, pl
   - Referrer-Policy: strict-origin-when-cross-origin
 - ✅ **Password Security**: Have I Been Pwned integration for password leak checking
 - ✅ **Rate Limiting**: Implemented in Edge Functions (10 requests/minute per IP)
-- ✅ **Dependency Security**: `npm audit` shows 0 vulnerabilities (602 dependencies scanned)
+- ✅ **Dependency Security**: Run `npm audit` regularly. *Current (Jan 2026): 4 vulnerabilities in dev deps – run `npm audit fix` and re-test.*
 - ✅ **API Key Protection**: Server-side API keys (RESEND_API_KEY) never exposed to client
 - ✅ **CORS Configuration**: Properly configured in Edge Functions
 - ✅ **Input Sanitization**: Zod validation prevents injection attacks
@@ -245,7 +245,7 @@ This audit evaluates the website across **Security**, **SEO**, and **UI/UX**, pl
 2. **Add Content Security Policy**: Implement CSP header in vercel.json
    - Example: `Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com;`
 3. **Security Headers**: ✅ **VERIFIED** - All recommended headers present in vercel.json
-4. **Dependency Audit**: ✅ **PASSED** - 0 vulnerabilities found (January 23, 2025)
+4. **Dependency Audit**: Run `npm audit` and `npm audit fix`; re-run build and tests. *(Jan 2026: 4 dev-deps issues reported.)*
 5. **Regular Audits**: Continue running `npm audit` before each deployment
 
 ---
@@ -301,7 +301,8 @@ This audit evaluates the website across **Security**, **SEO**, and **UI/UX**, pl
 - [x] ✅ Update navbar "Catering" to "Traiteur" - **FIXED** (commit `c5d49a3`)
 - [x] ✅ Fix team portrait images to display at full size - **FIXED** (commit `e961cf6`)
 
-### This Month (January 2026) – see Section 14 for full list
+### This Month (January 2026) – see Section 14 and Section 16 for full list
+- [ ] **Run `npm audit fix`** – Address 4 reported vulnerabilities (dev deps); re-test build
 - [ ] Add Content-Security-Policy header (vercel.json)
 - [ ] (Optional) Restrict CORS in Edge Functions to production domain
 - [ ] Align canonical/OG URLs (www vs non-www)
@@ -312,6 +313,7 @@ This audit evaluates the website across **Security**, **SEO**, and **UI/UX**, pl
 - [ ] Verify error messages translated (NL/RO)
 - [ ] Run bundle analysis (`npm run build:analyze`)
 - [ ] Run Lighthouse Performance on key pages
+- [ ] Verify Google Search Console and sitemap submission
 
 ### Long Term (Next Quarter)
 - [ ] Comprehensive accessibility testing with screen readers
@@ -380,13 +382,13 @@ The website has a **strong foundation** with excellent accessibility features, g
 
 Overall, the site is well-built and **all critical issues have been resolved**. The website is fully functional with improved UX and proper translations.
 
-**January 2026 refresh:** Security, SEO, and UI/UX have been re-audited. Use **Section 14 – Improve This Month** for the prioritized action list.
+**January 2026 refresh:** Security, SEO, and UI/UX have been re-audited. **Comprehensive audit (Section 15)** adds **Google Visibility**, **Design/UX**, **Performance**, **Content Quality**, **Conversion Optimization**, and **Legal Compliance**. Use **Section 14 – Improve This Month** and **Section 16 – Updated Improve This Month** for prioritized actions. Run **npm audit fix** for current dependency advisories.
 
 ---
 
 **Report Generated:** January 22, 2025  
-**Last Updated:** January 26, 2026  
-**Next Audit Recommended:** After implementing CSP and CORS improvements; quarterly for SEO/Performance
+**Last Updated:** January 26, 2026 (Comprehensive Audit – 8 frameworks)  
+**Next Audit Recommended:** After implementing CSP and CORS improvements; run npm audit fix; quarterly for SEO/Performance
 
 ---
 
@@ -497,3 +499,163 @@ Prioritized list of improvements you can do this month:
 ### General
 9. **Bundle analysis** – Run `npm run build:analyze` and trim large dependencies if needed.
 10. **Lighthouse Performance** – Run on Home and Order; aim for 90+ where feasible; optimize LCP/CLS if needed.
+
+---
+
+## 15. Comprehensive Audit – All Eight Frameworks (January 2026)
+
+This section consolidates and expands the audit across **Security**, **SEO**, **Google Visibility**, **Design/UX**, **Performance**, **Content Quality**, **Conversion Optimization**, and **Legal Compliance**.
+
+### 15.1 Security
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| Security headers | ✅ | X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy in vercel.json |
+| CSP | ⚠️ | Not set; add Content-Security-Policy in vercel.json |
+| HTTPS | ✅ | Enforced in production (assumed) |
+| Secrets / env | ✅ | Only VITE_* and Supabase anon in client; RESEND_API_KEY server-side only |
+| Password security | ✅ | HIBP leak check in Auth (sign-up and reset) |
+| Rate limiting | ✅ | Edge functions (e.g. send-contact-email) limit requests per IP |
+| CORS | ⚠️ | Edge functions use `*`; consider restricting to production domain |
+| Input validation | ✅ | Zod on Contact and forms; length limits |
+| XSS | ⚠️ Low | `dangerouslySetInnerHTML` only in Testimonials (controlled content); avoid if reviews become user-generated |
+| Dependencies | ⚠️ | **npm audit:** 4 vulnerabilities (2 moderate, 2 high) in dev deps – ajv, lodash, minimatch, rollup. Run `npm audit fix` and re-test. |
+
+**Action:** Add CSP; restrict CORS; run `npm audit fix` and verify build/tests.
+
+---
+
+### 15.2 SEO
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| Title / description / keywords | ✅ | SEO component per page; index.html fallback |
+| Canonical URLs | ✅ | SEO.tsx builds canonical from baseUrl + path |
+| Open Graph / Twitter | ✅ | OG and Twitter cards in index.html and SEO; og-image |
+| Structured data | ✅ | LocalBusiness (ButcherShop), Reviews, Breadcrumb, Product/ItemList in structuredData.ts |
+| Sitemap | ✅ | robots.txt points to Supabase dynamic sitemap |
+| Robots | ✅ | Allow /; Disallow /admin/, /private/; Sitemap URL set |
+| Hreflang | ✅ | Via dynamic sitemap (NL/RO) |
+| URL consistency | ⚠️ | Confirm www vs non-www (index.html vs SEO baseUrl) |
+| Sitemap lastmod | ⚠️ | Static in public sitemap index; automate in build if possible |
+
+**Action:** Align www/non-www; verify OG image 1200×630; automate lastmod.
+
+---
+
+### 15.3 Google Visibility
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| Google Analytics 4 | ✅ | GA4 in index.html + Analytics.tsx; consent-gated |
+| Consent before tracking | ✅ | vanilla-cookieconsent; GA loads only after analytics consent |
+| Page view tracking | ✅ | Route changes tracked (with consent) |
+| Event tracking | ✅ | order_submit, view_item, file_download, language_change, contact_click |
+| Structured data for SERPs | ✅ | LocalBusiness, Reviews, Breadcrumb, Product support rich results |
+| Mobile-friendly | ✅ | Responsive (viewport, Tailwind); touch targets and layout |
+| Core Web Vitals readiness | ⚠️ | Lazy loading and code splitting in place; run Lighthouse for LCP/INP/CLS |
+| Search Console | ⚠️ | Recommend verifying property (www vs non-www) and sitemap submission |
+
+**Action:** Verify GA4 property and GSC; run Lighthouse for CWV and mobile.
+
+---
+
+### 15.4 Design / UX
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| Design system | ✅ | Tailwind; CSS variables in index.css (light/dark, primary, radii) |
+| Consistency | ✅ | Shared components (Button, Card, etc.); LocalizedLink for i18n |
+| Skip link | ✅ | SkipLink to #main-content; visible on focus |
+| ARIA / roles | ✅ | Widespread aria-label, aria-labelledby, role, sr-only |
+| Focus management | ✅ | ScrollToTop on route change; focus styles on key components |
+| Responsive | ✅ | Mobile-first; breakpoints used across pages |
+| Loading states | ✅ | Skeletons (Order, Products); isSubmitting on Contact; loading in Auth |
+| Error handling | ✅ | ErrorBoundary; toasts for forms/API |
+| Motion | ✅ | Framer Motion; no mandatory motion that blocks use |
+| Contrast | ⚠️ | Not re-tested; run Lighthouse/WAVE for WCAG AA |
+
+**Action:** Run Lighthouse (Accessibility) and WAVE; fix contrast/focus if needed.
+
+---
+
+### 15.5 Performance
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| Code splitting | ✅ | Lazy routes via lazyWithRetry; manualChunks in Vite (react-vendor, ui-vendor) |
+| Image optimization | ✅ | WebP where used; LazyImage with Intersection Observer; hero preload |
+| Font loading | ✅ | Preconnect + preload for Google Fonts; non-blocking pattern |
+| Minification | ✅ | Vite esbuild minify; cssCodeSplit |
+| PWA / caching | ✅ | Service worker (sw.js); Cache-Control for sw.js in vercel.json |
+| Bundle analysis | ⚠️ | `npm run build:analyze` available; run to check size and trim if needed |
+
+**Action:** Run `npm run build:analyze` and Lighthouse Performance; optimize LCP/CLS if needed.
+
+---
+
+### 15.6 Content Quality
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| Bilingual (NL/RO) | ✅ | LanguageContext; translations for UI, forms, errors, legal |
+| Clarity | ✅ | Clear headlines and CTAs; “How it Works” and trust bar on Home |
+| Tone | ✅ | Professional and welcoming; testimonials and about section |
+| Promotions | ✅ | Promo section (e.g. 2+1 burgers) and final CTA promo line; RoadworksAlert for roadworks/ordering |
+| Trust content | ✅ | Testimonials, local/vers/huisbereid messaging, contact info |
+| Error messages | ⚠️ | Ensure all form/API errors have NL/RO and are user-friendly |
+
+**Action:** Audit Contact, Order, Auth for error copy in both languages.
+
+---
+
+### 15.7 Conversion Optimization
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| Hero CTA | ✅ | Primary “NAAR DE WEBSHOP” / “VEZI PRODUSELE”; secondary to products |
+| Trust → Craving → Action | ✅ | Home flow: trust bar → categories → how it works → testimonials → catering → about → final CTA |
+| Urgency | ✅ | Final CTA line (e.g. order by 12u); promo dates (e.g. 9–15 Feb) |
+| Multiple CTAs | ✅ | Order, Products, Contact, WhatsApp (RoadworksAlert); footer links |
+| Form design | ✅ | React Hook Form + Zod; clear labels and validation messages |
+| Friction | ✅ | Cookie consent before analytics; optional account (guest order possible) |
+| Social proof | ✅ | Testimonials with keywords; aggregateRating in structured data |
+
+**Action:** Consider A/B tests on CTA copy or placement if analytics supports it.
+
+---
+
+### 15.8 Legal Compliance
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| Privacy policy | ✅ | Dedicated /privacy page; NL/RO; controller, collection, rights, cookies |
+| Terms of use | ✅ | Dedicated /terms page; orders, payment, liability, etc. |
+| Cookie consent | ✅ | vanilla-cookieconsent; necessary + analytics; NL/RO; links to /privacy |
+| Consent before non-essential | ✅ | GA and cookie banner respect consent |
+| Allergens | ✅ | Allergens page linked (e.g. footer); supports food regulations |
+| Admin/private | ✅ | /admin and /private disallowed in robots.txt |
+| Data controller info | ✅ | Privacy page lists name, VAT, KBO, address, contact |
+
+**Action:** Keep Privacy/Terms updated with any new processing or features; consider cookie policy link if required.
+
+---
+
+## 16. Updated “Improve This Month” (January 2026)
+
+In addition to Section 14, prioritize:
+
+### Security
+- **Run `npm audit fix`** – Address 4 reported vulnerabilities (dev deps); re-run tests and build.
+- Add **Content-Security-Policy** and consider **CORS** restriction for Edge Functions.
+
+### Google Visibility & SEO
+- **Google Search Console** – Verify domain/property; submit sitemap; monitor coverage and CWV.
+- **Lighthouse** – Run for Performance, Accessibility, and Best Practices; act on CWV and contrast.
+
+### Content & UX
+- **Error message audit** – Ensure all user-facing errors are translated (NL/RO) and clear.
+- **Contrast** – Confirm WCAG AA (e.g. 4.5:1 text) via Lighthouse or WAVE.
+
+### Legal
+- **Review Privacy/Terms** – After any new data processing or features, update and re-publish.
