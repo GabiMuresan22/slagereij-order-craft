@@ -274,7 +274,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* PROMO OF THE WEEK */}
+      {/* PROMO OF THE WEEK - auto-hides after expiry */}
+      {new Date() <= new Date('2026-03-08T23:59:59+01:00') && (
       <section className="py-10 md:py-14 bg-primary/5 border-y border-primary/20" aria-labelledby="promo-heading">
         <div className="container mx-auto px-4">
           <motion.div
@@ -306,6 +307,7 @@ const Home = () => {
           </motion.div>
         </div>
       </section>
+      )}
 
       {/* C. VISUAL CATEGORY GRID - Product Navigation */}
       <section className="py-12 md:py-16 bg-background" aria-labelledby="categories-heading">
