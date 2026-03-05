@@ -11,23 +11,26 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Scroll to top
-    window.scrollTo(0, 0);
+    // Scroll to top immediately
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    
+    // Also scroll after a short delay to handle lazy-loaded content
+    const timeout = setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    }, 50);
     
     // Reset focus to main content area for accessibility
-    // This helps screen readers and keyboard users know where they are
     const mainContent = document.getElementById('main-content');
     if (mainContent) {
-      // Use setTimeout to ensure the DOM has updated after route change
       setTimeout(() => {
         mainContent.focus();
-        // Remove focus after a brief moment to avoid visible focus ring on page load
-        // but still announce the page change to screen readers
         setTimeout(() => {
           mainContent.blur();
         }, 100);
       }, 0);
     }
+    
+    return () => clearTimeout(timeout);
   }, [pathname]);
 
   return null;
