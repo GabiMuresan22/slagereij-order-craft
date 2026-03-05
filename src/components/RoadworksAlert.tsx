@@ -23,30 +23,34 @@ const RoadworksAlert = () => {
 
   const content = {
     nl: {
-      title: "🚨 BELANGRIJKE UPDATE: WIJ ZIJN OPEN! 🥩",
+      title: "🇧🇪📢 Beste klanten,",
       lines: [
-        "Het carnaval is voorbij en de wegenwerken zijn helaas weer hervat. Maar laat dat de pret niet drukken: Slagerij John blijft volledig toegankelijk tijdens de normale openingsuren! 🚧",
-        "Geen zin om in de file te staan? Bestel vooraf via onze webshop of WhatsApp, dan zetten wij alles voor je klaar voor een snelle afhaling.",
-        "📲 Bestel hier: www.slagerij-john.be",
-        "📞 WhatsApp: +32 466 18 64 57",
-        "📍 Bruggestraat 146A, 8750 Zwevezele",
-        "Bedankt voor jullie steun tijdens de werken! 🙌✨"
+        "Vanaf morgen 6.03.2026 hebben wij super prijzen die u niet wilt missen:",
+        "🥩 Spieringkotelet – 5,20€ / kg",
+        "🥩 Varkenskotelet – 5,50 € / kg",
+        "🥓 Spek – 6,50 € / kg",
+        "🍖 Vakensgehakt – 6 € / kg",
+        "⏳ Aanbieding geldig zolang de voorraad strekt.",
+        "📍 Adres: Bruggestraat 146A, 8750 Zwevezele",
+        "Wij verwelkomen u graag!"
       ],
       ctaOnline: "🛒 Bestel Nu Online",
-      ctaWhatsApp: "📞 Via WhatsApp Bestellen"
+      ctaWhatsApp: "📞 Reservaties: +32 466 18 64 57"
     },
     ro: {
-      title: "📢 ANUNȚ IMPORTANT: SUNTEM DESCHIȘI! 🥩",
+      title: "🇹🇩 📢 Dragi clienți,",
       lines: [
-        "Carnavalul s-a încheiat, iar lucrările la drum au fost reluate. Vrem să vă informăm că Slagerij John rămâne complet accesibil și funcționează după programul normal! 🚧",
-        "Vreți să evitați aglomerația? Comandați în avans prin magazinul nostru online sau prin WhatsApp, iar noi vă pregătim comanda pentru o ridicare rapidă.",
-        "📲 Comandă aici: www.slagerij-john.be",
-        "📞 WhatsApp: +32 466 18 64 57",
-        "📍 Bruggestraat 146A, 8750 Zwevezele",
-        "Vă mulțumim pentru susținere și vă așteptăm cu drag! 🙌✨"
+        "Începând de mâine 6.03.2026 vă așteptăm cu super prețuri de nerefuzat:",
+        "🥩 Ceafă de porc – 5,20 € / kg",
+        "🥩 Cotlet de porc – 5,50 € / kg",
+        "🥓 Piept de porc – 6,50 € / kg",
+        "🍖 Carne tocată de porc – 6 € / kg",
+        "⏳ Oferta este valabilă în limita stocului disponibil.",
+        "📍 Adres: Bruggestraat 146A, 8750 Zwevezele",
+        "Wij verwelkomen u graag!"
       ],
       ctaOnline: "🛒 Comandă Acum Online",
-      ctaWhatsApp: "📞 Comandă pe WhatsApp"
+      ctaWhatsApp: "📞 Rezervări: +32 466 18 64 57"
     }
   };
 
