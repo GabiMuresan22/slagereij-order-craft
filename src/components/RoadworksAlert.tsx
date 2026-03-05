@@ -23,7 +23,7 @@ const RoadworksAlert = () => {
 
   const content = {
     nl: {
-      title: "🇧🇪📢 Beste klanten,",
+      title: "📢  Beste klanten,",
       lines: [
         "Vanaf morgen 6.03.2026 hebben wij super prijzen die u niet wilt missen:",
         "🥩 Spieringkotelet – 5,20€ / kg",
@@ -32,13 +32,13 @@ const RoadworksAlert = () => {
         "🍖 Vakensgehakt – 6 € / kg",
         "⏳ Aanbieding geldig zolang de voorraad strekt.",
         "📍 Adres: Bruggestraat 146A, 8750 Zwevezele",
-        "Wij verwelkomen u graag!"
+        "Wij verwelkomen u graag!",
       ],
       ctaOnline: "🛒 Bestel Nu Online",
-      ctaWhatsApp: "📞 Reservaties: +32 466 18 64 57"
+      ctaWhatsApp: "📞 Reservaties: +32 466 18 64 57",
     },
     ro: {
-      title: "🇹🇩 📢 Dragi clienți,",
+      title: "📢 Dragi clienți,",
       lines: [
         "Începând de mâine 6.03.2026 vă așteptăm cu super prețuri de nerefuzat:",
         "🥩 Ceafă de porc – 5,20 € / kg",
@@ -47,11 +47,11 @@ const RoadworksAlert = () => {
         "🍖 Carne tocată de porc – 6 € / kg",
         "⏳ Oferta este valabilă în limita stocului disponibil.",
         "📍 Adres: Bruggestraat 146A, 8750 Zwevezele",
-        "Wij verwelkomen u graag!"
+        "Wij verwelkomen u graag!",
       ],
       ctaOnline: "🛒 Comandă Acum Online",
-      ctaWhatsApp: "📞 Rezervări: +32 466 18 64 57"
-    }
+      ctaWhatsApp: "📞 Rezervări: +32 466 18 64 57",
+    },
   };
 
   const t = language === "ro" ? content.ro : content.nl;
@@ -68,9 +68,7 @@ const RoadworksAlert = () => {
         </button>
 
         <div className="text-center pr-8 pl-8 space-y-3">
-          <p className="font-serif font-bold text-lg">
-            {t.title}
-          </p>
+          <p className="font-serif font-bold text-lg">{t.title}</p>
           {t.lines.map((line, index) => (
             <p key={index} className="text-sm leading-relaxed opacity-90">
               {line}
