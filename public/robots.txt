@@ -13,13 +13,17 @@ Allow: /
 User-agent: *
 Allow: /
 
-# Disallow admin or private pages (if any in future)
+# Block private/authenticated areas from indexing
 Disallow: /admin/
 Disallow: /private/
+Disallow: /auth
+Disallow: /my-account
+Disallow: /ro/admin/
+Disallow: /ro/auth
+Disallow: /ro/my-account
 
-# Dynamic sitemap with auto-updated lastmod dates
-Sitemap: https://xqmfdoayucknepabazpp.supabase.co/functions/v1/generate-sitemap
+# Primary sitemap on the same domain
+Sitemap: https://slagerij-john.be/sitemap.xml
 
 # Crawl-delay (optional, can help with server load)
 Crawl-delay: 1
-

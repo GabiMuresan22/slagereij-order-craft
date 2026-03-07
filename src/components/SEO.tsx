@@ -33,17 +33,10 @@ const SEO = ({
     ? location.pathname.slice(0, -1) 
     : location.pathname;
   
-  // Normalize search params: remove empty or undefined values
-  const searchParams = new URLSearchParams(location.search);
-  const normalizedSearch = searchParams.toString();
-  
-  // Construct canonical URL: baseUrl + path + search (if any)
-  // Ensure no double slashes and proper formatting
-  const pathWithSearch = normalizedSearch 
-    ? `${normalizedPath}?${normalizedSearch}` 
-    : normalizedPath;
-  const calculatedUrl = `${baseUrl}${pathWithSearch}`;
-  
+  // Canonical should point to the stable route URL (without query params)
+  // to avoid duplicate indexing of tracking/filter URLs.
+  const calculatedUrl = `${baseUrl}${normalizedPath}`;
+
   // Use provided canonicalUrl or calculated one, ensuring it's a valid absolute URL
   const finalCanonicalUrl = canonicalUrl || calculatedUrl;
 
