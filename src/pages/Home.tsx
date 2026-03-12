@@ -15,8 +15,7 @@ import {
   ShoppingBag,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import heroImageDesktop from "@/assets/hero-steak.webp";
-import heroImageMobile from "@/assets/hero-steak-mobile.webp";
+import heroImage from "@/assets/hero-steak-mobile.webp";
 import Testimonials from "@/components/Testimonials";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
@@ -139,8 +138,7 @@ const Home = () => {
         keywords="slagerij, traiteur, kwaliteitsvlees, Zwevezele, Wingene, catering, huisbereide gerechten, online bestellen, huisgemaakte worst, BBQ vlees, verse vleeswaren, Roemeense specialiteiten, mici"
         structuredData={structuredData}
       >
-        <link rel="preload" as="image" href={heroImageDesktop} media="(min-width: 768px)" />
-        <link rel="preload" as="image" href={heroImageMobile} media="(max-width: 767px)" />
+        <link rel="preload" as="image" href={heroImage} />
       </SEO>
 
       {/* A. HERO SECTION - Above the Fold */}
@@ -148,18 +146,14 @@ const Home = () => {
         className="relative h-[550px] md:h-[650px] flex items-center justify-center overflow-hidden"
         aria-label={t("accessibility.heroSection") || "Welcome section"}
       >
-        {/* Hero Image */}
-        <picture>
-          <source media="(min-width: 768px)" srcSet={heroImageDesktop} />
-          <source media="(max-width: 767px)" srcSet={heroImageMobile} />
-          <img
-            src={heroImageDesktop}
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover object-center"
-            fetchPriority="high"
-          />
-        </picture>
+        {/* Hero Image - same image on mobile, tablet and desktop */}
+        <img
+          src={heroImage}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          fetchPriority="high"
+        />
 
         {/* Dark Overlay for text contrast */}
         <div className="absolute inset-0 bg-black/50" aria-hidden="true" />
