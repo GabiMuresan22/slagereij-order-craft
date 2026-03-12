@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -82,8 +82,8 @@ const AppRoutes = () => (
     <Route path="/ro/accessibility" element={<Accessibility />} />
     
     {/* Legacy redirect for /packages */}
-    <Route path="/packages" element={<Products />} />
-    <Route path="/ro/packages" element={<Products />} />
+    <Route path="/packages" element={<Navigate to="/products" replace />} />
+    <Route path="/ro/packages" element={<Navigate to="/ro/products" replace />} />
     
     {/* 404 fallback */}
     <Route path="*" element={<NotFound />} />

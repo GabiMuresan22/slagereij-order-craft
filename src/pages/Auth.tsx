@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -31,6 +31,7 @@ export default function Auth() {
   const { t } = useLanguage();
   const { signIn, signUp, resetPassword, user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -246,6 +247,8 @@ export default function Auth() {
       <Helmet>
         <title>{t('auth.title')} - Slagerij John</title>
         <meta name="description" content={t('auth.description')} />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href={`https://slagerij-john.be${location.pathname}`} />
       </Helmet>
 
       <div className="container mx-auto px-4 py-16 min-h-screen flex items-center justify-center">

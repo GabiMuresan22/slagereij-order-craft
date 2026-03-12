@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Sitemap index pointing to the dynamic sitemap generator.
-  The dynamic sitemap provides current lastmod dates and bilingual hreflang annotations.
-  
-  Submit this URL to Google Search Console:
-  https://xqmfdoayucknepabazpp.supabase.co/functions/v1/generate-sitemap
-  
-  Note: This lastmod date is updated automatically during build.
-  The actual sitemap content is generated dynamically by the Edge Function.
--->
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>https://xqmfdoayucknepabazpp.supabase.co/functions/v1/generate-sitemap</loc>
-    <lastmod>2025-01-22</lastmod>
+    <lastmod>2026-03-07</lastmod>
   </sitemap>
 </sitemapindex>
