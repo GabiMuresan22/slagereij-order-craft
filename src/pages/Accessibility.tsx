@@ -4,23 +4,29 @@ import { Mail, Phone, ExternalLink } from "lucide-react";
 import { getBreadcrumbSchema } from "@/lib/structuredData";
 
 const Accessibility = () => {
-  const { t } = useLanguage();
-  const currentDate = new Date().toLocaleDateString('nl-BE', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
+  const { t, language } = useLanguage();
+  const locale = language === 'ro' ? 'ro-RO' : 'nl-BE';
+  const currentDate = new Date().toLocaleDateString(locale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   });
 
+  const breadcrumbLabel = language === 'ro' ? 'Accesibilitate' : 'Toegankelijkheid';
   const breadcrumbData = getBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Toegankelijkheid", url: "/accessibility" },
+    { name: breadcrumbLabel, url: "/accessibility" },
   ]);
+
+  const seoDescription = language === 'ro'
+    ? 'Declarație de accesibilitate pentru site-ul Slagerij John. Ne străduim să facem site-ul accesibil pentru toți.'
+    : 'Toegankelijkheidsverklaring voor de website van Slagerij John. Wij streven ernaar onze website toegankelijk te maken voor iedereen.';
 
   return (
     <>
       <SEO
-        title="Toegankelijkheidsverklaring - Slagerij John"
-        description="Toegankelijkheidsverklaring voor de website van Slagerij John. Wij streven ernaar onze website toegankelijk te maken voor iedereen."
+        title={t('accessibilityPage.title')}
+        description={seoDescription}
         structuredData={breadcrumbData}
       />
       
@@ -29,13 +35,13 @@ const Accessibility = () => {
         <div className="bg-gradient-to-b from-primary/10 to-background py-16">
           <div className="container mx-auto px-4">
             <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">
-              Toegankelijkheidsverklaring
+              {t('accessibilityPage.heading')}
             </h1>
             <p className="text-xl text-muted-foreground mb-2">
-              Slagerij John - www.slagerij-john.be
+              {t('accessibilityPage.subtitle')}
             </p>
             <p className="text-sm text-muted-foreground">
-              Laatst bijgewerkt: {currentDate}
+              {t('accessibilityPage.updated')}: {currentDate}
             </p>
           </div>
         </div>
