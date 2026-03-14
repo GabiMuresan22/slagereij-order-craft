@@ -4,9 +4,13 @@ import Footer from "./Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 // Mock the language context
-vi.mock("@/contexts/LanguageContext", () => ({
-  useLanguage: vi.fn(),
-}));
+vi.mock("@/contexts/LanguageContext", async () => {
+  const React = await import("react");
+  return {
+    useLanguage: vi.fn(),
+    LanguageProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  };
+});
 
 describe("Footer", () => {
   const mockT = vi.fn((key: string) => key);
@@ -25,7 +29,8 @@ describe("Footer", () => {
 
   it("renders footer hours section", () => {
     render(<Footer />);
-    expect(screen.getByText(/footer.hours/i)).toBeInTheDocument();
+    // The hours heading has translation key "footer.hours" - use the heading role to be specific
+    expect(screen.getByRole("heading", { name: /footer\.hours/i })).toBeInTheDocument();
   });
 
   it("renders footer about section", () => {
@@ -35,7 +40,8 @@ describe("Footer", () => {
 
   it("renders phone number link", () => {
     render(<Footer />);
-    const phoneLink = screen.getByRole("link", { name: /\+32 466 18 64 57/i });
+    // Find phone link by its href attribute
+    const phoneLink = screen.getByRole("link", { name: /accessibility\.callPhone/i });
     expect(phoneLink).toBeInTheDocument();
     expect(phoneLink).toHaveAttribute("href", "tel:+32466186457");
   });

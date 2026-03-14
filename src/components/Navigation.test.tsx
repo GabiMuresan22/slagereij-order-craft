@@ -5,13 +5,21 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 
 // Mock the contexts
-vi.mock("@/contexts/LanguageContext", () => ({
-  useLanguage: vi.fn(),
-}));
+vi.mock("@/contexts/LanguageContext", async () => {
+  const React = await import("react");
+  return {
+    useLanguage: vi.fn(),
+    LanguageProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  };
+});
 
-vi.mock("@/contexts/AuthContext", () => ({
-  useAuth: vi.fn(),
-}));
+vi.mock("@/contexts/AuthContext", async () => {
+  const React = await import("react");
+  return {
+    useAuth: vi.fn(),
+    AuthProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  };
+});
 
 vi.mock("@/integrations/supabase/client", () => ({
   supabase: {
@@ -40,8 +48,9 @@ describe("Navigation", () => {
 
   it("renders the logo", () => {
     render(<Navigation />);
-    const logo = screen.getByAltText(/Slager John Logo/i);
-    expect(logo).toBeInTheDocument();
+    // Logo is inside a link with aria-label; the img itself has alt="" (decorative within the labeled link)
+    const logoLink = screen.getByRole("link", { name: /accessibility.goToHome/i });
+    expect(logoLink).toBeInTheDocument();
   });
 
   it("renders navigation links", () => {
@@ -56,7 +65,8 @@ describe("Navigation", () => {
 
   it("renders language toggle button with native name", () => {
     render(<Navigation />);
-    const languageButton = screen.getByText(/Nederlands/i);
+    // The language button shows the native name abbreviation "NL" for Dutch
+    const languageButton = screen.getByText(/^NL$/);
     expect(languageButton).toBeInTheDocument();
   });
 
@@ -73,7 +83,8 @@ describe("Navigation", () => {
     });
 
     render(<Navigation />);
-    expect(screen.getByText(/My Account/i)).toBeInTheDocument();
+    // The component uses t('nav.myAccount') which returns the translation key via the mock
+    expect(screen.getByText(/nav\.myAccount/i)).toBeInTheDocument();
   });
 });
 

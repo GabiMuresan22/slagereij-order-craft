@@ -4,9 +4,13 @@ import Testimonials from "./Testimonials";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 // Mock the language context
-vi.mock("@/contexts/LanguageContext", () => ({
-  useLanguage: vi.fn(),
-}));
+vi.mock("@/contexts/LanguageContext", async () => {
+  const React = await import("react");
+  return {
+    useLanguage: vi.fn(),
+    LanguageProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  };
+});
 
 describe("Testimonials", () => {
   const mockT = vi.fn((key: string) => key);

@@ -38,8 +38,10 @@ describe('ScrollToTop', () => {
     const button = getByText('Go to Page 1');
     button.click();
 
-    // Verify scrollTo was called with 0, 0
-    expect(scrollToMock).toHaveBeenCalledWith(0, 0);
+    // Verify scrollTo was called with an object containing top: 0, left: 0
+    expect(scrollToMock).toHaveBeenCalledWith(
+      expect.objectContaining({ top: 0, left: 0 })
+    );
   });
 
   it('renders without crashing', () => {
