@@ -233,7 +233,7 @@ const Home = () => {
             </h2>
             <p className="text-primary font-bold text-lg md:text-xl mb-1">
               {language === "nl"
-                ? "🇧🇪 We beginnen de week met een superactie!"
+                ? "We beginnen de week met een superactie!"
                 : "Începem săptămâna cu o super promoție!"}
             </p>
             <p className="text-foreground font-serif font-bold text-xl md:text-2xl mb-2">
