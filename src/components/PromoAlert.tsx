@@ -25,7 +25,7 @@ const PromoAlert = () => {
 
   const content = {
     nl: {
-      title: "🇧🇪 We beginnen de week met een superactie!",
+      title: "We beginnen de week met een superactie!",
       promo: "Cordon Bleu – 3+1 GRATIS",
       validity: "De actie is geldig van 16 tot en met 22 maart, zolang de voorraad strekt.",
       cta: "Plaats je bestelling op voorhand, kom ze afhalen of laat ze bij je thuis leveren.",
