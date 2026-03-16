@@ -4,8 +4,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import LocalizedLink from "@/components/LocalizedLink";
 import { Button } from "@/components/ui/button";
 
-const STORAGE_KEY = "promo_alert_cordonbleu_v1";
-const PROMO_END_DATE = new Date("2026-03-22T23:59:59");
+const STORAGE_KEY = "promo_alert_cordonbleu_v2";
+const PROMO_END_DATE = new Date("2027-03-22T23:59:59");
 
 const PromoAlert = () => {
   const { language } = useLanguage();
@@ -49,7 +49,7 @@ const PromoAlert = () => {
   const t = language === "ro" ? content.ro : content.nl;
 
   return (
-    <div className="bg-primary text-primary-foreground relative">
+    <div className="bg-primary text-primary-foreground relative z-[60]">
       <div className="container mx-auto px-4 py-3">
         <button
           type="button"
