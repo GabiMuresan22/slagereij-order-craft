@@ -4,20 +4,21 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import LocalizedLink from "@/components/LocalizedLink";
 import { Button } from "@/components/ui/button";
 
-const STORAGE_KEY = "promo_alert_cordonbleu_v2";
 const PROMO_END_DATE = new Date("2027-03-22T23:59:59");
+const MIN_DISPLAY_MS = 50 * 1000; // Show for at least 50 seconds before allowing dismiss
 
 const PromoAlert = () => {
   const { language } = useLanguage();
   const [isVisible, setIsVisible] = useState(true);
+  const [canDismiss, setCanDismiss] = useState(false);
 
   useEffect(() => {
-    const dismissed = sessionStorage.getItem(STORAGE_KEY);
-    if (dismissed) setIsVisible(false);
+    const timer = setTimeout(() => setCanDismiss(true), MIN_DISPLAY_MS);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleDismiss = () => {
-    sessionStorage.setItem(STORAGE_KEY, "true");
+    if (!canDismiss) return;
     setIsVisible(false);
   };
 
@@ -54,8 +55,14 @@ const PromoAlert = () => {
         <button
           type="button"
           onClick={handleDismiss}
-          className="absolute top-2 right-2 p-1.5 rounded-full hover:bg-primary-foreground/20 transition-colors z-10"
+          disabled={!canDismiss}
+          className={`absolute top-2 right-2 p-1.5 rounded-full z-10 transition-colors ${
+            canDismiss
+              ? "hover:bg-primary-foreground/20 cursor-pointer"
+              : "cursor-not-allowed opacity-50"
+          }`}
           aria-label={language === "nl" ? "Sluiten" : "Închide"}
+          title={!canDismiss ? (language === "nl" ? "Sluit over 50 seconden" : "Se poate închide după 50 secunde") : undefined}
         >
           <X className="w-5 h-5 text-primary-foreground" />
         </button>
