@@ -13,6 +13,7 @@ import {
   Laptop,
   Scissors,
   ShoppingBag,
+  Phone,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import heroImage from "@/assets/hero-steak-mobile.webp";
@@ -211,6 +212,68 @@ const Home = () => {
               </motion.div>
             </LocalizedLink>
           </div>
+        </div>
+      </section>
+
+      {/* PROMO OF THE WEEK - Cordon Bleu 3+1 */}
+      <section
+        className="py-8 md:py-10 bg-gradient-to-r from-primary/15 via-primary/10 to-primary/15 border-b border-primary/20"
+        aria-labelledby="promo-week-heading"
+      >
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="max-w-2xl mx-auto text-center"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
+            <h2 id="promo-week-heading" className="sr-only">
+              {language === "nl" ? "Promo van de week" : "Promoția săptămânii"}
+            </h2>
+            <p className="text-primary font-bold text-lg md:text-xl mb-1">
+              {language === "nl"
+                ? "🇧🇪 We beginnen de week met een superactie!"
+                : "Începem săptămâna cu o super promoție!"}
+            </p>
+            <p className="text-foreground font-serif font-bold text-xl md:text-2xl mb-2">
+              {language === "nl" ? "Cordon Bleu – 3+1 GRATIS" : "Cordon Bleu – 3+1 GRATIS"}
+            </p>
+            <p className="text-muted-foreground text-sm md:text-base mb-4">
+              {language === "nl"
+                ? "De actie is geldig van 16 tot en met 22 maart, zolang de voorraad strekt."
+                : "Oferta este valabilă în perioada 16 – 22 martie, în limita stocului disponibil."}
+            </p>
+            <p className="text-foreground font-medium mb-2">
+              {language === "nl"
+                ? "Zeker zijn dat je de actie niet mist?"
+                : "Vrei să fii sigur că prinzi oferta?"}
+            </p>
+            <p className="text-muted-foreground text-sm md:text-base mb-6">
+              {language === "nl"
+                ? "Plaats je bestelling op voorhand, kom ze afhalen of laat ze bij je thuis leveren."
+                : "Fă comanda din timp și vino să o ridici sau ți-o livrăm direct acasă."}
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
+              <a
+                href="tel:+32466186457"
+                className="inline-flex items-center gap-2 font-semibold text-primary hover:underline"
+              >
+                <Phone className="w-4 h-4" aria-hidden="true" />
+                +32 466 18 64 57
+              </a>
+              <span className="inline-flex items-center gap-2 text-muted-foreground">
+                <MapPin className="w-4 h-4" aria-hidden="true" />
+                Bruggestraat 146A, 8750 Zwevezele
+              </span>
+              <LocalizedLink to="/order">
+                <Button size="sm" className="font-semibold">
+                  <ShoppingBag className="w-4 h-4 mr-2" aria-hidden="true" />
+                  {language === "nl" ? "Bestel online" : "Comandă online"}
+                </Button>
+              </LocalizedLink>
+            </div>
+          </motion.div>
         </div>
       </section>
 
