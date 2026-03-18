@@ -56,7 +56,7 @@ const PromoAlert = () => {
           type="button"
           onClick={handleDismiss}
           disabled={!canDismiss}
-          className={`absolute top-2 right-2 p-1.5 rounded-full z-10 transition-colors ${
+          className={`absolute top-2 right-2 p-1.5 rounded-full z-20 transition-colors ${
             canDismiss
               ? "hover:bg-primary-foreground/20 cursor-pointer"
               : "cursor-not-allowed opacity-50"
