@@ -24,6 +24,7 @@ Disallow: /ro/my-account
 
 # Primary sitemap on the same domain
 Sitemap: https://slagerij-john.be/sitemap.xml
+Sitemap: https://slagerij-john.be/sitemap-static.xml
 
 # Crawl-delay (optional, can help with server load)
 Crawl-delay: 1

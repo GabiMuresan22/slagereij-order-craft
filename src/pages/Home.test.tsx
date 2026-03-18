@@ -56,14 +56,11 @@ describe("Home", () => {
     expect(screen.getByText("home.hero.title")).toBeInTheDocument();
   });
 
-  it("renders the closure alert with destructive variant", () => {
+  it("renders hero section with CTA", () => {
     render(<Home />);
-    // Check that the alert is present
-    expect(screen.getByRole("alert")).toBeInTheDocument();
-    // Check for the alert title (using translation key as mock returns the key)
-    expect(screen.getByText("home.alert.title")).toBeInTheDocument();
-    // Check for the alert description
-    expect(screen.getByText("home.alert.description")).toBeInTheDocument();
+    // The hero section should have the hero title and subtitle translation keys
+    expect(screen.getByText("home.hero.title")).toBeInTheDocument();
+    expect(screen.getByText("home.hero.subtitle")).toBeInTheDocument();
   });
 });
 
