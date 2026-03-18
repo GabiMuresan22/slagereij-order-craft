@@ -484,10 +484,6 @@ ${data.zipCode} ${data.city}
                           </li>
                           <li className="flex items-start gap-2">
                             <span className="text-primary font-semibold">•</span>
-                            <span>{t('order.deliveryInfo.freeOver100')}</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-primary font-semibold">•</span>
                             <span>{t('order.deliveryInfo.schedule')}</span>
                           </li>
                           <li className="flex items-start gap-2 pt-2">
