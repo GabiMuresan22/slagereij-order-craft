@@ -476,7 +476,7 @@ ${data.zipCode} ${data.city}
                           </li>
                           <li className="flex items-start gap-2">
                             <span className="text-primary font-semibold">•</span>
-                            <span>{t('order.deliveryInfo.freeUnder20')}</span>
+                            <span>{t('order.deliveryInfo.freeUnder10')}</span>
                           </li>
                           <li className="flex items-start gap-2">
                             <span className="text-primary font-semibold">•</span>
