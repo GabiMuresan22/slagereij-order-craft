@@ -66,11 +66,11 @@ const PromoAlert = () => {
         >
           <X className="w-5 h-5 text-primary-foreground" />
         </button>
-        <div className="pr-8 pl-4 text-center sm:text-left">
+        <div className="pr-8 pl-4 text-center">
           <p className="font-semibold text-sm sm:text-base">{t.title}</p>
           <p className="font-bold text-sm sm:text-base mt-0.5">{t.promo}</p>
           <p className="text-xs sm:text-sm opacity-95 mt-1">{t.validity}</p>
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-2">
+          <div className="flex flex-wrap items-center justify-center gap-3 mt-2">
             <a
               href={`tel:${t.phone.replace(/\s/g, "")}`}
               className="inline-flex items-center gap-1.5 text-sm font-medium underline hover:no-underline"
