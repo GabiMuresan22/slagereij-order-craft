@@ -40,10 +40,13 @@ interface OrderItemForm {
 interface OrderShopFormShape {
   deliveryMethod: DeliveryMethodValue;
   orderItems: OrderItemForm[];
+  customRequests?: CustomCartRequest[];
+  [key: string]: unknown;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface OrderShopStepProps {
-  form: UseFormReturn<OrderShopFormShape>;
+  form: UseFormReturn<any>;
   products: ProductRow[];
   language: "nl" | "ro";
   orderItems: OrderItemForm[];
