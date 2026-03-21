@@ -228,13 +228,7 @@ const Products = () => {
     });
 
     if (items.length === 0) {
-      return (
-        <p className="text-center text-muted-foreground py-8">
-          {lang === "nl"
-            ? "Producten worden geladen of zijn binnenkort beschikbaar in de webshop."
-            : "Produsele se încarcă sau vor fi disponibile în curând în magazin."}
-        </p>
-      );
+      return null;
     }
 
     return (
