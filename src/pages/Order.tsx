@@ -500,7 +500,7 @@ ${data.zipCode} ${data.city}
                               ? t('order.form.deliveryDate') || 'Leveringsdatum'
                               : t('order.form.pickupDate')}
                           </FormLabel>
-                          <Popover>
+                          <Popover modal>
                             <PopoverTrigger asChild>
                               <FormControl>
                                 <Button
