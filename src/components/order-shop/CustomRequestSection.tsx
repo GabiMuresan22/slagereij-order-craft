@@ -23,8 +23,7 @@ export function CustomRequestSection({ labels, onAdd }: CustomRequestSectionProp
   const [quantityNote, setQuantityNote] = useState("");
   const [note, setNote] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     const trimmed = title.trim();
     if (!trimmed) {
       return;
