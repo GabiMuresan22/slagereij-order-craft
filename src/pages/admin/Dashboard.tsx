@@ -30,12 +30,21 @@ interface OrderItem {
   price?: number;
 }
 
+interface CustomRequestOrderRow {
+  id: string;
+  type: 'custom_request';
+  title: string;
+  quantityNote: string;
+  note: string;
+}
+
 interface Order {
   id: string;
   customer_name: string;
   customer_email: string;
   customer_phone: string;
   order_items: OrderItem[];
+  custom_requests?: CustomRequestOrderRow[];
   pickup_date: string;
   pickup_time: string;
   notes?: string | null;
@@ -43,6 +52,14 @@ interface Order {
   created_at: string;
   language?: string;
 }
+
+const normalizeOrder = (order: Record<string, unknown>): Order => ({
+  ...(order as unknown as Order),
+  order_items: order.order_items as unknown as OrderItem[],
+  custom_requests: Array.isArray(order.custom_requests)
+    ? (order.custom_requests as CustomRequestOrderRow[])
+    : [],
+});
 
 const statusColors = {
   pending: 'bg-yellow-500',
@@ -101,10 +118,7 @@ export default function AdminDashboard() {
         if (import.meta.env.DEV) console.error('Error fetching orders:', error);
       } else {
         // Cast order_items from Json to our OrderItem[] type
-        const typedOrders = (data || []).map(order => ({
-          ...order,
-          order_items: order.order_items as unknown as OrderItem[]
-        }));
+        const typedOrders = (data || []).map((order) => normalizeOrder(order as Record<string, unknown>));
         setOrders(typedOrders);
       }
       setLoading(false);
@@ -128,17 +142,11 @@ export default function AdminDashboard() {
         },
         (payload) => {
           if (payload.eventType === 'INSERT') {
-            const newOrder = {
-              ...(payload.new as any),
-              order_items: (payload.new as any).order_items as OrderItem[]
-            };
+            const newOrder = normalizeOrder(payload.new as Record<string, unknown>);
             setOrders((prev) => [newOrder, ...prev]);
             toast.success(t('admin.toast.newOrder'));
           } else if (payload.eventType === 'UPDATE') {
-            const updatedOrder = {
-              ...(payload.new as any),
-              order_items: (payload.new as any).order_items as OrderItem[]
-            };
+            const updatedOrder = normalizeOrder(payload.new as Record<string, unknown>);
             setOrders((prev) =>
               prev.map((order) =>
                 order.id === updatedOrder.id ? updatedOrder : order
@@ -362,6 +370,21 @@ export default function AdminDashboard() {
               </tbody>
             </table>
           </div>
+
+          ${order.custom_requests && order.custom_requests.length > 0 ? `
+          <div class="section">
+            <h2>${t('admin.print.customRequests')}</h2>
+            <ul style="margin: 0; padding-left: 20px;">
+              ${order.custom_requests.map(cr => `
+                <li style="margin-bottom: 12px;">
+                  <strong>${escapeHtml(cr.title)}</strong>
+                  ${cr.quantityNote ? `<br/><span>${escapeHtml(cr.quantityNote)}</span>` : ''}
+                  ${cr.note ? `<br/><span>${escapeHtml(cr.note)}</span>` : ''}
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+          ` : ''}
 
           <div class="section">
             <h2>${t('admin.print.pickupDetails')}</h2>
@@ -848,6 +871,25 @@ export default function AdminDashboard() {
                     ))}
                   </div>
                 </div>
+
+                {selectedOrder.custom_requests && selectedOrder.custom_requests.length > 0 && (
+                  <div>
+                    <h3 className="font-semibold mb-3">{t('admin.orderDetails.customRequests')}</h3>
+                    <div className="space-y-3">
+                      {selectedOrder.custom_requests.map((cr) => (
+                        <div key={cr.id} className="p-3 bg-muted rounded-lg border border-primary/20">
+                          <p className="font-medium">{cr.title}</p>
+                          {cr.quantityNote.trim() ? (
+                            <p className="text-sm text-muted-foreground mt-1">{cr.quantityNote}</p>
+                          ) : null}
+                          {cr.note.trim() ? (
+                            <p className="text-sm mt-1">{cr.note}</p>
+                          ) : null}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Pickup Details */}
                 <div>

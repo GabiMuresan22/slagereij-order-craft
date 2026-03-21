@@ -28,6 +28,8 @@ import { businessHours } from "@/hooks/useBusinessHours";
 import OrderSkeleton from "@/components/OrderSkeleton";
 import { OrderShopStep } from "@/components/order-shop/OrderShopStep";
 import type { OrderCategoryId } from "@/lib/orderShopCatalog";
+import type { CustomCartRequest } from "@/lib/orderCustomRequest";
+import { formatCustomRequestsForNotes } from "@/lib/orderCustomRequest";
 
 interface OrderItem {
   product: string;
@@ -95,9 +97,18 @@ const createOrderSchemas = (t: (key: string) => string) => {
     price: z.number().optional(),
   });
 
+  const customRequestEntrySchema = z.object({
+    id: z.string().uuid(),
+    type: z.literal("custom_request"),
+    title: z.string().min(1).max(300),
+    quantityNote: z.string().max(300),
+    note: z.string().max(2000),
+  });
+
   const orderFormSchema = z.object({
     deliveryMethod: z.enum(['pickup', 'delivery']),
-    orderItems: z.array(orderItemSchema).min(1, t('order.validation.addProduct')).max(50),
+    orderItems: z.array(orderItemSchema).max(50),
+    customRequests: z.array(customRequestEntrySchema).max(20),
     pickupDate: z.date({ message: t('order.validation.selectDate') }),
     pickupTime: z.string().min(1, t('order.validation.selectTime')),
     customerName: z.string()
@@ -118,6 +129,13 @@ const createOrderSchemas = (t: (key: string) => string) => {
       .max(1000, t('order.validation.notesMax') || 'Notes must be less than 1000 characters')
       .optional(),
   }).superRefine((data, ctx) => {
+    if (data.orderItems.length === 0 && data.customRequests.length === 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: t('order.validation.addProductOrRequest'),
+        path: ['orderItems'],
+      });
+    }
     if (data.deliveryMethod === 'delivery') {
       if (!data.street || data.street.length < 2) {
         ctx.addIssue({
@@ -199,6 +217,7 @@ const Order = () => {
     defaultValues: {
       deliveryMethod: "pickup",
       orderItems: [],
+      customRequests: [] as CustomCartRequest[],
       pickupTime: "",
       customerName: "",
       customerPhone: "",
@@ -212,6 +231,7 @@ const Order = () => {
   });
 
   const orderItems = form.watch("orderItems");
+  const customRequests = form.watch("customRequests");
   const deliveryMethod = form.watch("deliveryMethod");
 
   // Calculate order total for all products
@@ -239,7 +259,7 @@ const Order = () => {
     let isValid = false;
 
     if (step === 1) {
-      isValid = await form.trigger(["deliveryMethod", "orderItems"]);
+      isValid = await form.trigger(["deliveryMethod", "orderItems", "customRequests"]);
     } else if (step === 2) {
       isValid = await form.trigger(["pickupDate", "pickupTime"]);
     }
@@ -286,12 +306,22 @@ ${data.zipCode} ${data.city}
         finalNotes = finalNotes ? `${addressBlock}\n\n${finalNotes}` : addressBlock;
       }
 
+      if (data.customRequests?.length) {
+        const noteLabels =
+          language === "ro"
+            ? { header: "Cerere specială", qty: "Cantitate", note: "Observații" }
+            : { header: "Speciale aanvraag", qty: "Hoeveelheid", note: "Opmerking" };
+        const customBlock = formatCustomRequestsForNotes(data.customRequests, noteLabels);
+        finalNotes = finalNotes ? `${finalNotes}\n\n${customBlock}` : customBlock;
+      }
+
       const { error } = await supabase.from("orders").insert({
         id: orderId,
         customer_name: data.customerName,
         customer_phone: data.customerPhone,
         customer_email: data.customerEmail,
         order_items: orderItemsWithoutPrices, // No prices - database trigger will add them
+        custom_requests: data.customRequests ?? [],
         pickup_date: format(data.pickupDate, "yyyy-MM-dd"),
         pickup_time: data.pickupTime,
         notes: finalNotes,
@@ -323,7 +353,8 @@ ${data.zipCode} ${data.city}
               houseNumber: data.houseNumber,
               zipCode: data.zipCode,
               city: data.city
-            } : undefined
+            } : undefined,
+            customRequests: data.customRequests ?? [],
           }
         });
       } catch (emailError) {
@@ -424,6 +455,7 @@ ${data.zipCode} ${data.city}
                     products={products as Product[]}
                     language={language as "nl" | "ro"}
                     orderItems={orderItems}
+                    customRequests={customRequests}
                     orderTotal={orderTotal}
                     t={t}
                     onContinue={() => void nextStep()}

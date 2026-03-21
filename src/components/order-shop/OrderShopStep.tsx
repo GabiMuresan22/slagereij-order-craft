@@ -1,7 +1,10 @@
 import { useMemo, useState, useCallback } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import { Info } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import LocalizedLink from "@/components/LocalizedLink";
+import { CustomRequestSection } from "./CustomRequestSection";
+import type { CustomCartRequest } from "@/lib/orderCustomRequest";
 import { OrderHero } from "./OrderHero";
 import { OrderTypeToggle } from "./OrderTypeToggle";
 import { QuickOrderPanel } from "./QuickOrderPanel";
@@ -44,6 +47,7 @@ interface OrderShopStepProps {
   products: ProductRow[];
   language: "nl" | "ro";
   orderItems: OrderItemForm[];
+  customRequests: CustomCartRequest[];
   orderTotal: number;
   t: (key: string) => string;
   onContinue: () => void;
@@ -82,6 +86,7 @@ export function OrderShopStep({
   products,
   language,
   orderItems,
+  customRequests,
   orderTotal,
   t,
   onContinue,
@@ -101,6 +106,7 @@ export function OrderShopStep({
   removeLineLabel,
   methodLabel,
 }: OrderShopStepProps) {
+  const { toast } = useToast();
   const lang = language === "ro" ? "ro" : "nl";
   const [category, setCategory] = useState<OrderCategoryId>("colli");
 
@@ -198,6 +204,30 @@ export function OrderShopStep({
     else setQuantity(id, cur - 1, "stuk");
   };
 
+  const addCustomRequest = useCallback(
+    (item: CustomCartRequest) => {
+      const cur = form.getValues("customRequests") ?? [];
+      form.setValue("customRequests", [...cur, item], { shouldValidate: true });
+      toast({
+        title: t("order.shop.customSection.toastAdded"),
+        duration: 2500,
+      });
+    },
+    [form, toast, t]
+  );
+
+  const removeCustomRequest = useCallback(
+    (id: string) => {
+      const cur = form.getValues("customRequests") ?? [];
+      form.setValue(
+        "customRequests",
+        cur.filter((c) => c.id !== id),
+        { shouldValidate: true }
+      );
+    },
+    [form]
+  );
+
   const scrollToProducts = () => {
     document.getElementById("order-product-list")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -221,6 +251,7 @@ export function OrderShopStep({
   };
 
   const getDecimals = (productKey: string) => {
+    if (isStaticProductKey(productKey)) return 0;
     const p = productByKey.get(productKey);
     return p?.unit === "kg" ? 1 : 0;
   };
@@ -320,6 +351,18 @@ export function OrderShopStep({
             </div>
           </div>
 
+          <CustomRequestSection
+            labels={{
+              title: t("order.shop.customSection.title"),
+              subtitle: t("order.shop.customSection.subtitle"),
+              fieldTitle: t("order.shop.customSection.fieldTitle"),
+              fieldQty: t("order.shop.customSection.fieldQty"),
+              fieldNote: t("order.shop.customSection.fieldNote"),
+              cta: t("order.shop.customSection.cta"),
+            }}
+            onAdd={addCustomRequest}
+          />
+
           <div className="rounded-xl border border-amber-900/40 bg-amber-950/25 p-4 flex gap-3 text-sm text-amber-100/90">
             <Info className="h-5 w-5 shrink-0 text-amber-400" aria-hidden />
             <div>
@@ -353,6 +396,12 @@ export function OrderShopStep({
 
           <CartSummaryPanel
             lines={orderItems}
+            customRequests={customRequests}
+            customLabels={{
+              lineTitle: t("order.shop.cart.customLineTitle"),
+              qty: t("order.shop.cart.customQty"),
+              note: t("order.shop.cart.customNote"),
+            }}
             getLineTitle={getLineTitle}
             getLineUnitPrice={getLineUnitPrice}
             orderTotal={orderTotal}
@@ -366,6 +415,7 @@ export function OrderShopStep({
             onIncrement={(pk) => (isStaticProductKey(pk) ? incrementStatic(pk) : increment(pk))}
             onDecrement={(pk) => (isStaticProductKey(pk) ? decrementStatic(pk) : decrement(pk))}
             onRemove={removeLine}
+            onRemoveCustom={removeCustomRequest}
             onCheckout={onContinue}
             getQuantity={(pk) => getQty(pk, orderItems)}
             getDecimals={getDecimals}
@@ -383,7 +433,7 @@ export function OrderShopStep({
           </div>
           <button
             type="button"
-            disabled={orderItems.length === 0}
+            disabled={orderItems.length === 0 && customRequests.length === 0}
             onClick={onContinue}
             className="min-h-[48px] px-6 rounded-lg bg-primary text-primary-foreground font-semibold disabled:opacity-40"
           >

@@ -3,6 +3,7 @@ import { QuantityStepper } from "./QuantityStepper";
 import { Separator } from "@/components/ui/separator";
 import type { DeliveryMethodValue } from "./OrderTypeToggle";
 import { isStaticProductKey } from "@/lib/orderShopCatalog";
+import type { CustomCartRequest } from "@/lib/orderCustomRequest";
 
 interface CartLine {
   product: string;
@@ -12,6 +13,12 @@ interface CartLine {
 
 interface CartSummaryPanelProps {
   lines: CartLine[];
+  customRequests: CustomCartRequest[];
+  customLabels: {
+    lineTitle: string;
+    qty: string;
+    note: string;
+  };
   getLineTitle: (productKey: string) => string;
   getLineUnitPrice: (productKey: string) => number | null;
   orderTotal: number;
@@ -25,6 +32,7 @@ interface CartSummaryPanelProps {
   onIncrement: (productKey: string) => void;
   onDecrement: (productKey: string) => void;
   onRemove: (productKey: string) => void;
+  onRemoveCustom: (id: string) => void;
   onCheckout: () => void;
   getQuantity: (productKey: string) => number;
   getDecimals: (productKey: string) => number;
@@ -33,6 +41,8 @@ interface CartSummaryPanelProps {
 
 export function CartSummaryPanel({
   lines,
+  customRequests,
+  customLabels,
   getLineTitle,
   getLineUnitPrice,
   orderTotal,
@@ -46,12 +56,13 @@ export function CartSummaryPanel({
   onIncrement,
   onDecrement,
   onRemove,
+  onRemoveCustom,
   onCheckout,
   getQuantity,
   getDecimals,
   removeLabel,
 }: CartSummaryPanelProps) {
-  const hasItems = lines.length > 0;
+  const hasItems = lines.length > 0 || customRequests.length > 0;
   const showDeliveryWarning = deliveryMethod === "delivery" && hasItems && !minimumOk;
 
   return (
@@ -105,6 +116,46 @@ export function CartSummaryPanel({
               </li>
             );
           })}
+
+          {customRequests.map((req) => (
+            <li
+              key={req.id}
+              className="rounded-lg border border-primary/25 bg-primary/5 p-3 space-y-1.5"
+            >
+              <div className="flex justify-between gap-2 items-start">
+                <div className="min-w-0 space-y-1">
+                  <p className="text-sm font-medium text-foreground leading-snug">
+                    <span className="text-primary/90">{customLabels.lineTitle}: </span>
+                    {req.title}
+                  </p>
+                  {req.quantityNote.trim() ? (
+                    <p className="text-xs text-muted-foreground">
+                      <span className="font-medium text-foreground/80">{customLabels.qty}: </span>
+                      {req.quantityNote}
+                    </p>
+                  ) : null}
+                  {req.note.trim() ? (
+                    <p className="text-xs text-muted-foreground">
+                      <span className="font-medium text-foreground/80">{customLabels.note}: </span>
+                      {req.note}
+                    </p>
+                  ) : null}
+                </div>
+                <span className="text-xs text-muted-foreground shrink-0">—</span>
+              </div>
+              <div className="flex justify-end pt-1">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="text-xs text-muted-foreground h-8"
+                  onClick={() => onRemoveCustom(req.id)}
+                >
+                  {removeLabel}
+                </Button>
+              </div>
+            </li>
+          ))}
         </ul>
       )}
 
