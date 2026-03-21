@@ -23,8 +23,7 @@ export function CustomRequestSection({ labels, onAdd }: CustomRequestSectionProp
   const [quantityNote, setQuantityNote] = useState("");
   const [note, setNote] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     const trimmed = title.trim();
     if (!trimmed) {
       return;
@@ -51,7 +50,7 @@ export function CustomRequestSection({ labels, onAdd }: CustomRequestSectionProp
       </h2>
       <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{labels.subtitle}</p>
 
-      <form onSubmit={handleSubmit} className="mt-5 space-y-4">
+      <div className="mt-5 space-y-4">
         <div className="space-y-2">
           <Label htmlFor="custom-req-title" className="text-foreground">
             {labels.fieldTitle}
@@ -91,14 +90,15 @@ export function CustomRequestSection({ labels, onAdd }: CustomRequestSectionProp
           />
         </div>
         <Button
-          type="submit"
+          type="button"
           className="w-full sm:w-auto gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
           disabled={!title.trim()}
+          onClick={handleSubmit}
         >
           <Plus className="h-4 w-4" aria-hidden />
           {labels.cta}
         </Button>
-      </form>
+      </div>
     </section>
   );
 }

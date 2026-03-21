@@ -17,6 +17,7 @@ export type Database = {
       orders: {
         Row: {
           created_at: string
+          custom_requests: Json | null
           customer_email: string
           customer_name: string
           customer_phone: string
@@ -32,6 +33,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          custom_requests?: Json | null
           customer_email: string
           customer_name: string
           customer_phone: string
@@ -47,6 +49,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          custom_requests?: Json | null
           customer_email?: string
           customer_name?: string
           customer_phone?: string
