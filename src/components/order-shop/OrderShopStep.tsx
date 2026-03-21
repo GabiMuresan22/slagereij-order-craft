@@ -40,6 +40,8 @@ interface OrderItemForm {
 interface OrderShopFormShape {
   deliveryMethod: DeliveryMethodValue;
   orderItems: OrderItemForm[];
+  customRequests?: CustomCartRequest[];
+  [key: string]: unknown;
 }
 
 interface OrderShopStepProps {
