@@ -99,7 +99,7 @@ export function CustomRequestSection({ labels, onAdd }: CustomRequestSectionProp
           <Plus className="h-4 w-4" aria-hidden />
           {labels.cta}
         </Button>
-      </form>
+      </div>
     </section>
   );
 }
