@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
@@ -12,7 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { CalendarIcon, ShoppingCart, Loader2, CheckCircle2, Info } from "lucide-react";
+import { CalendarIcon, Loader2, CheckCircle2 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -26,23 +26,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { businessHours } from "@/hooks/useBusinessHours";
 import OrderSkeleton from "@/components/OrderSkeleton";
-
-// Product images mapping for Colli packages
-import porkProducts from "@/assets/pork-products.webp";
-import chicken from "@/assets/chicken.webp";
-import specialtyPlatter from "@/assets/specialty-platter.webp";
-import bbqGrillMeats from "@/assets/bbq-grill-meats.webp";
-import luxeGourmetSchotel from "@/assets/luxe-gourmet-schotel-10-soorten-vlees.webp";
-import fondueVlees from "@/assets/fondue-bourguignonne-meat-platter-beef-chicken.webp";
-
-const productImages: Record<string, string> = {
-  colliPork1: porkProducts,
-  colliPork2: porkProducts,
-  colliChicken: chicken,
-  colliMixed: specialtyPlatter,
-  colliBBQ: bbqGrillMeats,
-  colliJohn: luxeGourmetSchotel,
-};
+import { OrderShopStep } from "@/components/order-shop/OrderShopStep";
+import type { OrderCategoryId } from "@/lib/orderShopCatalog";
 
 interface OrderItem {
   product: string;
@@ -175,8 +160,6 @@ const Order = () => {
   const { user } = useAuth();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [customItems, setCustomItems] = useState<Set<number>>(new Set());
-
   // Fetch products with prices from database using TanStack Query for caching
   // This provides state persistence across navigation
   const { data: products = [], isLoading: loadingProducts, error: productsError } = useQuery({
@@ -211,19 +194,11 @@ const Order = () => {
   type OrderFormValues = z.infer<typeof orderFormSchema>;
 
   // Get product options with prices and images
-  const productOptions = products.map(p => ({
-    key: p.key,
-    label: language === 'nl' ? p.name_nl : p.name_ro,
-    price: p.price,
-    unit: p.unit,
-    image: productImages[p.key] || null,
-  }));
-
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
     defaultValues: {
       deliveryMethod: "pickup",
-      orderItems: [{ product: "", quantity: "", unit: "kg" }],
+      orderItems: [],
       pickupTime: "",
       customerName: "",
       customerPhone: "",
@@ -253,28 +228,11 @@ const Order = () => {
 
   const orderTotal = calculateTotal();
 
-  const addOrderItem = () => {
-    const currentItems = form.getValues("orderItems");
-    form.setValue("orderItems", [...currentItems, { product: "", quantity: "", unit: "kg" }]);
-  };
-
-  const removeOrderItem = (index: number) => {
-    const currentItems = form.getValues("orderItems");
-    form.setValue("orderItems", currentItems.filter((_, i) => i !== index));
-
-    // Remove from custom items set and adjust indices
-    setCustomItems(prev => {
-      const newSet = new Set<number>();
-      prev.forEach(itemIndex => {
-        if (itemIndex < index) {
-          newSet.add(itemIndex);
-        } else if (itemIndex > index) {
-          newSet.add(itemIndex - 1);
-        }
-        // Skip the removed index
-      });
-      return newSet;
-    });
+  const categoryLabels: Record<OrderCategoryId, string> = {
+    colli: t("order.shop.cat.colli"),
+    bbq: t("order.shop.cat.bbq"),
+    tapas: t("order.shop.cat.tapas"),
+    desserts: t("order.shop.cat.desserts"),
   };
 
   const nextStep = async () => {
@@ -419,9 +377,11 @@ ${data.zipCode} ${data.city}
           { name: "Bestellen", url: "/order" }
         ])}
       />
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold mb-8 text-center">{t('order.title')}</h1>
+      <div className={`container mx-auto px-4 ${step === 1 ? "py-6 md:py-10" : "py-16"}`}>
+        <div className={step === 1 ? "max-w-7xl mx-auto" : "max-w-3xl mx-auto"}>
+          {step !== 1 && (
+            <h1 className="text-4xl font-bold mb-8 text-center">{t('order.title')}</h1>
+          )}
 
           {/* Progress Steps - Accessible */}
           <nav aria-label={t('accessibility.orderProgress') || 'Order progress'} className="mb-8">
@@ -457,363 +417,33 @@ ${data.zipCode} ${data.city}
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8" aria-label={t('accessibility.orderForm') || 'Order form'}>
-              {/* Step 1: Product Selection */}
               {step === 1 && (
-                <>
-                  {/* Delivery Information Card */}
-                  <Card className="bg-card/80 backdrop-blur">
-                    <CardHeader>
-                      <CardTitle className="text-center flex items-center justify-center gap-2">
-                        📍 {t('order.deliveryInfo.title')}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-3 max-w-md mx-auto">
-                        <ul className="space-y-2 text-sm">
-                          <li className="flex items-start gap-2">
-                            <span className="text-primary font-semibold">•</span>
-                            <span>{t('order.deliveryInfo.minimum')}</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-primary font-semibold">•</span>
-                            <span>{t('order.deliveryInfo.tier1Free')}</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-primary font-semibold">•</span>
-                            <span>{t('order.deliveryInfo.tier1Paid')}</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-primary font-semibold">•</span>
-                            <span>{t('order.deliveryInfo.minimum100')}</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-primary font-semibold">•</span>
-                            <span>{t('order.deliveryInfo.tier2Free')}</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-primary font-semibold">•</span>
-                            <span>{t('order.deliveryInfo.tier2Paid')}</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-primary font-semibold">•</span>
-                            <span>{t('order.deliveryInfo.schedule')}</span>
-                          </li>
-                          <li className="flex items-start gap-2 pt-2">
-                            <span className="text-primary">📞</span>
-                            <a href="tel:+32466186457" className="hover:text-primary transition-colors min-h-[48px] inline-flex items-center">+32 466 18 64 57</a>
-                          </li>
-                        </ul>
-                      </div>
-
-                      {/* Address */}
-                      <div className="mt-6 pt-4 border-t border-border text-center text-sm">
-                        <p className="flex items-center justify-center gap-2">
-                          <span>📍</span>
-                          <span>{t('order.deliveryInfo.address')}</span>
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Products Card */}
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <ShoppingCart className="h-5 w-5" />
-                        {t('order.steps.products')}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      {/* Delivery Method Toggle */}
-                      <FormField
-                        control={form.control}
-                        name="deliveryMethod"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-base font-bold">
-                              {t('order.method.label')}
-                            </FormLabel>
-                            <FormControl>
-                              <RadioGroup
-                                onValueChange={field.onChange}
-                                value={field.value}
-                                className="grid grid-cols-2 gap-4"
-                              >
-                                <div>
-                                  <RadioGroupItem
-                                    value="pickup"
-                                    id="pickup"
-                                    className="peer sr-only"
-                                  />
-                                  <Label
-                                    htmlFor="pickup"
-                                    className="flex flex-col items-center justify-center rounded-lg border-2 border-muted bg-background p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary peer-data-[state=checked]:text-primary-foreground cursor-pointer transition-all"
-                                  >
-                                    <div className="text-2xl mb-2">🏪</div>
-                                    <div className="font-bold text-base">{t('order.method.pickup.title')}</div>
-                                    <div className="text-sm opacity-80">{t('order.method.pickup.location')}</div>
-                                  </Label>
-                                </div>
-                                <div>
-                                  <RadioGroupItem
-                                    value="delivery"
-                                    id="delivery"
-                                    className="peer sr-only"
-                                  />
-                                  <Label
-                                    htmlFor="delivery"
-                                    className="flex flex-col items-center justify-center rounded-lg border-2 border-muted bg-background p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary peer-data-[state=checked]:text-primary-foreground cursor-pointer transition-all"
-                                  >
-                                    <div className="text-2xl mb-2">🚗</div>
-                                    <div className="font-bold text-base">{t('order.method.delivery.title')}</div>
-                                    <div className="text-sm opacity-80">{t('order.method.delivery.location')}</div>
-                                  </Label>
-                                </div>
-                              </RadioGroup>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      {/* Product Selection */}
-                      {orderItems.map((item, index) => {
-                        const isCustomItem = customItems.has(index);
-
-                        return (
-                          <div key={index} className="space-y-4 pb-6 border-b last:border-0 mt-8 first:mt-0">
-                            {/* Row 1: Product dropdown (full width on mobile) */}
-                            <FormField
-                              control={form.control}
-                              name={`orderItems.${index}.product`}
-                              render={({ field }) => {
-                                const selectedProduct = productOptions.find(p => p.key === field.value);
-
-                                const handleToggleCustom = (e: React.MouseEvent) => {
-                                  e.preventDefault();
-                                  if (isCustomItem) {
-                                    // Switch back to dropdown mode and clear textarea
-                                    setCustomItems(prev => {
-                                      const newSet = new Set(prev);
-                                      newSet.delete(index);
-                                      return newSet;
-                                    });
-                                    field.onChange('');
-                                  } else {
-                                    // Switch to custom textarea mode
-                                    setCustomItems(prev => new Set(prev).add(index));
-                                    field.onChange('');
-                                  }
-                                };
-
-                                const handleProductChange = (value: string) => {
-                                  field.onChange(value);
-                                };
-
-                                return (
-                                  <FormItem className="w-full">
-                                    <FormLabel className="font-bold">{t('order.form.product')}</FormLabel>
-                                    <div className="relative min-h-[40px]">
-                                      {isCustomItem ? (
-                                        <FormControl>
-                                          <Textarea
-                                            placeholder={t('order.form.customProductPlaceholder')}
-                                            value={field.value}
-                                            onChange={(e) => field.onChange(e.target.value)}
-                                            rows={3}
-                                            className="border-[#FFC107] focus-visible:ring-[#FFC107] focus-visible:border-[#FFC107] transition-all duration-200 fade-in"
-                                            style={{
-                                              borderColor: '#FFC107',
-                                            }}
-                                          />
-                                        </FormControl>
-                                      ) : (
-                                        <div className="space-y-1 fade-in">
-                                          <Select onValueChange={handleProductChange} value={field.value}>
-                                            <FormControl>
-                                              <SelectTrigger className="h-auto py-2">
-                                                <SelectValue placeholder={t('order.form.selectProduct')}>
-                                                  {selectedProduct && (
-                                                    <div className="flex items-center gap-3">
-                                                      {selectedProduct.image && (
-                                                        <img
-                                                          src={selectedProduct.image}
-                                                          alt={selectedProduct.label}
-                                                          className="w-10 h-10 rounded-md object-cover flex-shrink-0"
-                                                        />
-                                                      )}
-                                                      <span className="font-medium">{selectedProduct.label}</span>
-                                                    </div>
-                                                  )}
-                                                </SelectValue>
-                                              </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                              {productOptions.map((option) => (
-                                                <SelectItem key={option.key} value={option.key} className="py-2">
-                                                  <div className="flex items-center gap-3 w-full">
-                                                    {option.image && (
-                                                      <img
-                                                        src={option.image}
-                                                        alt={option.label}
-                                                        className="w-12 h-12 rounded-md object-cover flex-shrink-0"
-                                                      />
-                                                    )}
-                                                    <div className="flex flex-col gap-0.5">
-                                                      <span className="font-medium">{option.label}</span>
-                                                      {option.price && (
-                                                        <span className="text-sm font-semibold text-primary">
-                                                          €{option.price.toFixed(2)}/{option.unit}
-                                                        </span>
-                                                      )}
-                                                    </div>
-                                                  </div>
-                                                </SelectItem>
-                                              ))}
-                                            </SelectContent>
-                                          </Select>
-                                          {selectedProduct && selectedProduct.price && (
-                                            <p className="text-xs text-muted-foreground mt-1">
-                                              {t('order.form.price')}: €{selectedProduct.price.toFixed(2)} per {selectedProduct.unit}
-                                            </p>
-                                          )}
-                                        </div>
-                                      )}
-                                    </div>
-                                    {/* Link moved below dropdown for better mobile UX */}
-                                    <button
-                                      type="button"
-                                      onClick={handleToggleCustom}
-                                      className="text-yellow-600 dark:text-yellow-500 hover:underline transition-all cursor-pointer font-normal mt-2 text-sm"
-                                    >
-                                      {isCustomItem ? t('order.form.backToMenu') : t('order.form.customProductToggle')}
-                                    </button>
-                                    <FormMessage />
-                                  </FormItem>
-                                );
-                              }}
-                            />
-
-                            {/* Row 2: Quantity and Unit side-by-side with delete button */}
-                            <div className="flex gap-3 items-end">
-                              <FormField
-                                control={form.control}
-                                name={`orderItems.${index}.quantity`}
-                                render={({ field }) => {
-                                  const item = orderItems[index];
-                                  const product = products.find(p => p.key === item?.product);
-                                  const itemTotal = product && item?.quantity
-                                    ? (product.price * parseFloat(item.quantity || '0')).toFixed(2)
-                                    : '0.00';
-
-                                  return (
-                                    <FormItem className="flex-1">
-                                      <FormLabel>{t('order.form.quantity')}</FormLabel>
-                                      <FormControl>
-                                        <Input
-                                          type="number"
-                                          step="0.1"
-                                          min="0.1"
-                                          max="1000"
-                                          placeholder="1.0"
-                                          {...field}
-                                        />
-                                      </FormControl>
-                                      {product && item?.quantity && parseFloat(item.quantity) > 0 && (
-                                        <p className="text-xs font-semibold text-primary">
-                                          €{itemTotal}
-                                        </p>
-                                      )}
-                                      <FormMessage />
-                                    </FormItem>
-                                  );
-                                }}
-                              />
-
-                              <FormField
-                                control={form.control}
-                                name={`orderItems.${index}.unit`}
-                                render={({ field }) => (
-                                  <FormItem className="w-28">
-                                    <FormLabel>{t('order.form.unit')}</FormLabel>
-                                    <Select onValueChange={field.onChange} value={field.value}>
-                                      <FormControl>
-                                        <SelectTrigger>
-                                          <SelectValue />
-                                        </SelectTrigger>
-                                      </FormControl>
-                                      <SelectContent>
-                                        <SelectItem value="kg">kg</SelectItem>
-                                        <SelectItem value="stuks">stuks</SelectItem>
-                                        <SelectItem value="stuk">stuk</SelectItem>
-                                      </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
-
-                              {orderItems.length > 1 && (
-                                <Button
-                                  type="button"
-                                  variant="destructive"
-                                  size="icon"
-                                  onClick={() => removeOrderItem(index)}
-                                  className="mb-2"
-                                >
-                                  ×
-                                </Button>
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })}
-
-                      <div className="space-y-3 mt-8">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={addOrderItem}
-                          className="w-full"
-                        >
-                          {t('order.form.addItem')}
-                        </Button>
-
-                        {orderTotal > 0 && (
-                          <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
-                            <div className="flex justify-between items-center">
-                              <span className="text-lg font-semibold">{t('order.total') || 'Totaal'}:</span>
-                              <span className="text-2xl font-bold text-primary">
-                                €{orderTotal.toFixed(2)}
-                              </span>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Allergen Information Warning - EU Regulation 1169/2011 Compliance */}
-                      <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 rounded-lg p-4 mb-6 flex gap-3 text-sm text-amber-900 dark:text-amber-100">
-                        <Info className="h-5 w-5 flex-shrink-0 text-amber-600" />
-                        <div>
-                          <p className="font-medium mb-1">{t('allergens.disclaimer.title')}</p>
-                          <p>
-                            {t('allergens.risk.warning')}{" "}
-                            <Link
-                              to="/allergens"
-                              className="underline font-semibold hover:text-amber-700"
-                            >
-                              {t('footer.allergens')}
-                            </Link>
-                          </p>
-                        </div>
-                      </div>
-
-                      <Button type="button" onClick={nextStep} className="w-full mt-6" size="lg">
-                        {t('order.form.continue')}
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </>
+                <div className="dark bg-background rounded-2xl border border-border/50 p-4 md:p-6 lg:p-8 shadow-xl">
+                  <OrderShopStep
+                    form={form}
+                    products={products as Product[]}
+                    language={language as "nl" | "ro"}
+                    orderItems={orderItems}
+                    orderTotal={orderTotal}
+                    t={t}
+                    onContinue={() => void nextStep()}
+                    categoryLabels={categoryLabels}
+                    heroTitle={t("order.title")}
+                    heroSubtitle={t("order.shop.heroSubtitle")}
+                    quickPrimary={t("order.shop.quickPrimary")}
+                    quickSecondary={t("order.shop.quickSecondary")}
+                    cartTitle={t("order.shop.cartTitle")}
+                    cartEmpty={t("order.shop.cartEmpty")}
+                    cartCta={t("order.shop.cartCta")}
+                    cartTotal={t("order.shop.cartTotal")}
+                    cartWarnMin={t("order.shop.cartWarnMin")}
+                    allergenTitle={t("allergens.disclaimer.title")}
+                    allergenBody={t("allergens.risk.warning")}
+                    allergenLink={t("footer.allergens")}
+                    removeLineLabel={t("order.shop.removeLine")}
+                    methodLabel={t("order.shop.methodLabel")}
+                  />
+                </div>
               )}
 
               {/* Step 2: Pickup Date & Time */}

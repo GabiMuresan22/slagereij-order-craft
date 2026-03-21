@@ -11,6 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import LocalizedLink from "@/components/LocalizedLink";
 import { useLocalizedNavigation } from "@/hooks/useLocalizedNavigation";
+import { cn } from "@/lib/utils";
 
 // Language configuration with flags (Belgian flag for Dutch)
 const languageConfig = {
@@ -126,14 +127,18 @@ const Navigation = () => {
             {navItems.map((item) => {
               // Make "Order Online" a primary button
               if (item.path === "/order") {
+                const orderActive = isActivePath(item.path);
                 return (
                   <Button
                     key={item.path}
                     asChild
                     size="sm"
-                    className="bg-primary text-primary-foreground hover:bg-primary/90 px-6"
+                    className={cn(
+                      "bg-primary text-primary-foreground hover:bg-primary/90 px-6",
+                      orderActive && "ring-2 ring-offset-2 ring-offset-background ring-primary-foreground/50"
+                    )}
                   >
-                    <LocalizedLink to={item.path}>
+                    <LocalizedLink to={item.path} aria-current={orderActive ? "page" : undefined}>
                       {item.label}
                     </LocalizedLink>
                   </Button>
@@ -229,9 +234,12 @@ const Navigation = () => {
             <Button
               asChild
               size="sm"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-4 text-sm"
+              className={cn(
+                "bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-4 text-sm",
+                isActivePath("/order") && "ring-2 ring-offset-2 ring-offset-background ring-primary-foreground/50"
+              )}
             >
-              <LocalizedLink to="/order">
+              <LocalizedLink to="/order" aria-current={isActivePath("/order") ? "page" : undefined}>
                 {t('nav.order')}
               </LocalizedLink>
             </Button>
