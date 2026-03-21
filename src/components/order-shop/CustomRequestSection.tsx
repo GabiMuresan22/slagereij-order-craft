@@ -51,7 +51,7 @@ export function CustomRequestSection({ labels, onAdd }: CustomRequestSectionProp
       </h2>
       <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{labels.subtitle}</p>
 
-      <form onSubmit={handleSubmit} className="mt-5 space-y-4">
+      <div className="mt-5 space-y-4">
         <div className="space-y-2">
           <Label htmlFor="custom-req-title" className="text-foreground">
             {labels.fieldTitle}
