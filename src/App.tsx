@@ -15,8 +15,6 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import AdminRoute from "./components/AdminRoute";
-import PromoAlert from "./components/PromoAlert";
-
 // 1. Import Suspense from React
 import { Suspense } from "react";
 import { lazyWithRetry } from "@/lib/lazyWithRetry";
@@ -107,7 +105,6 @@ const App = () => (
                 <Sonner />
                 <div className="flex flex-col min-h-screen">
                   <SkipLink />
-                  <PromoAlert />
                   {/* Navigation stays statically imported so it appears instantly */}
                   <Navigation />
                   <main id="main-content" className="flex-grow" role="main" tabIndex={-1}>
