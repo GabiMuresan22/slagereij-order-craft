@@ -380,6 +380,12 @@ const Products = () => {
               <CardContent className="p-6">
                 <h3 className="font-serif font-semibold text-lg mb-2">{t("menu.fondue.title")}</h3>
                 <p className="text-sm text-muted-foreground mb-4">{t("menu.fondue.badge")}</p>
+                <ul className="text-sm space-y-2 text-muted-foreground mb-4">
+                  <li className="flex justify-between gap-2">
+                    <span>◆ {t("menu.from")}</span>
+                    <span className="shrink-0 text-foreground font-medium">€10/pers</span>
+                  </li>
+                </ul>
                 <LocalizedLink to="/order">
                   <Button className="w-full bg-primary text-primary-foreground">{t("menu.orderNow")}</Button>
                 </LocalizedLink>
@@ -397,6 +403,20 @@ const Products = () => {
               <CardContent className="p-6">
                 <h3 className="font-serif font-semibold text-lg mb-2">{t("menu.gourmet.title")}</h3>
                 <p className="text-sm text-muted-foreground mb-4">{t("menu.gourmet.badge")}</p>
+                <ul className="text-sm space-y-2 text-muted-foreground mb-4">
+                  <li className="flex justify-between gap-2">
+                    <span>◆ {t("menu.gourmet.9soorten")}</span>
+                    <span className="shrink-0 text-foreground font-medium">€10/pers</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span>◆ {t("menu.gourmet.10soorten")}</span>
+                    <span className="shrink-0 text-foreground font-medium">€11/pers</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span>◆ {t("menu.gourmet.luxe")}</span>
+                    <span className="shrink-0 text-foreground font-medium">€15/pers</span>
+                  </li>
+                </ul>
                 <LocalizedLink to="/order">
                   <Button className="w-full bg-primary text-primary-foreground">{t("menu.orderNow")}</Button>
                 </LocalizedLink>
@@ -432,10 +452,31 @@ const Products = () => {
               <CardContent className="p-6">
                 <h3 className="font-serif font-semibold text-xl mb-2">{t("menu.tapas.title")}</h3>
                 <p className="text-sm text-muted-foreground mb-4">{t("menu.tapas.badge")}</p>
-                <ul className="text-sm space-y-1 text-muted-foreground mb-6">
-                  <li>◆ {t("menu.tapas.kinder")}</li>
-                  <li>◆ {t("menu.tapas.tapas2")}</li>
-                  <li>◆ {t("menu.tapas.john1")}</li>
+                <ul className="text-sm space-y-2 text-muted-foreground mb-6">
+                  <li className="flex justify-between gap-2">
+                    <span>◆ {t("menu.tapas.kinder")}</span>
+                    <span className="shrink-0 text-foreground font-medium">€9/pers</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span>◆ {t("menu.tapas.tapas2")}</span>
+                    <span className="shrink-0 text-foreground font-medium">€30 (4-5 pers)</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span>◆ {t("menu.tapas.mix")}</span>
+                    <span className="shrink-0 text-foreground font-medium">€40 (5-6 pers)</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span>◆ {t("menu.tapas.john1")}</span>
+                    <span className="shrink-0 text-foreground font-medium">€50 (5-6 pers)</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span>◆ {t("menu.tapas.john2")}</span>
+                    <span className="shrink-0 text-foreground font-medium">€60 (7-9 pers)</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span>◆ {t("menu.tapas.roemeens")}</span>
+                    <span className="shrink-0 text-foreground font-medium">€40 (5-6 pers)</span>
+                  </li>
                 </ul>
                 <LocalizedLink to="/order">
                   <Button className="w-full bg-primary text-primary-foreground">{t("menu.orderNow")}</Button>
@@ -445,11 +486,32 @@ const Products = () => {
             <Card className="rounded-xl border-border p-6">
               <h3 className="font-serif font-semibold text-xl mb-2">{t("menu.hapjes.title")}</h3>
               <p className="text-xs text-muted-foreground mb-4">{t("menu.pricePerPerson")}</p>
-              <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
-                {lang === "nl"
-                  ? "Koude hapjes, lepeltjes en bruschetta — perfect als aperitiefhapjes of feesthapjes. Bekijk het volledige aanbod in de webshop."
-                  : "Aperitive reci, lingurițe și bruschetta — ideale ca aperitive pentru petrecere. Vedeți oferta completă în magazin."}
-              </p>
+              <ul className="text-sm space-y-2 text-muted-foreground mb-6">
+                <li className="flex justify-between gap-2">
+                  <span>◆ {t("menu.hapjes.scampi")}</span>
+                  <span className="shrink-0 text-foreground font-medium">€4</span>
+                </li>
+                <li className="flex justify-between gap-2">
+                  <span>◆ {t("menu.hapjes.lepeltjeScampi")}</span>
+                  <span className="shrink-0 text-foreground font-medium">€2</span>
+                </li>
+                <li className="flex justify-between gap-2">
+                  <span>◆ {t("menu.hapjes.tacoGehakt")}</span>
+                  <span className="shrink-0 text-foreground font-medium">€2,50</span>
+                </li>
+                <li className="flex justify-between gap-2">
+                  <span>◆ {t("menu.hapjes.bruschettaGeitenkaas")}</span>
+                  <span className="shrink-0 text-foreground font-medium">€2</span>
+                </li>
+                <li className="flex justify-between gap-2">
+                  <span>◆ {t("menu.hapjes.wrapsZalm")}</span>
+                  <span className="shrink-0 text-foreground font-medium">€2</span>
+                </li>
+                <li className="flex justify-between gap-2">
+                  <span>◆ {t("menu.hapjes.bulgurGarnaal")}</span>
+                  <span className="shrink-0 text-foreground font-medium">€3,50</span>
+                </li>
+              </ul>
               <LocalizedLink to="/order">
                 <Button className="w-full bg-primary text-primary-foreground">{t("menu.orderNow")}</Button>
               </LocalizedLink>
@@ -511,6 +573,115 @@ const Products = () => {
                 </li>
               </ul>
               <LocalizedLink to="/order" className="block mt-6">
+                <Button className="w-full bg-primary text-primary-foreground">{t("menu.orderNow")}</Button>
+              </LocalizedLink>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Dessert & Mini Belegde Broodjes */}
+      <section
+        className="py-14 md:py-20 bg-muted/30 scroll-mt-28"
+        aria-labelledby="heading-dessert"
+      >
+        <div className="container mx-auto px-4">
+          <h2 id="heading-dessert" className="text-3xl md:text-4xl font-serif font-bold text-center mb-10">
+            {lang === "nl" ? "Dessert & Extra's" : "Desert & Extra"}
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <Card className="rounded-xl p-6 border-border">
+              <h3 className="font-serif font-semibold text-xl mb-2">{t("menu.dessert.title")}</h3>
+              <div className="flex justify-center mb-4">
+                <span className="inline-block px-3 py-1 rounded-full bg-muted text-muted-foreground text-xs">
+                  {t("menu.dessert.badge")}
+                </span>
+              </div>
+              <ul className="text-sm space-y-2 text-muted-foreground mb-6">
+                <li className="flex justify-between gap-2">
+                  <span>◆ {t("menu.dessert.buffet1")}</span>
+                  <span className="shrink-0 text-foreground font-medium">€7/pers</span>
+                </li>
+                <li className="flex justify-between gap-2">
+                  <span>◆ {t("menu.dessert.buffet2")}</span>
+                  <span className="shrink-0 text-foreground font-medium">€12/pers</span>
+                </li>
+                <li className="flex justify-between gap-2">
+                  <span>◆ {t("menu.dessert.fruitBuffet")}</span>
+                  <span className="shrink-0 text-foreground font-medium">€4/pers</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-0.5">◆</span>
+                  <span>{t("menu.dessert.meloenDruiven")}</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-0.5">◆</span>
+                  <span>{t("menu.dessert.ananasKiwi")}</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-0.5">◆</span>
+                  <span>{t("menu.dessert.mandarijnKaki")}</span>
+                </li>
+              </ul>
+              <LocalizedLink to="/order">
+                <Button className="w-full bg-primary text-primary-foreground">{t("menu.orderNow")}</Button>
+              </LocalizedLink>
+            </Card>
+            <Card className="rounded-xl p-6 border-border">
+              <h3 className="font-serif font-semibold text-xl mb-2">{t("menu.keuze.title")}</h3>
+              <div className="flex justify-center mb-4">
+                <span className="inline-block px-3 py-1 rounded-full bg-muted text-muted-foreground text-xs">
+                  {t("menu.keuze.badge")}
+                </span>
+              </div>
+              <ul className="text-sm space-y-2 text-muted-foreground mb-6">
+                <li className="flex justify-between gap-2">
+                  <span>◆ {t("menu.keuze.vanille")}</span>
+                  <span className="shrink-0 text-foreground font-medium">€2</span>
+                </li>
+                <li className="flex justify-between gap-2">
+                  <span>◆ {t("menu.keuze.tiramisu")}</span>
+                  <span className="shrink-0 text-foreground font-medium">€2,50</span>
+                </li>
+                <li className="flex justify-between gap-2">
+                  <span>◆ {t("menu.keuze.donut")}</span>
+                  <span className="shrink-0 text-foreground font-medium">€2</span>
+                </li>
+                <li className="flex justify-between gap-2">
+                  <span>◆ {t("menu.keuze.miniDonut")}</span>
+                  <span className="shrink-0 text-foreground font-medium">€1</span>
+                </li>
+                <li className="flex justify-between gap-2">
+                  <span>◆ {t("menu.keuze.macarons")}</span>
+                  <span className="shrink-0 text-foreground font-medium">€2</span>
+                </li>
+              </ul>
+              <LocalizedLink to="/order">
+                <Button className="w-full bg-primary text-primary-foreground">{t("menu.orderNow")}</Button>
+              </LocalizedLink>
+            </Card>
+            <Card className="rounded-xl p-6 border-border">
+              <h3 className="font-serif font-semibold text-xl mb-2">{t("menu.broodjes.title")}</h3>
+              <div className="flex justify-center mb-4">
+                <span className="inline-block px-3 py-1 rounded-full bg-muted text-muted-foreground text-xs">
+                  €1,70/st
+                </span>
+              </div>
+              <ul className="text-sm space-y-2 text-muted-foreground mb-6">
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-0.5">◆</span>
+                  <span>{t("menu.broodjes.kipcurry")}</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-0.5">◆</span>
+                  <span>{t("menu.broodjes.hesp")}</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-0.5">◆</span>
+                  <span>{t("menu.broodjes.tonijn")}</span>
+                </li>
+              </ul>
+              <LocalizedLink to="/order">
                 <Button className="w-full bg-primary text-primary-foreground">{t("menu.orderNow")}</Button>
               </LocalizedLink>
             </Card>
