@@ -8,6 +8,10 @@ import displayCaseImage from "@/assets/products-hero.webp";
 import tapasJohnPlatter from "@/assets/tapas-john-family-platter.webp";
 import fondueVlees from "@/assets/fondue-bourguignonne-meat-platter-beef-chicken.webp";
 import luxeGourmetSchotel from "@/assets/luxe-gourmet-schotel-10-soorten-vlees.webp";
+import hapjesPlatter from "@/assets/romanian-traditional-appetizer-platter-charcuterie.webp";
+import dessertSpread from "@/assets/catering-party-spread.webp";
+import keuzeDesssertPlatter from "@/assets/specialty-platter.webp";
+import broodjesPlatter from "@/assets/catering-party-platter.webp";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEO from "@/components/SEO";
 import { getBreadcrumbSchema, getProductListSchema } from "@/lib/structuredData";
@@ -483,7 +487,16 @@ const Products = () => {
                 </LocalizedLink>
               </CardContent>
             </Card>
-            <Card className="rounded-xl border-border p-6">
+            <Card className="rounded-xl border-border overflow-hidden">
+              <div className="aspect-video">
+                <img
+                  src={hapjesPlatter}
+                  alt={lang === "nl" ? "Hapjes schotel Slagerij John" : "Platou aperitive Slagerij John"}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <CardContent className="p-6">
               <h3 className="font-serif font-semibold text-xl mb-2">{t("menu.hapjes.title")}</h3>
               <p className="text-xs text-muted-foreground mb-4">{t("menu.pricePerPerson")}</p>
               <ul className="text-sm space-y-2 text-muted-foreground mb-6">
@@ -515,6 +528,7 @@ const Products = () => {
               <LocalizedLink to="/order">
                 <Button className="w-full bg-primary text-primary-foreground">{t("menu.orderNow")}</Button>
               </LocalizedLink>
+              </CardContent>
             </Card>
           </div>
         </div>
@@ -590,7 +604,16 @@ const Products = () => {
             {lang === "nl" ? "Dessert & Extra's" : "Desert & Extra"}
           </h2>
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            <Card className="rounded-xl p-6 border-border">
+            <Card className="rounded-xl border-border overflow-hidden">
+              <div className="aspect-video">
+                <img
+                  src={dessertSpread}
+                  alt={lang === "nl" ? "Dessert en fruit buffet" : "Bufet desert și fructe"}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <CardContent className="p-6">
               <h3 className="font-serif font-semibold text-xl mb-2">{t("menu.dessert.title")}</h3>
               <div className="flex justify-center mb-4">
                 <span className="inline-block px-3 py-1 rounded-full bg-muted text-muted-foreground text-xs">
@@ -626,8 +649,18 @@ const Products = () => {
               <LocalizedLink to="/order">
                 <Button className="w-full bg-primary text-primary-foreground">{t("menu.orderNow")}</Button>
               </LocalizedLink>
+              </CardContent>
             </Card>
-            <Card className="rounded-xl p-6 border-border">
+            <Card className="rounded-xl border-border overflow-hidden">
+              <div className="aspect-video">
+                <img
+                  src={keuzeDesssertPlatter}
+                  alt={lang === "nl" ? "Keuze dessert schotel" : "Platou desert la alegere"}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <CardContent className="p-6">
               <h3 className="font-serif font-semibold text-xl mb-2">{t("menu.keuze.title")}</h3>
               <div className="flex justify-center mb-4">
                 <span className="inline-block px-3 py-1 rounded-full bg-muted text-muted-foreground text-xs">
@@ -659,8 +692,18 @@ const Products = () => {
               <LocalizedLink to="/order">
                 <Button className="w-full bg-primary text-primary-foreground">{t("menu.orderNow")}</Button>
               </LocalizedLink>
+              </CardContent>
             </Card>
-            <Card className="rounded-xl p-6 border-border">
+            <Card className="rounded-xl border-border overflow-hidden">
+              <div className="aspect-video">
+                <img
+                  src={broodjesPlatter}
+                  alt={lang === "nl" ? "Mini belegde broodjes schotel" : "Platou mini sendvișuri"}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <CardContent className="p-6">
               <h3 className="font-serif font-semibold text-xl mb-2">{t("menu.broodjes.title")}</h3>
               <div className="flex justify-center mb-4">
                 <span className="inline-block px-3 py-1 rounded-full bg-muted text-muted-foreground text-xs">
@@ -684,6 +727,7 @@ const Products = () => {
               <LocalizedLink to="/order">
                 <Button className="w-full bg-primary text-primary-foreground">{t("menu.orderNow")}</Button>
               </LocalizedLink>
+              </CardContent>
             </Card>
           </div>
         </div>
