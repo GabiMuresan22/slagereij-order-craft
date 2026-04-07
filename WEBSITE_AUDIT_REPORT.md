@@ -725,3 +725,74 @@ The website now has:
 #### Low Priority
 9. **Dev Dependencies** - Address 14 dev dependency vulnerabilities (non-critical, mostly eslint)
 10. **Blog Strategy** - Consider implementing blog for SEO benefits
+
+---
+
+## 18. Full Re-Audit – April 2026 ✅
+
+**Date:** April 7, 2026  
+**Result:** All previously identified issues resolved. 0 outstanding critical or high items.
+
+### 18.1 Security
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| Security headers (X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy) | ✅ | In vercel.json |
+| Content-Security-Policy | ✅ | Comprehensive CSP in vercel.json |
+| HSTS | ✅ | max-age=31536000; includeSubDomains; preload |
+| Permissions-Policy | ✅ | camera, mic, geolocation, payment all denied |
+| HTTPS | ✅ | Enforced via Vercel |
+| CORS | ✅ | **All 4 Edge Functions restricted to `https://slagerij-john.be`** (was `*` in generate-sitemap; now fixed) |
+| GA4 / GDPR ePrivacy | ✅ | **GA4 script only loaded after analytics cookie consent** – index.html no longer auto-fires `gtag/js`. Script injected dynamically in `cookie-consent-config.ts` onConsent callback only. |
+| npm vulnerabilities | ✅ | **0 vulnerabilities** after `npm audit fix` (was 9: 3 moderate, 6 high) |
+| Security.txt | ✅ | RFC 9116 at `/.well-known/security.txt` |
+| Rate limiting | ✅ | Edge functions (3 req/min contact, 10 req/min order status) |
+| Password security | ✅ | HIBP leak check on sign-up and reset |
+| Input validation | ✅ | Zod schemas on all forms |
+
+**Security Score: A+ (No outstanding issues)**
+
+---
+
+### 18.2 Legal Compliance
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| Privacy Policy | ✅ | `/privacy` + `/ro/privacy`; controller, collection, rights, cookies |
+| Terms & Conditions | ✅ | `/terms` + `/ro/terms` |
+| Legal Notice | ✅ | **NEW** `/legal-notice` + `/ro/legal-notice` — Belgian CEL Book XII, Art. XII.6: legal name (Slager John Comm.V), legal form, VAT (BE 1012.585.374), KBO, address, hosting providers (Vercel + Supabase), applicable law |
+| Cookie Consent | ✅ | vanilla-cookieconsent; necessary + analytics; NL/RO; consent-gated GA4 |
+| Allergens | ✅ | `/allergens` page; 14 major allergens; cross-contamination notice |
+| Accessibility Statement | ✅ | `/accessibility`; WCAG 2.1 AA commitment; feedback channels |
+| Footer legal links | ✅ | Privacy, Terms, Legal Notice, Allergens, Accessibility all linked |
+| GDPR – data before consent | ✅ | No tracking before explicit analytics consent |
+| GDPR – data controller | ✅ | Listed in Privacy and Legal Notice pages |
+
+---
+
+### 18.3 SEO
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| Title / description | ✅ | SEO component per page |
+| Canonical URLs | ✅ | Normalized in SEO.tsx (no trailing slash) |
+| Open Graph / Twitter | ✅ | index.html + SEO component |
+| Structured data | ✅ | LocalBusiness, Reviews, Breadcrumb, Product/ItemList |
+| Dynamic sitemap | ✅ | `generate-sitemap` edge function; now includes `accessibility` + `legal-notice` |
+| Static sitemap | ✅ | `sitemap-static.xml` includes `accessibility` + `legal-notice` with hreflang alternates |
+| robots.txt | ✅ | Allow /; Disallow /admin/, /private/, /auth, /my-account |
+| Hreflang | ✅ | NL/RO in both sitemaps and per-page |
+
+---
+
+### 18.4 Action Items (April 2026)
+
+All previous critical and high items have been resolved. Remaining items are **low priority**:
+
+1. Align www vs non-www (og:url in index.html vs SEO.tsx canonical)
+2. Run Lighthouse + WAVE for contrast and a11y verification (WCAG AA)
+3. Run `npm run build:analyze` for bundle size optimization
+4. Submit sitemap to Google Search Console and monitor coverage
+5. Consider restricting CORS to include `https://www.slagerij-john.be` (www subdomain) in addition to non-www
+
+**Report Updated:** April 7, 2026

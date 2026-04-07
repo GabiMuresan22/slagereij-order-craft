@@ -42,7 +42,7 @@ This document serves as a comprehensive checklist for conducting regular website
 - [x] **XSS protection** - CSP headers + input sanitization
 - [x] **File upload restrictions** - Proper validation in place
 - [x] **Updated dependencies** - Regular npm audit runs
-- [x] **Dependency vulnerabilities** - 0 vulnerabilities (last check: Jan 2025)
+- [x] **Dependency vulnerabilities** - **0 vulnerabilities** (April 2026 – `npm audit fix` resolved all 9 issues)
 
 ### 🔒 E. Data Protection
 
