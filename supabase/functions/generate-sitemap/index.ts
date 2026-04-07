@@ -1,7 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": "https://slagerij-john.be",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
@@ -30,8 +30,10 @@ const routes: RouteConfig[] = [
   { path: "contact", changefreq: "monthly", priority: 0.75, roPriorityModifier: -0.05 },
   // Informational pages - lower priority
   { path: "allergens", changefreq: "monthly", priority: 0.5, roPriorityModifier: -0.1 },
+  { path: "accessibility", changefreq: "yearly", priority: 0.2, roPriorityModifier: -0.1 },
   { path: "privacy", changefreq: "yearly", priority: 0.3, roPriorityModifier: -0.1 },
   { path: "terms", changefreq: "yearly", priority: 0.3, roPriorityModifier: -0.1 },
+  { path: "legal-notice", changefreq: "yearly", priority: 0.2, roPriorityModifier: -0.1 },
 ];
 
 function generateUrlEntry(

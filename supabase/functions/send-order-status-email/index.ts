@@ -7,7 +7,7 @@ const BUSINESS_EMAIL = Deno.env.get("BUSINESS_EMAIL") || "contact@slagerij-john.
 const BUSINESS_WHATSAPP = Deno.env.get("BUSINESS_WHATSAPP") || "+32466186457";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": "https://slagerij-john.be",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type",
 };

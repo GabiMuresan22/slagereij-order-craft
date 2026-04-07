@@ -3,7 +3,7 @@ import { PDFDocument } from "https://esm.sh/pdf-lib@1.17.1";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': 'https://slagerij-john.be',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 

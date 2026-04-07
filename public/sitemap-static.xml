@@ -80,6 +80,13 @@
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
+  <url>
+    <loc>https://slagerij-john.be/legal-notice</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://slagerij-john.be/legal-notice"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://slagerij-john.be/ro/legal-notice"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
 
   <!-- Romanian pages -->
   <url>
