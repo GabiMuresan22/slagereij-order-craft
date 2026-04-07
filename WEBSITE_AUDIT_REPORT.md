@@ -632,12 +632,14 @@ This section consolidates and expands the audit across **Security**, **SEO**, **
 | Privacy policy | ✅ | Dedicated /privacy page; NL/RO; controller, collection, rights, cookies |
 | Terms of use | ✅ | Dedicated /terms page; orders, payment, liability, etc. |
 | Cookie consent | ✅ | vanilla-cookieconsent; necessary + analytics; NL/RO; links to /privacy |
-| Consent before non-essential | ✅ | GA and cookie banner respect consent |
+| Consent before non-essential | ✅ | GA4 loads only after analytics consent; index.html no longer auto-loads GA |
 | Allergens | ✅ | Allergens page linked (e.g. footer); supports food regulations |
 | Admin/private | ✅ | /admin and /private disallowed in robots.txt |
 | Data controller info | ✅ | Privacy page lists name, VAT, KBO, address, contact |
+| Legal Notice | ✅ | Dedicated /legal-notice page (Book XII, Art. XII.6): legal name, legal form (Comm.V), VAT, KBO, address, hosting providers (Vercel + Supabase), IP notice, applicable law |
+| CORS restriction | ✅ | Supabase Edge Functions restricted to https://slagerij-john.be |
 
-**Action:** Keep Privacy/Terms updated with any new processing or features; consider cookie policy link if required.
+**Action:** Keep Privacy/Terms/Legal-Notice updated with any new processing or features.
 
 ---
 

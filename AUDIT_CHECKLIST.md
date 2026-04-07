@@ -225,10 +225,12 @@ This document serves as a comprehensive checklist for conducting regular website
 - [x] **Privacy Policy** - `/privacy` page implemented
 - [x] **Terms & Conditions** - `/terms` page implemented
 - [x] **Cookie Policy** - Cookie consent banner (vanilla-cookieconsent)
-- [x] **GDPR compliance** - Cookie consent, privacy policy
+- [x] **GDPR compliance** - Cookie consent, privacy policy; GA4 loads only after analytics consent
 - [x] **Accessibility statement** - `/accessibility` page created
 - [x] **Contact details visible** - Footer + Contact page
 - [x] **Security.txt** - RFC 9116 file at `/.well-known/security.txt`
+- [x] **Legal Notice** - `/legal-notice` page (Belgian Code of Economic Law Book XII, Art. XII.6): legal name, legal form, VAT, KBO, address, hosting providers
+- [x] **CORS restricted** - Supabase Edge Functions restricted to `https://slagerij-john.be`
 
 ---
 

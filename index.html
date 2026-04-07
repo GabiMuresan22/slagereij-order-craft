@@ -75,28 +75,15 @@
       />
     </noscript>
 
-    <!-- Google tag (gtag.js) - Deferred for non-blocking load -->
+    <!-- Google Analytics dataLayer stub – GA4 script is loaded ONLY after
+         the user grants analytics consent via the cookie consent banner
+         (see src/lib/cookie-consent-config.ts → onConsent callback).
+         Do NOT add a gtag/js script loader here; doing so would send data
+         before consent and violate GDPR / ePrivacy Directive. -->
     <script>
-      // Load Google Analytics asynchronously after page load
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
-      }
-      // Defer GA loading
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", function () {
-          loadGoogleAnalytics();
-        });
-      } else {
-        loadGoogleAnalytics();
-      }
-      function loadGoogleAnalytics() {
-        var script = document.createElement("script");
-        script.async = true;
-        script.src = "https://www.googletagmanager.com/gtag/js?id=G-G5QGY974Y7";
-        document.head.appendChild(script);
-        gtag("js", new Date());
-        gtag("config", "G-G5QGY974Y7");
       }
     </script>
   </head>
