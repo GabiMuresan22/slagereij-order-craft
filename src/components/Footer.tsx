@@ -199,6 +199,9 @@ const Footer = () => {
               <LocalizedLink to="/terms" className="hover:text-primary transition-colors min-h-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-1">
                 {t('footer.terms')}
               </LocalizedLink>
+              <LocalizedLink to="/legal-notice" className="hover:text-primary transition-colors min-h-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-1">
+                {t('footer.legalNotice')}
+              </LocalizedLink>
               <LocalizedLink to="/allergens" className="hover:text-primary transition-colors min-h-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-1">
                 {t('footer.allergens')}
               </LocalizedLink>
