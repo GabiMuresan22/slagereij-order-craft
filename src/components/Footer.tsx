@@ -1,4 +1,4 @@
-import { MapPin, Phone, Clock, Facebook, Clapperboard, MapPinned } from "lucide-react";
+import { MapPin, Phone, Clock, Facebook, Clapperboard, MapPinned, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LocalizedLink from "@/components/LocalizedLink";
 import logo from "@/assets/logo.svg";
@@ -47,8 +47,23 @@ const Footer = () => {
                 >
                   +32 466 18 64 57
                 </a>
+              <div className="flex items-center space-x-3">
+                <Mail className="w-5 h-5 flex-shrink-0 text-primary" aria-hidden="true" />
+                <a 
+                  href="mailto:info@slagerij-john.be" 
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors min-h-[48px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md"
+                >
+                  {t('footer.legal.email')}
+                </a>
               </div>
             </address>
+            {/* Legal Business Info */}
+            <div className="mt-4 pt-4 border-t border-border space-y-1 text-xs text-muted-foreground">
+              <p className="font-semibold">{t('footer.legal.name')}</p>
+              <p>{t('footer.legal.vat')}</p>
+              <p>{t('footer.legal.kbo')}</p>
+              <p>{t('footer.legal.profession')}</p>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -204,6 +219,9 @@ const Footer = () => {
               </LocalizedLink>
               <LocalizedLink to="/accessibility" className="hover:text-primary transition-colors min-h-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-1">
                 {t('footer.accessibility')}
+              </LocalizedLink>
+              <LocalizedLink to="/legal-notice" className="hover:text-primary transition-colors min-h-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-1">
+                {t('footer.legalNotice')}
               </LocalizedLink>
               <button 
                 type="button"
