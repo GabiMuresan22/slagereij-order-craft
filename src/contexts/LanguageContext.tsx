@@ -655,7 +655,7 @@ const translations = {
     'terms.disputes.desc': 'Op deze voorwaarden is het Belgisch recht van toepassing. Bij geschillen streven wij eerst naar een minnelijke oplossing. Indien dit niet lukt, zijn de rechtbanken van het arrondissement West-Vlaanderen bevoegd.',
     'terms.disputes.odr': 'Europees platform voor online geschillenbeslechting: https://ec.europa.eu/consumers/odr',
     'terms.contact.title': '9. Contact',
-    'terms.contact.desc': 'Voor vragen over deze algemene voorwaarden, neem contact met ons op:'
+    'terms.contact.desc': 'Voor vragen over deze algemene voorwaarden, neem contact met ons op:',
     
     // Auth
     'auth.title': 'Authenticatie',
@@ -1763,7 +1763,7 @@ const translations = {
     'terms.disputes.desc': 'Aceste condiții sunt guvernate de dreptul belgian. În caz de litigii, căutăm mai întâi o soluție amiabilă. Dacă aceasta nu este posibilă, tribunalele din districtul Flandra de Vest sunt competente.',
     'terms.disputes.odr': 'Platforma europeană de soluționare a litigiilor online: https://ec.europa.eu/consumers/odr',
     'terms.contact.title': '9. Contact',
-    'terms.contact.desc': 'Pentru întrebări despre acești termeni și condiții, contactați-ne:'
+    'terms.contact.desc': 'Pentru întrebări despre acești termeni și condiții, contactați-ne:',
     
     // Auth
     'auth.title': 'Autentificare',
