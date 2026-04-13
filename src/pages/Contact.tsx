@@ -158,6 +158,16 @@ const Contact = () => {
                     </div>
                   </div>
                 </div>
+
+                {/* Legal Business Info */}
+                <div className="border-t border-border pt-6">
+                  <div className="text-sm text-muted-foreground space-y-1">
+                    <p className="font-semibold text-foreground">{t('footer.legal.name')}</p>
+                    <p>{t('footer.legal.vat')}</p>
+                    <p>{t('footer.legal.kbo')}</p>
+                    <p>{t('footer.legal.profession')}</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
