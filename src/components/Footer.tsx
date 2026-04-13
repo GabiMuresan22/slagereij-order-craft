@@ -47,6 +47,7 @@ const Footer = () => {
                 >
                   +32 466 18 64 57
                 </a>
+              </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 flex-shrink-0 text-primary" aria-hidden="true" />
                 <a 
