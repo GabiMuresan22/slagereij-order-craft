@@ -723,28 +723,36 @@ ${data.zipCode} ${data.city}
                     <FormField
                       control={form.control}
                       name="acceptTerms"
-                      render={({ field }) => (
-                        <FormItem className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 rounded-lg p-4">
-                          <div className="flex flex-row items-start space-x-3 space-y-0">
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value === true}
-                                onCheckedChange={(checked) => field.onChange(checked === true ? true : undefined)}
-                              />
-                            </FormControl>
-                            <div className="space-y-1 leading-none">
-                              <FormLabel className="text-sm font-normal text-foreground cursor-pointer">
-                                {t('order.form.acceptTerms').split(t('order.form.acceptTermsLink'))[0]}
-                                <Link to="/terms" target="_blank" className="text-primary underline hover:no-underline">
-                                  {t('order.form.acceptTermsLink')}
-                                </Link>
-                                {t('order.form.acceptTerms').split(t('order.form.acceptTermsLink'))[1]}
-                              </FormLabel>
+                      render={({ field }) => {
+                        const fullText = t('order.form.acceptTerms');
+                        const linkText = t('order.form.acceptTermsLink');
+                        const linkIndex = fullText.indexOf(linkText);
+                        const beforeLink = linkIndex >= 0 ? fullText.slice(0, linkIndex) : fullText;
+                        const afterLink = linkIndex >= 0 ? fullText.slice(linkIndex + linkText.length) : '';
+
+                        return (
+                          <FormItem className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 rounded-lg p-4">
+                            <div className="flex flex-row items-start space-x-3 space-y-0">
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value === true}
+                                  onCheckedChange={(checked) => field.onChange(checked ? true : undefined)}
+                                />
+                              </FormControl>
+                              <div className="space-y-1 leading-none">
+                                <FormLabel className="text-sm font-normal text-foreground cursor-pointer">
+                                  {beforeLink}
+                                  <Link to="/terms" target="_blank" className="text-primary underline hover:no-underline">
+                                    {linkText}
+                                  </Link>
+                                  {afterLink}
+                                </FormLabel>
+                              </div>
                             </div>
-                          </div>
-                          <FormMessage className="ml-7" />
-                        </FormItem>
-                      )}
+                            <FormMessage className="ml-7" />
+                          </FormItem>
+                        );
+                      }}
                     />
 
                     <div className="flex gap-3">
