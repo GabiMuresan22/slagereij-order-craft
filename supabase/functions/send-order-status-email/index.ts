@@ -194,6 +194,7 @@ const getEmailContent = async (data: OrderStatusEmailRequest) => {
       total: "Totaal",
       questions: "Als u vragen heeft, aarzel dan niet om contact met ons op te nemen.",
       footer: "Bedankt dat u voor onze slagerij kiest!",
+      withdrawalNotice: "Herroepingsrecht: Conform Art. VI.53, 4° WER is het herroepingsrecht van 14 dagen niet van toepassing op bederfelijke waren (vers vlees, charcuterie, bereide maaltijden).",
       statusLabels: {
         pending: "In Behandeling",
         confirmed: "Bevestigd",
@@ -234,6 +235,7 @@ const getEmailContent = async (data: OrderStatusEmailRequest) => {
       total: "Total",
       questions: "Dacă aveți întrebări, nu ezitați să ne contactați.",
       footer: "Vă mulțumim că ați ales măcelăria noastră!",
+      withdrawalNotice: "Drept de retragere: Conform Art. VI.53, 4° WER, dreptul de retragere de 14 zile nu se aplică produselor perisabile (carne proaspătă, mezeluri, preparate gătite).",
       statusLabels: {
         pending: "În Așteptare",
         confirmed: "Confirmat",
@@ -327,6 +329,9 @@ const getEmailContent = async (data: OrderStatusEmailRequest) => {
                   <!-- Footer -->
                   <tr>
                     <td style="background-color: #f9f9f9; padding: 20px 30px; text-align: center; border-top: 1px solid #eeeeee;">
+                      <p style="color: #999999; font-size: 11px; margin: 0 0 8px 0; font-style: italic;">
+                        ${t.withdrawalNotice}
+                      </p>
                       <p style="color: #999999; font-size: 12px; margin: 0;">
                         ${t.footer}
                       </p>
