@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
@@ -8,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -128,6 +130,9 @@ const createOrderSchemas = (t: (key: string) => string) => {
     notes: z.string()
       .max(1000, t('order.validation.notesMax') || 'Notes must be less than 1000 characters')
       .optional(),
+    acceptTerms: z.literal(true, {
+      errorMap: () => ({ message: t('order.validation.acceptTerms') }),
+    }),
   }).superRefine((data, ctx) => {
     if (data.orderItems.length === 0 && data.customRequests.length === 0) {
       ctx.addIssue({
@@ -227,6 +232,7 @@ const Order = () => {
       zipCode: "",
       city: "",
       notes: "",
+      acceptTerms: undefined as unknown as true,
     },
   });
 
@@ -709,6 +715,34 @@ ${data.zipCode} ${data.city}
                             />
                           </FormControl>
                           <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {/* Terms acceptance with perishable goods withdrawal notice */}
+                    <FormField
+                      control={form.control}
+                      name="acceptTerms"
+                      render={({ field }) => (
+                        <FormItem className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 rounded-lg p-4">
+                          <div className="flex flex-row items-start space-x-3 space-y-0">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value === true}
+                                onCheckedChange={(checked) => field.onChange(checked === true ? true : undefined)}
+                              />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                              <FormLabel className="text-sm font-normal text-foreground cursor-pointer">
+                                {t('order.form.acceptTerms').split(t('order.form.acceptTermsLink'))[0]}
+                                <Link to="/terms" target="_blank" className="text-primary underline hover:no-underline">
+                                  {t('order.form.acceptTermsLink')}
+                                </Link>
+                                {t('order.form.acceptTerms').split(t('order.form.acceptTermsLink'))[1]}
+                              </FormLabel>
+                            </div>
+                          </div>
+                          <FormMessage className="ml-7" />
                         </FormItem>
                       )}
                     />

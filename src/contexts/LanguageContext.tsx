@@ -937,6 +937,9 @@ const translations = {
     'order.form.customProductPlaceholder': 'Beschrijf het product, de hoeveelheid...',
     'order.form.consent': 'Ik ga akkoord met de verwerking van mijn persoonsgegevens volgens het',
     'order.form.privacyNotice': 'Uw persoonlijke gegevens worden verwerkt volgens ons privacybeleid. U heeft recht op toegang, correctie of verwijdering van uw gegevens.',
+    'order.form.acceptTerms': 'Ik ga akkoord met de algemene voorwaarden en erken dat het herroepingsrecht van 14 dagen niet van toepassing is op bederfelijke waren (vers vlees, charcuterie, bereide maaltijden) conform Art. VI.53, 4° WER.',
+    'order.form.acceptTermsLink': 'algemene voorwaarden',
+    'order.validation.acceptTerms': 'U moet akkoord gaan met de algemene voorwaarden om uw bestelling te plaatsen.',
     
     // Order - Other
     'order.total': 'Totaal',
@@ -2045,6 +2048,9 @@ const translations = {
     'order.form.customProductPlaceholder': 'Descrieți produsul, cantitatea...',
     'order.form.consent': 'Sunt de acord cu procesarea datelor mele personale conform',
     'order.form.privacyNotice': 'Datele dumneavoastră personale sunt procesate conform politicii noastre de confidențialitate. Aveți dreptul de acces, corectare sau ștergere a datelor.',
+    'order.form.acceptTerms': 'Sunt de acord cu termenii și condițiile și recunosc că dreptul de retragere de 14 zile nu se aplică produselor perisabile (carne proaspătă, mezeluri, preparate gătite) conform Art. VI.53, 4° WER.',
+    'order.form.acceptTermsLink': 'termenii și condițiile',
+    'order.validation.acceptTerms': 'Trebuie să fiți de acord cu termenii și condițiile pentru a plasa comanda.',
     
     // Order - Other
     'order.total': 'Total',
