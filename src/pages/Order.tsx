@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -128,6 +129,9 @@ const createOrderSchemas = (t: (key: string) => string) => {
     notes: z.string()
       .max(1000, t('order.validation.notesMax') || 'Notes must be less than 1000 characters')
       .optional(),
+    consent: z.boolean().refine((val) => val === true, {
+      message: t('order.validation.consentRequired'),
+    }),
   }).superRefine((data, ctx) => {
     if (data.orderItems.length === 0 && data.customRequests.length === 0) {
       ctx.addIssue({
@@ -227,6 +231,7 @@ const Order = () => {
       zipCode: "",
       city: "",
       notes: "",
+      consent: false,
     },
   });
 
@@ -328,6 +333,8 @@ ${data.zipCode} ${data.city}
         status: "pending",
         user_id: userIdToSave,
         language: language,
+        consent_given: true,
+        consent_timestamp: new Date().toISOString(),
       });
 
       if (error) throw error;
@@ -709,6 +716,30 @@ ${data.zipCode} ${data.city}
                             />
                           </FormControl>
                           <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="consent"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel className="text-sm font-normal">
+                              {t('order.form.consent')}{' '}
+                              <Link to="/privacy" className="text-primary hover:underline">
+                                {t('footer.privacy')}
+                              </Link>
+                            </FormLabel>
+                            <FormMessage />
+                          </div>
                         </FormItem>
                       )}
                     />

@@ -998,6 +998,8 @@ const translations = {
     'order.validation.houseNumber': 'Huisnummer is verplicht',
     'order.validation.zipCode': 'Postcode is verplicht',
     'order.validation.city': 'Gemeente is verplicht',
+    'order.validation.consentRequired': 'U moet akkoord gaan met het privacybeleid om deze bestelling te plaatsen',
+    'order.form.consent': 'Ik ga akkoord met de verwerking van mijn persoonsgegevens volgens het',
     
     // Packages Page
     'packages.title': 'Onze Colli\'s',
@@ -2106,6 +2108,8 @@ const translations = {
     'order.validation.houseNumber': 'Numărul este obligatoriu',
     'order.validation.zipCode': 'Codul poștal este obligatoriu',
     'order.validation.city': 'Orașul este obligatoriu',
+    'order.validation.consentRequired': 'Trebuie să fiți de acord cu politica de confidențialitate pentru a plasa comanda',
+    'order.form.consent': 'Sunt de acord cu procesarea datelor mele personale conform',
     
     // Packages Page
     'packages.title': 'Pachetele Noastre',
