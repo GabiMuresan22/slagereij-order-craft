@@ -14,8 +14,43 @@ export type Database = {
   }
   public: {
     Tables: {
+      contact_messages: {
+        Row: {
+          id: string
+          name: string
+          email: string
+          phone: string
+          message: string
+          consent_given: boolean
+          consent_timestamp: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          email: string
+          phone: string
+          message: string
+          consent_given?: boolean
+          consent_timestamp?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          email?: string
+          phone?: string
+          message?: string
+          consent_given?: boolean
+          consent_timestamp?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
       orders: {
         Row: {
+          consent_given: boolean
+          consent_timestamp: string | null
           created_at: string
           custom_requests: Json | null
           customer_email: string
@@ -32,6 +67,8 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
+          consent_given?: boolean
+          consent_timestamp?: string | null
           created_at?: string
           custom_requests?: Json | null
           customer_email: string
@@ -48,6 +85,8 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
+          consent_given?: boolean
+          consent_timestamp?: string | null
           created_at?: string
           custom_requests?: Json | null
           customer_email?: string
