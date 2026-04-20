@@ -29,6 +29,7 @@ interface CartSummaryPanelProps {
   totalLabel: string;
   ctaLabel: string;
   warningMinimum: string;
+  withdrawalNotice?: string;
   onIncrement: (productKey: string) => void;
   onDecrement: (productKey: string) => void;
   onRemove: (productKey: string) => void;
@@ -53,6 +54,7 @@ export function CartSummaryPanel({
   totalLabel,
   ctaLabel,
   warningMinimum,
+  withdrawalNotice,
   onIncrement,
   onDecrement,
   onRemove,

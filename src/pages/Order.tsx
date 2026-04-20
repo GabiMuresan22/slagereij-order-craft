@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import LocalizedLink from "@/components/LocalizedLink";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
@@ -712,6 +713,15 @@ ${data.zipCode} ${data.city}
                         </FormItem>
                       )}
                     />
+
+                    <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 rounded-md">
+                      <p className="text-xs text-amber-800 dark:text-amber-200 leading-relaxed">
+                        {t('order.legal.withdrawalDisclaimer')}
+                        <LocalizedLink to="/terms" className="underline ml-1 font-semibold">
+                          {t('order.legal.viewTerms')}
+                        </LocalizedLink>
+                      </p>
+                    </div>
 
                     <div className="flex gap-3">
                       <Button type="button" variant="outline" onClick={() => setStep(2)} className="flex-1">
