@@ -415,6 +415,7 @@ export function OrderShopStep({
             totalLabel={cartTotal}
             ctaLabel={cartCta}
             warningMinimum={cartWarnMin}
+            withdrawalNotice={t("order.shop.cart.withdrawalNotice")}
             onIncrement={(pk) => (isStaticProductKey(pk) ? incrementStatic(pk) : increment(pk))}
             onDecrement={(pk) => (isStaticProductKey(pk) ? decrementStatic(pk) : decrement(pk))}
             onRemove={removeLine}
