@@ -167,6 +167,12 @@ export function CartSummaryPanel({
         </p>
       )}
 
+      {withdrawalNotice && (
+        <p className="text-[10px] text-muted-foreground mt-2 px-1 italic">
+          {withdrawalNotice}
+        </p>
+      )}
+
       <Separator className="my-4 bg-border" />
 
       <div className="flex items-center justify-between gap-2 mb-4">
